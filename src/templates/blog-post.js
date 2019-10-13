@@ -5,6 +5,7 @@ import Bio from "../components/bio"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { rhythm, scale } from "../utils/typography"
+import { remarkForm } from "@tinacms/gatsby-tinacms-remark"
 
 class BlogPostTemplate extends React.Component {
   render() {
@@ -80,7 +81,24 @@ class BlogPostTemplate extends React.Component {
   }
 }
 
-export default BlogPostTemplate
+const BlogPostForm = {
+  fields: [
+    {
+      name: "frontmatter.title",
+      component: "text",
+      label: "Title",
+      required: true,
+    },
+    { name: "frontmatter.date", component: "date", label: "Date" },
+    {
+      name: "frontmatter.description",
+      component: "textarea",
+      label: "Textarea",
+    },
+    { name: "rawMarkdownBody", component: "markdown", label: "Body" },
+  ],
+}
+export default remarkForm(BlogPostTemplate, BlogPostForm)
 
 export const pageQuery = graphql`
   query BlogPostBySlug($slug: String!) {
@@ -94,6 +112,9 @@ export const pageQuery = graphql`
       id
       excerpt(pruneLength: 160)
       html
+      fileRelativePath
+      rawFrontmatter
+      rawMarkdownBody
       frontmatter {
         title
         date(formatString: "MMMM DD, YYYY")

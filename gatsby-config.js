@@ -10,6 +10,18 @@ module.exports = {
   },
   plugins: [
     {
+      resolve: "@tinacms/gatsby-plugin-tinacms",
+      options: {
+        plugins: [
+          "@tinacms/gatsby-tinacms-git",
+          "@tinacms/gatsby-tinacms-remark",
+        ],
+        sidebar: {
+          hidden: process.env.NODE_ENV === "production",
+        },
+      },
+    },
+    {
       resolve: `gatsby-source-filesystem`,
       options: {
         path: `${__dirname}/content/blog`,

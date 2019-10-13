@@ -81,9 +81,30 @@ class BlogPostTemplate extends React.Component {
   }
 }
 
+/**
+ * This object defines the form for editing blog post.
+ */
 const BlogPostForm = {
+  /**
+   * The list of fields tell us what the form looks like.
+   */
   fields: [
+    /**
+     * This is a field definition. There are many types of
+     * components available, including:
+     *
+     * * text
+     * * textarea
+     * * toggle
+     * * date
+     * * markdown
+     * * color
+     * * group
+     * * group-list
+     * * blocks
+     */
     {
+      //
       name: "frontmatter.title",
       component: "text",
       label: "Title",
@@ -98,6 +119,11 @@ const BlogPostForm = {
     { name: "rawMarkdownBody", component: "markdown", label: "Body" },
   ],
 }
+
+/**
+ * The `remarkForm` higher order component wraps the `BlogPostTemplate`
+ * and generates a new form from the data in the `markdownRemark` query.
+ */
 export default remarkForm(BlogPostTemplate, BlogPostForm)
 
 export const pageQuery = graphql`

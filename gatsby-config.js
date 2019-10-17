@@ -10,12 +10,9 @@ module.exports = {
   },
   plugins: [
     {
-      resolve: "@tinacms/gatsby-plugin-tinacms",
+      resolve: "gatsby-plugin-tinacms",
       options: {
-        plugins: [
-          "@tinacms/gatsby-tinacms-git",
-          "@tinacms/gatsby-tinacms-remark",
-        ],
+        plugins: ["gatsby-tinacms-git", "gatsby-tinacms-remark"],
         sidebar: {
           hidden: process.env.NODE_ENV === "production",
         },

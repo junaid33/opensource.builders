@@ -5,7 +5,7 @@ import Bio from "../components/bio"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { rhythm, scale } from "../utils/typography"
-import { remarkForm } from "@tinacms/gatsby-tinacms-remark"
+import { remarkForm } from "gatsby-tinacms-remark"
 
 class BlogPostTemplate extends React.Component {
   render() {

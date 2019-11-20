@@ -52,7 +52,7 @@ const Bio = () => {
    * Then checkout `useGlobalJsonForm`
    */
 
-  const [{ name, social }] = useLocalJsonForm(data.author, {
+  const [{ author, social }] = useLocalJsonForm(data.author, {
     label: "Author bio",
     fields: [
       { name: 'rawJson.author' , label: "Author Name", component: "text" },
@@ -76,7 +76,7 @@ const Bio = () => {
     >
      <Image
         fixed={data.avatar.childImageSharp.fixed}
-        alt={name}
+        alt={author}
         style={{
           marginRight: rhythm(1 / 2),
           marginBottom: 0,
@@ -88,7 +88,7 @@ const Bio = () => {
         }}
       />
       <p>
-        Written by <strong>{name}</strong> who lives and works in Canada
+        Written by <strong>{author}</strong> who lives and works in Canada
         building useful things.
         {` `}
         <a href={`https://twitter.com/${social.twitter}`}>
@@ -100,30 +100,3 @@ const Bio = () => {
 }
 
 export default Bio
-
-
-
-/**
- * 
- *  <Image
-        fixed={data.avatar.childImageSharp.fixed}
-        alt={name}
-        style={{
-          marginRight: rhythm(1 / 2),
-          marginBottom: 0,
-          minWidth: 50,
-          borderRadius: `100%`,
-        }}
-        imgStyle={{
-          borderRadius: `50%`,
-        }}
-      />
-      <p>
-        Written by <strong>{name}</strong> who lives and works in Canada
-        building useful things.
-        {` `}
-        <a href={`https://twitter.com/${social.twitter}`}>
-          You should follow him on Twitter
-        </a>
-      </p>
- */

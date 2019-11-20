@@ -138,9 +138,7 @@ export const pageQuery = graphql`
       id
       excerpt(pruneLength: 160)
       html
-      fileRelativePath
-      rawFrontmatter
-      rawMarkdownBody
+      ...TinaRemark
       frontmatter {
         title
         date(formatString: "MMMM DD, YYYY")

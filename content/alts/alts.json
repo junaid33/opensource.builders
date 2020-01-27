@@ -1,6 +1,10 @@
 {
   "alternatives": [
     {
+      "name": "Some open source project",
+      "main": "Heroku"
+    },
+    {
       "main": "Shopify",
       "alts": [
         {
@@ -15,11 +19,5 @@
         }
       ]
     }
-  ],
-  "main": "Heroku",
-  "alts": {
-    "name": "Caprover",
-    "stars": "15000",
-    "license": "Apache 2.0"
-  }
+  ]
 }

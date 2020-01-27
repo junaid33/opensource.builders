@@ -4,9 +4,14 @@
       "main": "Google Analytics",
       "alts": [
         {
+          "name": "Freshlytics",
+          "stars": "300",
+          "license": "Apache 2.0"
+        },
+        {
           "name": "Ackee",
           "stars": "4000",
-          "license": "AG"
+          "license": "AGPL"
         }
       ]
     },

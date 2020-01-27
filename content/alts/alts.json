@@ -1,6 +1,16 @@
 {
   "alternatives": [
     {
+      "main": "Google Analytics",
+      "alts": [
+        {
+          "name": "Ackee",
+          "stars": "4000",
+          "license": "AG"
+        }
+      ]
+    },
+    {
       "main": "Heroku",
       "alts": [
         {

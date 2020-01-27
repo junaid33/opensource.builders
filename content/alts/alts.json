@@ -1,8 +1,14 @@
 {
   "alternatives": [
     {
-      "name": "Some open source project",
-      "main": "Heroku"
+      "main": "Heroku",
+      "alts": [
+        {
+          "name": "Caprover",
+          "license": "Apcahe 2.0",
+          "stars": "5000"
+        }
+      ]
     },
     {
       "main": "Shopify",

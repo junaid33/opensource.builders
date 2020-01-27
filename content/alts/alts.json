@@ -6,7 +6,7 @@
         {
           "name": "Caprover",
           "license": "Apcahe 2.0",
-          "stars": "5000"
+          "stars": "50000"
         }
       ]
     },
@@ -16,12 +16,12 @@
         {
           "name": "Reaction Commerce",
           "license": "GPL V3",
-          "stars": 50000
+          "stars": "50000"
         },
         {
           "name": "Moltin",
           "license": "AGPL",
-          "stars": 40000
+          "stars": "40000"
         }
       ]
     }

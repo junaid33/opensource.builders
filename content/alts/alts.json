@@ -1,42 +1,62 @@
 {
   "alternatives": [
     {
-      "main": "Shopify",
-      "alts": [
-        {
-          "name": "Reaction Commerce",
-          "license": "GPL V3",
-          "stars": "50000"
-        },
-        {
-          "name": "Moltin",
-          "license": "AGPL",
-          "stars": "40000"
-        }
-      ]
-    },
-    {
-      "main": "Google Analytics",
-      "alts": [
-        {
-          "name": "Freshlytics",
-          "stars": "300",
-          "license": "Apache 2.0"
-        },
-        {
-          "name": "Ackee",
-          "stars": "4000",
-          "license": "AGPL"
-        }
-      ]
-    },
-    {
       "main": "Heroku",
+      "svg": "https://brand.heroku.com/static/media/heroku-logotype-horizontal.81c49462.svg",
       "alts": [
         {
           "name": "Caprover",
+          "repo": "CapRover/CapRover",
           "license": "Apcahe 2.0",
-          "stars": "50000"
+          "stars": "50000",
+          "svg": "https://caprover.com/img/logo.png"
+        }
+      ]
+    },
+    {
+      "main": "Shopify",
+      "svg": "https://cdn.shopify.com/assets2/brand-assets/shopify-logo-main-8ee1e0052baf87fd9698ceff7cbc01cc36a89170212ad227db3ff2706e89fd04.svg",
+      "alts": [
+        {
+          "name": "WooCommerce",
+          "stars": "5.8K",
+          "license": "GPL",
+          "svg": "https://cdn.svgporn.com/logos/woocommerce.svg",
+          "repo": "woocommerce/woocommerce"
+        },
+        {
+          "name": "Saleor Commerce",
+          "repo": "mirumee/saleor",
+          "license": "AGPL",
+          "stars": "40000",
+          "svg": "https://docs.getsaleor.com/img/saleor-logo.svg"
+        },
+        {
+          "name": "Reaction Commerce",
+          "repo": "reactioncommerce/reaction",
+          "license": "GPL V3",
+          "stars": "50000",
+          "svg": "https://miro.medium.com/max/2340/1*HkurkhBk-_xjj4YvX451IA.jpeg"
+        }
+      ]
+    },
+    {
+      "main": "Analytics",
+      "svg": "https://cdn.worldvectorlogo.com/logos/google-analytics-2.svg",
+      "alts": [
+        {
+          "name": "Freshlytics",
+          "repo": "sheshbabu/freshlytics",
+          "stars": "300",
+          "license": "Apache 2.0",
+          "svg": "https://raw.githubusercontent.com/sheshbabu/freshlytics/master/docs/title.png"
+        },
+        {
+          "name": "Ackee",
+          "repo": "electerious/Ackee",
+          "stars": "4000",
+          "license": "AGPL",
+          "svg": "https://cdn.svgporn.com/logos/moltin.svg"
         }
       ]
     }

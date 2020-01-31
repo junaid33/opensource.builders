@@ -9,14 +9,25 @@ module.exports = {
     },
   },
   plugins: [
+    "gatsby-plugin-chakra-ui",
     {
       resolve: "gatsby-plugin-tinacms",
       options: {
-        plugins: ["gatsby-tinacms-git", "gatsby-tinacms-remark", "gatsby-tinacms-json",],
+        plugins: [
+          "gatsby-tinacms-git",
+          "gatsby-tinacms-remark",
+          "gatsby-tinacms-json",
+        ],
         sidebar: {
           hidden: process.env.NODE_ENV === "production",
-          position: "displace"
+          position: "displace",
         },
+      },
+    },
+    {
+      resolve: `gatsby-plugin-layout`,
+      options: {
+        component: require.resolve(`./src/components/layout`),
       },
     },
     {
@@ -38,6 +49,13 @@ module.exports = {
       options: {
         path: `${__dirname}/content/data`,
         name: `data`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/content/alts`,
+        name: `alts`,
       },
     },
     `gatsby-transformer-json`,
@@ -86,11 +104,11 @@ module.exports = {
     },
     `gatsby-plugin-offline`,
     `gatsby-plugin-react-helmet`,
-    {
-      resolve: `gatsby-plugin-typography`,
-      options: {
-        pathToConfigModule: `src/utils/typography`,
-      },
-    },
+    // {
+    //   resolve: `gatsby-plugin-typography`,
+    //   options: {
+    //     pathToConfigModule: `src/utils/typography`,
+    //   },
+    // },
   ],
 }

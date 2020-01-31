@@ -1,8 +1,19 @@
 const path = require(`path`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
+const altsData = require("./content/alts/alts.json")
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
+
+  const compTemplate = path.resolve(`./src/templates/comparisons.js`)
+  altsData.alternatives.forEach(comp_object => {
+    var path = comp_object.main.replace(/\s+/g, "-").toLowerCase()
+    createPage({
+      path,
+      component: compTemplate,
+      context: comp_object,
+    })
+  })
 
   const blogPost = path.resolve(`./src/templates/blog-post.js`)
   const result = await graphql(

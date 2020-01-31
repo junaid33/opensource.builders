@@ -10,6 +10,7 @@ const Index = ({ data, location }) => {
   console.log(data)
   const [{ alternatives }] = useLocalJsonForm(data.altsJson, {
     label: "Add an app comparison",
+
     fields: [
       {
         label: "Comparisons",
@@ -18,6 +19,13 @@ const Index = ({ data, location }) => {
         description: "Comparisons List",
         itemProps: item => ({
           label: item.main,
+        }),
+        defaultItem: () => ({
+          main: "New Comparison",
+          alts: [],
+          id: Math.random()
+            .toString(36)
+            .substr(2, 9),
         }),
         fields: [
           {
@@ -76,6 +84,7 @@ const Index = ({ data, location }) => {
       {data.altsJson.alternatives.map(comp => (
         <Box
           display="flex"
+          flexDirection={{ base: "column", md: "row" }}
           width="100%"
           borderRadius={5}
           boxShadow="0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)"
@@ -86,26 +95,31 @@ const Index = ({ data, location }) => {
               "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%239C92AC' fill-opacity='0.4' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E\")",
           }}
         >
-          <Link to={comp.main.replace(/\s+/g, "-").toLowerCase()}>
-            <Box
-              as="img"
-              width="15rem"
-              height="12rem"
-              py={3}
-              px="20px"
-              mb="0"
-              borderTopLeftRadius={5}
-              borderBottomLeftRadius={5}
-              src={comp.svg}
-              alt=""
-            />
-          </Link>
-
           <Box
-            // boxShadow="inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)"
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            flexBasis="15rem"
+            minWidth="15rem"
+            height="12rem"
+          >
+            <Link to={comp.main.replace(/\s+/g, "-").toLowerCase()}>
+              <Box
+                as="img"
+                width="15rem"
+                py={3}
+                px="20px"
+                mb="0"
+                borderTopLeftRadius={5}
+                borderBottomLeftRadius={5}
+                src={comp.svg}
+                alt=""
+              />
+            </Link>
+          </Box>
+          <Box
             borderTopRightRadius={5}
             borderBottomRightRadius={5}
-            // bg="#133c53"
             bg="white"
             display="flex"
             width="100%"
@@ -114,6 +128,9 @@ const Index = ({ data, location }) => {
           >
             {comp.alts.map(alt => (
               <Box
+                as="a"
+                href={`https://github.com/${alt.repo}`}
+                target="_blank"
                 display="flex"
                 flexDirection="column"
                 alignItems="stretch"
@@ -169,7 +186,7 @@ const Index = ({ data, location }) => {
                       borderRadius={25}
                       px={2}
                       variant="subtle"
-                      fontSize="0.2em"
+                      fontSize=".5rem"
                       variantColor="blue"
                     >
                       {alt.license}
@@ -178,7 +195,7 @@ const Index = ({ data, location }) => {
                       fontFamily="Inter"
                       fontSize={12}
                       ml="auto"
-                      color="yellow.400"
+                      color="#fe8f0c"
                       display="flex"
                       alignItems="center"
                       fontWeight={500}

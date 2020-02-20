@@ -12,34 +12,20 @@
           "svg": "https://miro.medium.com/max/2340/1*HkurkhBk-_xjj4YvX451IA.jpeg"
         },
         {
-          "name": "WooCommerce",
-          "stars": "5.8K",
-          "license": "GPL",
-          "svg": "https://cdn.svgporn.com/logos/woocommerce.svg",
-          "repo": "woocommerce/woocommerce"
-        },
-        {
           "name": "Saleor Commerce",
           "repo": "mirumee/saleor",
           "license": "BSD-3",
           "stars": "6.6K",
           "svg": "https://docs.getsaleor.com/img/saleor-logo.svg"
+        },
+        {
+          "name": "WooCommerce",
+          "stars": "5.8K",
+          "license": "GPL",
+          "svg": "https://cdn.svgporn.com/logos/woocommerce.svg",
+          "repo": "woocommerce/woocommerce"
         }
       ]
-    },
-    {
-      "main": "LogRocket",
-      "alts": [
-        {
-          "name": "Sentry",
-          "repo": "getsentry/sentry",
-          "stars": "23.9K",
-          "svg": "https://camo.githubusercontent.com/2dfeafbee0904d6df16ddf7200993dace1629e60/68747470733a2f2f73656e7472792d6272616e642e73746f726167652e676f6f676c65617069732e636f6d2f73656e7472792d6c6f676f2d626c61636b2e706e67",
-          "license": "Apache 2.0"
-        }
-      ],
-      "id": "3dwh5h2gh",
-      "svg": "https://logrocket-assets.io/img/logo.png"
     },
     {
       "main": "Heroku",
@@ -101,6 +87,20 @@
           "svg": "https://raw.githubusercontent.com/sheshbabu/freshlytics/master/docs/title.png"
         }
       ]
+    },
+    {
+      "main": "LogRocket",
+      "alts": [
+        {
+          "name": "Sentry",
+          "repo": "getsentry/sentry",
+          "stars": "23.9K",
+          "svg": "https://camo.githubusercontent.com/2dfeafbee0904d6df16ddf7200993dace1629e60/68747470733a2f2f73656e7472792d6272616e642e73746f726167652e676f6f676c65617069732e636f6d2f73656e7472792d6c6f676f2d626c61636b2e706e67",
+          "license": "Apache 2.0"
+        }
+      ],
+      "id": "3dwh5h2gh",
+      "svg": "https://logrocket-assets.io/img/logo.png"
     },
     {
       "main": "Oberlo",

@@ -9,7 +9,7 @@
           "repo": "reactioncommerce/reaction",
           "license": "GPL V3",
           "stars": "9.6K",
-          "svg": "https://miro.medium.com/max/2340/1*HkurkhBk-_xjj4YvX451IA.jpeg"
+          "svg": "https://user-images.githubusercontent.com/34615258/75008703-5e98d000-543e-11ea-912c-5678fb12e1a0.png"
         },
         {
           "name": "Saleor Commerce",
@@ -26,95 +26,6 @@
           "repo": "woocommerce/woocommerce"
         }
       ]
-    },
-    {
-      "main": "Heroku",
-      "svg": "https://brand.heroku.com/static/media/heroku-logotype-horizontal.81c49462.svg",
-      "alts": [
-        {
-          "name": "Dokku",
-          "stars": "18.6K",
-          "license": "MIT",
-          "svg": "https://cdn.jsdelivr.net/gh/dokku/dokku@v0.19.13/docs/assets/dokku.png",
-          "repo": "dokku/dokku"
-        },
-        {
-          "name": "Caprover",
-          "repo": "CapRover/CapRover",
-          "license": "Apcahe 2.0",
-          "stars": "4.7K",
-          "svg": "https://caprover.com/img/logo.png"
-        }
-      ]
-    },
-    {
-      "main": "Intercom",
-      "svg": "https://cdn.freebiesupply.com/logos/large/2x/intercom-1-logo-svg-vector.svg",
-      "alts": [
-        {
-          "name": "chatwoot",
-          "stars": "3.4K",
-          "svg": "https://d33wubrfki0l68.cloudfront.net/778fcd4101a8074c6a90332fc23cfc02f3964db7/67954/static/brand-d6ec4f18194acc9e590c511b9ae51974.svg",
-          "repo": "chatwoot/chatwoot",
-          "license": "MIT"
-        },
-        {
-          "name": "chaskiq",
-          "repo": "chaskiq/chaskiq",
-          "stars": "144",
-          "license": "GPL V2",
-          "svg": "https://chaskiq.io/static/logo-fc283679ef63087d2e3aa9fa158a97e8.png"
-        }
-      ],
-      "id": "txmr3k1l9"
-    },
-    {
-      "main": "Analytics",
-      "svg": "https://cdn.worldvectorlogo.com/logos/google-analytics-2.svg",
-      "alts": [
-        {
-          "name": "Ackee",
-          "repo": "electerious/Ackee",
-          "stars": "1.4K",
-          "license": "MIT",
-          "svg": "https://img.stackshare.io/service/11335/Icon.png"
-        },
-        {
-          "name": "Freshlytics",
-          "repo": "sheshbabu/freshlytics",
-          "stars": "225",
-          "license": "MIT",
-          "svg": "https://raw.githubusercontent.com/sheshbabu/freshlytics/master/docs/title.png"
-        }
-      ]
-    },
-    {
-      "main": "LogRocket",
-      "alts": [
-        {
-          "name": "Sentry",
-          "repo": "getsentry/sentry",
-          "stars": "23.9K",
-          "svg": "https://camo.githubusercontent.com/2dfeafbee0904d6df16ddf7200993dace1629e60/68747470733a2f2f73656e7472792d6272616e642e73746f726167652e676f6f676c65617069732e636f6d2f73656e7472792d6c6f676f2d626c61636b2e706e67",
-          "license": "Apache 2.0"
-        }
-      ],
-      "id": "3dwh5h2gh",
-      "svg": "https://logrocket-assets.io/img/logo.png"
-    },
-    {
-      "main": "Oberlo",
-      "alts": [
-        {
-          "name": "Openship",
-          "stars": "62",
-          "license": "GPL V3",
-          "repo": "openshiporg/openship",
-          "svg": "https://user-images.githubusercontent.com/34615258/62741139-89ba5580-b9ff-11e9-950f-afb005771866.png"
-        }
-      ],
-      "id": "5uv2jsadu",
-      "svg": "https://images.milled.com/2019-08-05/A6dBQIGfvORn3rqg/dPc3Rhvp77SD.png"
     }
   ]
 }

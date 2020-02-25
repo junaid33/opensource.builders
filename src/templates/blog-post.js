@@ -55,6 +55,21 @@ const BlogText = styled.section`
     margin-top: 0;
     margin-bottom: 16px;
   }
+
+  @media (max-width: 1170px) {
+    padding: 4vw 7vw 0;
+  }
+  @media (max-width: 800px) {
+    font-size: 1rem;
+    padding: 1vw 7vw 0;
+    h2 {
+      font-size: 32px;
+    }
+  }
+  @media (max-width: 500px) {
+    padding: 0vw 7vw 0;
+  }
+
 `
 
 class BlogPostTemplate extends React.Component {
@@ -98,7 +113,9 @@ class BlogPostTemplate extends React.Component {
           ml="auto"
           mr="auto"
           maxWidth="60rem"
-          p="2.625rem 1.3125rem"
+          py={4}
+          px={2}
+          // p="2.625rem 1.3125rem"
         >
           <Box
             width="100%"

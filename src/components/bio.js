@@ -8,7 +8,7 @@
 import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import Image from "gatsby-image"
-import { Box } from "@chakra-ui/core"
+import { Box, Divider } from "@chakra-ui/core"
 
 /**
  * STEP 1: Import the json hooks
@@ -70,46 +70,49 @@ const Bio = () => {
   // })
 
   return (
-    <Box display="flex" px="60px" paddingBottom="30px">
-      <Image
-        fixed={data.avatar.childImageSharp.fixed}
-        alt={author}
-        style={{
-          marginBottom: 0,
-          minWidth: 50,
-          borderRadius: `100%`,
-        }}
-        imgStyle={{
-          borderRadius: `50%`,
-        }}
-      />
-      <Box
-        display="flex"
-        flexDirection="column"
-        textAlign="left"
-        marginTop="8px"
-        marginLeft="16px"
-      >
+    <>
+      <Divider />
+      <Box display="flex" px="7vw" pt="10px" pb="20px">
+        <Image
+          fixed={data.avatar.childImageSharp.fixed}
+          alt={author}
+          style={{
+            marginBottom: 0,
+            minWidth: 50,
+            borderRadius: `100%`,
+          }}
+          imgStyle={{
+            borderRadius: `50%`,
+          }}
+        />
         <Box
-          as="p"
-          color="#1a277b"
-          fontSize="18px"
-          lineHeight="16px"
-          marginBottom={1}
+          display="flex"
+          flexDirection="column"
+          textAlign="left"
+          marginTop="8px"
+          marginLeft="16px"
         >
-          {author}
+          <Box
+            as="p"
+            color="gray.700"
+            fontSize="18px"
+            lineHeight="16px"
+            marginBottom={1}
+            fontWeight={500}
+          >
+            {author}
+          </Box>
+          <Box
+            as="p"
+            color="gray.500"
+            fontSize="14px"
+            lineHeight="18px"
+            marginBottom="0"
+          >
+            Maintainer of Opensource.builders
+          </Box>
         </Box>
-        <Box
-          as="p"
-          color="#545ea7"
-          fontSize="14px"
-          lineHeight="18px"
-          marginBottom="0"
-        >
-          Maintainer of Opensource.builders
-        </Box>
-      </Box>
-      {/* <p>
+        {/* <p>
         Written by <strong>{author}</strong> who lives and works in Canada
         building useful things.
         {` `}
@@ -117,7 +120,8 @@ const Bio = () => {
           You should follow him on Twitter
         </a>
       </p> */}
-    </Box>
+      </Box>
+    </>
   )
 }
 

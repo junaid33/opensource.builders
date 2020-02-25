@@ -64,6 +64,7 @@
     "url": "git+https://github.com/tinacms/gatsby-starter-tinacms.git"
   },
   "scripts": {
+    "clean": "rimraf .cache public",
     "build": "npm run clean && gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",

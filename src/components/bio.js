@@ -8,7 +8,7 @@
 import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import Image from "gatsby-image"
-
+import { Box } from "@chakra-ui/core"
 
 /**
  * STEP 1: Import the json hooks
@@ -54,12 +54,15 @@ const Bio = () => {
   const [{ author, social }] = useLocalJsonForm(data.author, {
     label: "Author bio",
     fields: [
-      { name: 'rawJson.author' , label: "Author Name", component: "text" },
-      
-      { name: 'rawJson.social', label: 'Social Info', component: 'group', fields: [
-        {label: "@Twitter", name: "twitter", component: "text"}
-      ]}
-    ]
+      { name: "rawJson.author", label: "Author Name", component: "text" },
+
+      {
+        name: "rawJson.social",
+        label: "Social Info",
+        component: "group",
+        fields: [{ label: "@Twitter", name: "twitter", component: "text" }],
+      },
+    ],
   })
   // const [{ name, social }] = useGlobalJsonForm(data.author, {
   //   label: "Author",
@@ -67,12 +70,8 @@ const Bio = () => {
   // })
 
   return (
-    <div
-      style={{
-        display: `flex`,
-      }}
-    >
-     <Image
+    <Box display="flex" px="60px" paddingBottom="30px">
+      <Image
         fixed={data.avatar.childImageSharp.fixed}
         alt={author}
         style={{
@@ -84,15 +83,41 @@ const Bio = () => {
           borderRadius: `50%`,
         }}
       />
-      <p>
+      <Box
+        display="flex"
+        flexDirection="column"
+        textAlign="left"
+        marginTop="8px"
+        marginLeft="16px"
+      >
+        <Box
+          as="p"
+          color="#1a277b"
+          fontSize="18px"
+          lineHeight="16px"
+          marginBottom={1}
+        >
+          {author}
+        </Box>
+        <Box
+          as="p"
+          color="#545ea7"
+          fontSize="14px"
+          lineHeight="18px"
+          marginBottom="0"
+        >
+          Maintainer of Opensource.builders
+        </Box>
+      </Box>
+      {/* <p>
         Written by <strong>{author}</strong> who lives and works in Canada
         building useful things.
         {` `}
         <a href={`https://twitter.com/${social.twitter}`}>
           You should follow him on Twitter
         </a>
-      </p>
-    </div>
+      </p> */}
+    </Box>
   )
 }
 

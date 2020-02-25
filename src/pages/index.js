@@ -1,10 +1,18 @@
 import React from "react"
-import { Link, graphql } from "gatsby"
-import { Box, Badge, Icon } from "@chakra-ui/core"
-import Bio from "../components/bio"
-import Layout from "../components/layout"
+import { Link, graphql, Img } from "gatsby"
+import {
+  Box,
+  Badge,
+  Icon,
+  Heading,
+  Divider,
+  Text,
+  Tooltip,
+} from "@chakra-ui/core"
 import SEO from "../components/seo"
-import { useLocalJsonForm, useGlobalJsonForm } from "gatsby-tinacms-json"
+import Github from "../components/Github"
+
+import { useLocalJsonForm } from "gatsby-tinacms-json"
 
 const Index = ({ data, location }) => {
   console.log(data)
@@ -68,6 +76,16 @@ const Index = ({ data, location }) => {
                 component: "text",
               },
               {
+                label: "Site",
+                name: "site",
+                component: "text",
+              },
+              {
+                label: "Language",
+                name: "language",
+                component: "text",
+              },
+              {
                 label: "Repo",
                 name: "repo",
                 component: "text",
@@ -81,134 +99,152 @@ const Index = ({ data, location }) => {
   return (
     <>
       <SEO title="All comparisons" />
-      {data.altsJson.alternatives.map(comp => (
-        <Box
-          display="flex"
-          flexDirection={{ base: "column", md: "row" }}
-          width="100%"
-          borderRadius={5}
-          boxShadow="0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)"
-          mb={2}
-          bg="#FFFFFF"
-          {...{
-            backgroundImage:
-              "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%239C92AC' fill-opacity='0.4' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E\")",
-          }}
-        >
+      <Box
+        bg="white"
+        boxShadow="0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)"
+      >
+        <Box px={{ md: "2rem" }}>
           <Box
             display="flex"
-            justifyContent="center"
+            flexWrap="wrap"
+            justifyContent="space-between"
             alignItems="center"
-            flexBasis="15rem"
-            minWidth="15rem"
-            height="12rem"
+            px="1rem"
           >
-            <Link to={comp.main.replace(/\s+/g, "-").toLowerCase()}>
+            <Box py={5}>
+              <Heading as="h2" size="lg">
+                Open-source alternatives
+              </Heading>
+              <Text fontSize="md" fontWeight={400} color="#939fae" mt={1}>
+                Find open-source alternatives for your favorite apps
+              </Text>
+            </Box>
+            {/* <Box display="flex">
+              <Button
+                leftIcon="add"
+                variantColor="cyan"
+                variant="solid"
+                size="sm"
+              >
+                Add Comparison
+              </Button>
+            </Box> */}
+          </Box>
+        </Box>
+      </Box>
+      <Box
+        display="flex"
+        flexWrap="wrap"
+        ml="auto"
+        mr="auto"
+        maxWidth="60rem"
+        p="2.625rem 1.3125rem"
+      >
+        {data.altsJson.alternatives.map(comp => (
+          <Box mb={16} width={{ base: "100%", md: "50%" }}>
+            <Box mx={3}>
               <Box
                 as="img"
-                width="15rem"
+                height="4rem"
                 py={3}
-                px="20px"
-                mb="0"
+                px={4}
                 borderTopLeftRadius={5}
                 borderBottomLeftRadius={5}
                 src={comp.svg}
                 alt=""
               />
-            </Link>
-          </Box>
-          <Box
-            borderTopRightRadius={5}
-            borderBottomRightRadius={5}
-            bg="white"
-            display="flex"
-            width="100%"
-            minHeight="100%"
-            px={2}
-          >
-            {comp.alts.map(alt => (
-              <Box
-                as="a"
-                href={`https://github.com/${alt.repo}`}
-                target="_blank"
-                display="flex"
-                flexDirection="column"
-                alignItems="stretch"
-                p={2}
-                width={{ base: "50%", md: "33%" }}
-              >
-                <Box
-                  height="100%"
-                  display="flex"
-                  justifyContent="center"
-                  bg="#FFFFFF"
-                  boxShadow="rgba(46, 41, 51, 0.08) 0px 1px 2px, rgba(71, 63, 79, 0.08) 0px 2px 4px"
-                  borderRadius={5}
-                >
-                  <Box
-                    as="img"
-                    py={5}
-                    px={5}
-                    maxHeight="152px"
-                    objectFit="contain"
-                    src={alt.svg}
-                    alt=""
-                  />
-                </Box>
-                <Box display="flex">
-                  <Box flex={1}>
+              <Divider borderColor="gray.400" />
+              <Box display="flex" flexWrap="wrap">
+                {comp.alts.map(alt => (
+                  <Box width={{ base: "100%" }}>
                     <Box
-                      mt={1}
-                      fontFamily="Inter"
-                      {...{
-                        color: "#78757a",
-                        fontSize: "0.75rem",
-                        textTransform: "uppercase",
-                      }}
-                    >
-                      {alt.repo && alt.repo.split("/")[0]} /
-                    </Box>
-                    <Box
-                      fontFamily="Inter"
-                      {...{
-                        // color: "#fff",
-                        fontSize: "0.75rem",
-                        fontWeight: "bold",
-                      }}
-                      lineHeight=".8"
-                    >
-                      {alt.repo && alt.repo.split("/")[1].toLowerCase()}
-                    </Box>
-                  </Box>
-                  <Box mt={2} display="flex" flexDirection="column" ml="auto">
-                    <Badge
-                      ml="auto"
-                      borderRadius={25}
-                      px={2}
-                      variant="subtle"
-                      fontSize=".5rem"
-                      variantColor="blue"
-                    >
-                      {alt.license}
-                    </Badge>
-                    <Box
-                      fontFamily="Inter"
-                      fontSize={12}
-                      ml="auto"
-                      color="#fe8f0c"
                       display="flex"
-                      alignItems="center"
-                      fontWeight={500}
+                      borderRadius="4px"
+                      p={2}
+                      m={2}
+                      boxShadow="0px 1px 4px rgba(0, 0, 0, 0.16)"
+                      bg="white"
                     >
-                      <Icon name="star" size={2} mr={1} /> {alt.stars}
+                      <Box
+                        as="img"
+                        height="56px"
+                        width="56px"
+                        // p={1}
+                        mr={3}
+                        borderRadius="4px"
+                        boxShadow="0px 1px 4px rgba(0, 0, 0, 0.16)"
+                        src={alt.svg}
+                      />
+                      <Box
+                        display="flex"
+                        flexDirection="column"
+                        justifyContent="center"
+                        lineHeight="21px"
+                      >
+                        <Text fontSize="md" fontWeight={500}>
+                          {alt.name}
+                        </Text>
+                        <Box
+                          // fontFamily="Inter"
+                          fontSize={14}
+                          color="#D69E2E"
+                          display="flex"
+                          alignItems="center"
+                          fontWeight={600}
+                          mt={1}
+                        >
+                          <Icon name="star" size={3} mr={1} /> {alt.stars}
+                          <Tooltip hasArrow label="Language" placement="top">
+                            <Badge ml={3} variantColor="green">
+                              {alt.language}
+                            </Badge>
+                          </Tooltip>
+                          <Tooltip hasArrow label="License" placement="top">
+                            <Badge ml={3} variantColor="blue">
+                              {alt.license}
+                            </Badge>
+                          </Tooltip>
+                        </Box>
+                      </Box>
+                      <Box ml="auto" display="flex" alignItems="center">
+                        <Tooltip hasArrow label="Repo" placement="top">
+                          <Box
+                            as="a"
+                            href={`https://github.com/${alt.repo}`}
+                            target="_blank"
+                          >
+                            <Github />
+                          </Box>
+                        </Tooltip>
+                        <Tooltip hasArrow label="Website" placement="top">
+                          <Box
+                            size={5}
+                            mx={3}
+                            as="a"
+                            href={alt.site}
+                            target="_blank"
+                          >
+                            <svg
+                              viewBox="0 0 24 24"
+                              focusable="false"
+                              role="presentation"
+                            >
+                              <path
+                                fill="#718096"
+                                d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+                              ></path>
+                            </svg>
+                          </Box>
+                        </Tooltip>
+                      </Box>
                     </Box>
                   </Box>
-                </Box>
+                ))}
               </Box>
-            ))}
+            </Box>
           </Box>
-        </Box>
-      ))}
+        ))}
+      </Box>
     </>
   )
 }
@@ -232,6 +268,8 @@ export const pageQuery = graphql`
           stars
           svg
           repo
+          site
+          language
         }
       }
       rawJson

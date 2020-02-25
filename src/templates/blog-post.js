@@ -1,10 +1,61 @@
 import React from "react"
 import { Link, graphql } from "gatsby"
-
+import { Box, Avatar, Heading, Text } from "@chakra-ui/core"
+import styled from "@emotion/styled"
 import Bio from "../components/bio"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { remarkForm } from "gatsby-tinacms-remark"
+
+const BlogText = styled.section`
+  position: relative;
+  min-height: 230px;
+  line-height: 1.6em;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 20px;
+  padding-left: 60px;
+  padding-right: 60px;
+  padding-bottom: 20px;
+  background: rgb(255, 255, 255);
+
+  h2 {
+    font-weight: 600;
+    color: #11103e;
+    margin-top: 48px;
+    margin-bottom: 16px;
+    font-size: 40px;
+    line-height: 42px;
+    letter-spacing: 0;
+  }
+
+  h3 {
+    font-weight: 600;
+    color: #11103e;
+    margin-top: 20px;
+    margin-bottom: 16px;
+    font-size: 30px;
+    line-height: 42px;
+    letter-spacing: 0;
+  }
+
+  h4 {
+    font-weight: 500;
+    color: #11103e;
+    margin-top: 20px;
+    margin-bottom: 16px;
+    font-size: 24px;
+    line-height: 42px;
+    letter-spacing: 0;
+  }
+
+  p {
+    margin-top: 0;
+    margin-bottom: 16px;
+  }
+`
 
 class BlogPostTemplate extends React.Component {
   render() {
@@ -13,62 +64,58 @@ class BlogPostTemplate extends React.Component {
     const { previous, next } = this.props.pageContext
 
     return (
-      <Layout location={this.props.location} title={siteTitle}>
+      <>
+        <Box
+          bg="white"
+          boxShadow="0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)"
+        >
+          <Box px={{ md: "2rem" }}>
+            <Box
+              display="flex"
+              flexWrap="wrap"
+              justifyContent="space-between"
+              alignItems="center"
+              px="1rem"
+            >
+              <Box py={5}>
+                <Heading as="h2" size="lg">
+                  About Opensource.Builders
+                </Heading>
+                <Text fontSize="md" fontWeight={400} color="#939fae" mt={1}>
+                  On a mission to find great open-source software
+                </Text>
+              </Box>
+            </Box>
+          </Box>
+        </Box>
         <SEO
           title={post.frontmatter.title}
           description={post.frontmatter.description || post.excerpt}
         />
-        <article>
-          <header>
-            <h1
-              style={{
-                marginBottom: 0,
-              }}
-            >
-              {post.frontmatter.title}
-            </h1>
-            <p
-              style={{
-                display: `block`,
-              }}
-            >
-              {post.frontmatter.date}
-            </p>
-          </header>
-          <section dangerouslySetInnerHTML={{ __html: post.html }} />
-          <hr />
-          <footer>
-            <Bio />
-          </footer>
-        </article>
-
-        <nav>
-          <ul
-            style={{
-              display: `flex`,
-              flexWrap: `wrap`,
-              justifyContent: `space-between`,
-              listStyle: `none`,
-              padding: 0,
-            }}
+        <Box
+          display="flex"
+          flexWrap="wrap"
+          ml="auto"
+          mr="auto"
+          maxWidth="60rem"
+          p="2.625rem 1.3125rem"
+        >
+          <Box
+            width="100%"
+            boxShadow="0px 1px 4px rgba(0, 0, 0, 0.16)"
+            borderRadius="3px"
+            bg="white"
           >
-            <li>
-              {previous && (
-                <Link to={previous.fields.slug} rel="prev">
-                  ← {previous.frontmatter.title}
-                </Link>
-              )}
-            </li>
-            <li>
-              {next && (
-                <Link to={next.fields.slug} rel="next">
-                  {next.frontmatter.title} →
-                </Link>
-              )}
-            </li>
-          </ul>
-        </nav>
-      </Layout>
+            <article>
+              <BlogText dangerouslySetInnerHTML={{ __html: post.html }} />
+              <footer>
+                <Bio />
+              </footer>
+            </article>
+          </Box>
+        </Box>
+       
+      </>
     )
   }
 }

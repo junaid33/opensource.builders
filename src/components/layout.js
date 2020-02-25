@@ -16,7 +16,6 @@ class Layout extends React.Component {
       header = (
         <h1
           style={{
-           
             marginTop: 0,
           }}
         >
@@ -54,24 +53,12 @@ class Layout extends React.Component {
       )
     }
     return (
-      <Box background="#EDF2F7" minHeight="100%">
+      <Box background="#EDF2F7" minHeight="100vh">
         <Header />
-        <div
-          style={{
-            marginLeft: `auto`,
-            marginRight: `auto`,
-            maxWidth: "60rem",
-            padding: "2.625rem 1.3125rem"
-          }}
-        >
-          {/* <header>{header}</header> */}
-          <main>{children}</main>
-          <footer>
-            © {new Date().getFullYear()}, Built with
-            {` `}
-            <a href="https://www.gatsbyjs.org">Gatsby</a>
-          </footer>
-        </div>
+        {/* <header>{header}</header> */}
+        <Box as="main" height="100%">
+          {children}
+        </Box>
       </Box>
     )
   }

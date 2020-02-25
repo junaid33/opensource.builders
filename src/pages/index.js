@@ -14,7 +14,7 @@ import SEO from "../components/seo"
 
 import { useLocalJsonForm } from "gatsby-tinacms-json"
 
-const HTML = styled.section`
+const Reset = styled.div`
   html {
     color: #1a202c !important;
   }
@@ -103,7 +103,7 @@ const Index = ({ data, location }) => {
     ],
   })
   return (
-    <HTML>
+    <Reset>
       <SEO title="All comparisons" />
       <Box
         bg="white"
@@ -262,7 +262,7 @@ const Index = ({ data, location }) => {
           </Box>
         ))}
       </Box>
-    </HTML>
+    </Reset>
   )
 }
 

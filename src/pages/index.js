@@ -8,10 +8,23 @@ import {
   Divider,
   Text,
   Tooltip,
+  CSSReset
 } from "@chakra-ui/core"
 import SEO from "../components/seo"
 
 import { useLocalJsonForm } from "gatsby-tinacms-json"
+
+const BlogText = styled.section`
+  h2 {
+    font-weight: 600;
+    color: #11103e;
+    margin-top: 48px;
+    margin-bottom: 16px;
+    font-size: 40px;
+    line-height: 42px;
+    letter-spacing: 0;
+  }
+`
 
 const Index = ({ data, location }) => {
   console.log(data)
@@ -97,6 +110,7 @@ const Index = ({ data, location }) => {
   })
   return (
     <>
+      <CSSReset />
       <SEO title="All comparisons" />
       <Box
         bg="white"

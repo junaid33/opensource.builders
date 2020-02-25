@@ -1,11 +1,11 @@
 {
-  "name": "gatsby-starter-tinacms",
+  "name": "opensource.builders",
   "private": true,
-  "description": "A starter for a blog powered by Gatsby and Markdown, made editable with TinaCMS",
+  "description": "Find open-source alternatives",
   "version": "0.1.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "Junaid Kabani <junaidkabani3@gmail.com>",
   "bugs": {
-    "url": "https://github.com/tinacms/gatsby-starter-tinacms/issues"
+    "url": "https://github.com/junaid33/opensource.builders/issues"
   },
   "dependencies": {
     "@chakra-ui/core": "^0.5.2",

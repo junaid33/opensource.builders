@@ -10,6 +10,7 @@ import {
   Tooltip,
   CSSReset
 } from "@chakra-ui/core"
+import styled from "@emotion/styled"
 import SEO from "../components/seo"
 
 import { useLocalJsonForm } from "gatsby-tinacms-json"

@@ -13,19 +13,7 @@ import styled from "@emotion/styled"
 import { useLocalJsonForm } from "gatsby-tinacms-json"
 import SEO from "../components/seo"
 
-function useForceUpdate() {
-  const [value, setValue] = useState(0) // integer state
-  return () => setValue(value => ++value) // update the state to force render
-}
-
 const Index = ({ data, location }) => {
-  const forceUpdate = useForceUpdate()
-
-  useEffect(() => {
-    window.localStorage.setItem("darkMode", false)
-    forceUpdate()
-  })
-
   const [{ alternatives }] = useLocalJsonForm(data.altsJson, {
     label: "Add an app comparison",
 
@@ -122,7 +110,7 @@ const Index = ({ data, location }) => {
             px="1rem"
           >
             <Box py={5}>
-              <Heading as="h2" size="lg">
+              <Heading as="h2" size="lg" color="rgb(26, 32, 44)">
                 Open-source alternatives
               </Heading>
               <Text fontSize="md" fontWeight={400} color="#939fae" mt={1}>
@@ -183,7 +171,11 @@ const Index = ({ data, location }) => {
                           justifyContent="center"
                           lineHeight="21px"
                         >
-                          <Text fontSize="md" fontWeight={500}>
+                          <Text
+                            fontSize="md"
+                            fontWeight={500}
+                            color="rgb(26, 32, 44)"
+                          >
                             {alt.name}
                           </Text>
                           <Box
@@ -196,12 +188,20 @@ const Index = ({ data, location }) => {
                           >
                             <Icon name="star" size={3} mr={1} /> {alt.stars}
                             <Tooltip hasArrow label="Language" placement="top">
-                              <Badge ml={3} variantColor="green">
+                              <Badge
+                                ml={3}
+                                bg="rgb(198, 246, 213)"
+                                color="rgb(34, 84, 61)"
+                              >
                                 {alt.language}
                               </Badge>
                             </Tooltip>
                             <Tooltip hasArrow label="License" placement="top">
-                              <Badge ml={3} variantColor="blue">
+                              <Badge
+                                ml={3}
+                                bg="rgb(206, 237, 255)"
+                                color="rgb(21, 62, 117)"
+                              >
                                 {alt.license}
                               </Badge>
                             </Tooltip>

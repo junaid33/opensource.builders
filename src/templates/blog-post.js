@@ -54,6 +54,7 @@ const BlogText = styled.section`
   p {
     margin-top: 0;
     margin-bottom: 16px;
+    color: rgb(26, 32, 44);
   }
 
   @media (max-width: 1170px) {
@@ -69,7 +70,6 @@ const BlogText = styled.section`
   @media (max-width: 500px) {
     padding: 0vw 7vw 0;
   }
-
 `
 
 class BlogPostTemplate extends React.Component {
@@ -93,7 +93,7 @@ class BlogPostTemplate extends React.Component {
               px="1rem"
             >
               <Box py={5}>
-                <Heading as="h2" size="lg">
+                <Heading as="h2" size="lg" color="rgb(26, 32, 44)">
                   About Opensource.Builders
                 </Heading>
                 <Text fontSize="md" fontWeight={400} color="#939fae" mt={1}>
@@ -131,7 +131,6 @@ class BlogPostTemplate extends React.Component {
             </article>
           </Box>
         </Box>
-       
       </>
     )
   }

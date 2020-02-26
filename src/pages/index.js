@@ -14,6 +14,10 @@ import { useLocalJsonForm } from "gatsby-tinacms-json"
 import SEO from "../components/seo"
 
 const Index = ({ data, location }) => {
+  useEffect(() => {
+    window.localStorage.setItem("darkMode", false)
+  })
+
   const [{ alternatives }] = useLocalJsonForm(data.altsJson, {
     label: "Add an app comparison",
 
@@ -133,16 +137,24 @@ const Index = ({ data, location }) => {
         {data.altsJson.alternatives.map(comp => (
           <Box mb={16} width={{ base: "100%", md: "50%" }}>
             <Box mx={{ base: 0, sm: 1 }}>
-              <Box
-                as="img"
-                height="4rem"
-                py={3}
-                px={4}
-                borderTopLeftRadius={5}
-                borderBottomLeftRadius={5}
-                src={comp.svg}
-                alt=""
-              />
+              <Box display="flex" alignItems="center">
+                <Box position="relative">
+                  <Box position="absolute" top={0} left={0} zIndex="-1">
+                    {comp.main}
+                  </Box>
+                  <Box
+                    as="img"
+                    height="4rem"
+                    position="relative"
+                    pt={4}
+                    pr={5}
+                    borderTopLeftRadius={5}
+                    borderBottomLeftRadius={5}
+                    src={comp.svg}
+                    alt=""
+                  />
+                </Box>
+              </Box>
               <Divider borderColor="gray.400" />
               <Box display="flex" flexWrap="wrap">
                 {comp.alts.map(alt => (
@@ -187,7 +199,13 @@ const Index = ({ data, location }) => {
                             mt={1}
                           >
                             <Icon name="star" size={3} mr={1} /> {alt.stars}
-                            <Tooltip hasArrow label="Language" placement="top">
+                            <Tooltip
+                              bg="rgb(45, 55, 72)"
+                              color="rgba(255, 255, 255, 0.92);"
+                              hasArrow
+                              label="Language"
+                              placement="top"
+                            >
                               <Badge
                                 ml={3}
                                 bg="rgb(198, 246, 213)"
@@ -196,7 +214,13 @@ const Index = ({ data, location }) => {
                                 {alt.language}
                               </Badge>
                             </Tooltip>
-                            <Tooltip hasArrow label="License" placement="top">
+                            <Tooltip
+                              bg="rgb(45, 55, 72)"
+                              color="rgba(255, 255, 255, 0.92);"
+                              hasArrow
+                              label="License"
+                              placement="top"
+                            >
                               <Badge
                                 ml={3}
                                 bg="rgb(206, 237, 255)"
@@ -213,7 +237,13 @@ const Index = ({ data, location }) => {
                         display={{ base: "none", sm: "flex" }}
                         alignItems="center"
                       >
-                        <Tooltip hasArrow label="Repo" placement="top">
+                        <Tooltip
+                          bg="rgb(45, 55, 72)"
+                          color="rgba(255, 255, 255, 0.92);"
+                          hasArrow
+                          label="Repo"
+                          placement="top"
+                        >
                           <Box
                             as="a"
                             href={`https://github.com/${alt.repo}`}
@@ -233,7 +263,13 @@ const Index = ({ data, location }) => {
                             </svg>
                           </Box>
                         </Tooltip>
-                        <Tooltip hasArrow label="Website" placement="top">
+                        <Tooltip
+                          bg="rgb(45, 55, 72)"
+                          color="rgba(255, 255, 255, 0.92);"
+                          hasArrow
+                          label="Website"
+                          placement="top"
+                        >
                           <Box
                             size={5}
                             mx={3}

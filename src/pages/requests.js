@@ -74,7 +74,12 @@ export default () => {
               bg="white"
             >
               <Box mx={3} py={4} px={2} display="flex" alignItems="center">
-                <Tooltip label="Thumbs-up the issue to upvote" placement="top">
+                <Tooltip
+                  bg="rgb(45, 55, 72)"
+                  color="rgba(255, 255, 255, 0.92);"
+                  label="Thumbs-up the issue to upvote"
+                  placement="top"
+                >
                   <PseudoBox
                     bg="white"
                     border="1px #63B3ED solid"
@@ -173,6 +178,7 @@ export default () => {
                   alignItems: "center",
                   position: "relative",
                   fontSize: "1rem",
+                  color: "#000",
                   paddingLeft: "1rem",
                   paddingRight: "1rem",
                   height: "2.5rem",
@@ -201,6 +207,7 @@ export default () => {
                   alignItems: "center",
                   position: "relative",
                   fontSize: "1rem",
+                  color: "#000",
                   paddingLeft: "1rem",
                   paddingRight: "1rem",
                   height: "2.5rem",

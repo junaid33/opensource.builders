@@ -9,7 +9,6 @@ module.exports = {
     },
   },
   plugins: [
-    "gatsby-plugin-chakra-ui",
     {
       resolve: "gatsby-plugin-tinacms",
       options: {
@@ -24,6 +23,7 @@ module.exports = {
         },
       },
     },
+    "gatsby-plugin-chakra-ui",
     {
       resolve: `gatsby-plugin-layout`,
       options: {

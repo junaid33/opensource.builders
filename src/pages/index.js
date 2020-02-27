@@ -459,7 +459,11 @@ const Index = ({ data, location }) => {
                         </Tooltip>
                       </Box>
                     </Box>
-                    <Divider display={{ sm: "none" }} my={0} borderColor="#edf1f6" />
+                    <Divider
+                      display={{ sm: "none" }}
+                      my={0}
+                      borderColor="#edf1f6"
+                    />
                     <Box
                       display={{ base: "flex", sm: "none" }}
                       alignItems="center"
@@ -470,7 +474,6 @@ const Index = ({ data, location }) => {
                         display="flex"
                         alignItems="center"
                         justifyContent="center"
-                        borderRight="1px solid #edf1f6"
                         py={1}
                       >
                         <Box
@@ -525,6 +528,7 @@ const Index = ({ data, location }) => {
                         alignItems="center"
                         justifyContent="center"
                         borderRight="1px solid #edf1f6"
+                        borderLeft="1px solid #edf1f6"
                         py={1}
                       >
                         <Box

@@ -257,6 +257,15 @@
           "svg": "https://img.stackshare.io/service/11335/Icon.png",
           "site": "https://ackee.electerious.com",
           "language": "JS"
+        },
+        {
+          "name": "Plausible",
+          "repo": "plausible-insights/plausible",
+          "stars": "169",
+          "license": "MIT",
+          "svg": "https://plausible.io/images/icon/plausible_logo_300px.png",
+          "site": "https://plausible.io",
+          "language": "Elixir"
         }
       ]
     },

@@ -11,7 +11,8 @@
           "license": "GPL V3",
           "stars": "9.6K",
           "svg": "https://user-images.githubusercontent.com/34615258/75008703-5e98d000-543e-11ea-912c-5678fb12e1a0.png",
-          "language": "JS"
+          "language": "JS",
+          "deploy": "https://docs.reactioncommerce.com/docs/deploying-reaction-using-heroku"
         },
         {
           "name": "Saleor Commerce",
@@ -20,7 +21,8 @@
           "license": "BSD-3",
           "stars": "6.6K",
           "svg": "https://user-images.githubusercontent.com/34615258/75009087-5db46e00-543f-11ea-8bf3-fe057e6779da.png",
-          "language": "Python"
+          "language": "Python",
+          "deploy": "https://heroku.com/deploy?template=https://github.com/mirumee/saleor"
         },
         {
           "name": "WooCommerce",
@@ -29,7 +31,8 @@
           "svg": "https://user-images.githubusercontent.com/34615258/75009182-a53afa00-543f-11ea-8e47-724cad625b44.png",
           "repo": "woocommerce/woocommerce",
           "site": "http://www.woocommerce.com/",
-          "language": "PHP"
+          "language": "PHP",
+          "deploy": "https://marketplace.digitalocean.com/apps/wordpress"
         },
         {
           "repo": "Sylius/Sylius",
@@ -38,7 +41,8 @@
           "stars": "5.6K",
           "license": "MIT",
           "name": "Sylius",
-          "svg": "https://media-exp1.licdn.com/dms/image/C4D0BAQEA7LMXgFhCoA/company-logo_200_200/0?e=2159024400&v=beta&t=l6oMKJERDt_Gzl1VXioCYow95n_YEGoukqCD-02NWmY"
+          "svg": "https://media-exp1.licdn.com/dms/image/C4D0BAQEA7LMXgFhCoA/company-logo_200_200/0?e=2159024400&v=beta&t=l6oMKJERDt_Gzl1VXioCYow95n_YEGoukqCD-02NWmY",
+          "deploy": "https://docs.sylius.com/en/1.6/cookbook/deployment/platform-sh.html"
         },
         {
           "name": "Bagisto",
@@ -47,7 +51,8 @@
           "svg": "https://static.crozdesk.com/web_app_library/providers/logos/000/008/399/original/bagisto-1569908595-logo.png?1569908595",
           "site": "https://bagisto.com",
           "language": "PHP",
-          "repo": "bagisto/bagisto"
+          "repo": "bagisto/bagisto",
+          "deploy": "https://medium.com/@oayomideelijah/deploy-bagisto-ecommerce-laravel-project-to-heroku-db42a33c52f1"
         }
       ]
     },
@@ -61,7 +66,8 @@
           "language": "JS",
           "license": "MIT",
           "stars": "25.5K",
-          "svg": "https://upload.wikimedia.org/wikipedia/commons/5/55/RocketChat_Logo_1024x1024.png"
+          "svg": "https://upload.wikimedia.org/wikipedia/commons/5/55/RocketChat_Logo_1024x1024.png",
+          "deploy": "https://heroku.com/deploy?template=https://github.com/RocketChat/Rocket.Chat"
         },
         {
           "name": "Mattermost",
@@ -70,7 +76,8 @@
           "site": "https://mattermost.com",
           "stars": "17.6K",
           "language": "Go",
-          "svg": "data:image/png;base64,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"
+          "svg": "data:image/png;base64,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",
+          "deploy": "https://heroku.com/deploy?template=https://github.com/mattermost/mattermost-heroku"
         },
         {
           "name": "Zulip",
@@ -79,7 +86,8 @@
           "language": "Python",
           "site": "https://zulip.org/",
           "svg": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Zulip_logo.svg/1200px-Zulip_logo.svg.png",
-          "license": "Apache 2.0"
+          "license": "Apache 2.0",
+          "deploy": "https://marketplace.digitalocean.com/apps/zulip"
         },
         {
           "name": "Riot",
@@ -114,7 +122,8 @@
           "svg": "https://cdn.jsdelivr.net/gh/dokku/dokku@v0.19.13/docs/assets/dokku.png",
           "repo": "dokku/dokku",
           "site": "http://dokku.viewdocs.io/dokku/",
-          "language": "Shell"
+          "language": "Shell",
+          "deploy": "https://marketplace.digitalocean.com/apps/dokku"
         },
         {
           "name": "OpenFaas",
@@ -123,7 +132,8 @@
           "language": "Go",
           "license": "MIT",
           "stars": "17K",
-          "svg": "https://www.openfaas.com/images/openfaas/whale.png"
+          "svg": "https://www.openfaas.com/images/openfaas/whale.png",
+          "deploy": "https://marketplace.digitalocean.com/apps/openfaas"
         },
         {
           "name": "Caprover",
@@ -132,7 +142,8 @@
           "stars": "4.7K",
           "svg": "https://caprover.com/img/logo.png",
           "language": "TS",
-          "site": "https://CapRover.com"
+          "site": "https://CapRover.com",
+          "deploy": "https://marketplace.digitalocean.com/apps/caprover?action=deploy&refcode=6410aa23d3f3"
         }
       ]
     },
@@ -156,7 +167,8 @@
           "license": "MIT",
           "svg": "https://pbs.twimg.com/profile_images/1192531063928762368/MaxeYpcK_400x400.jpg",
           "site": "https://usefathom.com/",
-          "language": "Go"
+          "language": "Go",
+          "deploy": "https://marketplace.digitalocean.com/apps/fathom-analytics"
         },
         {
           "name": "Ackee",
@@ -165,7 +177,8 @@
           "license": "MIT",
           "svg": "https://img.stackshare.io/service/11335/Icon.png",
           "site": "https://ackee.electerious.com",
-          "language": "JS"
+          "language": "JS",
+          "deploy": "https://heroku.com/deploy?template=https://github.com/electerious/Ackee/tree/master"
         },
         {
           "name": "Plausible",
@@ -188,7 +201,8 @@
           "svg": "https://gogs.io/img/favicon.ico",
           "site": "https://gogs.io/",
           "language": "GO",
-          "repo": "gogs/gogs"
+          "repo": "gogs/gogs",
+          "deploy": "https://gogs.io/docs/installation"
         },
         {
           "name": "GitLab",
@@ -206,7 +220,8 @@
           "svg": "https://gitea.io/images/gitea.png",
           "license": "MIT",
           "site": "https://gitea.io/en-us/",
-          "language": "Go"
+          "language": "Go",
+          "deploy": "https://marketplace.digitalocean.com/apps/gitea"
         }
       ],
       "id": "8bxlppy5h",
@@ -222,7 +237,8 @@
           "stars": "20.4K",
           "license": "Apache 2.0",
           "language": "Go",
-          "svg": "https://openebs.org/assets/images/workloads/minio.png"
+          "svg": "https://openebs.org/assets/images/workloads/minio.png",
+          "deploy": "https://docs.min.io/docs/minio-deployment-quickstart-guide.html"
         },
         {
           "name": "ceph",
@@ -231,7 +247,8 @@
           "repo": "ceph/ceph",
           "license": "LGPL V3",
           "stars": "7.4K",
-          "svg": "https://gitlab.cern.ch/uploads/-/system/project/avatar/24868/Ceph_Logo_.png"
+          "svg": "https://gitlab.cern.ch/uploads/-/system/project/avatar/24868/Ceph_Logo_.png",
+          "deploy": "https://docs.ceph.com/docs/master/start/"
         },
         {
           "name": "SwiftStack",
@@ -240,7 +257,8 @@
           "license": "Apache 2.0",
           "svg": "https://www.swiftstack.com/sites/default/files/swiftstack-logo-stacked-small.png",
           "language": "Python",
-          "repo": "openstack/swift"
+          "repo": "openstack/swift",
+          "deploy": "https://docs.openstack.org/swift/latest/deployment_guide.html"
         }
       ],
       "id": "mui65dcfl",
@@ -265,7 +283,8 @@
           "license": "AGPL V3",
           "language": "C#",
           "stars": "4.8K",
-          "svg": "https://avatars3.githubusercontent.com/u/15990069?s=400&v=4"
+          "svg": "https://avatars3.githubusercontent.com/u/15990069?s=400&v=4",
+          "deploy": "https://marketplace.digitalocean.com/apps/bitwarden"
         },
         {
           "name": "Buttercup",
@@ -291,7 +310,8 @@
           "repo": "chatwoot/chatwoot",
           "license": "MIT",
           "site": "https://www.chatwoot.com/",
-          "language": "Ruby"
+          "language": "Ruby",
+          "deploy": "https://heroku.com/deploy?template=https://github.com/chatwoot/chatwoot/tree/master"
         },
         {
           "name": "chaskiq",
@@ -300,7 +320,8 @@
           "license": "GPL V2",
           "svg": "https://chaskiq.io/icons/icon-192x192.png?v=38c439bc2c86c4a2e167235e8bb0ce1c",
           "site": "https://chaskiq.io/",
-          "language": "JS"
+          "language": "JS",
+          "deploy": " https://heroku.com/deploy?template=https://github.com/chaskiq/chaskiq"
         }
       ],
       "id": "txmr3k1l9"
@@ -315,7 +336,8 @@
           "license": "Apache 2.0",
           "svg": "https://design.jboss.org/keycloak/logo/images/keycloak_icon_256px.png",
           "site": "https://www.keycloak.org",
-          "language": "JAVA"
+          "language": "JAVA",
+          "deploy": "https://heroku.com/deploy?template=https://github.com/mieckert/keycloak-heroku/tree/master"
         },
         {
           "name": "FusionAuth",
@@ -324,7 +346,8 @@
           "svg": "https://pbs.twimg.com/profile_images/1032028202724556800/j7T9io9U_400x400.jpg",
           "language": "C#",
           "site": "https://fusionauth.io/",
-          "license": "Custom"
+          "license": "Custom",
+          "deploy": "https://fusionauth.io/docs/v1/tech/installation-guide/"
         }
       ],
       "id": "n3ogcivro",
@@ -340,7 +363,8 @@
           "license": "MIT",
           "language": "Ruby",
           "site": "https://github.com/huginn/huginn",
-          "svg": "https://user-images.githubusercontent.com/34615258/75391724-3e3e9a80-58b0-11ea-9b71-a30d2d5b90f8.png"
+          "svg": "https://user-images.githubusercontent.com/34615258/75391724-3e3e9a80-58b0-11ea-9b71-a30d2d5b90f8.png",
+          "deploy": "https://heroku.com/deploy?template=https://github.com/huginn/huginn/tree/master"
         },
         {
           "name": "n8n",
@@ -365,7 +389,8 @@
           "license": "AGPL V3",
           "stars": "20.4K",
           "language": "Ruby",
-          "svg": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Mastodon_Logotype_%28Simple%29.svg/1200px-Mastodon_Logotype_%28Simple%29.svg.png"
+          "svg": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Mastodon_Logotype_%28Simple%29.svg/1200px-Mastodon_Logotype_%28Simple%29.svg.png",
+          "deploy": "https://marketplace.digitalocean.com/apps/mastodon"
         },
         {
           "name": "Convo",
@@ -406,11 +431,12 @@
           "license": "AGPL V3",
           "repo": "nextcloud/server",
           "site": "https://nextcloud.com",
-          "language": "PHP"
+          "language": "PHP",
+          "deploy": "https://docs.nextcloud.com/server/stable/admin_manual/installation/index.html"
         }
       ],
       "id": "zt5htxj1r",
-      "svg": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Google_Drive_logo.png/1200px-Google_Drive_logo.png"
+      "svg": "https://www.actionstep.com/images/marketplace/integrations/google-drive.png"
     },
     {
       "main": "YouTube",
@@ -422,7 +448,8 @@
           "svg": "https://upload.wikimedia.org/wikipedia/commons/2/2b/Logo_de_PeerTube.svg",
           "repo": "Chocobozzz/PeerTube",
           "site": "https://joinpeertube.org/",
-          "language": "TS"
+          "language": "TS",
+          "deploy": "https://github.com/Chocobozzz/PeerTube/blob/develop/support/doc/production.md"
         }
       ],
       "id": "3kvfwzi1o",
@@ -438,7 +465,8 @@
           "svg": "https://cdn.worldvectorlogo.com/logos/elasticsearch.svg",
           "repo": "elastic/elasticsearch",
           "site": "https://www.elastic.co/elasticsearch",
-          "language": "JAVA"
+          "language": "JAVA",
+          "deploy": "https://www.elastic.co/guide/en/cloud/current/ec-create-deployment.html"
         }
       ],
       "id": "hfarlvwm9",
@@ -454,7 +482,8 @@
           "language": "JS",
           "repo": "ohmyform/ohmyform",
           "site": "https://ohmyform.com/",
-          "svg": "https://user-images.githubusercontent.com/34615258/75390028-2c0f2d00-58ad-11ea-8d03-54469bad4365.png"
+          "svg": "https://user-images.githubusercontent.com/34615258/75390028-2c0f2d00-58ad-11ea-8d03-54469bad4365.png",
+          "deploy": "http://ohmyform.com/docs/install/"
         }
       ],
       "id": "tg03f7qhy",
@@ -470,7 +499,8 @@
           "license": "MIT",
           "svg": "https://verdaccio.org/img/logo/symbol/svg/verdaccio-tiny.svg",
           "site": "https://www.verdaccio.org/",
-          "language": "TS"
+          "language": "TS",
+          "deploy": "https://heroku.com/deploy?template=https://github.com/autotelic/verdaccio-heroku-docker/tree/master"
         }
       ],
       "id": "kwyzeihzt",
@@ -484,9 +514,10 @@
           "repo": "getsentry/sentry",
           "stars": "23.9K",
           "svg": "https://sentry-brand.storage.googleapis.com/sentry-glyph-black.svg",
-          "license": "Apache 2.0",
+          "license": "Custom",
           "site": "https://sentry.io",
-          "language": "Python"
+          "language": "Python",
+          "deploy": "https://docs.sentry.io/server/"
         }
       ],
       "id": "3dwh5h2gh",
@@ -502,7 +533,8 @@
           "repo": "openshiporg/openship",
           "svg": "https://user-images.githubusercontent.com/34615258/75076255-4750f580-54c5-11ea-9b9e-21ede0e13a09.png",
           "site": "https://openship.org",
-          "language": "JS"
+          "language": "JS",
+          "deploy": "https://zeit.co/import/project?template=https://github.com/openshiporg/openship"
         }
       ],
       "id": "5uv2jsadu",
@@ -518,7 +550,8 @@
           "language": "Python",
           "stars": "67",
           "license": "BSD-3",
-          "svg": "https://bullet-train.io/static/icons-192.png"
+          "svg": "https://bullet-train.io/static/icons-192.png",
+          "deploy": "https://heroku.com/deploy?template=https://github.com/BulletTrainHQ/bullet-train-api"
         }
       ],
       "id": "zczpb2ekn",

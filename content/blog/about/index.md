@@ -41,7 +41,7 @@ Open-source enables communities to build software collaboratively. This means th
 
 #### Supporting meritocracy
 
-Unlike commercial companies, open-source software is normally not funded, has little to no marketing budget, and is built by a single developer or small team. What makes it great is that it is a meritocracy. Its success is dependent of how good the software is and how much value it provides to users.
+Unlike commercial companies, open-source software is normally not funded, has little to no marketing budget, and is built by a single developer or small team. What makes it great is that it is a meritocracy. Its success is dependent on how good the software is and how much value it provides to users.
 
 ### Future
 

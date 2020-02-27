@@ -298,7 +298,7 @@
           "repo": "chaskiq/chaskiq",
           "stars": "144",
           "license": "GPL V2",
-          "svg": "https://hermessapp.s3.amazonaws.com/variants/npa5rr6t86euzl1b4n1j7xet8706/433fa47d6994ed0356f685de0c983874ccef5c1e6d708ab52e2c7bf141e0b9b3?response-content-disposition=inline%3B%20filename%3D%22favicon.png%22%3B%20filename%2A%3DUTF-8%27%27favicon.png&response-content-type=image%2Fpng&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=0JTEFTEXHP4R8QCMC582%2F20200221%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20200221T214801Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=35bad708a566d8d2078c60d1f664c33a557c3946da7f23042f26f62802724f07",
+          "svg": "https://chaskiq.io/icons/icon-192x192.png?v=38c439bc2c86c4a2e167235e8bb0ce1c",
           "site": "https://chaskiq.io/",
           "language": "JS"
         }

@@ -146,8 +146,8 @@ const Index = ({ data, location }) => {
                     as="img"
                     height="4rem"
                     position="relative"
-                    pt={4}
-                    pr={5}
+                    py={3}
+                    px={4}
                     borderTopLeftRadius={5}
                     borderBottomLeftRadius={5}
                     src={comp.svg}

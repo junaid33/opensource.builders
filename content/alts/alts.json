@@ -41,13 +41,13 @@
           "svg": "https://media-exp1.licdn.com/dms/image/C4D0BAQEA7LMXgFhCoA/company-logo_200_200/0?e=2159024400&v=beta&t=l6oMKJERDt_Gzl1VXioCYow95n_YEGoukqCD-02NWmY"
         },
         {
-          "repo": "bagisto/bagisto",
-          "language": "PHP",
-          "site": "https://bagisto.com",
-          "svg": "https://static.crozdesk.com/web_app_library/providers/logos/000/008/399/original/bagisto-1569908595-logo.png",
-          "license": "MIT",
+          "name": "Bagisto",
           "stars": "2.1K",
-          "name": "Bagisto"
+          "license": "MIT",
+          "svg": "https://static.crozdesk.com/web_app_library/providers/logos/000/008/399/original/bagisto-1569908595-logo.png?1569908595",
+          "site": "https://bagisto.com",
+          "language": "PHP",
+          "repo": "bagisto/bagisto"
         }
       ]
     },
@@ -93,6 +93,90 @@
       ],
       "id": "0pu87phxq",
       "svg": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Slack_Technologies_Logo.svg"
+    },
+    {
+      "main": "Heroku",
+      "svg": "https://brand.heroku.com/static/media/heroku-logotype-horizontal.81c49462.svg",
+      "alts": [
+        {
+          "site": "https://flynn.io/",
+          "language": "Go",
+          "stars": "7.5K",
+          "name": "Flynn",
+          "license": "BSD-3",
+          "repo": "flynn/flynn",
+          "svg": "https://flynn.io/images/flynn-acaf9509.svg"
+        },
+        {
+          "name": "Dokku",
+          "stars": "18.6K",
+          "license": "MIT",
+          "svg": "https://cdn.jsdelivr.net/gh/dokku/dokku@v0.19.13/docs/assets/dokku.png",
+          "repo": "dokku/dokku",
+          "site": "http://dokku.viewdocs.io/dokku/",
+          "language": "Shell"
+        },
+        {
+          "name": "OpenFaas",
+          "site": "https://www.openfaas.com/",
+          "repo": "openfaas/faas",
+          "language": "Go",
+          "license": "MIT",
+          "stars": "17K",
+          "svg": "https://www.openfaas.com/images/openfaas/whale.png"
+        },
+        {
+          "name": "Caprover",
+          "repo": "CapRover/CapRover",
+          "license": "Apcahe 2.0",
+          "stars": "4.7K",
+          "svg": "https://caprover.com/img/logo.png",
+          "language": "TS",
+          "site": "https://CapRover.com"
+        }
+      ]
+    },
+    {
+      "main": "Analytics",
+      "svg": "https://cdn.worldvectorlogo.com/logos/google-analytics-2.svg",
+      "alts": [
+        {
+          "name": "Matomo",
+          "site": "https://matomo.org",
+          "language": "PHP",
+          "repo": "Matomo-org/matomo",
+          "license": "GPL V3",
+          "stars": "12.8K",
+          "svg": "https://static.matomo.org/wp-content/uploads/2018/11/DefaultIcon.png"
+        },
+        {
+          "name": "Fathom Analytics",
+          "repo": "usefathom/fathom",
+          "stars": "6.2K",
+          "license": "MIT",
+          "svg": "https://pbs.twimg.com/profile_images/1192531063928762368/MaxeYpcK_400x400.jpg",
+          "site": "https://usefathom.com/",
+          "language": "Go"
+        },
+        {
+          "name": "Ackee",
+          "repo": "electerious/Ackee",
+          "stars": "1.4K",
+          "license": "MIT",
+          "svg": "https://img.stackshare.io/service/11335/Icon.png",
+          "site": "https://ackee.electerious.com",
+          "language": "JS"
+        },
+        {
+          "name": "Plausible",
+          "repo": "plausible-insights/plausible",
+          "stars": "169",
+          "license": "MIT",
+          "svg": "https://plausible.io/images/icon/plausible_logo_300px.png",
+          "site": "https://plausible.io",
+          "language": "Elixir"
+        }
+      ]
     },
     {
       "main": "Github",
@@ -163,50 +247,17 @@
       "svg": "https://cdn-images-1.medium.com/fit/t/1600/480/1*DHe24MbDHtbkOeIJzxrfdA.png"
     },
     {
-      "main": "Heroku",
-      "svg": "https://brand.heroku.com/static/media/heroku-logotype-horizontal.81c49462.svg",
-      "alts": [
-        {
-          "site": "https://flynn.io/",
-          "language": "Go",
-          "stars": "7.5K",
-          "name": "Flynn",
-          "license": "BSD-3",
-          "repo": "flynn/flynn",
-          "svg": "https://flynn.io/images/flynn-acaf9509.svg"
-        },
-        {
-          "name": "Dokku",
-          "stars": "18.6K",
-          "license": "MIT",
-          "svg": "https://cdn.jsdelivr.net/gh/dokku/dokku@v0.19.13/docs/assets/dokku.png",
-          "repo": "dokku/dokku",
-          "site": "http://dokku.viewdocs.io/dokku/",
-          "language": "Shell"
-        },
-        {
-          "name": "OpenFaas",
-          "site": "https://www.openfaas.com/",
-          "repo": "openfaas/faas",
-          "language": "Go",
-          "license": "MIT",
-          "stars": "17K",
-          "svg": "https://www.openfaas.com/images/openfaas/whale.png"
-        },
-        {
-          "name": "Caprover",
-          "repo": "CapRover/CapRover",
-          "license": "Apcahe 2.0",
-          "stars": "4.7K",
-          "svg": "https://caprover.com/img/logo.png",
-          "language": "TS",
-          "site": "https://CapRover.com"
-        }
-      ]
-    },
-    {
       "main": "1Password",
       "alts": [
+        {
+          "name": "KeePassXC",
+          "repo": "keepassxreboot/keepassxc",
+          "language": "C++",
+          "site": "https://keepassxc.org/",
+          "license": "GPL V3",
+          "stars": "7.2K",
+          "svg": "https://upload.wikimedia.org/wikipedia/commons/c/c1/KeePassXC.svg"
+        },
         {
           "name": "Bitwarden",
           "site": "https://bitwarden.com",
@@ -247,45 +298,12 @@
           "repo": "chaskiq/chaskiq",
           "stars": "144",
           "license": "GPL V2",
-          "svg": "https://d2.alternativeto.net/dist/icons/chaskiq_161485.png?width=200&height=200&mode=crop&upscale=false",
+          "svg": "https://hermessapp.s3.amazonaws.com/variants/npa5rr6t86euzl1b4n1j7xet8706/433fa47d6994ed0356f685de0c983874ccef5c1e6d708ab52e2c7bf141e0b9b3?response-content-disposition=inline%3B%20filename%3D%22favicon.png%22%3B%20filename%2A%3DUTF-8%27%27favicon.png&response-content-type=image%2Fpng&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=0JTEFTEXHP4R8QCMC582%2F20200221%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20200221T214801Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=35bad708a566d8d2078c60d1f664c33a557c3946da7f23042f26f62802724f07",
           "site": "https://chaskiq.io/",
           "language": "JS"
         }
       ],
       "id": "txmr3k1l9"
-    },
-    {
-      "main": "Analytics",
-      "svg": "https://cdn.worldvectorlogo.com/logos/google-analytics-2.svg",
-      "alts": [
-        {
-          "name": "Fathom Analytics",
-          "repo": "usefathom/fathom",
-          "stars": "6.2K",
-          "license": "MIT",
-          "svg": "https://pbs.twimg.com/profile_images/1192531063928762368/MaxeYpcK_400x400.jpg",
-          "site": "https://usefathom.com/",
-          "language": "Go"
-        },
-        {
-          "name": "Ackee",
-          "repo": "electerious/Ackee",
-          "stars": "1.4K",
-          "license": "MIT",
-          "svg": "https://img.stackshare.io/service/11335/Icon.png",
-          "site": "https://ackee.electerious.com",
-          "language": "JS"
-        },
-        {
-          "name": "Plausible",
-          "repo": "plausible-insights/plausible",
-          "stars": "169",
-          "license": "MIT",
-          "svg": "https://plausible.io/images/icon/plausible_logo_300px.png",
-          "site": "https://plausible.io",
-          "language": "Elixir"
-        }
-      ]
     },
     {
       "main": "Auth0",
@@ -479,7 +497,7 @@
       "alts": [
         {
           "name": "Openship",
-          "stars": "62",
+          "stars": "74",
           "license": "GPL V3",
           "repo": "openshiporg/openship",
           "svg": "https://user-images.githubusercontent.com/34615258/75076255-4750f580-54c5-11ea-9b9e-21ede0e13a09.png",
@@ -489,6 +507,22 @@
       ],
       "id": "5uv2jsadu",
       "svg": "https://images.milled.com/2019-08-05/A6dBQIGfvORn3rqg/dPc3Rhvp77SD.png"
+    },
+    {
+      "main": "Launch Darkly",
+      "alts": [
+        {
+          "name": "BulletTrain",
+          "site": "https://bullet-train.io/",
+          "repo": "BulletTrainHQ/bullet-train-api",
+          "language": "Python",
+          "stars": "67",
+          "license": "BSD-3",
+          "svg": "https://bullet-train.io/static/icons-192.png"
+        }
+      ],
+      "id": "zczpb2ekn",
+      "svg": "https://launchdarkly.com/static/LaunchDarkly_Horizontal_Primary_Logo_on_Light_RGB-c988374345c62ec9a6306bff974ec1c8.png"
     }
   ]
 }

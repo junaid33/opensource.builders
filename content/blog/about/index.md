@@ -1,9 +1,10 @@
 ---
 title: About
-date: '2020-02-06T00:00:00.000Z'
+date: "2020-02-06T00:00:00.000Z"
 description: |
   About Opensource.Builders
 ---
+
 ### The Beginning
 
 My coding journey began about a year ago when I set out to build a tool to help manage my company. Like most people starting to learn how to code, I was drawn to Github and open-source software.
@@ -36,7 +37,7 @@ Commercial software companies normally do not let you customize their software u
 
 #### Community
 
-Open-source enables communities to build software collaboratively. This means the software is battle-tested over time by people who built and use it.
+Open-source enables communities to build software collaboratively. This means the software is battle-tested over time by people who built it and use it.
 
 #### Supporting meritocracy
 

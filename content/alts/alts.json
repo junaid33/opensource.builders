@@ -39,6 +39,15 @@
           "license": "MIT",
           "name": "Sylius",
           "svg": "https://media-exp1.licdn.com/dms/image/C4D0BAQEA7LMXgFhCoA/company-logo_200_200/0?e=2159024400&v=beta&t=l6oMKJERDt_Gzl1VXioCYow95n_YEGoukqCD-02NWmY"
+        },
+        {
+          "repo": "bagisto/bagisto",
+          "language": "PHP",
+          "site": "https://bagisto.com",
+          "svg": "https://static.crozdesk.com/web_app_library/providers/logos/000/008/399/original/bagisto-1569908595-logo.png",
+          "license": "MIT",
+          "stars": "2.1K",
+          "name": "Bagisto"
         }
       ]
     },
@@ -158,6 +167,15 @@
       "svg": "https://brand.heroku.com/static/media/heroku-logotype-horizontal.81c49462.svg",
       "alts": [
         {
+          "site": "https://flynn.io/",
+          "language": "Go",
+          "stars": "7.5K",
+          "name": "Flynn",
+          "license": "BSD-3",
+          "repo": "flynn/flynn",
+          "svg": "https://flynn.io/images/flynn-acaf9509.svg"
+        },
+        {
           "name": "Dokku",
           "stars": "18.6K",
           "license": "MIT",
@@ -229,7 +247,7 @@
           "repo": "chaskiq/chaskiq",
           "stars": "144",
           "license": "GPL V2",
-          "svg": "https://hermessapp.s3.amazonaws.com/variants/npa5rr6t86euzl1b4n1j7xet8706/433fa47d6994ed0356f685de0c983874ccef5c1e6d708ab52e2c7bf141e0b9b3?response-content-disposition=inline%3B%20filename%3D%22favicon.png%22%3B%20filename%2A%3DUTF-8%27%27favicon.png&response-content-type=image%2Fpng&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=0JTEFTEXHP4R8QCMC582%2F20200221%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20200221T214801Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=35bad708a566d8d2078c60d1f664c33a557c3946da7f23042f26f62802724f07",
+          "svg": "https://d2.alternativeto.net/dist/icons/chaskiq_161485.png?width=200&height=200&mode=crop&upscale=false",
           "site": "https://chaskiq.io/",
           "language": "JS"
         }

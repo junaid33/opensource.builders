@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react"
-import { Link, graphql, Img } from "gatsby"
+import React, { useEffect } from "react"
+import { graphql } from "gatsby"
 import {
   Box,
   Badge,
@@ -9,11 +9,10 @@ import {
   Text,
   Tooltip,
 } from "@chakra-ui/core"
-import styled from "@emotion/styled"
 import { useLocalJsonForm } from "gatsby-tinacms-json"
 import SEO from "../components/seo"
 
-const Index = ({ data, location }) => {
+const Index = ({ data }) => {
   useEffect(() => {
     window.localStorage.setItem("darkMode", false)
   })
@@ -164,6 +163,9 @@ const Index = ({ data, location }) => {
                     m={2}
                     boxShadow="0px 1px 4px rgba(0, 0, 0, 0.16)"
                     bg="white"
+                    as="a"
+                    target="_blank"
+                    href={alt.site}
                   >
                     <Box display="flex" p={2}>
                       <Box display="flex">

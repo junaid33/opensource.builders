@@ -84,10 +84,14 @@ module.exports = {
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     {
-      resolve: `gatsby-plugin-google-analytics`,
+      resolve: 'gatsby-plugin-fathom',
       options: {
-        //trackingId: `ADD YOUR TRACKING ID HERE`,
-      },
+        // Fathom server URL. Defaults to `cdn.usefathom.com`
+        trackingUrl: 'https://fathom-5ej5.onrender.com',
+        // Unique site id
+        siteId: '1581653644079',
+        // Domain whitelist
+      }
     },
     `gatsby-plugin-feed`,
     {

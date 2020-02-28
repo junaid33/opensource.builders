@@ -301,9 +301,9 @@ const Index = ({ data, location }) => {
                     m={2}
                     boxShadow="0px 1px 4px rgba(0, 0, 0, 0.16)"
                     bg="white"
-                    as="a"
-                    target="_blank"
-                    href={alt.site}
+                    // as="a"
+                    // target="_blank"
+                    // href={alt.site}
                   >
                     <Box display="flex" p={2}>
                       <Box display="flex">

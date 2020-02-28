@@ -55,6 +55,23 @@ class Layout extends React.Component {
     return (
       <Box background="#EDF2F7" minHeight="100vh">
         <Header />
+        <Box
+          as="a"
+          p={5}
+          href="https://www.producthunt.com/posts/opensource-builders?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-opensource-builders"
+          target="_blank"
+          // display={{ base: "none", md: "flex" }}
+          position="fixed"
+          bottom={0}
+          right={0}
+        >
+          <Box
+            as="img"
+            src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=185805&theme=dark"
+            alt="Opensource Builders - Find open-source alternatives to commercial apps | Product Hunt Embed"
+            width="200px"
+          />
+        </Box>
         {/* <header>{header}</header> */}
         <Box as="main" height="100%">
           {children}

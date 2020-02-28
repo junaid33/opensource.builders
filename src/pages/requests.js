@@ -51,18 +51,7 @@ export default () => {
                 Request open-source alternatives
               </Text>
             </Box>
-            <a
-              href="https://www.producthunt.com/posts/opensource-builders?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-opensource-builders"
-              target="_blank"
-            >
-              <Box
-                as="img"
-                src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=185805&theme=dark"
-                alt="Opensource Builders - Find open-source alternatives to commercial apps | Product Hunt Embed"
-                width="250px"
-                height="54px"
-              />
-            </a>
+         
           </Box>
         </Box>
       </Box>

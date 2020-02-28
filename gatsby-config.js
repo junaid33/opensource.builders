@@ -87,9 +87,9 @@ module.exports = {
       resolve: 'gatsby-plugin-fathom',
       options: {
         // Fathom server URL. Defaults to `cdn.usefathom.com`
-        trackingUrl: 'https://fathom-5ej5.onrender.com',
+        trackingUrl: 'https://fathom-anjh.onrender.com',
         // Unique site id
-        siteId: '1581653644079',
+        siteId: 'IRCCY',
         // Domain whitelist
       }
     },

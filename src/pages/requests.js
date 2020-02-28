@@ -44,13 +44,25 @@ export default () => {
             px="1rem"
           >
             <Box py={5}>
-              <Heading as="h2" size="lg" color="rgb(26, 32, 44)">
+              <Heading as="h2" size="lg">
                 Requests
               </Heading>
               <Text fontSize="md" fontWeight={400} color="#939fae" mt={1}>
                 Request open-source alternatives
               </Text>
             </Box>
+            <a
+              href="https://www.producthunt.com/posts/opensource-builders?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-opensource-builders"
+              target="_blank"
+            >
+              <Box
+                as="img"
+                src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=185805&theme=dark"
+                alt="Opensource Builders - Find open-source alternatives to commercial apps | Product Hunt Embed"
+                width="250px"
+                height="54px"
+              />
+            </a>
           </Box>
         </Box>
       </Box>
@@ -102,7 +114,7 @@ export default () => {
                   </PseudoBox>
                 </Tooltip>
                 <Box display="flex" flexDirection="column">
-                  <Text fontSize="lg" fontWeight={500} color="rgb(26, 32, 44)">
+                  <Text fontSize="lg" fontWeight={500}>
                     {req.title}
                   </Text>
                   <Text fontSize="md" fontWeight={500} color="#555">
@@ -152,11 +164,11 @@ export default () => {
             bg="white"
             boxShadow="0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)"
           >
-            <Text color="rgb(26, 32, 44)">
+            <Text>
               This request page is powered by <strong>Github Issues</strong>.
               Each request is an issue on the repo.
             </Text>
-            <Text mt={4} fontWeight={600} color="rgb(26, 32, 44)">
+            <Text mt={4} fontWeight={600}>
               Adding a new request
             </Text>
             <form
@@ -167,61 +179,11 @@ export default () => {
               <Text fontSize="sm" mt={1} fontWeight={500} color="gray.600">
                 Name
               </Text>
-              <Box
-                as="input"
-                name="title"
-                placeholder="Shopify"
-                {...{
-                  width: "100%",
-                  display: "flex",
-                  WebkitBoxAlign: "center",
-                  alignItems: "center",
-                  position: "relative",
-                  fontSize: "1rem",
-                  color: "#000",
-                  paddingLeft: "1rem",
-                  paddingRight: "1rem",
-                  height: "2.5rem",
-                  lineHeight: "2.5rem",
-                  backgroundColor: "rgb(255, 255, 255)",
-                  transition: "all 0.2s ease 0s",
-                  outline: "none",
-                  borderRadius: "0.25rem",
-                  borderWidth: "1px",
-                  borderStyle: "solid",
-                  borderImage: "initial",
-                  borderColor: "#e2e8ef",
-                }}
-              />
+              <Input name="title" placeholder="Shopify" />
               <Text fontSize="sm" mt={2} fontWeight={500} color="gray.600">
                 Description
               </Text>
-              <Box
-                as="input"
-                name="body"
-                placeholder="E-commerce platform"
-                {...{
-                  width: "100%",
-                  display: "flex",
-                  WebkitBoxAlign: "center",
-                  alignItems: "center",
-                  position: "relative",
-                  fontSize: "1rem",
-                  color: "#000",
-                  paddingLeft: "1rem",
-                  paddingRight: "1rem",
-                  height: "2.5rem",
-                  lineHeight: "2.5rem",
-                  backgroundColor: "rgb(255, 255, 255)",
-                  transition: "all 0.2s ease 0s",
-                  outline: "none",
-                  borderRadius: "0.25rem",
-                  borderWidth: "1px",
-                  borderStyle: "solid",
-                  borderImage: "initial",
-                  borderColor: "#e2e8ef",
-                }}
-              />
+              <Input name="body" placeholder="E-commerce platform" />
               <Input name="labels" value="request" type="hidden" />
               <Button
                 type="submit"
@@ -235,10 +197,10 @@ export default () => {
                 Add Request
               </Button>
             </form>
-            <Text mt={6} fontWeight={600} color="rgb(26, 32, 44)">
+            <Text mt={6} fontWeight={600}>
               Upvoting a request
             </Text>
-            <Text mt={1} color="rgb(26, 32, 44)">
+            <Text mt={1}>
               To upvote a request, click on the issue and give it a thumbs-up.
             </Text>
           </Box>

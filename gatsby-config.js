@@ -23,8 +23,19 @@ module.exports = {
         },
       },
     },
-    "gatsby-plugin-chakra-ui",
     {
+      resolve: "gatsby-plugin-chakra-ui",
+      options: {
+        /**
+         * if false, this plugin will not use `<CSSReset />
+         */
+        isResettingCSS: true,
+        /**
+         * if false, this plugin will not use <ColorModeProvider />
+         */
+        isUsingColorMode: false,
+      },
+    },    {
       resolve: `gatsby-plugin-layout`,
       options: {
         component: require.resolve(`./src/components/layout`),

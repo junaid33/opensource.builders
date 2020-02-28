@@ -54,7 +54,6 @@ const BlogText = styled.section`
   p {
     margin-top: 0;
     margin-bottom: 16px;
-    color: rgb(26, 32, 44);
   }
 
   @media (max-width: 1170px) {
@@ -93,13 +92,25 @@ class BlogPostTemplate extends React.Component {
               px="1rem"
             >
               <Box py={5}>
-                <Heading as="h2" size="lg" color="rgb(26, 32, 44)">
+                <Heading as="h2" size="lg">
                   About Opensource.Builders
                 </Heading>
                 <Text fontSize="md" fontWeight={400} color="#939fae" mt={1}>
                   On a mission to find great open-source software
                 </Text>
               </Box>
+              <a
+                href="https://www.producthunt.com/posts/opensource-builders?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-opensource-builders"
+                target="_blank"
+              >
+                <Box
+                  as="img"
+                  src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=185805&theme=dark"
+                  alt="Opensource Builders - Find open-source alternatives to commercial apps | Product Hunt Embed"
+                  width="250px"
+                  height="54px"
+                />
+              </a>
             </Box>
           </Box>
         </Box>

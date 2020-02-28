@@ -107,15 +107,6 @@
       "svg": "https://brand.heroku.com/static/media/heroku-logotype-horizontal.81c49462.svg",
       "alts": [
         {
-          "site": "https://flynn.io/",
-          "language": "Go",
-          "stars": "7.5K",
-          "name": "Flynn",
-          "license": "BSD-3",
-          "repo": "flynn/flynn",
-          "svg": "https://flynn.io/images/flynn-acaf9509.svg"
-        },
-        {
           "name": "Dokku",
           "stars": "18.6K",
           "license": "MIT",
@@ -134,6 +125,15 @@
           "stars": "17K",
           "svg": "https://www.openfaas.com/images/openfaas/whale.png",
           "deploy": "https://marketplace.digitalocean.com/apps/openfaas"
+        },
+        {
+          "site": "https://flynn.io/",
+          "language": "Go",
+          "stars": "7.5K",
+          "name": "Flynn",
+          "license": "BSD-3",
+          "repo": "flynn/flynn",
+          "svg": "https://flynn.io/images/flynn-acaf9509.svg"
         },
         {
           "name": "Caprover",
@@ -406,6 +406,23 @@
       "svg": "https://pngimg.com/uploads/facebook_logos/facebook_logos_PNG19749.png"
     },
     {
+      "main": "Instagram",
+      "alts": [
+        {
+          "name": "Pixelfed",
+          "repo": "pixelfed / pixelfed",
+          "site": "https://pixelfed.org",
+          "stars": "2K",
+          "license": "AGPL V3",
+          "language": "PHP",
+          "deploy": "https://docs.pixelfed.org/installing-pixelfed/",
+          "svg": "https://avatars0.githubusercontent.com/u/38410642?s=200&v=4"
+        }
+      ],
+      "id": "7e22r3p12",
+      "svg": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/1200px-Instagram_logo.svg.png"
+    },
+    {
       "main": "Segment",
       "alts": [
         {
@@ -507,6 +524,22 @@
       "svg": "https://upload.wikimedia.org/wikipedia/commons/d/db/Npm-logo.svg"
     },
     {
+      "main": "Asana",
+      "alts": [
+        {
+          "name": "LeanTime",
+          "stars": "227",
+          "site": "https://leantime.io/",
+          "repo": "leantime/leantime",
+          "language": "PHP",
+          "license": "GPL V2",
+          "svg": "https://avatars2.githubusercontent.com/u/11252321?s=200&v=4"
+        }
+      ],
+      "id": "o6lgatqba",
+      "svg": "https://cdn.wimi-teamwork.com/static/medias/wimi-asana-logo.png"
+    },
+    {
       "main": "LogRocket",
       "alts": [
         {
@@ -522,6 +555,23 @@
       ],
       "id": "3dwh5h2gh",
       "svg": "https://logrocket-assets.io/img/logo.png"
+    },
+    {
+      "main": "Zendesk",
+      "alts": [
+        {
+          "name": "UVDesk",
+          "stars": "252",
+          "license": "MIT",
+          "language": "PHP",
+          "site": "https://www.uvdesk.com/en/",
+          "deploy": "https://www.uvdesk.com/en/blog/open-source-helpdesk-installation-on-ubuntu-uvdesk/",
+          "svg": "https://yt3.ggpht.com/a/AGF-l7-NdudzgErRaS3LGC3qIHjUM53t3Hmt4RpqUw=s900-c-k-c0xffffffff-no-rj-mo",
+          "repo": "uvdesk/community-skeleton"
+        }
+      ],
+      "id": "lzgn1ku9q",
+      "svg": "https://logos-download.com/wp-content/uploads/2016/10/Zendesk_logo_wordmark.png"
     },
     {
       "main": "Oberlo",
@@ -556,6 +606,23 @@
       ],
       "id": "zczpb2ekn",
       "svg": "https://launchdarkly.com/static/LaunchDarkly_Horizontal_Primary_Logo_on_Light_RGB-c988374345c62ec9a6306bff974ec1c8.png"
+    },
+    {
+      "main": "Netlify",
+      "alts": [
+        {
+          "name": "StaticDeploy",
+          "deploy": "https://staticdeploy.io/docs/guides-deploying-staticdeploy-with-docker",
+          "site": "https://staticdeploy.io/",
+          "language": "TS",
+          "repo": "staticdeploy/staticdeploy",
+          "stars": "44",
+          "license": "MIT",
+          "svg": "https://staticdeploy.io/images/logo.svg"
+        }
+      ],
+      "id": "gxfg2143l",
+      "svg": "https://www.netlify.com/img/press/logos/full-logo-light.png"
     }
   ]
 }

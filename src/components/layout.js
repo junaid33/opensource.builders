@@ -60,10 +60,10 @@ class Layout extends React.Component {
           p={5}
           href="https://www.producthunt.com/posts/opensource-builders?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-opensource-builders"
           target="_blank"
-          // display={{ base: "none", md: "flex" }}
           position="fixed"
           bottom={0}
           right={0}
+          zIndex={2}
         >
           <Box
             as="img"

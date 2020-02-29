@@ -201,7 +201,7 @@
         {
           "name": "Caprover",
           "repo": "CapRover/CapRover",
-          "license": "Apcahe 2.0",
+          "license": "Apache 2.0",
           "stars": "4.7K",
           "svg": "https://caprover.com/img/logo.png",
           "language": "TS",
@@ -349,7 +349,8 @@
           "license": "Apache-2.0",
           "svg": "https://avatars2.githubusercontent.com/u/40803294?s=200&v=4",
           "language": "Go",
-          "deploy": "https://docs.cortezaproject.org/"
+          "deploy": "https://docs.cortezaproject.org/",
+          "stars": "25"
         }
       ]
     },

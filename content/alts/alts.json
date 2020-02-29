@@ -147,7 +147,7 @@
         {
           "name": "Caprover",
           "repo": "CapRover/CapRover",
-          "license": "Apcahe 2.0",
+          "license": "Apache 2.0",
           "stars": "4.7K",
           "svg": "https://caprover.com/img/logo.png",
           "language": "TS",
@@ -180,6 +180,16 @@
           "deploy": "https://marketplace.digitalocean.com/apps/fathom-analytics"
         },
         {
+          "name": "Countly",
+          "repo": "countly/countly-server",
+          "stars": "4.3K",
+          "license": "AGPL V3-MOD",
+          "svg": "https://pbs.twimg.com/profile_images/704285378153467905/nxvtCKh0_400x400.jpg",
+          "site": "https://count.ly",
+          "language": "JS",
+          "deploy": "https://support.count.ly/hc/en-us/articles/360037814151-Deployment-scenarios"
+        },
+        {
           "name": "Ackee",
           "repo": "electerious/Ackee",
           "stars": "1.4K",
@@ -197,16 +207,6 @@
           "svg": "https://plausible.io/images/icon/plausible_logo_300px.png",
           "site": "https://plausible.io",
           "language": "Elixir"
-        },
-        {
-          "name": "Countly",
-          "repo": "countly/countly-server",
-          "stars": "4.3K",
-          "license": "AGPL V3-MOD",
-          "svg": "https://pbs.twimg.com/profile_images/704285378153467905/nxvtCKh0_400x400.jpg",
-          "site": "https://count.ly",
-          "language": "JS",
-          "deploy": "https://support.count.ly/hc/en-us/articles/360037814151-Deployment-scenarios"
         }
       ]
     },

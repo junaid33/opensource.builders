@@ -188,7 +188,17 @@
           "svg": "https://plausible.io/images/icon/plausible_logo_300px.png",
           "site": "https://plausible.io",
           "language": "Elixir"
-        }
+        },
+        {
+          "name": "Countly",
+          "repo": "countly/countly-server",
+          "stars": "4.3K",
+          "license": "AGPL v3 with modified Section 7",
+          "svg": "https://pbs.twimg.com/profile_images/704285378153467905/nxvtCKh0_400x400.jpg",
+          "site": "https://count.ly",
+          "language": "JS",
+          "deploy": "https://support.count.ly/hc/en-us/articles/360037814151-Deployment-scenarios"
+        },
       ]
     },
     {

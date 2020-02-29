@@ -410,7 +410,7 @@
       "alts": [
         {
           "name": "Pixelfed",
-          "repo": "pixelfed / pixelfed",
+          "repo": "pixelfed/pixelfed",
           "site": "https://pixelfed.org",
           "stars": "2K",
           "license": "AGPL V3",

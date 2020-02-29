@@ -632,6 +632,41 @@
       ],
       "id": "gxfg2143l",
       "svg": "https://www.netlify.com/img/press/logos/full-logo-light.png"
+    },
+    {
+      "main": "Salesforce",
+      "svg": "https://user-images.githubusercontent.com/3085186/75608678-a15a4800-5acf-11ea-9ddc-6bb922043585.png",
+      "alts": [
+        {
+          "name": "Oodo",
+          "repo": "odoo/odoo",
+          "site": "https://www.odoo.com/",
+          "license": "GPL V3",
+          "stars": "16.8K",
+          "svg": "https://user-images.githubusercontent.com/3085186/75608557-7b807380-5ace-11ea-9144-18bdfcefcf9e.png",
+          "language": "Python",
+          "deploy": "https://www.odoo.com/documentation/master/setup/install.html"
+        },
+        {
+          "name": "SuiteCRM",
+          "repo": "salesagility/SuiteCRM",
+          "site": "https://www.suitecrm.com/",
+          "license": "AGPL-3.0",
+          "stars": "1.9K",
+          "svg": "https://user-images.githubusercontent.com/3085186/75608635-49234600-5acf-11ea-8612-b24c50b58e68.png",
+          "language": "PHP",
+          "deploy": "https://docs.suitecrm.com/admin/installation-guide/"
+        },
+        {
+          "name": "Crust CRM",
+          "repo": "crusttech",
+          "site": "https://www.crust.tech/",
+          "license": "Apache-2.0",
+          "svg": "https://avatars2.githubusercontent.com/u/40803294?s=200&v=4",
+          "language": "Go",
+          "deploy": "https://docs.cortezaproject.org/"
+        }
+      ]
     }
   ]
 }

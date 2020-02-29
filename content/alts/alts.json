@@ -54,7 +54,8 @@
           "repo": "bagisto/bagisto",
           "deploy": "https://medium.com/@oayomideelijah/deploy-bagisto-ecommerce-laravel-project-to-heroku-db42a33c52f1"
         }
-      ]
+      ],
+      "website": "https://shopify.com"
     },
     {
       "main": "Slack",
@@ -109,10 +110,11 @@
         }
       ],
       "id": "0pu87phxq",
-      "svg": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Slack_Technologies_Logo.svg"
+      "svg": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Slack_Technologies_Logo.svg",
+      "website": "https://slack.com"
     },
     {
-      "main": "Analytics",
+      "main": "Google Analytics",
       "svg": "https://cdn.worldvectorlogo.com/logos/google-analytics-2.svg",
       "alts": [
         {
@@ -163,7 +165,8 @@
           "site": "https://plausible.io",
           "language": "Elixir"
         }
-      ]
+      ],
+      "website": "https://analytics.google.com/"
     },
     {
       "main": "Heroku",
@@ -208,7 +211,8 @@
           "site": "https://CapRover.com",
           "deploy": "https://marketplace.digitalocean.com/apps/caprover?action=deploy&refcode=6410aa23d3f3"
         }
-      ]
+      ],
+      "website": "https://heroku.com"
     },
     {
       "main": "Github",
@@ -244,7 +248,8 @@
         }
       ],
       "id": "8bxlppy5h",
-      "svg": "https://github.githubassets.com/images/modules/logos_page/GitHub-Logo.png"
+      "svg": "https://github.githubassets.com/images/modules/logos_page/GitHub-Logo.png",
+      "website": "https://github"
     },
     {
       "main": "Amazon S3",
@@ -281,7 +286,8 @@
         }
       ],
       "id": "mui65dcfl",
-      "svg": "https://cdn-images-1.medium.com/fit/t/1600/480/1*DHe24MbDHtbkOeIJzxrfdA.png"
+      "svg": "https://cdn-images-1.medium.com/fit/t/1600/480/1*DHe24MbDHtbkOeIJzxrfdA.png",
+      "website": "https://aws.amazon.com/s3/"
     },
     {
       "main": "1Password",
@@ -316,7 +322,8 @@
         }
       ],
       "id": "hvf9tctei",
-      "svg": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/1password-logo.svg/702px-1password-logo.svg.png"
+      "svg": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/1password-logo.svg/702px-1password-logo.svg.png",
+      "website": "https://1password.com/"
     },
     {
       "main": "Salesforce",
@@ -352,7 +359,8 @@
           "deploy": "https://docs.cortezaproject.org/",
           "stars": "25"
         }
-      ]
+      ],
+      "website": "https://salesforce.com"
     },
     {
       "main": "Intercom",
@@ -379,7 +387,8 @@
           "deploy": " https://heroku.com/deploy?template=https://github.com/chaskiq/chaskiq"
         }
       ],
-      "id": "txmr3k1l9"
+      "id": "txmr3k1l9",
+      "website": "https://intercom.com"
     },
     {
       "main": "Auth0",
@@ -406,7 +415,8 @@
         }
       ],
       "id": "n3ogcivro",
-      "svg": "https://user-images.githubusercontent.com/34615258/75075526-9d249e00-54c3-11ea-8a18-f278259caba2.png"
+      "svg": "https://user-images.githubusercontent.com/34615258/75075526-9d249e00-54c3-11ea-8a18-f278259caba2.png",
+      "website": "https://auth0.com"
     },
     {
       "main": "Zapier",
@@ -432,7 +442,8 @@
         }
       ],
       "id": "tv9m27gmw",
-      "svg": "https://cdn.zapier.com/zapier/images/logos/zapier-logo.png"
+      "svg": "https://cdn.zapier.com/zapier/images/logos/zapier-logo.png",
+      "website": "https://zapier.com"
     },
     {
       "main": "Facebook",
@@ -458,7 +469,8 @@
         }
       ],
       "id": "mvhgnbgfj",
-      "svg": "https://pngimg.com/uploads/facebook_logos/facebook_logos_PNG19749.png"
+      "svg": "https://pngimg.com/uploads/facebook_logos/facebook_logos_PNG19749.png",
+      "website": "https://facebook.com"
     },
     {
       "main": "Instagram",
@@ -475,7 +487,8 @@
         }
       ],
       "id": "7e22r3p12",
-      "svg": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/1200px-Instagram_logo.svg.png"
+      "svg": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/1200px-Instagram_logo.svg.png",
+      "website": "https://instagram.com"
     },
     {
       "main": "Segment",
@@ -491,7 +504,8 @@
         }
       ],
       "id": "rsxg8idaz",
-      "svg": "https://help.clearbit.com/hc/article_attachments/360021277474/partner-segment-logo.png"
+      "svg": "https://help.clearbit.com/hc/article_attachments/360021277474/partner-segment-logo.png",
+      "website": "https://segment.com"
     },
     {
       "main": "Google Drive",
@@ -508,7 +522,8 @@
         }
       ],
       "id": "zt5htxj1r",
-      "svg": "https://www.actionstep.com/images/marketplace/integrations/google-drive.png"
+      "svg": "https://www.actionstep.com/images/marketplace/integrations/google-drive.png",
+      "website": "https://google.com/drive"
     },
     {
       "main": "YouTube",
@@ -525,7 +540,8 @@
         }
       ],
       "id": "3kvfwzi1o",
-      "svg": "https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg"
+      "svg": "https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg",
+      "website": "https://youtube.com"
     },
     {
       "main": "Algolia",
@@ -542,7 +558,8 @@
         }
       ],
       "id": "hfarlvwm9",
-      "svg": "https://upload.wikimedia.org/wikipedia/commons/6/69/Algolia-logo.svg"
+      "svg": "https://upload.wikimedia.org/wikipedia/commons/6/69/Algolia-logo.svg",
+      "website": "https://algolia.com"
     },
     {
       "main": "Typeform",
@@ -559,7 +576,8 @@
         }
       ],
       "id": "tg03f7qhy",
-      "svg": "https://cdn.freebiesupply.com/logos/large/2x/typeform-logo-png-transparent.png"
+      "svg": "https://cdn.freebiesupply.com/logos/large/2x/typeform-logo-png-transparent.png",
+      "website": "https://typeform.com"
     },
     {
       "main": "npm",
@@ -576,7 +594,8 @@
         }
       ],
       "id": "kwyzeihzt",
-      "svg": "https://upload.wikimedia.org/wikipedia/commons/d/db/Npm-logo.svg"
+      "svg": "https://upload.wikimedia.org/wikipedia/commons/d/db/Npm-logo.svg",
+      "website": "https://npm.com"
     },
     {
       "main": "Asana",
@@ -592,7 +611,8 @@
         }
       ],
       "id": "o6lgatqba",
-      "svg": "https://cdn.wimi-teamwork.com/static/medias/wimi-asana-logo.png"
+      "svg": "https://cdn.wimi-teamwork.com/static/medias/wimi-asana-logo.png",
+      "website": "https://asana.com"
     },
     {
       "main": "LogRocket",
@@ -609,7 +629,8 @@
         }
       ],
       "id": "3dwh5h2gh",
-      "svg": "https://logrocket-assets.io/img/logo.png"
+      "svg": "https://logrocket-assets.io/img/logo.png",
+      "website": "https://logrocket.com"
     },
     {
       "main": "Zendesk",
@@ -626,7 +647,8 @@
         }
       ],
       "id": "lzgn1ku9q",
-      "svg": "https://logos-download.com/wp-content/uploads/2016/10/Zendesk_logo_wordmark.png"
+      "svg": "https://logos-download.com/wp-content/uploads/2016/10/Zendesk_logo_wordmark.png",
+      "website": "https://zen.com"
     },
     {
       "main": "Oberlo",
@@ -643,7 +665,8 @@
         }
       ],
       "id": "5uv2jsadu",
-      "svg": "https://images.milled.com/2019-08-05/A6dBQIGfvORn3rqg/dPc3Rhvp77SD.png"
+      "svg": "https://images.milled.com/2019-08-05/A6dBQIGfvORn3rqg/dPc3Rhvp77SD.png",
+      "website": "https://oberlo.com"
     },
     {
       "main": "Launch Darkly",
@@ -660,7 +683,8 @@
         }
       ],
       "id": "zczpb2ekn",
-      "svg": "https://launchdarkly.com/static/LaunchDarkly_Horizontal_Primary_Logo_on_Light_RGB-c988374345c62ec9a6306bff974ec1c8.png"
+      "svg": "https://launchdarkly.com/static/LaunchDarkly_Horizontal_Primary_Logo_on_Light_RGB-c988374345c62ec9a6306bff974ec1c8.png",
+      "website": "https://launchdarkly.com"
     },
     {
       "main": "Netlify",
@@ -677,7 +701,8 @@
         }
       ],
       "id": "gxfg2143l",
-      "svg": "https://www.netlify.com/img/press/logos/full-logo-light.png"
+      "svg": "https://www.netlify.com/img/press/logos/full-logo-light.png",
+      "website": "https://netlify.com"
     }
   ]
 }

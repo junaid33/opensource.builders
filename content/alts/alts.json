@@ -193,7 +193,7 @@
           "name": "Countly",
           "repo": "countly/countly-server",
           "stars": "4.3K",
-          "license": "AGPL v3 with modified Section 7",
+          "license": "AGPL V3-MOD",
           "svg": "https://pbs.twimg.com/profile_images/704285378153467905/nxvtCKh0_400x400.jpg",
           "site": "https://count.ly",
           "language": "JS",

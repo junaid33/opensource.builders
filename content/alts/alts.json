@@ -112,51 +112,6 @@
       "svg": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Slack_Technologies_Logo.svg"
     },
     {
-      "main": "Heroku",
-      "svg": "https://brand.heroku.com/static/media/heroku-logotype-horizontal.81c49462.svg",
-      "alts": [
-        {
-          "name": "Dokku",
-          "stars": "18.6K",
-          "license": "MIT",
-          "svg": "https://cdn.jsdelivr.net/gh/dokku/dokku@v0.19.13/docs/assets/dokku.png",
-          "repo": "dokku/dokku",
-          "site": "http://dokku.viewdocs.io/dokku/",
-          "language": "Shell",
-          "deploy": "https://marketplace.digitalocean.com/apps/dokku"
-        },
-        {
-          "name": "OpenFaas",
-          "site": "https://www.openfaas.com/",
-          "repo": "openfaas/faas",
-          "language": "Go",
-          "license": "MIT",
-          "stars": "17K",
-          "svg": "https://www.openfaas.com/images/openfaas/whale.png",
-          "deploy": "https://marketplace.digitalocean.com/apps/openfaas"
-        },
-        {
-          "site": "https://flynn.io/",
-          "language": "Go",
-          "stars": "7.5K",
-          "name": "Flynn",
-          "license": "BSD-3",
-          "repo": "flynn/flynn",
-          "svg": "https://flynn.io/images/flynn-acaf9509.svg"
-        },
-        {
-          "name": "Caprover",
-          "repo": "CapRover/CapRover",
-          "license": "Apache 2.0",
-          "stars": "4.7K",
-          "svg": "https://caprover.com/img/logo.png",
-          "language": "TS",
-          "site": "https://CapRover.com",
-          "deploy": "https://marketplace.digitalocean.com/apps/caprover?action=deploy&refcode=6410aa23d3f3"
-        }
-      ]
-    },
-    {
       "main": "Analytics",
       "svg": "https://cdn.worldvectorlogo.com/logos/google-analytics-2.svg",
       "alts": [
@@ -207,6 +162,51 @@
           "svg": "https://plausible.io/images/icon/plausible_logo_300px.png",
           "site": "https://plausible.io",
           "language": "Elixir"
+        }
+      ]
+    },
+    {
+      "main": "Heroku",
+      "svg": "https://brand.heroku.com/static/media/heroku-logotype-horizontal.81c49462.svg",
+      "alts": [
+        {
+          "name": "Dokku",
+          "stars": "18.6K",
+          "license": "MIT",
+          "svg": "https://cdn.jsdelivr.net/gh/dokku/dokku@v0.19.13/docs/assets/dokku.png",
+          "repo": "dokku/dokku",
+          "site": "http://dokku.viewdocs.io/dokku/",
+          "language": "Shell",
+          "deploy": "https://marketplace.digitalocean.com/apps/dokku"
+        },
+        {
+          "name": "OpenFaas",
+          "site": "https://www.openfaas.com/",
+          "repo": "openfaas/faas",
+          "language": "Go",
+          "license": "MIT",
+          "stars": "17K",
+          "svg": "https://www.openfaas.com/images/openfaas/whale.png",
+          "deploy": "https://marketplace.digitalocean.com/apps/openfaas"
+        },
+        {
+          "site": "https://flynn.io/",
+          "language": "Go",
+          "stars": "7.5K",
+          "name": "Flynn",
+          "license": "BSD-3",
+          "repo": "flynn/flynn",
+          "svg": "https://flynn.io/images/flynn-acaf9509.svg"
+        },
+        {
+          "name": "Caprover",
+          "repo": "CapRover/CapRover",
+          "license": "Apcahe 2.0",
+          "stars": "4.7K",
+          "svg": "https://caprover.com/img/logo.png",
+          "language": "TS",
+          "site": "https://CapRover.com",
+          "deploy": "https://marketplace.digitalocean.com/apps/caprover?action=deploy&refcode=6410aa23d3f3"
         }
       ]
     },
@@ -317,6 +317,41 @@
       ],
       "id": "hvf9tctei",
       "svg": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/1password-logo.svg/702px-1password-logo.svg.png"
+    },
+    {
+      "main": "Salesforce",
+      "svg": "https://user-images.githubusercontent.com/3085186/75608678-a15a4800-5acf-11ea-9ddc-6bb922043585.png",
+      "alts": [
+        {
+          "name": "Oodo",
+          "repo": "odoo/odoo",
+          "site": "https://www.odoo.com/",
+          "license": "GPL V3",
+          "stars": "16.8K",
+          "svg": "https://user-images.githubusercontent.com/3085186/75608557-7b807380-5ace-11ea-9144-18bdfcefcf9e.png",
+          "language": "Python",
+          "deploy": "https://www.odoo.com/documentation/master/setup/install.html"
+        },
+        {
+          "name": "SuiteCRM",
+          "repo": "salesagility/SuiteCRM",
+          "site": "https://www.suitecrm.com/",
+          "license": "AGPL-3.0",
+          "stars": "1.9K",
+          "svg": "https://user-images.githubusercontent.com/3085186/75608635-49234600-5acf-11ea-8612-b24c50b58e68.png",
+          "language": "PHP",
+          "deploy": "https://docs.suitecrm.com/admin/installation-guide/"
+        },
+        {
+          "name": "Crust CRM",
+          "repo": "crusttech",
+          "site": "https://www.crust.tech/",
+          "license": "Apache-2.0",
+          "svg": "https://avatars2.githubusercontent.com/u/40803294?s=200&v=4",
+          "language": "Go",
+          "deploy": "https://docs.cortezaproject.org/"
+        }
+      ]
     },
     {
       "main": "Intercom",
@@ -642,41 +677,6 @@
       ],
       "id": "gxfg2143l",
       "svg": "https://www.netlify.com/img/press/logos/full-logo-light.png"
-    },
-    {
-      "main": "Salesforce",
-      "svg": "https://user-images.githubusercontent.com/3085186/75608678-a15a4800-5acf-11ea-9ddc-6bb922043585.png",
-      "alts": [
-        {
-          "name": "Oodo",
-          "repo": "odoo/odoo",
-          "site": "https://www.odoo.com/",
-          "license": "GPL V3",
-          "stars": "16.8K",
-          "svg": "https://user-images.githubusercontent.com/3085186/75608557-7b807380-5ace-11ea-9144-18bdfcefcf9e.png",
-          "language": "Python",
-          "deploy": "https://www.odoo.com/documentation/master/setup/install.html"
-        },
-        {
-          "name": "SuiteCRM",
-          "repo": "salesagility/SuiteCRM",
-          "site": "https://www.suitecrm.com/",
-          "license": "AGPL-3.0",
-          "stars": "1.9K",
-          "svg": "https://user-images.githubusercontent.com/3085186/75608635-49234600-5acf-11ea-8612-b24c50b58e68.png",
-          "language": "PHP",
-          "deploy": "https://docs.suitecrm.com/admin/installation-guide/"
-        },
-        {
-          "name": "Crust CRM",
-          "repo": "crusttech",
-          "site": "https://www.crust.tech/",
-          "license": "Apache-2.0",
-          "svg": "https://avatars2.githubusercontent.com/u/40803294?s=200&v=4",
-          "language": "Go",
-          "deploy": "https://docs.cortezaproject.org/"
-        }
-      ]
     }
   ]
 }

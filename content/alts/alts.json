@@ -97,6 +97,15 @@
           "language": "JS",
           "stars": "4.2K",
           "svg": "https://about.riot.im/images/riot-nav.svg"
+        },
+        {
+          "name": "Wire",
+          "license": "GPL V3",
+          "repo": "wireapp/wire",
+          "site": "https://wire.com/en/",
+          "language": "JS",
+          "stars": "1.8K",
+          "svg": "https://brand.wire.com/public/Wire%20logo.svg"
         }
       ],
       "id": "0pu87phxq",

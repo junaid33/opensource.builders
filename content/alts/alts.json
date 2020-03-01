@@ -574,6 +574,16 @@
           "site": "https://ohmyform.com/",
           "svg": "https://user-images.githubusercontent.com/34615258/75390028-2c0f2d00-58ad-11ea-8d03-54469bad4365.png",
           "deploy": "http://ohmyform.com/docs/install/"
+        },
+        {
+          "name": "Super Easy Forms",
+          "stars": "27",
+          "license": "MIT",
+          "language": "JS",
+          "repo": "gkpty/super-easy-forms",
+          "site": "https://supereasyforms.com/",
+          "svg": "https://supereasyforms.com/img/SEF-LOGO.svg",
+          "deploy": "https://www.npmjs.com/package/super-easy-forms#installation"
         }
       ],
       "id": "tg03f7qhy",
@@ -680,7 +690,7 @@
       "website": "https://oberlo.com"
     },
     {
-      "main": "LaunchDarkly",
+      "main": "Launch Darkly",
       "alts": [
         {
           "name": "BulletTrain",

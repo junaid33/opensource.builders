@@ -233,6 +233,7 @@
           "license": "MIT",
           "repo": "gitlabhq/gitlabhq",
           "svg": "https://www.vectorlogo.zone/logos/gitlab/gitlab-tile.svg",
+          "deploy": "https://about.gitlab.com/install/",
           "site": "https://about.gitlab.com/",
           "language": "Ruby"
         },

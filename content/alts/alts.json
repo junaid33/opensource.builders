@@ -651,6 +651,16 @@
           "site": "https://nextcloud.com",
           "language": "PHP",
           "deploy": "https://docs.nextcloud.com/server/stable/admin_manual/installation/index.html"
+        },
+        {
+          "name": "OwnCloud",
+          "stars": "7K",
+          "svg": "https://raw.githubusercontent.com/owncloud/owncloud.github.io/source/static/logo.png",
+          "license": "AGPL V3",
+          "repo": "owncloud/core",
+          "site": "https://owncloud.org/",
+          "language": "PHP",
+          "deploy": "https://doc.owncloud.org/server/10.2/"
         }
       ],
       "id": "zt5htxj1r",

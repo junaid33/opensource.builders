@@ -218,6 +218,16 @@
       "main": "Github",
       "alts": [
         {
+          "name": "Pagure",
+          "stars": "158",
+          "license": "GPL v2+",
+          "svg": "https://docs.pagure.org/pagure/_static/pagure.png",
+          "site": "https://pagure.io/pagure",
+          "language": "Python",
+          "repo": "Pagure/pagure",
+          "deploy": "https://docs.pagure.org/pagure/install.html"
+        },
+        {
           "name": "Gogs",
           "stars": "33.5K",
           "license": "MIT",

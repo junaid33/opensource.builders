@@ -30,7 +30,7 @@ Opensource.builders is a website to find and request open-source alternatives to
 
     Your site is now running at `http://localhost:8000`!
     
-## 🧐 Want to add a open-source project?
+## Want to add a open-source project?
 
 There are 2 ways to add a new open-source project
 
@@ -44,12 +44,12 @@ You can edit this JSON directly and send a PR if you don't want to run anything 
 
 If you are an expert on Gatsby and gatsby-transformer-json, please check out this [issue](https://github.com/junaid33/opensource.builders/issues/109).
 
-## 🧐 Want to add a request for open-source alternatives?
+## Want to add a request for open-source alternatives?
 
 1. Create an issue with the title being the name of the commercial software and the body being a small description
 2. Add the label "request" and give it the initial thumbs-up
 
-## 🧐 What's the tech stack?
+## What's the tech stack?
 
 1. [TinaCMS](https://github.com/tinacms/tinacms) to add the comparisons and alternatives. They are kept as a JSON file.
 2. [ChakraUI](https://github.com/chakra-ui/chakra-ui) to style the website

@@ -218,16 +218,6 @@
       "main": "Github",
       "alts": [
         {
-          "name": "Pagure",
-          "stars": "158",
-          "license": "GPL v2+",
-          "svg": "https://docs.pagure.org/pagure/_static/pagure.png",
-          "site": "https://pagure.io/pagure",
-          "language": "Python",
-          "repo": "Pagure/pagure",
-          "deploy": "https://docs.pagure.org/pagure/install.html"
-        },
-        {
           "name": "Gogs",
           "stars": "33.5K",
           "license": "MIT",
@@ -256,6 +246,16 @@
           "site": "https://gitea.io/en-us/",
           "language": "Go",
           "deploy": "https://marketplace.digitalocean.com/apps/gitea"
+        },
+        {
+          "name": "Pagure",
+          "stars": "158",
+          "license": "GPL v2+",
+          "svg": "https://docs.pagure.org/pagure/_static/pagure.png",
+          "site": "https://pagure.io/pagure",
+          "language": "Python",
+          "repo": "Pagure/pagure",
+          "deploy": "https://docs.pagure.org/pagure/install.html"
         }
       ],
       "id": "8bxlppy5h",
@@ -377,6 +377,16 @@
       "main": "Google Docs",
       "alts": [
         {
+          "name": "CryptPad",
+          "stars": "1.6K",
+          "svg": "https://cryptpad.fr/customize/cryptpad-new-logo-colors-logoonly.png?ver=3.12.4",
+          "license": "AGPL V3",
+          "repo": "xwiki-labs/cryptpad",
+          "site": "https://cryptpad.fr/",
+          "language": "JS",
+          "deploy": "https://github.com/xwiki-labs/cryptpad/wiki/Installation-guide"
+        },
+        {
           "name": "ONLYOFFICE",
           "stars": "1.4K",
           "svg": "https://res-5.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_120,w_120,f_auto,b_white,q_auto:eco/v1470826892/ph2jc5mrymrljhrhbnjj.png",
@@ -395,16 +405,6 @@
           "site": "https://www.graphitedocs.com/",
           "language": "JS",
           "deploy": "https://github.com/Graphite-Docs/graphite#install"
-        },
-        {
-          "name": "CryptPad",
-          "stars": "1.6K",
-          "svg": "https://cryptpad.fr/customize/cryptpad-new-logo-colors-logoonly.png?ver=3.12.4",
-          "license": "AGPL V3",
-          "repo": "xwiki-labs/cryptpad",
-          "site": "https://cryptpad.fr/",
-          "language": "JS",
-          "deploy": "https://github.com/xwiki-labs/cryptpad/wiki/Installation-guide"
         }
       ],
       "svg": "https://assets-global.website-files.com/580ea75512564ed05c3a8455/589347c705e0ff8065dcdf22_Google_Docs_wordmark.svg",

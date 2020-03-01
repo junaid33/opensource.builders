@@ -374,6 +374,43 @@
       "website": "https://salesforce.com"
     },
     {
+      "main": "Google Docs",
+      "alts": [
+        {
+          "name": "ONLYOFFICE",
+          "stars": "1.4K",
+          "svg": "https://res-5.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_120,w_120,f_auto,b_white,q_auto:eco/v1470826892/ph2jc5mrymrljhrhbnjj.png",
+          "license": "AGPL V3",
+          "repo": "ONLYOFFICE/DocumentServer",
+          "site": "https://www.onlyoffice.com/",
+          "language": "JS",
+          "deploy": "https://helpcenter.onlyoffice.com/"
+        },
+        {
+          "name": "Graphite Docs",
+          "stars": "378",
+          "svg": "https://raw.githubusercontent.com/Graphite-Docs/graphite/master/public/images/mstile-310x310.png",
+          "license": "GPL V3",
+          "repo": "Graphite-Docs/graphite",
+          "site": "https://www.graphitedocs.com/",
+          "language": "JS",
+          "deploy": "https://github.com/Graphite-Docs/graphite#install"
+        },
+        {
+          "name": "CryptPad",
+          "stars": "1.6K",
+          "svg": "https://cryptpad.fr/customize/cryptpad-new-logo-colors-logoonly.png?ver=3.12.4",
+          "license": "AGPL V3",
+          "repo": "xwiki-labs/cryptpad",
+          "site": "https://cryptpad.fr/",
+          "language": "JS",
+          "deploy": "https://github.com/xwiki-labs/cryptpad/wiki/Installation-guide"
+        }
+      ],
+      "svg": "https://assets-global.website-files.com/580ea75512564ed05c3a8455/589347c705e0ff8065dcdf22_Google_Docs_wordmark.svg",
+      "website": "https://www.google.com/intl/en_US/docs/about/"
+    },
+    {
       "main": "Intercom",
       "svg": "https://cdn.freebiesupply.com/logos/large/2x/intercom-1-logo-svg-vector.svg",
       "alts": [
@@ -457,6 +494,90 @@
       "website": "https://zapier.com"
     },
     {
+      "main": "Zendesk",
+      "alts": [
+        {
+          "name": "Zammad",
+          "stars": "2k",
+          "license": "GNU AGPLv3",
+          "language": "Ruby",
+          "site": "https://www.zammad.com/",
+          "deploy": "https://docs.zammad.org/en/latest/",
+          "svg": "https://zammad.com/assets/images/icons/logo.svg",
+          "repo": "zammad/zammad"
+        },
+        {
+          "name": "UVDesk",
+          "stars": "252",
+          "license": "MIT",
+          "language": "PHP",
+          "site": "https://www.uvdesk.com/en/",
+          "deploy": "https://www.uvdesk.com/en/blog/open-source-helpdesk-installation-on-ubuntu-uvdesk/",
+          "svg": "https://yt3.ggpht.com/a/AGF-l7-NdudzgErRaS3LGC3qIHjUM53t3Hmt4RpqUw=s900-c-k-c0xffffffff-no-rj-mo",
+          "repo": "uvdesk/community-skeleton"
+        }
+      ],
+      "id": "lzgn1ku9q",
+      "svg": "https://logos-download.com/wp-content/uploads/2016/10/Zendesk_logo_wordmark.png",
+      "website": "https://zen.com"
+    },
+    {
+      "main": "YouTube",
+      "alts": [
+        {
+          "name": "Peertube",
+          "stars": "6.8K",
+          "license": "AGPL V3",
+          "svg": "https://upload.wikimedia.org/wikipedia/commons/2/2b/Logo_de_PeerTube.svg",
+          "repo": "Chocobozzz/PeerTube",
+          "site": "https://joinpeertube.org/",
+          "language": "TS",
+          "deploy": "https://github.com/Chocobozzz/PeerTube/blob/develop/support/doc/production.md"
+        },
+        {
+          "name": "NodeTube",
+          "stars": "1.6K",
+          "license": "MIT",
+          "svg": "https://raw.githubusercontent.com/mayeaux/nodetube/master/media/logo.jpg",
+          "repo": "mayeaux/nodetube",
+          "site": "https://github.com/mayeaux/nodetube",
+          "language": "JS",
+          "deploy": "https://github.com/mayeaux/nodetube/blob/master/README.md"
+        }
+      ],
+      "id": "3kvfwzi1o",
+      "svg": "https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg",
+      "website": "https://youtube.com"
+    },
+    {
+      "main": "Typeform",
+      "alts": [
+        {
+          "name": "OhMyForm",
+          "stars": "315",
+          "license": "MIT",
+          "language": "JS",
+          "repo": "ohmyform/ohmyform",
+          "site": "https://ohmyform.com/",
+          "svg": "https://user-images.githubusercontent.com/34615258/75390028-2c0f2d00-58ad-11ea-8d03-54469bad4365.png",
+          "deploy": "http://ohmyform.com/docs/install/"
+        },
+        {
+          "name": "Super Easy Forms",
+          "stars": "27",
+          "license": "MIT",
+          "language": "JS",
+          "repo": "gkpty/super-easy-forms",
+          "site": "https://supereasyforms.com/",
+          "svg": "https://supereasyforms.com/img/SEF-LOGO.svg",
+          "deploy": "https://www.npmjs.com/package/super-easy-forms#installation"
+        }
+      ],
+      "id": "tg03f7qhy",
+      "svg": "https://cdn.freebiesupply.com/logos/large/2x/typeform-logo-png-transparent.png",
+      "website": "https://typeform.com"
+    },
+    {
       "main": "Facebook",
       "alts": [
         {
@@ -537,71 +658,6 @@
       "website": "https://google.com/drive"
     },
     {
-      "main": "Google Docs",
-      "alts": [
-        {
-          "name": "ONLYOFFICE",
-          "stars": "1.4K",
-          "svg": "https://res-5.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_120,w_120,f_auto,b_white,q_auto:eco/v1470826892/ph2jc5mrymrljhrhbnjj.png",
-          "license": "AGPL V3",
-          "repo": "ONLYOFFICE/DocumentServer",
-          "site": "https://www.onlyoffice.com/",
-          "language": "JS",
-          "deploy": "https://helpcenter.onlyoffice.com/"
-        },
-        {
-          "name": "Graphite Docs",
-          "stars": "378",
-          "svg": "https://raw.githubusercontent.com/Graphite-Docs/graphite/master/public/images/mstile-310x310.png",
-          "license": "GPL V3",
-          "repo": "Graphite-Docs/graphite",
-          "site": "https://www.graphitedocs.com/",
-          "language": "JS",
-          "deploy": "https://github.com/Graphite-Docs/graphite#install"
-        },
-        {
-          "name": "CryptPad",
-          "stars": "1.6K",
-          "svg": "https://cryptpad.fr/customize/cryptpad-new-logo-colors-logoonly.png?ver=3.12.4",
-          "license": "AGPL V3",
-          "repo": "xwiki-labs/cryptpad",
-          "site": "https://cryptpad.fr/",
-          "language": "JS",
-          "deploy": "https://github.com/xwiki-labs/cryptpad/wiki/Installation-guide"
-        }
-      ],
-      "svg": "https://assets-global.website-files.com/580ea75512564ed05c3a8455/589347c705e0ff8065dcdf22_Google_Docs_wordmark.svg",
-      "website": "https://www.google.com/intl/en_US/docs/about/"
-    },
-    {
-      "main": "YouTube",
-      "alts": [
-        {
-          "name": "Peertube",
-          "stars": "6.8K",
-          "license": "AGPL V3",
-          "svg": "https://upload.wikimedia.org/wikipedia/commons/2/2b/Logo_de_PeerTube.svg",
-          "repo": "Chocobozzz/PeerTube",
-          "site": "https://joinpeertube.org/",
-          "language": "TS",
-          "deploy": "https://github.com/Chocobozzz/PeerTube/blob/develop/support/doc/production.md"
-        },
-        {
-          "name": "NodeTube",
-          "stars": "1.6K",
-          "license": "MIT",
-          "svg": "https://raw.githubusercontent.com/mayeaux/nodetube/master/media/logo.jpg",
-          "repo": "mayeaux/nodetube",
-          "site": "https://github.com/mayeaux/nodetube",
-          "language": "JS",
-          "deploy": "https://github.com/mayeaux/nodetube/blob/master/README.md"
-        }
-      ],
-      "id": "3kvfwzi1o",
-      "svg": "https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg",
-      "website": "https://youtube.com"
-    },
-    {
       "main": "Algolia",
       "alts": [
         {
@@ -620,34 +676,6 @@
       "website": "https://algolia.com"
     },
     {
-      "main": "Typeform",
-      "alts": [
-        {
-          "name": "OhMyForm",
-          "stars": "315",
-          "license": "MIT",
-          "language": "JS",
-          "repo": "ohmyform/ohmyform",
-          "site": "https://ohmyform.com/",
-          "svg": "https://user-images.githubusercontent.com/34615258/75390028-2c0f2d00-58ad-11ea-8d03-54469bad4365.png",
-          "deploy": "http://ohmyform.com/docs/install/"
-        },
-        {
-          "name": "Super Easy Forms",
-          "stars": "27",
-          "license": "MIT",
-          "language": "JS",
-          "repo": "gkpty/super-easy-forms",
-          "site": "https://supereasyforms.com/",
-          "svg": "https://supereasyforms.com/img/SEF-LOGO.svg",
-          "deploy": "https://www.npmjs.com/package/super-easy-forms#installation"
-        }
-      ],
-      "id": "tg03f7qhy",
-      "svg": "https://cdn.freebiesupply.com/logos/large/2x/typeform-logo-png-transparent.png",
-      "website": "https://typeform.com"
-    },
-    {
       "main": "npm",
       "alts": [
         {
@@ -663,7 +691,7 @@
       ],
       "id": "kwyzeihzt",
       "svg": "https://upload.wikimedia.org/wikipedia/commons/d/db/Npm-logo.svg",
-      "website": "https://npm.com"
+      "website": "https://www.npmjs.com"
     },
     {
       "main": "Asana",
@@ -701,34 +729,6 @@
       "website": "https://logrocket.com"
     },
     {
-      "main": "Zendesk",
-      "alts": [
-        {
-          "name": "Zammad",
-          "stars": "2k",
-          "license": "GNU AGPLv3",
-          "language": "Ruby",
-          "site": "https://www.zammad.com/",
-          "deploy": "https://docs.zammad.org/en/latest/",
-          "svg": "https://zammad.com/assets/images/icons/logo.svg",
-          "repo": "zammad/zammad"
-        },
-        {
-          "name": "UVDesk",
-          "stars": "252",
-          "license": "MIT",
-          "language": "PHP",
-          "site": "https://www.uvdesk.com/en/",
-          "deploy": "https://www.uvdesk.com/en/blog/open-source-helpdesk-installation-on-ubuntu-uvdesk/",
-          "svg": "https://yt3.ggpht.com/a/AGF-l7-NdudzgErRaS3LGC3qIHjUM53t3Hmt4RpqUw=s900-c-k-c0xffffffff-no-rj-mo",
-          "repo": "uvdesk/community-skeleton"
-        }
-      ],
-      "id": "lzgn1ku9q",
-      "svg": "https://logos-download.com/wp-content/uploads/2016/10/Zendesk_logo_wordmark.png",
-      "website": "https://zen.com"
-    },
-    {
       "main": "Oberlo",
       "alts": [
         {
@@ -747,7 +747,7 @@
       "website": "https://oberlo.com"
     },
     {
-      "main": "Launch Darkly",
+      "main": "LaunchDarkly",
       "alts": [
         {
           "name": "BulletTrain",

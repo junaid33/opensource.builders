@@ -636,6 +636,16 @@
       "main": "Zendesk",
       "alts": [
         {
+          "name": "Zammad",
+          "stars": "2k",
+          "license": "GNU AGPLv3",
+          "language": "Ruby",
+          "site": "https://www.zammad.com/",
+          "deploy": "https://docs.zammad.org/en/latest/",
+          "svg": "https://zammad.com/assets/images/icons/logo.svg",
+          "repo": "zammad/zammad"
+        },
+        {
           "name": "UVDesk",
           "stars": "252",
           "license": "MIT",

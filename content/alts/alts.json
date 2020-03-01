@@ -537,6 +537,16 @@
           "site": "https://joinpeertube.org/",
           "language": "TS",
           "deploy": "https://github.com/Chocobozzz/PeerTube/blob/develop/support/doc/production.md"
+        },
+        {
+          "name": "NodeTube",
+          "stars": "1.6K",
+          "license": "MIT",
+          "svg": "https://raw.githubusercontent.com/mayeaux/nodetube/master/media/logo.jpg",
+          "repo": "mayeaux/nodetube",
+          "site": "https://github.com/mayeaux/nodetube",
+          "language": "JS",
+          "deploy": "https://github.com/mayeaux/nodetube/blob/master/README.md"
         }
       ],
       "id": "3kvfwzi1o",

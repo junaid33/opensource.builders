@@ -537,6 +537,43 @@
       "website": "https://google.com/drive"
     },
     {
+      "main": "Google Docs",
+      "alts": [
+        {
+          "name": "ONLYOFFICE",
+          "stars": "1.4K",
+          "svg": "https://res-5.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_120,w_120,f_auto,b_white,q_auto:eco/v1470826892/ph2jc5mrymrljhrhbnjj.png",
+          "license": "AGPL V3",
+          "repo": "ONLYOFFICE/DocumentServer",
+          "site": "https://www.onlyoffice.com/",
+          "language": "JS",
+          "deploy": "https://helpcenter.onlyoffice.com/"
+        },
+        {
+          "name": "Graphite Docs",
+          "stars": "378",
+          "svg": "https://raw.githubusercontent.com/Graphite-Docs/graphite/master/public/images/mstile-310x310.png",
+          "license": "GPL V3",
+          "repo": "Graphite-Docs/graphite",
+          "site": "https://www.graphitedocs.com/",
+          "language": "JS",
+          "deploy": "https://github.com/Graphite-Docs/graphite#install"
+        },
+        {
+          "name": "CryptPad",
+          "stars": "1.6K",
+          "svg": "https://cryptpad.fr/customize/cryptpad-new-logo-colors-logoonly.png?ver=3.12.4",
+          "license": "AGPL V3",
+          "repo": "xwiki-labs/cryptpad",
+          "site": "https://cryptpad.fr/",
+          "language": "JS",
+          "deploy": "https://github.com/xwiki-labs/cryptpad/wiki/Installation-guide"
+        }
+      ],
+      "svg": "https://assets-global.website-files.com/580ea75512564ed05c3a8455/589347c705e0ff8065dcdf22_Google_Docs_wordmark.svg",
+      "website": "https://www.google.com/intl/en_US/docs/about/"
+    },
+    {
       "main": "YouTube",
       "alts": [
         {

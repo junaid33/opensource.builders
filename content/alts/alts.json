@@ -273,6 +273,62 @@
       "website": "https://github"
     },
     {
+      "main": "1Password",
+      "alts": [
+        {
+          "name": "KeePassXC",
+          "repo": "keepassxreboot/keepassxc",
+          "language": "C++",
+          "site": "https://keepassxc.org/",
+          "license": "GPL V3",
+          "stars": "7.2K",
+          "svg": "https://upload.wikimedia.org/wikipedia/commons/c/c1/KeePassXC.svg"
+        },
+        {
+          "name": "Bitwarden",
+          "site": "https://bitwarden.com",
+          "repo": "bitwarden/server",
+          "license": "AGPL V3",
+          "language": "C#",
+          "stars": "4.8K",
+          "svg": "https://avatars3.githubusercontent.com/u/15990069?s=400&v=4",
+          "deploy": "https://marketplace.digitalocean.com/apps/bitwarden"
+        },
+        {
+          "name": "Buttercup",
+          "repo": "buttercup/buttercup-desktop",
+          "license": "GPL V3",
+          "stars": "3.2K",
+          "site": "https://buttercup.pw",
+          "language": "JS",
+          "svg": "https://is1-ssl.mzstatic.com/image/thumb/Purple123/v4/91/c5/cc/91c5ccb5-04ef-2bd2-e665-1079ef983c52/AppIcon-0-0-1x_U007emarketing-0-0-0-10-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/217x0w.png"
+        },
+        {
+          "name": "Padloc",
+          "repo": "padloc/padloc",
+          "license": "GPL V3",
+          "stars": "886",
+          "site": "https://padloc.app/",
+          "language": "TS",
+          "svg": "https://avatars2.githubusercontent.com/u/38265889",
+          "deploy": "https://github.com/padloc/padloc#getting-started"
+        },
+        {
+          "name": "Passwordcockpit",
+          "repo": "passwordcockpit/passwordcockpit",
+          "license": "BSD-3",
+          "stars": "18",
+          "site": "https://passwordcockpit.com/",
+          "language": "PHP",
+          "svg": "https://avatars1.githubusercontent.com/u/45554572",
+          "deploy": "https://github.com/passwordcockpit/passwordcockpit#usage"
+        }
+      ],
+      "id": "hvf9tctei",
+      "svg": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/1password-logo.svg/702px-1password-logo.svg.png",
+      "website": "https://1password.com/"
+    },
+    {
       "main": "Amazon S3",
       "alts": [
         {
@@ -309,52 +365,6 @@
       "id": "mui65dcfl",
       "svg": "https://cdn-images-1.medium.com/fit/t/1600/480/1*DHe24MbDHtbkOeIJzxrfdA.png",
       "website": "https://aws.amazon.com/s3/"
-    },
-    {
-      "main": "1Password",
-      "alts": [
-        {
-          "name": "KeePassXC",
-          "repo": "keepassxreboot/keepassxc",
-          "language": "C++",
-          "site": "https://keepassxc.org/",
-          "license": "GPL V3",
-          "stars": "7.2K",
-          "svg": "https://upload.wikimedia.org/wikipedia/commons/c/c1/KeePassXC.svg"
-        },
-        {
-          "name": "Bitwarden",
-          "site": "https://bitwarden.com",
-          "repo": "bitwarden/server",
-          "license": "AGPL V3",
-          "language": "C#",
-          "stars": "4.8K",
-          "svg": "https://avatars3.githubusercontent.com/u/15990069?s=400&v=4",
-          "deploy": "https://marketplace.digitalocean.com/apps/bitwarden"
-        },
-        {
-          "name": "Buttercup",
-          "repo": "buttercup/buttercup-desktop",
-          "license": "GPL V3",
-          "stars": "3.2K",
-          "site": "https://buttercup.pw",
-          "language": "JS",
-          "svg": "https://is1-ssl.mzstatic.com/image/thumb/Purple123/v4/91/c5/cc/91c5ccb5-04ef-2bd2-e665-1079ef983c52/AppIcon-0-0-1x_U007emarketing-0-0-0-10-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/217x0w.png"
-        },
-        {
-          "name": "Passwordcockpit",
-          "repo": "passwordcockpit/passwordcockpit",
-          "license": "BSD-3",
-          "stars": "18",
-          "site": "https://passwordcockpit.com/",
-          "language": "PHP",
-          "svg": "https://avatars1.githubusercontent.com/u/45554572",
-          "deploy": "https://github.com/passwordcockpit/passwordcockpit#usage"
-        }
-      ],
-      "id": "hvf9tctei",
-      "svg": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/1password-logo.svg/702px-1password-logo.svg.png",
-      "website": "https://1password.com/"
     },
     {
       "main": "Salesforce",
@@ -429,6 +439,156 @@
       ],
       "svg": "https://assets-global.website-files.com/580ea75512564ed05c3a8455/589347c705e0ff8065dcdf22_Google_Docs_wordmark.svg",
       "website": "https://www.google.com/intl/en_US/docs/about/"
+    },
+    {
+      "main": "Zendesk",
+      "alts": [
+        {
+          "name": "Zammad",
+          "stars": "2k",
+          "license": "GNU AGPLv3",
+          "language": "Ruby",
+          "site": "https://www.zammad.com/",
+          "deploy": "https://docs.zammad.org/en/latest/",
+          "svg": "https://zammad.com/assets/images/icons/logo.svg",
+          "repo": "zammad/zammad"
+        },
+        {
+          "name": "UVDesk",
+          "stars": "252",
+          "license": "MIT",
+          "language": "PHP",
+          "site": "https://www.uvdesk.com/en/",
+          "deploy": "https://www.uvdesk.com/en/blog/open-source-helpdesk-installation-on-ubuntu-uvdesk/",
+          "svg": "https://yt3.ggpht.com/a/AGF-l7-NdudzgErRaS3LGC3qIHjUM53t3Hmt4RpqUw=s900-c-k-c0xffffffff-no-rj-mo",
+          "repo": "uvdesk/community-skeleton"
+        },
+        {
+          "name": "Helpy",
+          "stars": "1.8K",
+          "license": "MIT",
+          "language": "RUBY",
+          "site": "https://helpy.io/",
+          "deploy": "https://github.com/helpyio/helpy#getting-started",
+          "svg": "https://raw.githubusercontent.com/helpyio/helpy/59c142c8c4da903c2cecdfcc426d7e8d582bfdb0/app/assets/images/helpy-logo.png",
+          "repo": "helpyio/helpy"
+        }
+      ],
+      "id": "lzgn1ku9q",
+      "svg": "https://logos-download.com/wp-content/uploads/2016/10/Zendesk_logo_wordmark.png",
+      "website": "https://zen.com"
+    },
+    {
+      "main": "Google Drive",
+      "alts": [
+        {
+          "name": "NextCloud",
+          "stars": "9.8K",
+          "svg": "https://nextcloud.com/wp-content/themes/next/assets/img/common/nextcloud-square-logo.png?x53054",
+          "license": "AGPL V3",
+          "repo": "nextcloud/server",
+          "site": "https://nextcloud.com",
+          "language": "PHP",
+          "deploy": "https://docs.nextcloud.com/server/stable/admin_manual/installation/index.html"
+        },
+        {
+          "name": "OwnCloud",
+          "stars": "7K",
+          "svg": "https://raw.githubusercontent.com/owncloud/owncloud.github.io/source/static/logo.png",
+          "license": "AGPL V3",
+          "repo": "owncloud/core",
+          "site": "https://owncloud.org/",
+          "language": "PHP",
+          "deploy": "https://doc.owncloud.org/server/10.2/"
+        },
+        {
+          "name": "Seafile",
+          "stars": "7.5K",
+          "svg": "https://wiki.deimos.fr/images/3/39/Seafile_logo.png",
+          "license": "GPL V2",
+          "repo": "haiwen/seafile",
+          "site": "https://www.seafile.com/en/home/",
+          "language": "C",
+          "deploy": "https://download.seafile.com/published/seafile-manual/deploy/README.md"
+        }
+      ],
+      "id": "zt5htxj1r",
+      "svg": "https://www.actionstep.com/images/marketplace/integrations/google-drive.png",
+      "website": "https://google.com/drive"
+    },
+    {
+      "main": "cPanel",
+      "alts": [
+        {
+          "name": "Vesta",
+          "deploy": "https://vestacp.com/install/",
+          "site": "https://vestacp.com/",
+          "language": "PHP",
+          "repo": "serghey-rodin/vesta",
+          "stars": "2.2K",
+          "license": "GPL V3",
+          "svg": "https://pbs.twimg.com/profile_images/1024954605992648704/yrIPRVMG_400x400.jpg"
+        },
+        {
+          "name": "Webmin",
+          "deploy": "https://doxfer.webmin.com/Webmin/Installing_Webmin",
+          "site": "http://www.webmin.com/",
+          "language": "PERL",
+          "repo": "webmin/webmin",
+          "stars": "1.3K",
+          "license": "BSD-3",
+          "svg": "https://avatars2.githubusercontent.com/u/102707"
+        },
+        {
+          "name": "Hestia",
+          "deploy": "https://github.com/hestiacp/hestiacp/#installing-hestia-control-panel",
+          "site": "https://hestiacp.com/",
+          "language": "PHP",
+          "repo": "hestiacp/hestiacp",
+          "stars": "194",
+          "license": "GPL V3",
+          "svg": "https://hestiacp.com/img/logo.png"
+        }
+      ],
+      "svg": "https://cdn.freebiesupply.com/logos/large/2x/cpanel-logo-svg-vector.svg",
+      "website": "https://cpanel.net/"
+    },
+    {
+      "main": "Trello",
+      "alts": [
+        {
+          "name": "Wekan",
+          "deploy": "https://github.com/wekan/wekan/wiki/Platforms",
+          "site": "https://wekan.github.io/",
+          "language": "JS",
+          "repo": "wekan/wekan",
+          "stars": "15.5K",
+          "license": "MIT",
+          "svg": "https://raw.githubusercontent.com/wekan/wekan/master/meta/icons/wekan-150.png"
+        },
+        {
+          "name": "Taiga",
+          "deploy": "https://taigaio.github.io/taiga-doc/dist/setup-production.html",
+          "site": "https://taiga.io/",
+          "language": "PYTHON",
+          "repo": "taigaio/taiga-back",
+          "stars": "5.1K",
+          "license": "AGPL V3",
+          "svg": "https://avatars0.githubusercontent.com/u/6905422"
+        },
+        {
+          "name": "Kanboard",
+          "deploy": "https://docs.kanboard.org/en/latest/admin_guide/index.html",
+          "site": "https://kanboard.org/",
+          "language": "PHP",
+          "repo": "kanboard/kanboard",
+          "stars": "4.9K",
+          "license": "MIT",
+          "svg": "https://user-images.githubusercontent.com/40141083/41202259-db1c76a8-6cb5-11e8-8cdc-cf6c3d560b3b.png"
+        }
+      ],
+      "svg": "https://d2k1ftgv7pobq7.cloudfront.net/meta/u/res/images/brand-assets/Logos/0099ec3754bf473d2bbf317204ab6fea/trello-logo-blue.png",
+      "website": "https://trello.com/"
     },
     {
       "main": "Intercom",
@@ -514,44 +674,6 @@
       "website": "https://zapier.com"
     },
     {
-      "main": "Zendesk",
-      "alts": [
-        {
-          "name": "Zammad",
-          "stars": "2k",
-          "license": "GNU AGPLv3",
-          "language": "Ruby",
-          "site": "https://www.zammad.com/",
-          "deploy": "https://docs.zammad.org/en/latest/",
-          "svg": "https://zammad.com/assets/images/icons/logo.svg",
-          "repo": "zammad/zammad"
-        },
-        {
-          "name": "UVDesk",
-          "stars": "252",
-          "license": "MIT",
-          "language": "PHP",
-          "site": "https://www.uvdesk.com/en/",
-          "deploy": "https://www.uvdesk.com/en/blog/open-source-helpdesk-installation-on-ubuntu-uvdesk/",
-          "svg": "https://yt3.ggpht.com/a/AGF-l7-NdudzgErRaS3LGC3qIHjUM53t3Hmt4RpqUw=s900-c-k-c0xffffffff-no-rj-mo",
-          "repo": "uvdesk/community-skeleton"
-        },
-        {
-          "name": "Helpy",
-          "stars": "1.8K",
-          "license": "MIT",
-          "language": "RUBY",
-          "site": "https://helpy.io/",
-          "deploy": "https://github.com/helpyio/helpy#getting-started",
-          "svg": "https://raw.githubusercontent.com/helpyio/helpy/59c142c8c4da903c2cecdfcc426d7e8d582bfdb0/app/assets/images/helpy-logo.png",
-          "repo": "helpyio/helpy"
-        }
-      ],
-      "id": "lzgn1ku9q",
-      "svg": "https://logos-download.com/wp-content/uploads/2016/10/Zendesk_logo_wordmark.png",
-      "website": "https://zen.com"
-    },
-    {
       "main": "YouTube",
       "alts": [
         {
@@ -578,6 +700,34 @@
       "id": "3kvfwzi1o",
       "svg": "https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg",
       "website": "https://youtube.com"
+    },
+    {
+      "main": "Algolia",
+      "alts": [
+        {
+          "name": "Elastic Search",
+          "stars": "47.1K",
+          "license": "Apache 2.0",
+          "svg": "https://cdn.worldvectorlogo.com/logos/elasticsearch.svg",
+          "repo": "elastic/elasticsearch",
+          "site": "https://www.elastic.co/elasticsearch",
+          "language": "JAVA",
+          "deploy": "https://www.elastic.co/guide/en/cloud/current/ec-create-deployment.html"
+        },
+        {
+          "name": "MeiliSearch",
+          "stars": "1.2K",
+          "license": "MIT",
+          "svg": "https://www.meilisearch.com/_nuxt/img/cf59975.svg",
+          "repo": "meilisearch/meilisearch",
+          "site": "https://www.meilisearch.com/",
+          "language": "RUST",
+          "deploy": "https://docs.meilisearch.com/guides/advanced_guides/binary.html"
+        }
+      ],
+      "id": "hfarlvwm9",
+      "svg": "https://upload.wikimedia.org/wikipedia/commons/6/69/Algolia-logo.svg",
+      "website": "https://algolia.com"
     },
     {
       "main": "Typeform",
@@ -670,72 +820,6 @@
       "website": "https://segment.com"
     },
     {
-      "main": "Google Drive",
-      "alts": [
-        {
-          "name": "NextCloud",
-          "stars": "9.8K",
-          "svg": "https://nextcloud.com/wp-content/themes/next/assets/img/common/nextcloud-square-logo.png?x53054",
-          "license": "AGPL V3",
-          "repo": "nextcloud/server",
-          "site": "https://nextcloud.com",
-          "language": "PHP",
-          "deploy": "https://docs.nextcloud.com/server/stable/admin_manual/installation/index.html"
-        },
-        {
-          "name": "OwnCloud",
-          "stars": "7K",
-          "svg": "https://raw.githubusercontent.com/owncloud/owncloud.github.io/source/static/logo.png",
-          "license": "AGPL V3",
-          "repo": "owncloud/core",
-          "site": "https://owncloud.org/",
-          "language": "PHP",
-          "deploy": "https://doc.owncloud.org/server/10.2/"
-        },
-        {
-          "name": "Seafile",
-          "stars": "7.5K",
-          "svg": "https://tr1.cbsistatic.com/hub/i/2016/07/06/c91667ce-569c-410b-9777-49340b7b8ef9/seafilehero.jpg",
-          "license": "GPL V2",
-          "repo": "haiwen/seafile",
-          "site": "https://www.seafile.com/en/home/",
-          "language": "C",
-          "deploy": "https://download.seafile.com/published/seafile-manual/deploy/README.md"
-        }
-      ],
-      "id": "zt5htxj1r",
-      "svg": "https://www.actionstep.com/images/marketplace/integrations/google-drive.png",
-      "website": "https://google.com/drive"
-    },
-    {
-      "main": "Algolia",
-      "alts": [
-        {
-          "name": "Elastic Search",
-          "stars": "47.1K",
-          "license": "Apache 2.0",
-          "svg": "https://cdn.worldvectorlogo.com/logos/elasticsearch.svg",
-          "repo": "elastic/elasticsearch",
-          "site": "https://www.elastic.co/elasticsearch",
-          "language": "JAVA",
-          "deploy": "https://www.elastic.co/guide/en/cloud/current/ec-create-deployment.html"
-        },
-        {
-          "name": "MeiliSearch",
-          "stars": "1.2K",
-          "license": "MIT",
-          "svg": "https://www.meilisearch.com/_nuxt/img/cf59975.svg",
-          "repo": "meilisearch/meilisearch",
-          "site": "https://www.meilisearch.com/",
-          "language": "RUST",
-          "deploy": "https://docs.meilisearch.com/guides/advanced_guides/binary.html"
-        }
-      ],
-      "id": "hfarlvwm9",
-      "svg": "https://upload.wikimedia.org/wikipedia/commons/6/69/Algolia-logo.svg",
-      "website": "https://algolia.com"
-    },
-    {
       "main": "npm",
       "alts": [
         {
@@ -769,6 +853,24 @@
       "id": "o6lgatqba",
       "svg": "https://cdn.wimi-teamwork.com/static/medias/wimi-asana-logo.png",
       "website": "https://asana.com"
+    },
+    {
+      "main": "HubSpot",
+      "alts": [
+        {
+          "name": "Erxes",
+          "deploy": "https://erxes.io/install",
+          "site": "https://erxes.io/",
+          "language": "JS",
+          "repo": "erxes/erxes",
+          "stars": "715",
+          "license": "GPL V3",
+          "svg": "https://opencollective-production.s3-us-west-1.amazonaws.com/a5ff26c0-b88a-11e8-b4ab-519dd68ec9a0.jpg"
+        }
+      ],
+      "id": "hubspot",
+      "svg": "https://www.hubspot.com/hubfs/HubSpot_Logos/HSLogo_color.svg",
+      "website": "https://www.hubspot.com/"
     },
     {
       "main": "LogRocket",
@@ -841,24 +943,6 @@
       "id": "gxfg2143l",
       "svg": "https://www.netlify.com/img/press/logos/full-logo-light.png",
       "website": "https://netlify.com"
-    },
-    {
-      "main": "HubSpot",
-      "alts": [
-        {
-          "name": "Erxes",
-          "deploy": "https://erxes.io/install",
-          "site": "https://erxes.io/",
-          "language": "JS",
-          "repo": "erxes/erxes",
-          "stars": "715",
-          "license": "GPL V3",
-          "svg": "https://erxes.io/static/images/logo/logo-inverse.png"
-        }
-      ],
-      "id": "hubspot",
-      "svg": "https://www.hubspot.com/hubfs/HubSpot_Logos/HSLogo_color.svg",
-      "website": "https://www.hubspot.com/"
     }
   ]
 }

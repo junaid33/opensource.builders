@@ -515,6 +515,16 @@
           "deploy": "https://www.uvdesk.com/en/blog/open-source-helpdesk-installation-on-ubuntu-uvdesk/",
           "svg": "https://yt3.ggpht.com/a/AGF-l7-NdudzgErRaS3LGC3qIHjUM53t3Hmt4RpqUw=s900-c-k-c0xffffffff-no-rj-mo",
           "repo": "uvdesk/community-skeleton"
+        },
+        {
+          "name": "Helpy",
+          "stars": "1.8K",
+          "license": "MIT",
+          "language": "RUBY",
+          "site": "https://helpy.io/",
+          "deploy": "https://github.com/helpyio/helpy#getting-started",
+          "svg": "https://raw.githubusercontent.com/helpyio/helpy/59c142c8c4da903c2cecdfcc426d7e8d582bfdb0/app/assets/images/helpy-logo.png",
+          "repo": "helpyio/helpy"
         }
       ],
       "id": "lzgn1ku9q",

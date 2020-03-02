@@ -661,6 +661,16 @@
           "site": "https://owncloud.org/",
           "language": "PHP",
           "deploy": "https://doc.owncloud.org/server/10.2/"
+        },
+        {
+          "name": "Seafile",
+          "stars": "7.5K",
+          "svg": "https://tr1.cbsistatic.com/hub/i/2016/07/06/c91667ce-569c-410b-9777-49340b7b8ef9/seafilehero.jpg",
+          "license": "GPL V2",
+          "repo": "haiwen/seafile",
+          "site": "https://www.seafile.com/en/home/",
+          "language": "C",
+          "deploy": "https://download.seafile.com/published/seafile-manual/deploy/README.md"
         }
       ],
       "id": "zt5htxj1r",

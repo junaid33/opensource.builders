@@ -7,12 +7,6 @@ Opensource.builders is a website to find and request open-source alternatives to
 
 ## 🚀 Quick start
 
-### Online one-click setup 
-
-With the online one click setup with gitpod(a free online VS Code like IDE) you'll get a ready to code workspace with: cloned repo, pre-installed dependencies and running web server.
-
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/from-referrer/)
-
 ### Local setup
 
 1.  **Clone the site.**
@@ -37,6 +31,12 @@ With the online one click setup with gitpod(a free online VS Code like IDE) you'
 1.  **Open the source code and start editing!**
 
     Your site is now running at `http://localhost:8000`!
+    
+### Online one-click setup 
+
+To edit website online, check out the CodeSandbox:
+
+https://codesandbox.io/s/github/junaid33/opensource.builders
     
 ## Want to add a open-source project?
 

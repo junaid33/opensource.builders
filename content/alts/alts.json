@@ -661,7 +661,17 @@
           "site": "https://owncloud.org/",
           "language": "PHP",
           "deploy": "https://doc.owncloud.org/server/10.2/"
-        }
+        },
+        {
+          "name": "Aurora Files",
+          "stars": "93",
+          "svg": "https://afterlogic.org/images/product_icons/afterlogic-aurora.png",
+          "license": "AGPL V3",
+          "repo": "afterlogic/aurora-files",
+          "site": "https://afterlogic.org/aurora-files",
+          "language": "PHP",
+          "deploy": "https://afterlogic.com/docs/aurora-files/installation"
+        },
       ],
       "id": "zt5htxj1r",
       "svg": "https://www.actionstep.com/images/marketplace/integrations/google-drive.png",
@@ -781,7 +791,6 @@
           "name": "StaticDeploy",
           "deploy": "https://staticdeploy.io/docs/guides-deploying-staticdeploy-with-docker",
           "site": "https://staticdeploy.io/",
-          "language": "TS",
           "repo": "staticdeploy/staticdeploy",
           "stars": "44",
           "license": "MIT",

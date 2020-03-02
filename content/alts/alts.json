@@ -340,6 +340,16 @@
           "site": "https://buttercup.pw",
           "language": "JS",
           "svg": "https://is1-ssl.mzstatic.com/image/thumb/Purple123/v4/91/c5/cc/91c5ccb5-04ef-2bd2-e665-1079ef983c52/AppIcon-0-0-1x_U007emarketing-0-0-0-10-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/217x0w.png"
+        },
+        {
+          "name": "Passwordcockpit",
+          "repo": "passwordcockpit/passwordcockpit",
+          "license": "BSD-3",
+          "stars": "18",
+          "site": "https://passwordcockpit.com/",
+          "language": "PHP",
+          "svg": "https://avatars1.githubusercontent.com/u/45554572",
+          "deploy": "https://github.com/passwordcockpit/passwordcockpit#usage"
         }
       ],
       "id": "hvf9tctei",

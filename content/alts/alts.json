@@ -210,6 +210,16 @@
           "language": "TS",
           "site": "https://CapRover.com",
           "deploy": "https://marketplace.digitalocean.com/apps/caprover?action=deploy&refcode=6410aa23d3f3"
+        },
+        {
+          "name": "Tsuru",
+          "repo": "tsuru/tsuru",
+          "license": "BSD-3",
+          "stars": "3.3K",
+          "svg": "https://avatars3.githubusercontent.com/u/6999787",
+          "language": "GO",
+          "site": "https://tsuru.io/",
+          "deploy": "https://docs.tsuru.io/stable/installing/index.html"
         }
       ],
       "website": "https://heroku.com"

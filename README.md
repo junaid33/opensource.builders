@@ -7,6 +7,14 @@ Opensource.builders is a website to find and request open-source alternatives to
 
 ## 🚀 Quick start
 
+### Online one-click setup 
+
+With the online one click setup with gitpod(a free online VS Code like IDE) you'll get a ready to code workspace with: cloned repo, pre-installed dependencies and running web server.
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/from-referrer/)
+
+### Local setup
+
 1.  **Clone the site.**
 
     Use the Gatsby CLI to create a new site, specifying the blog starter.

@@ -791,6 +791,43 @@
       "id": "gxfg2143l",
       "svg": "https://www.netlify.com/img/press/logos/full-logo-light.png",
       "website": "https://netlify.com"
+    },
+    {
+      "main": "Trello",
+      "alts": [
+        {
+          "name": "Taiga",
+          "deploy": "https://taigaio.github.io/taiga-doc/dist/setup-production.html",
+          "site": "https://taiga.io/",
+          "language": "PYTHON",
+          "repo": "taigaio/taiga-back",
+          "stars": "5.1K",
+          "license": "AGPL V3",
+          "svg": "https://avatars0.githubusercontent.com/u/6905422"
+        },
+        {
+          "name": "Wekan",
+          "deploy": "https://github.com/wekan/wekan/wiki/Platforms",
+          "site": "https://wekan.github.io/",
+          "language": "JS",
+          "repo": "wekan/wekan",
+          "stars": "15.5K",
+          "license": "MIT",
+          "svg": "https://raw.githubusercontent.com/wekan/wekan/master/meta/icons/wekan-150.png"
+        },
+        {
+          "name": "Kanboard",
+          "deploy": "https://docs.kanboard.org/en/latest/admin_guide/index.html",
+          "site": "https://kanboard.org/",
+          "language": "PHP",
+          "repo": "kanboard/kanboard",
+          "stars": "4.9K",
+          "license": "MIT",
+          "svg": "https://github.com/kanboard/kanboard/raw/master/assets/img/icon.svg"
+        }
+      ],
+      "svg": "https://d2k1ftgv7pobq7.cloudfront.net/meta/u/res/images/brand-assets/Logos/0099ec3754bf473d2bbf317204ab6fea/trello-logo-blue.png",
+      "website": "https://trello.com/"
     }
   ]
 }

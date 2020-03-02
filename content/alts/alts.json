@@ -330,6 +330,16 @@
           "site": "https://buttercup.pw",
           "language": "JS",
           "svg": "https://is1-ssl.mzstatic.com/image/thumb/Purple123/v4/91/c5/cc/91c5ccb5-04ef-2bd2-e665-1079ef983c52/AppIcon-0-0-1x_U007emarketing-0-0-0-10-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/217x0w.png"
+        },
+        {
+          "name": "Padloc",
+          "repo": "padloc/padloc",
+          "license": "GPL V3",
+          "stars": "886",
+          "site": "https://padloc.app/",
+          "language": "TS",
+          "svg": "https://avatars2.githubusercontent.com/u/38265889",
+          "deploy": "https://github.com/padloc/padloc#getting-started"
         }
       ],
       "id": "hvf9tctei",

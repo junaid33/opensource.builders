@@ -709,6 +709,16 @@
           "site": "https://www.elastic.co/elasticsearch",
           "language": "JAVA",
           "deploy": "https://www.elastic.co/guide/en/cloud/current/ec-create-deployment.html"
+        },
+        {
+          "name": "MeiliSearch",
+          "stars": "1.2K",
+          "license": "MIT",
+          "svg": "https://www.meilisearch.com/_nuxt/img/cf59975.svg",
+          "repo": "meilisearch/meilisearch",
+          "site": "https://www.meilisearch.com/",
+          "language": "RUST",
+          "deploy": "https://docs.meilisearch.com/guides/advanced_guides/binary.html"
         }
       ],
       "id": "hfarlvwm9",

@@ -960,6 +960,23 @@
       "id": "gxfg2143l",
       "svg": "https://www.netlify.com/img/press/logos/full-logo-light.png",
       "website": "https://netlify.com"
-    }
-  ]
+    },
+    {
+      "main": "Cypress.io",
+      "alts": [
+        {
+          "name": "Sorry Cypress",
+          "deploy": "https://github.com/agoldis/sorry-cypress/wiki/AWS-Tutorial",
+          "site": "https://github.com/agoldis/sorry-cypress",
+          "language": "TS",
+          "repo": "agoldis/sorry-cypress",
+          "stars": "146",
+          "license": "MIT",
+          "svg": "https://s3.amazonaws.com/agoldis.dev/images/sorry-cypress/logo.png"
+        }
+      ],
+      "id": "axfg2133l",
+      "svg": "https://www.cypress.io/static/33498b5f95008093f5f94467c61d20ab/59c46/cypress-logo.webp",
+      "website": "https://cypress.io"
+    }]
 }

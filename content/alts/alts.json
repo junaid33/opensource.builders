@@ -933,6 +933,33 @@
       "id": "gxfg2143l",
       "svg": "https://www.netlify.com/img/press/logos/full-logo-light.png",
       "website": "https://netlify.com"
+    },
+    {
+      "main": "RescueTime",
+      "alts": [
+        {
+          "name": "ActivityWatch",
+          "deploy": "https://activitywatch.readthedocs.io/en/latest/getting-started.html",
+          "site": "https://activitywatch.net/",
+          "language": "PYTHON",
+          "repo": "ActivityWatch/activitywatch",
+          "stars": "2.6K",
+          "license": "MPL V2",
+          "svg": "https://github.com/ActivityWatch/aw-webui/raw/0a60cf7b6f43194f3cdcc32b1372d2835face88c/static/logo.svg"
+        },
+        {
+          "name": "Kimai",
+          "deploy": "https://www.kimai.org/documentation/installation.html",
+          "site": "https://www.kimai.org/",
+          "language": "PHP",
+          "repo": "kevinpapst/kimai2",
+          "stars": "737",
+          "license": "MIT",
+          "svg": "https://www.kimai.org/assets/icon/apple-touch-icon.png"
+        }
+      ],
+      "svg": "https://www.rescuetime.com/assets/marketing/rescuetime_logo-246f5c855b92476132c28a7ec1acff6dceaeeda0b475486090663d73d91ce4ac.png",
+      "website": "https://www.rescuetime.com/"
     }
   ]
 }

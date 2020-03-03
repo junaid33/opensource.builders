@@ -933,6 +933,33 @@
       "id": "gxfg2143l",
       "svg": "https://www.netlify.com/img/press/logos/full-logo-light.png",
       "website": "https://netlify.com"
+    },
+    {
+      "main": "WebHR",
+      "alts": [
+        {
+          "name": "Sentrifugo",
+          "deploy": "http://www.sentrifugo.com/installation-guide",
+          "site": "http://www.sentrifugo.com/",
+          "language": "PHP",
+          "repo": "sapplica/sentrifugo",
+          "stars": "335",
+          "license": "GPL V3",
+          "svg": "https://avatars3.githubusercontent.com/u/7835433"
+        },
+        {
+          "name": "IceHrm",
+          "deploy": "https://github.com/gamonoid/icehrm/#installation",
+          "site": "https://icehrm.com/",
+          "language": "JS",
+          "repo": "gamonoid/icehrm/",
+          "stars": "290",
+          "license": "MIT",
+          "svg": "https://raw.githubusercontent.com/gamonoid/icehrm/master/web/images/icehrm.png"
+        }
+      ],
+      "svg": "https://cdn.webhr.co/images/Logo/WebHR.svg",
+      "website": "https://webhr.co/"
     }
   ]
 }

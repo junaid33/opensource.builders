@@ -960,6 +960,23 @@
       "id": "gxfg2143l",
       "svg": "https://www.netlify.com/img/press/logos/full-logo-light.png",
       "website": "https://netlify.com"
+    },
+    {
+      "main": "QuickBooks",
+      "alts": [
+        {
+          "name": "Akaunting",
+          "site": "https://akaunting.com",
+          "language": "PHP",
+          "repo": "akaunting/akaunting",
+          "stars": "2650",
+          "license": "GPLv3",
+          "svg": "https://akaunting.com/public/images/logo/akaunting-logo.svg",
+          "deploy": "https://marketplace.digitalocean.com/apps/akaunting"
+        }
+      ],
+      "svg": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Intuit_QuickBooks_logo.png/250px-Intuit_QuickBooks_logo.png",
+      "website": "https://quickbooks.intuit.com"
     }
   ]
 }

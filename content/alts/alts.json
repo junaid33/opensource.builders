@@ -6,7 +6,7 @@
       "alts": [
         {
           "name": "Reaction Commerce",
-          "repo": "reactioncommerce/reaction",
+          "repo": "https://github.com/reactioncommerce/reaction",
           "site": "http://www.reactioncommerce.com/",
           "license": "GPL V3",
           "stars": "9.6K",
@@ -16,7 +16,7 @@
         },
         {
           "name": "Saleor Commerce",
-          "repo": "mirumee/saleor",
+          "repo": "https://github.com/mirumee/saleor",
           "site": "https://saleor.io/",
           "license": "BSD-3",
           "stars": "6.6K",
@@ -29,13 +29,13 @@
           "stars": "5.8K",
           "license": "GPL",
           "svg": "https://user-images.githubusercontent.com/34615258/75009182-a53afa00-543f-11ea-8e47-724cad625b44.png",
-          "repo": "woocommerce/woocommerce",
+          "repo": "https://github.com/woocommerce/woocommerce",
           "site": "http://www.woocommerce.com/",
           "language": "PHP",
           "deploy": "https://marketplace.digitalocean.com/apps/wordpress"
         },
         {
-          "repo": "Sylius/Sylius",
+          "repo": "https://github.com/Sylius/Sylius",
           "site": "https://sylius.com/",
           "language": "PHP",
           "stars": "5.6K",
@@ -51,7 +51,7 @@
           "svg": "https://static.crozdesk.com/web_app_library/providers/logos/000/008/399/original/bagisto-1569908595-logo.png?1569908595",
           "site": "https://bagisto.com",
           "language": "PHP",
-          "repo": "bagisto/bagisto",
+          "repo": "https://github.com/bagisto/bagisto",
           "deploy": "https://webkul.com/blog/laravel-ecommerce-website"
         }
       ],
@@ -62,7 +62,7 @@
       "alts": [
         {
           "name": "Rocket.Chat",
-          "repo": "RocketChat/Rocket.Chat",
+          "repo": "https://github.com/RocketChat/Rocket.Chat",
           "site": "https://rocket.chat/",
           "language": "JS",
           "license": "MIT",
@@ -73,7 +73,7 @@
         {
           "name": "Mattermost",
           "license": "AGPL",
-          "repo": "mattermost/mattermost-server",
+          "repo": "https://github.com/mattermost/mattermost-server",
           "site": "https://mattermost.com",
           "stars": "17.6K",
           "language": "Go",
@@ -82,7 +82,7 @@
         },
         {
           "name": "Zulip",
-          "repo": "zulip/zulip",
+          "repo": "https://github.com/zulip/zulip",
           "stars": "11.2K",
           "language": "Python",
           "site": "https://zulip.org/",
@@ -93,7 +93,7 @@
         {
           "name": "Riot",
           "license": "Apache 2.0",
-          "repo": "vector-im/riot-web",
+          "repo": "https://github.com/vector-im/riot-web",
           "site": "http://riot.im",
           "language": "JS",
           "stars": "4.2K",
@@ -102,7 +102,7 @@
         {
           "name": "Wire",
           "license": "GPL V3",
-          "repo": "wireapp/wire",
+          "repo": "https://github.com/wireapp/wire",
           "site": "https://wire.com/en/",
           "language": "JS",
           "stars": "1.8K",
@@ -121,14 +121,14 @@
           "name": "Matomo",
           "site": "https://matomo.org",
           "language": "PHP",
-          "repo": "Matomo-org/matomo",
+          "repo": "https://github.com/Matomo-org/matomo",
           "license": "GPL V3",
           "stars": "12.8K",
           "svg": "https://static.matomo.org/wp-content/uploads/2018/11/DefaultIcon.png"
         },
         {
           "name": "Fathom Analytics",
-          "repo": "usefathom/fathom",
+          "repo": "https://github.com/usefathom/fathom",
           "stars": "6.2K",
           "license": "MIT",
           "svg": "https://pbs.twimg.com/profile_images/1192531063928762368/MaxeYpcK_400x400.jpg",
@@ -138,7 +138,7 @@
         },
         {
           "name": "Countly",
-          "repo": "countly/countly-server",
+          "repo": "https://github.com/countly/countly-server",
           "stars": "4.3K",
           "license": "AGPL V3-MOD",
           "svg": "https://pbs.twimg.com/profile_images/704285378153467905/nxvtCKh0_400x400.jpg",
@@ -148,7 +148,7 @@
         },
         {
           "name": "Ackee",
-          "repo": "electerious/Ackee",
+          "repo": "https://github.com/electerious/Ackee",
           "stars": "1.4K",
           "license": "MIT",
           "svg": "https://img.stackshare.io/service/11335/Icon.png",
@@ -158,7 +158,7 @@
         },
         {
           "name": "Plausible",
-          "repo": "plausible-insights/plausible",
+          "repo": "https://github.com/plausible-insights/plausible",
           "stars": "169",
           "license": "MIT",
           "svg": "https://plausible.io/images/icon/plausible_logo_300px.png",
@@ -177,7 +177,7 @@
           "stars": "18.6K",
           "license": "MIT",
           "svg": "https://cdn.jsdelivr.net/gh/dokku/dokku@v0.19.13/docs/assets/dokku.png",
-          "repo": "dokku/dokku",
+          "repo": "https://github.com/dokku/dokku",
           "site": "http://dokku.viewdocs.io/dokku/",
           "language": "Shell",
           "deploy": "https://marketplace.digitalocean.com/apps/dokku"
@@ -185,7 +185,7 @@
         {
           "name": "OpenFaas",
           "site": "https://www.openfaas.com/",
-          "repo": "openfaas/faas",
+          "repo": "https://github.com/openfaas/faas",
           "language": "Go",
           "license": "MIT",
           "stars": "17K",
@@ -198,12 +198,12 @@
           "stars": "7.5K",
           "name": "Flynn",
           "license": "BSD-3",
-          "repo": "flynn/flynn",
+          "repo": "https://github.com/flynn/flynn",
           "svg": "https://flynn.io/images/flynn-acaf9509.svg"
         },
         {
           "name": "Caprover",
-          "repo": "CapRover/CapRover",
+          "repo": "https://github.com/CapRover/CapRover",
           "license": "Apache 2.0",
           "stars": "4.7K",
           "svg": "https://caprover.com/img/logo.png",
@@ -213,7 +213,7 @@
         },
         {
           "name": "Tsuru",
-          "repo": "tsuru/tsuru",
+          "repo": "https://github.com/tsuru/tsuru",
           "license": "BSD-3",
           "stars": "3.3K",
           "svg": "https://avatars3.githubusercontent.com/u/6999787",
@@ -234,14 +234,14 @@
           "svg": "https://gogs.io/img/favicon.ico",
           "site": "https://gogs.io/",
           "language": "GO",
-          "repo": "gogs/gogs",
+          "repo": "https://github.com/gogs/gogs",
           "deploy": "https://gogs.io/docs/installation"
         },
         {
           "name": "GitLab",
           "stars": "22.2K",
           "license": "MIT",
-          "repo": "gitlabhq/gitlabhq",
+          "repo": "https://github.com/gitlabhq/gitlabhq",
           "svg": "https://www.vectorlogo.zone/logos/gitlab/gitlab-tile.svg",
           "deploy": "https://about.gitlab.com/install/",
           "site": "https://about.gitlab.com/",
@@ -250,7 +250,7 @@
         {
           "name": "Gitea",
           "stars": "18.4K",
-          "repo": "go-gitea/gitea",
+          "repo": "https://github.com/go-gitea/gitea",
           "svg": "https://gitea.io/images/gitea.png",
           "license": "MIT",
           "site": "https://gitea.io/en-us/",
@@ -264,7 +264,7 @@
           "svg": "https://docs.pagure.org/pagure/_static/pagure.png",
           "site": "https://pagure.io/pagure",
           "language": "Python",
-          "repo": "Pagure/pagure",
+          "repo": "https://github.com/Pagure/pagure",
           "deploy": "https://docs.pagure.org/pagure/install.html"
         }
       ],
@@ -277,7 +277,7 @@
       "alts": [
         {
           "name": "KeePassXC",
-          "repo": "keepassxreboot/keepassxc",
+          "repo": "https://github.com/keepassxreboot/keepassxc",
           "language": "C++",
           "site": "https://keepassxc.org/",
           "license": "GPL V3",
@@ -287,7 +287,7 @@
         {
           "name": "Bitwarden",
           "site": "https://bitwarden.com",
-          "repo": "bitwarden/server",
+          "repo": "https://github.com/bitwarden/server",
           "license": "AGPL V3",
           "language": "C#",
           "stars": "4.8K",
@@ -296,7 +296,7 @@
         },
         {
           "name": "Buttercup",
-          "repo": "buttercup/buttercup-desktop",
+          "repo": "https://github.com/buttercup/buttercup-desktop",
           "license": "GPL V3",
           "stars": "3.2K",
           "site": "https://buttercup.pw",
@@ -305,7 +305,7 @@
         },
         {
           "name": "Padloc",
-          "repo": "padloc/padloc",
+          "repo": "https://github.com/padloc/padloc",
           "license": "GPL V3",
           "stars": "886",
           "site": "https://padloc.app/",
@@ -315,7 +315,7 @@
         },
         {
           "name": "Passwordcockpit",
-          "repo": "passwordcockpit/passwordcockpit",
+          "repo": "https://github.com/passwordcockpit/passwordcockpit",
           "license": "BSD-3",
           "stars": "18",
           "site": "https://passwordcockpit.com/",
@@ -334,7 +334,7 @@
         {
           "name": "minio",
           "site": "https://min.io",
-          "repo": "minio/minio",
+          "repo": "https://github.com/minio/minio",
           "stars": "20.4K",
           "license": "Apache 2.0",
           "language": "Go",
@@ -345,7 +345,7 @@
           "name": "ceph",
           "language": "C++",
           "site": "https://ceph.io",
-          "repo": "ceph/ceph",
+          "repo": "https://github.com/ceph/ceph",
           "license": "LGPL V3",
           "stars": "7.4K",
           "svg": "https://gitlab.cern.ch/uploads/-/system/project/avatar/24868/Ceph_Logo_.png",
@@ -358,7 +358,7 @@
           "license": "Apache 2.0",
           "svg": "https://www.swiftstack.com/sites/default/files/swiftstack-logo-stacked-small.png",
           "language": "Python",
-          "repo": "openstack/swift",
+          "repo": "https://github.com/openstack/swift",
           "deploy": "https://docs.openstack.org/swift/latest/deployment_guide.html"
         }
       ],
@@ -372,7 +372,7 @@
       "alts": [
         {
           "name": "Oodo",
-          "repo": "odoo/odoo",
+          "repo": "https://github.com/odoo/odoo",
           "site": "https://www.odoo.com/",
           "license": "GPL V3",
           "stars": "16.8K",
@@ -382,7 +382,7 @@
         },
         {
           "name": "SuiteCRM",
-          "repo": "salesagility/SuiteCRM",
+          "repo": "https://github.com/salesagility/SuiteCRM",
           "site": "https://www.suitecrm.com/",
           "license": "AGPL-3.0",
           "stars": "1.9K",
@@ -392,7 +392,7 @@
         },
         {
           "name": "Crust CRM",
-          "repo": "crusttech",
+          "repo": "https://github.com/crusttech",
           "site": "https://www.crust.tech/",
           "license": "Apache-2.0",
           "svg": "https://avatars2.githubusercontent.com/u/40803294?s=200&v=4",
@@ -411,7 +411,7 @@
           "stars": "1.6K",
           "svg": "https://cryptpad.fr/customize/cryptpad-new-logo-colors-logoonly.png?ver=3.12.4",
           "license": "AGPL V3",
-          "repo": "xwiki-labs/cryptpad",
+          "repo": "https://github.com/xwiki-labs/cryptpad",
           "site": "https://cryptpad.fr/",
           "language": "JS",
           "deploy": "https://github.com/xwiki-labs/cryptpad/wiki/Installation-guide"
@@ -421,7 +421,7 @@
           "stars": "1.4K",
           "svg": "https://res-5.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_120,w_120,f_auto,b_white,q_auto:eco/v1470826892/ph2jc5mrymrljhrhbnjj.png",
           "license": "AGPL V3",
-          "repo": "ONLYOFFICE/DocumentServer",
+          "repo": "https://github.com/ONLYOFFICE/DocumentServer",
           "site": "https://www.onlyoffice.com/",
           "language": "JS",
           "deploy": "https://helpcenter.onlyoffice.com/"
@@ -431,7 +431,7 @@
           "stars": "378",
           "svg": "https://raw.githubusercontent.com/Graphite-Docs/graphite/master/public/images/mstile-310x310.png",
           "license": "GPL V3",
-          "repo": "Graphite-Docs/graphite",
+          "repo": "https://github.com/Graphite-Docs/graphite",
           "site": "https://www.graphitedocs.com/",
           "language": "JS",
           "deploy": "https://github.com/Graphite-Docs/graphite#install"
@@ -451,7 +451,7 @@
           "site": "https://www.zammad.com/",
           "deploy": "https://docs.zammad.org/en/latest/",
           "svg": "https://zammad.com/assets/images/icons/logo.svg",
-          "repo": "zammad/zammad"
+          "repo": "https://github.com/zammad/zammad"
         },
         {
           "name": "UVDesk",
@@ -461,7 +461,7 @@
           "site": "https://www.uvdesk.com/en/",
           "deploy": "https://www.uvdesk.com/en/blog/open-source-helpdesk-installation-on-ubuntu-uvdesk/",
           "svg": "https://yt3.ggpht.com/a/AGF-l7-NdudzgErRaS3LGC3qIHjUM53t3Hmt4RpqUw=s900-c-k-c0xffffffff-no-rj-mo",
-          "repo": "uvdesk/community-skeleton"
+          "repo": "https://github.com/uvdesk/community-skeleton"
         },
         {
           "name": "Helpy",
@@ -471,7 +471,7 @@
           "site": "https://helpy.io/",
           "deploy": "https://github.com/helpyio/helpy#getting-started",
           "svg": "https://raw.githubusercontent.com/helpyio/helpy/59c142c8c4da903c2cecdfcc426d7e8d582bfdb0/app/assets/images/helpy-logo.png",
-          "repo": "helpyio/helpy"
+          "repo": "https://github.com/helpyio/helpy"
         }
       ],
       "id": "lzgn1ku9q",
@@ -486,7 +486,7 @@
           "stars": "9.8K",
           "svg": "https://nextcloud.com/wp-content/themes/next/assets/img/common/nextcloud-square-logo.png?x53054",
           "license": "AGPL V3",
-          "repo": "nextcloud/server",
+          "repo": "https://github.com/nextcloud/server",
           "site": "https://nextcloud.com",
           "language": "PHP",
           "deploy": "https://docs.nextcloud.com/server/stable/admin_manual/installation/index.html"
@@ -496,7 +496,7 @@
           "stars": "7K",
           "svg": "https://raw.githubusercontent.com/owncloud/owncloud.github.io/source/static/logo.png",
           "license": "AGPL V3",
-          "repo": "owncloud/core",
+          "repo": "https://github.com/owncloud/core",
           "site": "https://owncloud.org/",
           "language": "PHP",
           "deploy": "https://doc.owncloud.org/server/10.2/"
@@ -506,7 +506,7 @@
           "stars": "7.5K",
           "svg": "https://wiki.deimos.fr/images/3/39/Seafile_logo.png",
           "license": "GPL V2",
-          "repo": "haiwen/seafile",
+          "repo": "https://github.com/haiwen/seafile",
           "site": "https://www.seafile.com/en/home/",
           "language": "C",
           "deploy": "https://download.seafile.com/published/seafile-manual/deploy/README.md"
@@ -524,7 +524,7 @@
           "deploy": "https://vestacp.com/install/",
           "site": "https://vestacp.com/",
           "language": "PHP",
-          "repo": "serghey-rodin/vesta",
+          "repo": "https://github.com/serghey-rodin/vesta",
           "stars": "2.2K",
           "license": "GPL V3",
           "svg": "https://pbs.twimg.com/profile_images/1024954605992648704/yrIPRVMG_400x400.jpg"
@@ -534,7 +534,7 @@
           "deploy": "https://doxfer.webmin.com/Webmin/Installing_Webmin",
           "site": "http://www.webmin.com/",
           "language": "PERL",
-          "repo": "webmin/webmin",
+          "repo": "https://github.com/webmin/webmin",
           "stars": "1.3K",
           "license": "BSD-3",
           "svg": "https://avatars2.githubusercontent.com/u/102707"
@@ -544,7 +544,7 @@
           "deploy": "https://github.com/hestiacp/hestiacp/#installing-hestia-control-panel",
           "site": "https://hestiacp.com/",
           "language": "PHP",
-          "repo": "hestiacp/hestiacp",
+          "repo": "https://github.com/hestiacp/hestiacp",
           "stars": "194",
           "license": "GPL V3",
           "svg": "https://hestiacp.com/img/logo.png"
@@ -561,7 +561,7 @@
           "deploy": "https://github.com/wekan/wekan/wiki/Platforms",
           "site": "https://wekan.github.io/",
           "language": "JS",
-          "repo": "wekan/wekan",
+          "repo": "https://github.com/wekan/wekan",
           "stars": "15.5K",
           "license": "MIT",
           "svg": "https://raw.githubusercontent.com/wekan/wekan/master/meta/icons/wekan-150.png"
@@ -571,7 +571,7 @@
           "deploy": "https://taigaio.github.io/taiga-doc/dist/setup-production.html",
           "site": "https://taiga.io/",
           "language": "PYTHON",
-          "repo": "taigaio/taiga-back",
+          "repo": "https://github.com/taigaio/taiga-back",
           "stars": "5.1K",
           "license": "AGPL V3",
           "svg": "https://avatars0.githubusercontent.com/u/6905422"
@@ -581,7 +581,7 @@
           "deploy": "https://docs.kanboard.org/en/latest/admin_guide/index.html",
           "site": "https://kanboard.org/",
           "language": "PHP",
-          "repo": "kanboard/kanboard",
+          "repo": "https://github.com/kanboard/kanboard",
           "stars": "4.9K",
           "license": "MIT",
           "svg": "https://user-images.githubusercontent.com/40141083/41202259-db1c76a8-6cb5-11e8-8cdc-cf6c3d560b3b.png"
@@ -598,7 +598,7 @@
           "name": "chatwoot",
           "stars": "3.4K",
           "svg": "https://chatwoot.herokuapp.com/packs/media/widget/assets/images/logo-a1bb9ce7a33ef8e3b17f28d79a48cb28.svg",
-          "repo": "chatwoot/chatwoot",
+          "repo": "https://github.com/chatwoot/chatwoot",
           "license": "MIT",
           "site": "https://www.chatwoot.com/",
           "language": "Ruby",
@@ -606,7 +606,7 @@
         },
         {
           "name": "chaskiq",
-          "repo": "chaskiq/chaskiq",
+          "repo": "https://github.com/chaskiq/chaskiq",
           "stars": "144",
           "license": "GPL V2",
           "svg": "https://chaskiq.io/icons/icon-192x192.png?v=38c439bc2c86c4a2e167235e8bb0ce1c",
@@ -623,7 +623,7 @@
       "alts": [
         {
           "name": "Huginn",
-          "repo": "huginn/huginn",
+          "repo": "https://github.com/huginn/huginn",
           "stars": "27.3K",
           "license": "MIT",
           "language": "Ruby",
@@ -635,7 +635,7 @@
           "name": "n8n",
           "stars": "6.4K",
           "svg": "https://user-images.githubusercontent.com/34615258/75075867-68fdad00-54c4-11ea-8e73-5930124d61a1.png",
-          "repo": "n8n-io/n8n",
+          "repo": "https://github.com/n8n-io/n8n",
           "license": "Apache 2.0",
           "site": "https://n8n.io",
           "language": "TS"
@@ -653,7 +653,7 @@
           "stars": "6.8K",
           "license": "AGPL V3",
           "svg": "https://upload.wikimedia.org/wikipedia/commons/2/2b/Logo_de_PeerTube.svg",
-          "repo": "Chocobozzz/PeerTube",
+          "repo": "https://github.com/Chocobozzz/PeerTube",
           "site": "https://joinpeertube.org/",
           "language": "TS",
           "deploy": "https://github.com/Chocobozzz/PeerTube/blob/develop/support/doc/production.md"
@@ -663,7 +663,7 @@
           "stars": "1.6K",
           "license": "MIT",
           "svg": "https://raw.githubusercontent.com/mayeaux/nodetube/master/media/logo.jpg",
-          "repo": "mayeaux/nodetube",
+          "repo": "https://github.com/mayeaux/nodetube",
           "site": "https://github.com/mayeaux/nodetube",
           "language": "JS",
           "deploy": "https://github.com/mayeaux/nodetube/blob/master/README.md"
@@ -681,7 +681,7 @@
           "stars": "47.1K",
           "license": "Apache 2.0",
           "svg": "https://cdn.worldvectorlogo.com/logos/elasticsearch.svg",
-          "repo": "elastic/elasticsearch",
+          "repo": "https://github.com/elastic/elasticsearch",
           "site": "https://www.elastic.co/elasticsearch",
           "language": "JAVA",
           "deploy": "https://www.elastic.co/guide/en/cloud/current/ec-create-deployment.html"
@@ -691,7 +691,7 @@
           "stars": "1.2K",
           "license": "MIT",
           "svg": "https://www.meilisearch.com/_nuxt/img/cf59975.svg",
-          "repo": "meilisearch/meilisearch",
+          "repo": "https://github.com/meilisearch/meilisearch",
           "site": "https://www.meilisearch.com/",
           "language": "RUST",
           "deploy": "https://docs.meilisearch.com/guides/advanced_guides/binary.html"
@@ -709,7 +709,7 @@
           "stars": "315",
           "license": "MIT",
           "language": "JS",
-          "repo": "ohmyform/ohmyform",
+          "repo": "https://github.com/ohmyform/ohmyform",
           "site": "https://ohmyform.com/",
           "svg": "https://user-images.githubusercontent.com/34615258/75390028-2c0f2d00-58ad-11ea-8d03-54469bad4365.png",
           "deploy": "http://ohmyform.com/docs/install/"
@@ -719,7 +719,7 @@
           "stars": "27",
           "license": "MIT",
           "language": "JS",
-          "repo": "gkpty/super-easy-forms",
+          "repo": "https://github.com/gkpty/super-easy-forms",
           "site": "https://supereasyforms.com/",
           "svg": "https://supereasyforms.com/img/SEF-LOGO.svg",
           "deploy": "https://www.npmjs.com/package/super-easy-forms#installation"
@@ -737,7 +737,7 @@
           "deploy": "https://getfider.com/docs/hosting-instance/",
           "site": "https://getfider.com/",
           "language": "GO",
-          "repo": "getfider/fider",
+          "repo": "https://github.com/getfider/fider",
           "stars": "1K",
           "license": "GPL V3",
           "svg": "https://userfiles.uptimerobot.com/img/436354-1543054074.png"
@@ -747,7 +747,7 @@
           "deploy": "https://github.com/riggraz/astuto#requirements",
           "site": "https://github.com/riggraz/astuto",
           "language": "RUBY",
-          "repo": "riggraz/astuto",
+          "repo": "https://github.com/riggraz/astuto",
           "stars": "599",
           "license": "GPL V3",
           "svg": "https://ph-files.imgix.net/be9188f7-f8a4-4959-9b3a-e685c5a9f364?auto=format"
@@ -761,7 +761,7 @@
       "alts": [
         {
           "name": "Mastodon",
-          "repo": "tootsuite/mastodon",
+          "repo": "https://github.com/tootsuite/mastodon",
           "site": "https://joinmastodon.org",
           "license": "AGPL V3",
           "stars": "20.4K",
@@ -775,7 +775,7 @@
           "license": "Custom",
           "site": "https://convo.events",
           "language": "Go",
-          "repo": "hiconvo/api",
+          "repo": "https://github.com/hiconvo/api",
           "svg": "https://pbs.twimg.com/profile_images/1183892292387532800/Tu02VSpQ_400x400.png"
         }
       ],
@@ -788,7 +788,7 @@
       "alts": [
         {
           "name": "Pixelfed",
-          "repo": "pixelfed/pixelfed",
+          "repo": "https://github.com/pixelfed/pixelfed",
           "site": "https://pixelfed.org",
           "stars": "2K",
           "license": "AGPL V3",
@@ -806,7 +806,7 @@
       "alts": [
         {
           "name": "Rudder",
-          "repo": "rudderlabs/rudder-server",
+          "repo": "https://github.com/rudderlabs/rudder-server",
           "language": "Go",
           "site": "https://www.rudderstack.com",
           "stars": "1.4K",
@@ -823,7 +823,7 @@
       "alts": [
         {
           "name": "Verdaccio",
-          "repo": "verdaccio/verdaccio",
+          "repo": "https://github.com/verdaccio/verdaccio",
           "stars": "8.9K",
           "license": "MIT",
           "svg": "https://verdaccio.org/img/logo/symbol/svg/verdaccio-tiny.svg",
@@ -841,7 +841,7 @@
       "alts": [
         {
           "name": "KeyCloak",
-          "repo": "keycloak/keycloak",
+          "repo": "https://github.com/keycloak/keycloak",
           "stars": "5.3K",
           "license": "Apache 2.0",
           "svg": "https://design.jboss.org/keycloak/logo/images/keycloak_icon_256px.png",
@@ -861,7 +861,7 @@
           "name": "LeanTime",
           "stars": "227",
           "site": "https://leantime.io/",
-          "repo": "leantime/leantime",
+          "repo": "https://github.com/leantime/leantime",
           "language": "PHP",
           "license": "GPL V2",
           "svg": "https://avatars2.githubusercontent.com/u/11252321?s=200&v=4"
@@ -879,7 +879,7 @@
           "deploy": "https://erxes.io/install",
           "site": "https://erxes.io/",
           "language": "JS",
-          "repo": "erxes/erxes",
+          "repo": "https://github.com/erxes/erxes",
           "stars": "715",
           "license": "GPL V3",
           "svg": "https://opencollective-production.s3-us-west-1.amazonaws.com/a5ff26c0-b88a-11e8-b4ab-519dd68ec9a0.jpg"
@@ -894,7 +894,7 @@
       "alts": [
         {
           "name": "Sentry",
-          "repo": "getsentry/sentry",
+          "repo": "https://github.com/getsentry/sentry",
           "stars": "23.9K",
           "svg": "https://sentry-brand.storage.googleapis.com/sentry-glyph-black.svg",
           "license": "Custom",
@@ -914,7 +914,7 @@
           "name": "Openship",
           "stars": "74",
           "license": "GPL V3",
-          "repo": "openshiporg/openship",
+          "repo": "https://github.com/openshiporg/openship",
           "svg": "https://user-images.githubusercontent.com/34615258/75076255-4750f580-54c5-11ea-9b9e-21ede0e13a09.png",
           "site": "https://openship.org",
           "language": "JS",
@@ -931,7 +931,7 @@
         {
           "name": "BulletTrain",
           "site": "https://bullet-train.io/",
-          "repo": "BulletTrainHQ/bullet-train-api",
+          "repo": "https://github.com/BulletTrainHQ/bullet-train-api",
           "language": "Python",
           "stars": "67",
           "license": "BSD-3",
@@ -951,7 +951,7 @@
           "deploy": "https://staticdeploy.io/docs/guides-deploying-staticdeploy-with-docker",
           "site": "https://staticdeploy.io/",
           "language": "TS",
-          "repo": "staticdeploy/staticdeploy",
+          "repo": "https://github.com/staticdeploy/staticdeploy",
           "stars": "44",
           "license": "MIT",
           "svg": "https://staticdeploy.io/images/logo.svg"

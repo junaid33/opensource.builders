@@ -960,6 +960,54 @@
       "id": "gxfg2143l",
       "svg": "https://www.netlify.com/img/press/logos/full-logo-light.png",
       "website": "https://netlify.com"
+    },
+    {
+      "main": "TeamViewer",
+      "alts": [
+        {
+          "name": "Myrtille",
+          "site": "https://cedrozor.github.io/myrtille/",
+          "repo": "cedrozor/myrtille",
+          "language": "C#",
+          "deploy": "https://github.com/cedrozor/myrtille/blob/master/DOCUMENTATION.md#installation",
+          "svg": "https://raw.githubusercontent.com/cedrozor/myrtille/master/Myrtille.Web/img/myrtille.png",
+          "stars": "713",
+          "license": "Apache 2.0"
+        },
+        {
+          "name": "MeshCentral",
+          "svg": "https://lh5.googleusercontent.com/deHYI_EjlypcziDM6Pzg0gEBGejwoYBiGz0ERe-CuiiYt1yjNSKWieWIt5T0pasfdhrnLY5EsQ=w16383",
+          "site": "https://www.meshcommander.com/meshcentral2",
+          "language": "JS",
+          "repo": "Ylianst/MeshCentral",
+          "deploy": "https://github.com/Ylianst/MeshCentral#installation",
+          "license": "Apache 2.0",
+          "stars": "247"
+        },
+        {
+          "name": "Apache Guacamole™",
+          "repo": "apache/guacamole-server",
+          "site": "https://guacamole.apache.org/",
+          "language": "C",
+          "svg": "https://raw.githubusercontent.com/apache/guacamole-website/master/images/guacamole-logo-64.png",
+          "stars": "1.2K",
+          "license": "Apache 2.0",
+          "deploy": "https://guacamole.apache.org/doc/gug/installing-guacamole.html"
+        },
+        {
+          "name": "Remotely",
+          "stars": "233",
+          "svg": "https://remotely.one/media/Remotely_Icon_Transparent.png",
+          "license": "GPL V3",
+          "deploy": "https://github.com/Jay-Rad/Remotely/blob/master/README.md",
+          "language": "JS",
+          "site": "https://remotely.one/",
+          "repo": "Jay-Rad/Remotely"
+        }
+      ],
+      "id": "n1j0lce0m",
+      "website": "https://www.teamviewer.com/",
+      "svg": "https://www.teamviewer.com/wp-content/themes/tv-wordpress-theme/dist/media/logo-teamviewer.svg"
     }
   ]
 }

@@ -225,7 +225,7 @@
       "website": "https://heroku.com"
     },
     {
-      "main": "Github",
+      "main": "GitHub",
       "alts": [
         {
           "name": "Gogs",
@@ -270,7 +270,7 @@
       ],
       "id": "8bxlppy5h",
       "svg": "https://github.githubassets.com/images/modules/logos_page/GitHub-Logo.png",
-      "website": "https://github"
+      "website": "https://github.com"
     },
     {
       "main": "1Password",

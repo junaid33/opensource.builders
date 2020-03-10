@@ -53,6 +53,16 @@
           "language": "PHP",
           "repo": "bagisto/bagisto",
           "deploy": "https://webkul.com/blog/laravel-ecommerce-website"
+        }, 
+        {
+          "name": "Shopaholic",
+          "stars": "370",
+          "license": "GPL v3",
+          "svg": "https://raw.githubusercontent.com/oc-shopaholic/oc-shopaholic-plugin/master/assets/images/logo.png",
+          "language": "PHP",
+          "site": "https://shopaholic.one",
+          "deploy": "https://www.smashingmagazine.com/2020/03/october-cms-shopaholic",
+          "repo": "https://github.com/oc-shopaholic/oc-shopaholic-plugin"
         }
       ],
       "website": "https://shopify.com"

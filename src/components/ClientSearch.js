@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import * as JsSearch from "js-search"
 import {
   Box,
   Badge,
@@ -11,22 +12,10 @@ import {
   PseudoBox,
   InputGroup,
   Input,
-  InputRightElement,
+  InputLeftElement,
   Button,
 } from "@chakra-ui/core"
-import * as JsSearch from "js-search"
-import JSONData from "../../content/alts/alts.json"
 
-const allData = []
-
-JSONData.alternatives.map(comp => {
-  const flat = comp.alts.map(alt => {
-    return { ...alt, main: comp.main, mainID: comp.id }
-  })
-  allData.push(...flat)
-})
-
-console.log(allData)
 
 const deployLogo = deploy => {
   if (deploy.includes("heroku.com")) {
@@ -200,7 +189,7 @@ class Search extends Component {
     dataToSearch.addIndex(`main`) // sets the index attribute for the data
     dataToSearch.addIndex(`langauge`) // sets the index attribute for the data
 
-    dataToSearch.addDocuments(allData) // adds the data to be searched
+    dataToSearch.addDocuments(this.props.comps) // adds the data to be searched
     this.setState({ search: dataToSearch, isLoading: false })
   }
 
@@ -218,33 +207,8 @@ class Search extends Component {
   }
 
   render() {
-    const { isError, isLoading, searchResults, searchQuery } = this.state
-    const queryResults = searchQuery === `` ? allData : searchResults
-    if (isLoading) {
-      return (
-        <div style={{ margin: `1.2rem 1rem 1.2rem 1rem` }}>
-          <h1 style={{ marginTop: `3em`, textAlign: `center` }}>
-            Getting the search all setup
-          </h1>
-        </div>
-      )
-    }
-    if (isError) {
-      return (
-        <div style={{ margin: `1.2rem 1rem 1.2rem 1rem` }}>
-          <h1 style={{ marginTop: `3em`, textAlign: `center` }}>Ohh no!!!!!</h1>
-          <h3
-            style={{
-              marginTop: `2em`,
-              padding: `2em 0em`,
-              textAlign: `center`,
-            }}
-          >
-            Something really bad happened
-          </h3>
-        </div>
-      )
-    }
+    const { searchResults, searchQuery } = this.state
+    const queryResults = searchQuery === `` ? this.props.comps : searchResults
     return (
       <Box>
         <Box
@@ -270,28 +234,19 @@ class Search extends Component {
             </Box>
           </Box>
         </Box>
-     
+
         <Box ml="auto" mr="auto" maxWidth="60rem" px={2} py={4}>
-          <InputGroup size="lg" mx={1} mb={6}>
+          <InputGroup size="lg" mx={1} mb={6} >
+          <InputLeftElement children={<Icon name="search" color="gray.300" />} />
+
             <Input
               pr="4.5rem"
               placeholder="Search for anything"
               value={searchQuery}
               onChange={this.searchData}
+              boxShadow="sm"
             />
-            <InputRightElement width="7rem">
-              <Button
-                variantColor="green"
-                // variant="ghost"
-                // bg="green.50"
-                h="2rem"
-                size="md"
-                _hover={{ opacity: 0.8 }}
-                onClick={this.handleSubmit}
-              >
-                SEARCH
-              </Button>
-            </InputRightElement>
+
           </InputGroup>
           {/* Number of items:
         {queryResults.length} */}
@@ -304,7 +259,7 @@ class Search extends Component {
             // px={2}
             // py={4}
           >
-            {JSONData.alternatives.map(comp => {
+            {this.props.mainInfo.map(comp => {
               const match = queryResults.filter(alt => alt.mainID === comp.id)
               if (match.length > 0) {
                 return (

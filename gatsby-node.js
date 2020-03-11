@@ -15,6 +15,39 @@ exports.createPages = async ({ graphql, actions }) => {
     })
   })
 
+  const allData = []
+
+  altsData.alternatives.map(comp => {
+    const flat = comp.alts.map(alt => {
+      return { ...alt, main: comp.main, mainID: comp.id }
+    })
+    allData.push(...flat)
+  })
+
+
+
+const mainInfo = altsData.alternatives.map(({alts, ...keepAttrs}) => keepAttrs)
+
+  createPage({
+    path: `/search`,
+    component: path.resolve(`./src/templates/ClientSearchTemplate.js`),
+    context: {
+      compData: {
+        allComps: allData,
+        mainInfo: mainInfo,
+        options: {
+          indexStrategy: `Prefix match`,
+          searchSanitizer: `Lower Case`,
+          TitleIndex: true,
+          AuthorIndex: true,
+          SearchByTerm: true,
+        },
+      },
+
+    },
+  })
+
+
   const blogPost = path.resolve(`./src/templates/blog-post.js`)
   const result = await graphql(
     `

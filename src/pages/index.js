@@ -142,13 +142,8 @@ const deployLogo = deploy => {
 }
 
 const Index = ({ data, location }) => {
-  // useEffect(() => {
-  //   window.localStorage.setItem("darkMode", false)
-  // })
-
   const [{ alternatives }] = useLocalJsonForm(data.altsJson, {
     label: "Add an app comparison",
-
     fields: [
       {
         label: "Comparisons",

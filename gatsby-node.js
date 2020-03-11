@@ -24,12 +24,10 @@ exports.createPages = async ({ graphql, actions }) => {
     allData.push(...flat)
   })
 
-
-
 const mainInfo = altsData.alternatives.map(({alts, ...keepAttrs}) => keepAttrs)
 
   createPage({
-    path: `/search`,
+    path: `/`,
     component: path.resolve(`./src/templates/ClientSearchTemplate.js`),
     context: {
       compData: {

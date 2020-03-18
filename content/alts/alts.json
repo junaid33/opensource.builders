@@ -944,6 +944,15 @@
           "license": "BSD-3",
           "svg": "https://bullet-train.io/static/icons-192.png",
           "deploy": "https://heroku.com/deploy?template=https://github.com/BulletTrainHQ/bullet-train-api"
+        },
+        {
+          "name": "Unleash",
+          "site": "https://unleash.github.io/",
+          "repo": "unleash/unleash",
+          "language": "Javascript",
+          "stars": "1901",
+          "license": "APACHE2.0",
+          "svg": "https://unleash.github.io/img/logo-inverted.png",
         }
       ],
       "id": "zczpb2ekn",

@@ -29,20 +29,6 @@ const mainInfo = altsData.alternatives.map(({alts, ...keepAttrs}) => keepAttrs)
   createPage({
     path: `/`,
     component: path.resolve(`./src/templates/ClientSearchTemplate.js`),
-    context: {
-      compData: {
-        allComps: allData,
-        mainInfo: mainInfo,
-        options: {
-          indexStrategy: `Prefix match`,
-          searchSanitizer: `Lower Case`,
-          TitleIndex: true,
-          AuthorIndex: true,
-          SearchByTerm: true,
-        },
-      },
-
-    },
   })
 
 

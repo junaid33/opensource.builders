@@ -17,6 +17,7 @@ import {
 } from "@chakra-ui/core"
 
 
+
 const deployLogo = deploy => {
   if (deploy.includes("heroku.com")) {
     return (
@@ -183,11 +184,11 @@ class Search extends Component {
      */
     dataToSearch.searchIndex = new JsSearch.TfIdfSearchIndex(`repo`)
 
+    dataToSearch.addIndex(`site`) // sets the index attribute for the data
     dataToSearch.addIndex(`name`) // sets the index attribute for the data
     dataToSearch.addIndex(`repo`) // sets the index attribute for the data
     dataToSearch.addIndex(`license`) // sets the index attribute for the data
     dataToSearch.addIndex(`main`) // sets the index attribute for the data
-    dataToSearch.addIndex(`langauge`) // sets the index attribute for the data
 
     dataToSearch.addDocuments(this.props.comps) // adds the data to be searched
     this.setState({ search: dataToSearch, isLoading: false })
@@ -209,6 +210,9 @@ class Search extends Component {
   render() {
     const { searchResults, searchQuery } = this.state
     const queryResults = searchQuery === `` ? this.props.comps : searchResults
+
+
+
     return (
       <Box>
         <Box

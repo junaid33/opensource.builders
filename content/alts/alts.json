@@ -45,6 +45,16 @@
           "deploy": "https://docs.sylius.com/en/1.6/cookbook/deployment/platform-sh.html"
         },
         {
+          "name": "PrestaShop",
+          "repo": "prestashop/prestashop",
+          "site": "https://www.prestashop.com",
+          "license": " OSL-3.0",
+          "stars": "4.5K",
+          "svg": "https://avatars1.githubusercontent.com/u/2815696?s=200&v=4",
+          "language": "PHP",
+          "deploy": "https://devdocs.prestashop.com/1.7/basics/installation/"
+        },
+        {
           "name": "Bagisto",
           "stars": "2.1K",
           "license": "MIT",
@@ -53,8 +63,19 @@
           "language": "PHP",
           "repo": "bagisto/bagisto",
           "deploy": "https://webkul.com/blog/laravel-ecommerce-website"
+        }, 
+        {
+          "name": "Shopaholic",
+          "stars": "370",
+          "license": "GPL v3",
+          "svg": "https://raw.githubusercontent.com/oc-shopaholic/oc-shopaholic-plugin/master/assets/images/logo.png",
+          "language": "PHP",
+          "site": "https://shopaholic.one",
+          "deploy": "https://www.smashingmagazine.com/2020/03/october-cms-shopaholic",
+          "repo": "https://github.com/oc-shopaholic/oc-shopaholic-plugin"
         }
       ],
+      "id": "wejrioewjr",
       "website": "https://shopify.com"
     },
     {
@@ -166,7 +187,8 @@
           "language": "Elixir"
         }
       ],
-      "website": "https://analytics.google.com/"
+      "website": "https://analytics.google.com/",
+      "id": "io3jr2332"
     },
     {
       "main": "Heroku",
@@ -222,16 +244,17 @@
           "deploy": "https://docs.tsuru.io/stable/installing/index.html"
         }
       ],
-      "website": "https://heroku.com"
+      "website": "https://heroku.com",
+      "id": "12uejiood"
     },
     {
-      "main": "Github",
+      "main": "GitHub",
       "alts": [
         {
           "name": "Gogs",
           "stars": "33.5K",
           "license": "MIT",
-          "svg": "https://gogs.io/img/favicon.ico",
+          "svg": "https://avatars2.githubusercontent.com/u/6656686?s=400&v=4",
           "site": "https://gogs.io/",
           "language": "GO",
           "repo": "gogs/gogs",
@@ -270,7 +293,7 @@
       ],
       "id": "8bxlppy5h",
       "svg": "https://github.githubassets.com/images/modules/logos_page/GitHub-Logo.png",
-      "website": "https://github"
+      "website": "https://github.com"
     },
     {
       "main": "1Password",
@@ -371,7 +394,7 @@
       "svg": "https://user-images.githubusercontent.com/3085186/75608678-a15a4800-5acf-11ea-9ddc-6bb922043585.png",
       "alts": [
         {
-          "name": "Oodo",
+          "name": "Odoo",
           "repo": "odoo/odoo",
           "site": "https://www.odoo.com/",
           "license": "GPL V3",
@@ -401,7 +424,8 @@
           "stars": "25"
         }
       ],
-      "website": "https://salesforce.com"
+      "website": "https://salesforce.com",
+      "id": "kpo1k2e123"
     },
     {
       "main": "Google Docs",
@@ -435,10 +459,21 @@
           "site": "https://www.graphitedocs.com/",
           "language": "JS",
           "deploy": "https://github.com/Graphite-Docs/graphite#install"
+        },
+        {
+          "name": "CodiMD",
+          "stars": "513",
+          "svg": "https://demo.codimd.org/codimd-icon-1024.png",
+          "license": "AGPL V3",
+          "repo": "codimd/server",
+          "site": "https://demo.codimd.org/",
+          "language": "JS",
+          "deploy": "https://github.com/codimd/server#installation--upgrading"
         }
       ],
       "svg": "https://assets-global.website-files.com/580ea75512564ed05c3a8455/589347c705e0ff8065dcdf22_Google_Docs_wordmark.svg",
-      "website": "https://www.google.com/intl/en_US/docs/about/"
+      "website": "https://www.google.com/intl/en_US/docs/about/",
+      "id": " pqlrehguie"
     },
     {
       "main": "Zendesk",
@@ -551,7 +586,8 @@
         }
       ],
       "svg": "https://cdn.freebiesupply.com/logos/large/2x/cpanel-logo-svg-vector.svg",
-      "website": "https://cpanel.net/"
+      "website": "https://cpanel.net/",
+      "id": " ewriieoke"
     },
     {
       "main": "Trello",
@@ -588,7 +624,8 @@
         }
       ],
       "svg": "https://d2k1ftgv7pobq7.cloudfront.net/meta/u/res/images/brand-assets/Logos/0099ec3754bf473d2bbf317204ab6fea/trello-logo-blue.png",
-      "website": "https://trello.com/"
+      "website": "https://trello.com/",
+      "id": " eyyrebbfy"
     },
     {
       "main": "Intercom",
@@ -977,6 +1014,53 @@
       ],
       "svg": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Intuit_QuickBooks_logo.png/250px-Intuit_QuickBooks_logo.png",
       "website": "https://quickbooks.intuit.com"
+    },{
+      "main": "TeamViewer",
+      "alts": [
+        {
+          "name": "Myrtille",
+          "site": "https://cedrozor.github.io/myrtille/",
+          "repo": "cedrozor/myrtille",
+          "language": "C#",
+          "deploy": "https://github.com/cedrozor/myrtille/blob/master/DOCUMENTATION.md#installation",
+          "svg": "https://raw.githubusercontent.com/cedrozor/myrtille/master/Myrtille.Web/img/myrtille.png",
+          "stars": "713",
+          "license": "Apache 2.0"
+        },
+        {
+          "name": "MeshCentral",
+          "svg": "https://lh5.googleusercontent.com/deHYI_EjlypcziDM6Pzg0gEBGejwoYBiGz0ERe-CuiiYt1yjNSKWieWIt5T0pasfdhrnLY5EsQ=w16383",
+          "site": "https://www.meshcommander.com/meshcentral2",
+          "language": "JS",
+          "repo": "Ylianst/MeshCentral",
+          "deploy": "https://github.com/Ylianst/MeshCentral#installation",
+          "license": "Apache 2.0",
+          "stars": "247"
+        },
+        {
+          "name": "Apache Guacamole™",
+          "repo": "apache/guacamole-server",
+          "site": "https://guacamole.apache.org/",
+          "language": "C",
+          "svg": "https://raw.githubusercontent.com/apache/guacamole-website/master/images/guacamole-logo-64.png",
+          "stars": "1.2K",
+          "license": "Apache 2.0",
+          "deploy": "https://guacamole.apache.org/doc/gug/installing-guacamole.html"
+        },
+        {
+          "name": "Remotely",
+          "stars": "233",
+          "svg": "https://remotely.one/media/Remotely_Icon_Transparent.png",
+          "license": "GPL V3",
+          "deploy": "https://github.com/Jay-Rad/Remotely/blob/master/README.md",
+          "language": "JS",
+          "site": "https://remotely.one/",
+          "repo": "Jay-Rad/Remotely"
+        }
+      ],
+      "id": "n1j0lce0m",
+      "website": "https://www.teamviewer.com/",
+      "svg": "https://www.teamviewer.com/wp-content/themes/tv-wordpress-theme/dist/media/logo-teamviewer.svg"
     }
   ]
 }

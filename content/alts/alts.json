@@ -45,6 +45,16 @@
           "deploy": "https://docs.sylius.com/en/1.6/cookbook/deployment/platform-sh.html"
         },
         {
+          "name": "PrestaShop",
+          "repo": "prestashop/prestashop",
+          "site": "https://www.prestashop.com",
+          "license": " OSL-3.0",
+          "stars": "4.5K",
+          "svg": "https://avatars1.githubusercontent.com/u/2815696?s=200&v=4",
+          "language": "PHP",
+          "deploy": "https://devdocs.prestashop.com/1.7/basics/installation/"
+        },
+        {
           "name": "Bagisto",
           "stars": "2.1K",
           "license": "MIT",

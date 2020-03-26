@@ -15,6 +15,23 @@ exports.createPages = async ({ graphql, actions }) => {
     })
   })
 
+  const allData = []
+
+  altsData.alternatives.map(comp => {
+    const flat = comp.alts.map(alt => {
+      return { ...alt, main: comp.main, mainID: comp.id }
+    })
+    allData.push(...flat)
+  })
+
+const mainInfo = altsData.alternatives.map(({alts, ...keepAttrs}) => keepAttrs)
+
+  createPage({
+    path: `/`,
+    component: path.resolve(`./src/templates/ClientSearchTemplate.js`),
+  })
+
+
   const blogPost = path.resolve(`./src/templates/blog-post.js`)
   const result = await graphql(
     `

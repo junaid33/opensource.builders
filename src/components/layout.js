@@ -54,7 +54,7 @@ class Layout extends React.Component {
     }
     return (
       <Box background="#EDF2F7" minHeight="100vh">
-        <Header />
+        <Header location={this.props.location} />
         <Box
           as="a"
           p={5}

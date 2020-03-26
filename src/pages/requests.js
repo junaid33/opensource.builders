@@ -25,7 +25,6 @@ export default () => {
     )
       .then(response => response.json()) // parse JSON from request
       .then(resultData => {
-        console.log(resultData)
         resultData.sort((a, b) =>
           a.reactions.total_count < b.reactions.total_count ? 1 : -1
         )

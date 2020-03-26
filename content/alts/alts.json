@@ -1064,6 +1064,24 @@
       "id": "gxfg2143l",
       "svg": "https://www.netlify.com/img/press/logos/full-logo-light.png",
       "website": "https://netlify.com"
+    },
+{
+      "main": "Amplitude",
+      "alts": [
+        {
+          "name": "PostHog",
+          "deploy": "https://github.com/PostHog/posthog/wiki/Deployment",
+          "site": "https://posthog.com/",
+          "language": "Python",
+          "repo": "PostHog/posthog",
+          "stars": "1.7k",
+          "license": "MIT",
+          "svg": "https://posthog.com/wp-content/uploads/2020/02/Group-10.png"
+        }
+      ],
+      "id": "jvridinciu",
+      "svg": "https://www.vectorlogo.zone/logos/amplitude/amplitude-icon.svg",
+      "website": "https://amplitude.com/"
     }
   ]
 }

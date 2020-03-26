@@ -281,6 +281,16 @@
           "deploy": "https://marketplace.digitalocean.com/apps/gitea"
         },
         {
+          "name": "OneDev",
+          "stars": "2.7K",
+          "license": "MIT",
+          "svg": "https://code.onedev.io/img/logo.png",
+          "site": "https://code.onedev.io/",
+          "language": "Java",
+          "repo": "theonedev/onedev",
+          "deploy": "https://code.onedev.io/projects/onedev-manual/blob/master/pages/installation-guide.md"
+        },
+        {
           "name": "Pagure",
           "stars": "158",
           "license": "GPL v2+",

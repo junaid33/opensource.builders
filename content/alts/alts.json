@@ -459,6 +459,16 @@
           "site": "https://www.graphitedocs.com/",
           "language": "JS",
           "deploy": "https://github.com/Graphite-Docs/graphite#install"
+        },
+        {
+          "name": "CodiMD",
+          "stars": "513",
+          "svg": "https://demo.codimd.org/codimd-icon-1024.png",
+          "license": "AGPL V3",
+          "repo": "codimd/server",
+          "site": "https://demo.codimd.org/",
+          "language": "JS",
+          "deploy": "https://github.com/codimd/server#installation--upgrading"
         }
       ],
       "svg": "https://assets-global.website-files.com/580ea75512564ed05c3a8455/589347c705e0ff8065dcdf22_Google_Docs_wordmark.svg",

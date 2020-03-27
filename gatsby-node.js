@@ -2,6 +2,8 @@ const path = require(`path`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
 const altsData = require("./content/alts/alts.json")
 
+
+
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
@@ -24,13 +26,27 @@ exports.createPages = async ({ graphql, actions }) => {
     allData.push(...flat)
   })
 
-const mainInfo = altsData.alternatives.map(({alts, ...keepAttrs}) => keepAttrs)
+  const mainInfo = altsData.alternatives.map(
+    ({ alts, ...keepAttrs }) => keepAttrs
+  )
 
   createPage({
     path: `/`,
     component: path.resolve(`./src/templates/ClientSearchTemplate.js`),
+    context: {
+      compData: {
+        allComps: allData,
+        mainInfo: mainInfo,
+        options: {  
+          indexStrategy: `Prefix match`,
+          searchSanitizer: `Lower Case`,
+          TitleIndex: true,
+          AuthorIndex: true,
+          SearchByTerm: true,
+        },
+      },
+    },
   })
-
 
   const blogPost = path.resolve(`./src/templates/blog-post.js`)
   const result = await graphql(

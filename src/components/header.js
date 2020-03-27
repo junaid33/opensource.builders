@@ -19,7 +19,6 @@ export default function Header({ children, location }) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const btnRef = React.useRef()
 
-  console.log({ location })
   const navItem = ({ name, to, my, onClick }) => (
     <Link to={to} onClick={onClick}>
       <PseudoBox
@@ -85,37 +84,7 @@ export default function Header({ children, location }) {
               </Box>
             </Link>
           </Box>
-          {/* <mobileNav /> */}
           <>
-            {/* <Button
-              ml="auto"
-              px={1}
-              bg="transparent"
-              color="#9fa6b2"
-              display={{
-                base: "flex",
-                sm: "none",
-              }}
-              _hover={{ bg: "#374151", color: "#fff" }}
-              ref={btnRef}
-              onClick={onOpen}
-            >
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M4 6H20M4 12H20M4 18H20"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </Button> */}
             <Popover>
               {({ isOpen, onClose }) => (
                 <>
@@ -152,6 +121,12 @@ export default function Header({ children, location }) {
                   </PopoverTrigger>
                   <PopoverContent zIndex={4} width="200px" py={2} bg="gray.800">
                     <PopoverBody>
+                      {process.env.NODE_ENV === "development" && navItem({
+                        to: "/edit",
+                        name: "Edit",
+                        my: 2,
+                        onClick: onClose,
+                      })}
                       {navItem({
                         to: "/",
                         name: "Alternatives",
@@ -202,10 +177,11 @@ export default function Header({ children, location }) {
             </Popover>
           </>
           <Box pl={2} display={{ base: "none", sm: "flex" }}>
+            {process.env.NODE_ENV === "development" &&
+              navItem({ to: "/edit", name: "Edit" })}
             {navItem({ to: "/", name: "Alternatives" })}
             {navItem({ to: "/requests", name: "Requests" })}
             {navItem({ to: "/about", name: "About" })}
-
             <PseudoBox
               display="flex"
               alignItems="center"

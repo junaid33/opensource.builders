@@ -888,6 +888,24 @@
       "website": "https://canny.io/"
     },
     {
+      "main": "Zoom",
+      "alts": [
+        {
+          "name": "Jitsi",
+          "repo": "jitsi/jitsi-meet",
+          "site": "https://meet.jit.si/",
+          "license": "Apache 2.0",
+          "stars": "6.9K",
+          "svg": "https://i.pinimg.com/originals/95/01/6d/95016d0e63a555cdd650f3494e552b67.png",
+          "language": "JS",
+          "deploy": "https://github.com/jitsi/jitsi-meet/blob/master/doc/development.md"
+        }
+      ],
+      "id": "cufgpxuvc",
+      "website": "https://zoom.com",
+      "svg": "https://www.coconino.edu/resources/images/images/its/zoom-logo.png?i=050"
+    },
+    {
       "main": "Instagram",
       "alts": [
         {

@@ -51,12 +51,12 @@ export default function Header({ children, location }) {
           flexWrap="wrap"
           justifyContent="space-between"
           alignItems="center"
-          p="1rem"
+          p=".75rem"
         >
           <Box flex={3}>
             <Link to="/">
-              <Box display="flex">
-                <Box flexBasis="46px">
+              <Box display="flex" my={3} pr={2}>
+                <Box minWidth="46px">
                   <Logo />
                 </Box>
                 <Box>
@@ -176,7 +176,7 @@ export default function Header({ children, location }) {
               )}
             </Popover>
           </>
-          <Box pl={2} display={{ base: "none", sm: "flex" }}>
+          <Box  display={{ base: "none", sm: "flex" }}>
             {process.env.NODE_ENV === "development" &&
               navItem({ to: "/edit", name: "Edit" })}
             {navItem({ to: "/", name: "Alternatives" })}

@@ -42,15 +42,13 @@ https://codesandbox.io/s/github/junaid33/opensource.builders
 
 There are 2 ways to add a new open-source project
 
-1. Clone the repo and run it locally using the instructions above. You will see a blue pencil icon on the bottom left. When you click it, it opens TinaCMS. You can add comparisons and alternatives here and change the data on existing ones. Once done, the data is automatically saved and you can send a PR which I can preview and accept quickly.
+1. Go to http://localhost:8000/edit. You will see a blue pencil icon on the bottom left. When you click it, it opens TinaCMS. You can add comparisons and alternatives here and change the data on existing ones. Once done, the data is automatically saved and you can send a PR which I can preview and accept quickly.
 
 2. All the data is saved here:
 
 https://github.com/junaid33/opensource.builders/blob/master/content/alts/alts.json
 
 You can edit this JSON directly and send a PR if you don't want to run anything locally.
-
-If you are an expert on Gatsby and gatsby-transformer-json, please check out this [issue](https://github.com/junaid33/opensource.builders/issues/109).
 
 ## Want to add a request for open-source alternatives?
 

@@ -281,6 +281,16 @@
           "deploy": "https://marketplace.digitalocean.com/apps/gitea"
         },
         {
+          "name": "Codeberg",
+          "stars": "22",
+          "repo": "https://codeberg.org/Codeberg/Community",
+          "svg": "https://codeberg.org/img/logo-small.svg",
+          "license": "AGPL V3",
+          "site": "https://codeberg.org/",
+          "language": "Go",
+          "deploy": "https://codeberg.org/Codeberg/build-deploy-gitea"
+        },
+        {
           "name": "OneDev",
           "stars": "2.7K",
           "license": "MIT",

@@ -569,7 +569,7 @@
       ],
       "id": "lzgn1ku9q",
       "svg": "https://logos-download.com/wp-content/uploads/2016/10/Zendesk_logo_wordmark.png",
-      "website": "https://zen.com"
+      "website": "https://www.zendesk.com/"
     },
     {
       "main": "Google Drive",
@@ -819,13 +819,13 @@
         },
         {
           "name": "MeiliSearch",
-          "stars": "1.2K",
+          "stars": "3.4K",
           "license": "MIT",
           "svg": "https://www.meilisearch.com/_nuxt/img/cf59975.svg",
           "repo": "meilisearch/meilisearch",
           "site": "https://www.meilisearch.com/",
           "language": "RUST",
-          "deploy": "https://docs.meilisearch.com/guides/advanced_guides/binary.html"
+          "deploy": "https://docs.meilisearch.com/guides/introduction/quick_start_guide.html"
         }
       ],
       "id": "hfarlvwm9",

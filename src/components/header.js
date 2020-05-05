@@ -56,7 +56,7 @@ export default function Header({ children, location }) {
           <Box flex={3}>
             <Link to="/">
               <Box display="flex" my={3} pr={2}>
-                <Box minWidth="46px">
+                <Box minWidth="46px" maxWidth="0px">
                   <Logo />
                 </Box>
                 <Box>

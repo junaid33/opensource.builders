@@ -1,6 +1,13 @@
 {
   "alternatives": [
     {
+      "main": "Medium",
+      "alts": [],
+      "id": "fvlhaa4dg",
+      "svg": "https://miro.medium.com/max/1090/1*TGH72Nnw24QL3iV9IOm4VA.png",
+      "website": "https://medium.com/"
+    },
+    {
       "main": "Shopify",
       "svg": "https://cdn.shopify.com/assets2/brand-assets/shopify-logo-main-8ee1e0052baf87fd9698ceff7cbc01cc36a89170212ad227db3ff2706e89fd04.svg",
       "alts": [
@@ -1083,7 +1090,7 @@
       "svg": "https://www.netlify.com/img/press/logos/full-logo-light.png",
       "website": "https://netlify.com"
     },
-{
+    {
       "main": "Amplitude",
       "alts": [
         {

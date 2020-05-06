@@ -2,7 +2,26 @@
   "alternatives": [
     {
       "main": "Medium",
-      "alts": [],
+      "alts": [
+        {
+          "site": "https://writefreely.org/",
+          "name": "WriteFreely",
+          "stars": "1493",
+          "license": "AGPL V3",
+          "language": "GO",
+          "repo": "writeas/writefreely",
+          "svg": "https://github.com/writeas/writefreely/blob/master/static/img/touch-icon-180.png?raw=true"
+        },
+        {
+          "name": "Sigle",
+          "site": "https://www.sigle.io/",
+          "stars": "140",
+          "license": "MIT",
+          "svg": "https://app.sigle.io/icon-192x192.png",
+          "language": "JS",
+          "repo": "pradel/sigle"
+        }
+      ],
       "id": "fvlhaa4dg",
       "svg": "https://miro.medium.com/max/1090/1*TGH72Nnw24QL3iV9IOm4VA.png",
       "website": "https://medium.com/"

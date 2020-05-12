@@ -44,6 +44,7 @@
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-helmet": "^5.2.1",
+    "react-infinite-scroller": "^1.2.4",
     "react-tinacms": "^0.8.0",
     "react-typography": "^0.16.19",
     "slugify": "^1.3.5",

@@ -16,7 +16,6 @@ import SEO from "../components/seo"
 import CompGroup from "../components/CompGroup"
 
 const Index = ({ data, location }) => {
-    
   const [{ alternatives }] = useLocalJsonForm(data.altsJson, {
     label: "Add an app comparison",
     fields: [
@@ -26,7 +25,7 @@ const Index = ({ data, location }) => {
         component: "group-list",
         description: "Comparisons List",
         itemProps: item => ({
-          label: item.main,
+          label: item.commercial[0].main,
         }),
         defaultItem: () => ({
           main: "New Comparison",
@@ -36,20 +35,46 @@ const Index = ({ data, location }) => {
             .substr(2, 9),
         }),
         fields: [
+          // {
+          //   label: "Main Application",
+          //   name: "main",
+          //   component: "text",
+          // },
+          // {
+          //   label: "Website",
+          //   name: "website",
+          //   component: "text",
+          // },
+          // {
+          //   label: "Logo URL",
+          //   name: "svg",
+          //   component: "text",
+          // },
           {
-            label: "Main Application",
-            name: "main",
-            component: "text",
-          },
-          {
-            label: "Website",
-            name: "website",
-            component: "text",
-          },
-          {
-            label: "Logo URL",
-            name: "svg",
-            component: "text",
+            label: "Commercial Apps",
+            name: "commercial",
+            component: "group-list",
+            description: "Commercial Apps",
+            itemProps: item => ({
+              label: item.main,
+            }),
+            fields: [
+              {
+                label: "Main Application",
+                name: "main",
+                component: "text",
+              },
+              {
+                label: "Website",
+                name: "website",
+                component: "text",
+              },
+              {
+                label: "Logo URL",
+                name: "svg",
+                component: "text",
+              },
+            ],
           },
           {
             label: "Opensource Alternatives",
@@ -102,6 +127,26 @@ const Index = ({ data, location }) => {
               },
             ],
           },
+          {
+            name: "category",
+            component: "select",
+            label: "Category",
+            description: "Select a category",
+            options: [
+              "E-commerce",
+              "Developer Tools",
+              "Social Media",
+              "Communication",
+              "Analytics",
+              "Password Managers",
+              "Form Builder",
+              "Cloud",
+              "Deployment",
+              "Product Management",
+              "Automation",
+              "CRM",
+            ],
+          },
         ],
       },
     ],
@@ -143,7 +188,11 @@ const Index = ({ data, location }) => {
         py={4}
       >
         {data.altsJson.alternatives.map(comp => (
-          <CompGroup comp={comp} alts={comp.alts} />
+          <CompGroup
+            comp={comp}
+            commercial={comp.commercial}
+            alts={comp.alts}
+          />
         ))}
       </Box>
     </>
@@ -161,9 +210,11 @@ export const pageQuery = graphql`
     }
     altsJson {
       alternatives {
-        main
-        svg
-        website
+        commercial {
+          main
+          svg
+          website
+        }
         alts {
           name
           license

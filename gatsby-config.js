@@ -24,6 +24,7 @@ module.exports = {
       },
     },
     {
+
       resolve: "gatsby-plugin-chakra-ui",
       options: {
         /**
@@ -35,7 +36,8 @@ module.exports = {
          */
         isUsingColorMode: false,
       },
-    },    {
+    },    
+    {
       resolve: `gatsby-plugin-layout`,
       options: {
         component: require.resolve(`./src/components/layout`),

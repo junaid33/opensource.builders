@@ -195,6 +195,16 @@
           "deploy": "https://support.count.ly/hc/en-us/articles/360037814151-Deployment-scenarios"
         },
         {
+          "name": "PostHog",
+          "deploy": "https://posthog.com/docs/deployment",
+          "site": "https://posthog.com/",
+          "language": "Python",
+          "repo": "PostHog/posthog",
+          "stars": "2.1k",
+          "license": "MIT",
+          "svg": "https://posthog.com/wp-content/uploads/2020/02/Group-10.png"
+        },
+        {
           "name": "Ackee",
           "repo": "electerious/Ackee",
           "stars": "1.4K",

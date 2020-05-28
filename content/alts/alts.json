@@ -413,6 +413,16 @@
           "deploy": "https://github.com/padloc/padloc#getting-started"
         },
         {
+          "name": "AuthPass",
+          "repo": "authpass/authpass",
+          "license": "GPL V3",
+          "stars": "135",
+          "site": "https://authpass.app/",
+          "language": "Dart",
+          "svg": "https://github.com/authpass/authpass/raw/master/_docs/authpass-logo.svg",
+          "deploy": "https://github.com/authpass/authpass#authpassapp---open-source-password-manager-for-mobile-and-desktop"
+        },
+        {
           "name": "Passwordcockpit",
           "repo": "passwordcockpit/passwordcockpit",
           "license": "BSD-3",

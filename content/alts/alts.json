@@ -205,6 +205,16 @@
           "deploy": "https://heroku.com/deploy?template=https://github.com/electerious/Ackee/tree/master"
         },
         {
+          "name": "Open Web Analytics",
+          "repo": "padams/Open-Web-Analytics",
+          "stars": "988",
+          "license": "GPL V2",
+          "svg": "http://www.openwebanalytics.com/wp-content/uploads/2010/12/owa-logo-100w.png",
+          "site": "http://www.openwebanalytics.com/",
+          "language": "PHP",
+          "deploy": "https://github.com/padams/Open-Web-Analytics/wiki/Installation"
+        },
+        {
           "name": "Plausible",
           "repo": "plausible-insights/plausible",
           "stars": "169",

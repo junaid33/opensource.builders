@@ -103,6 +103,8 @@ class Search extends Component {
       searchResults: queryResult,
       category: e,
     })
+
+    console.log({ queryResult })
   }
 
   searchData = e => {
@@ -133,6 +135,12 @@ class Search extends Component {
       searchQuery === `` && license === `` && language === `` && category === ``
         ? this.props.comps
         : searchResults
+
+    const compLoad =
+      searchQuery === `` && license === `` && language === `` && category === ``
+        ? this.props.mainInfo.slice(0, this.props.loadCount)
+        : this.props.mainInfo
+        
     const categories = [
       "E-commerce",
       "Developer Tools",
@@ -366,7 +374,7 @@ class Search extends Component {
                 </Box>
               </Box>
               <Box display="flex" flexWrap="wrap" width="100%">
-                {this.props.mainInfo.map(comp => {
+                {compLoad.map(comp => {
                   const match = queryResults.filter(
                     alt => alt.mainID === comp.id
                   )

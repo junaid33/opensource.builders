@@ -25,7 +25,7 @@ const SearchTemplate = props => {
 
   return (
     <>
-      <ClientSearch comps={allComps} mainInfo={fiveComp} />
+      <ClientSearch comps={allComps} loadCount={loadCount} mainInfo={mainInfo} />
     </>
   )
 }

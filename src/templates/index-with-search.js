@@ -3,6 +3,7 @@ import { useBottomScrollListener } from "react-bottom-scroll-listener"
 import { Box, Text, Icon } from "@chakra-ui/core"
 import { graphql } from "gatsby"
 import { useLocalJsonForm } from "gatsby-tinacms-json"
+import SEO from "../components/seo"
 import ClientSearch from "../components/ClientSearch"
 
 const SearchTemplate = props => {
@@ -25,7 +26,12 @@ const SearchTemplate = props => {
 
   return (
     <>
-      <ClientSearch comps={allComps} loadCount={loadCount} mainInfo={mainInfo} />
+      <SEO title="Find open-source alternatives for your favorite apps" />
+      <ClientSearch
+        comps={allComps}
+        loadCount={loadCount}
+        mainInfo={mainInfo}
+      />
     </>
   )
 }

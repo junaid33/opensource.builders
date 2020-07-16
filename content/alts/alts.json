@@ -217,12 +217,12 @@
         {
           "name": "Open Web Analytics",
           "repo": "padams/Open-Web-Analytics",
-          "stars": "988",
+          "stars": "1.2K",
           "license": "GPL V2",
           "svg": "http://www.openwebanalytics.com/wp-content/uploads/2010/12/owa-logo-100w.png",
           "site": "http://www.openwebanalytics.com/",
           "language": "PHP",
-          "deploy": "https://github.com/padams/Open-Web-Analytics/wiki/Installation"
+          "deploy": "https://render.com/deploy?repo=https://github.com/render-examples/open-web-analytics"
         },
         {
           "name": "Plausible",

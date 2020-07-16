@@ -135,6 +135,16 @@
           "svg": "https://about.riot.im/images/riot-nav.svg"
         },
         {
+          "name": "Twake",
+          "repo": "TwakeApp/Twake",
+          "site": "https://twake.app/",
+          "language": "JS",
+          "license": "AGPL",
+          "stars": "100",
+          "svg": "https://twake.app/medias/logo_big.png",
+          "deploy" : "https://doc.twake.app/installation"
+        },
+        {
           "name": "Wire",
           "license": "GPL V3",
           "repo": "wireapp/wire",

@@ -182,7 +182,8 @@
           "repo": "Matomo-org/matomo",
           "license": "GPL V3",
           "stars": "12.8K",
-          "svg": "https://static.matomo.org/wp-content/uploads/2018/11/DefaultIcon.png"
+          "svg": "https://static.matomo.org/wp-content/uploads/2018/11/DefaultIcon.png",
+          "deploy": "https://render.com/deploy?repo=https://github.com/render-examples/matomo"
         },
         {
           "name": "Fathom Analytics",

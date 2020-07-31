@@ -9696,6 +9696,13 @@ react-beautiful-dnd@^11.0.5:
     tiny-invariant "^1.0.4"
     use-memo-one "^1.1.0"
 
+react-bottom-scroll-listener@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/react-bottom-scroll-listener/-/react-bottom-scroll-listener-4.0.0.tgz#ab67c2fe383574ec32fb53a27cb32862cd466654"
+  integrity sha512-vxTP1BgP0hJ4xuyn4U7q0RyrbMsPNUKEGPDNsuaHnJDQ05b1TXTVxLAaFlQtQC+tcn4dWYTRJJMZ26zwCEz2Og==
+  dependencies:
+    lodash.debounce "^4.0.8"
+
 react-clientside-effect@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/react-clientside-effect/-/react-clientside-effect-1.2.2.tgz#6212fb0e07b204e714581dd51992603d1accc837"

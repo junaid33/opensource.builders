@@ -1,34 +1,18 @@
 {
   "alternatives": [
     {
-      "main": "Medium",
-      "alts": [
+      "commercial": [
         {
-          "site": "https://writefreely.org/",
-          "name": "WriteFreely",
-          "stars": "1.5K",
-          "license": "AGPL V3",
-          "language": "GO",
-          "repo": "writeas/writefreely",
-          "svg": "https://github.com/writeas/writefreely/blob/master/static/img/touch-icon-180.png?raw=true"
+          "main": "Shopify",
+          "svg": "https://cdn.worldvectorlogo.com/logos/shopify.svg",
+          "website": "https://shopify.com"
         },
         {
-          "name": "Sigle",
-          "site": "https://www.sigle.io/",
-          "stars": "140",
-          "license": "MIT",
-          "svg": "https://app.sigle.io/icon-192x192.png",
-          "language": "JS",
-          "repo": "pradel/sigle"
+          "main": "BigCommerce",
+          "svg": "https://images.ctfassets.net/ji35mhihvyjo/4X8mBlHCRaAQMMUWEIgQU8/2673daeefcbb7c4f38dffb312e77ca45/bigcommerce.svg",
+          "website": "https://bigcommerce.com"
         }
       ],
-      "id": "fvlhaa4dg",
-      "svg": "https://miro.medium.com/max/1090/1*TGH72Nnw24QL3iV9IOm4VA.png",
-      "website": "https://medium.com/"
-    },
-    {
-      "main": "Shopify",
-      "svg": "https://cdn.shopify.com/assets2/brand-assets/shopify-logo-main-8ee1e0052baf87fd9698ceff7cbc01cc36a89170212ad227db3ff2706e89fd04.svg",
       "alts": [
         {
           "name": "Reaction Commerce",
@@ -58,7 +42,11 @@
           "repo": "woocommerce/woocommerce",
           "site": "http://www.woocommerce.com/",
           "language": "PHP",
-          "deploy": "https://marketplace.digitalocean.com/apps/wordpress"
+          "deploy": "https://marketplace.digitalocean.com/apps/wordpress",
+          "main": [
+            "Shopify",
+            "idgaf"
+          ]
         },
         {
           "repo": "Sylius/Sylius",
@@ -102,7 +90,7 @@
         }
       ],
       "id": "wejrioewjr",
-      "website": "https://shopify.com"
+      "category": "E-commerce"
     },
     {
       "main": "Slack",
@@ -147,6 +135,16 @@
           "svg": "https://about.riot.im/images/riot-nav.svg"
         },
         {
+          "name": "Twake",
+          "repo": "TwakeApp/Twake",
+          "site": "https://twake.app/",
+          "language": "JS",
+          "license": "AGPL",
+          "stars": "100",
+          "svg": "https://twake.app/medias/logo_big.png",
+          "deploy" : "https://doc.twake.app/installation"
+        },
+        {
           "name": "Wire",
           "license": "GPL V3",
           "repo": "wireapp/wire",
@@ -158,7 +156,20 @@
       ],
       "id": "0pu87phxq",
       "svg": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Slack_Technologies_Logo.svg",
-      "website": "https://slack.com"
+      "website": "https://slack.com",
+      "commercial": [
+        {
+          "main": "Slack",
+          "svg": "https://cdn.worldvectorlogo.com/logos/slack-new-logo.svg",
+          "website": "https://slack.com"
+        },
+        {
+          "main": "Microsoft Teams",
+          "svg": "https://upload.wikimedia.org/wikipedia/commons/c/c9/Microsoft_Office_Teams_%282018%E2%80%93present%29.svg",
+          "website": "https://www.microsoft.com/en-us/microsoft-365/microsoft-teams/group-chat-software"
+        }
+      ],
+      "category": "Communication"
     },
     {
       "main": "Google Analytics",
@@ -171,7 +182,8 @@
           "repo": "Matomo-org/matomo",
           "license": "GPL V3",
           "stars": "12.8K",
-          "svg": "https://static.matomo.org/wp-content/uploads/2018/11/DefaultIcon.png"
+          "svg": "https://static.matomo.org/wp-content/uploads/2018/11/DefaultIcon.png",
+          "deploy": "https://render.com/deploy?repo=https://github.com/render-examples/matomo"
         },
         {
           "name": "Fathom Analytics",
@@ -204,6 +216,16 @@
           "deploy": "https://heroku.com/deploy?template=https://github.com/electerious/Ackee/tree/master"
         },
         {
+          "name": "Open Web Analytics",
+          "repo": "padams/Open-Web-Analytics",
+          "stars": "1.2K",
+          "license": "GPL V2",
+          "svg": "http://www.openwebanalytics.com/wp-content/uploads/2010/12/owa-logo-100w.png",
+          "site": "http://www.openwebanalytics.com/",
+          "language": "PHP",
+          "deploy": "https://render.com/deploy?repo=https://github.com/render-examples/open-web-analytics"
+        },
+        {
           "name": "Plausible",
           "repo": "plausible-insights/plausible",
           "stars": "169",
@@ -214,11 +236,29 @@
         }
       ],
       "website": "https://analytics.google.com/",
-      "id": "io3jr2332"
+      "id": "io3jr2332",
+      "commercial": [
+        {
+          "main": "Google Analytics",
+          "svg": "https://cdn.worldvectorlogo.com/logos/google-analytics-3.svg",
+          "website": "https://analytics.google.com/"
+        }
+      ],
+      "category": "Analytics"
     },
     {
-      "main": "Heroku",
-      "svg": "https://brand.heroku.com/static/media/heroku-logotype-horizontal.81c49462.svg",
+      "commercial": [
+        {
+          "main": "Heroku",
+          "website": "https://heroku.com",
+          "svg": "https://slack-files2.s3-us-west-2.amazonaws.com/avatars/2018-07-10/396072065317_f8b9a63ed67ca0368c6e_512.png"
+        },
+        {
+          "main": "Render",
+          "website": "https://render.com",
+          "svg": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIzLjAuNCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCAyMzQuMyAyMzQuMyIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMjM0LjMgMjM0LjM7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4KCS5zdDB7ZmlsbDojNDZFM0I3O30KPC9zdHlsZT4KPGcgaWQ9Ikdyb3VwXzI3NjYiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xNTg1MyAtODUwMykiPgoJPGc+CgkJPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIxNTk5OCw4NTM0LjcgMTU5OTYsODUzNC43IDE1OTk2LDg1MzYuNyAxNTk5Niw4NTU1LjIgMTU5OTYsODU1Ny4yIDE1OTk4LDg1NTcuMiAxNjAxNi42LDg1NTcuMiAKCQkJMTYwMTguNiw4NTU3LjIgMTYwMTguNiw4NTU1LjIgMTYwMTguNiw4NTM2LjcgMTYwMTguNiw4NTM0LjcgMTYwMTYuNiw4NTM0LjcgCQkiLz4KCQk8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMTU5MzguMiw4NTM0LjdjLTcuMiwwLTE0LjIsMS40LTIwLjgsNC4yYy02LjQsMi43LTEyLjEsNi42LTE3LDExLjVzLTguOCwxMC42LTExLjUsMTcKCQkJYy0yLjgsNi42LTQuMiwxMy42LTQuMiwyMC44djc4LjR2MmgyaDE4LjZoMnYtMnYtNzguN2MwLjQtOC4xLDMuOC0xNS43LDkuNS0yMS4zYzUuOC01LjcsMTMuNC05LDIxLjUtOS4zaDQxLjJoMnYtMnYtMTguNnYtMmgtMgoJCQlIMTU5MzguMnoiLz4KCQk8cG9seWdvbiBjbGFzcz0ic3QwIiBwb2ludHM9IjE2MDM1LjEsODYwOC45IDE2MDMzLjEsODYwOC45IDE2MDMzLjEsODYxMC45IDE2MDMzLjEsODYyOS41IDE2MDMzLjEsODYzMS41IDE2MDM1LjEsODYzMS41IAoJCQkxNjA1My43LDg2MzEuNSAxNjA1NS43LDg2MzEuNSAxNjA1NS43LDg2MjkuNSAxNjA1NS43LDg2MTAuOSAxNjA1NS43LDg2MDguOSAxNjA1My43LDg2MDguOSAJCSIvPgoJCTxwb2x5Z29uIGNsYXNzPSJzdDAiIHBvaW50cz0iMTYwMzUuMSw4NTcxLjggMTYwMzMuMSw4NTcxLjggMTYwMzMuMSw4NTczLjggMTYwMzMuMSw4NTkyLjQgMTYwMzMuMSw4NTk0LjQgMTYwMzUuMSw4NTk0LjQgCgkJCTE2MDUzLjcsODU5NC40IDE2MDU1LjcsODU5NC40IDE2MDU1LjcsODU5Mi40IDE2MDU1LjcsODU3My44IDE2MDU1LjcsODU3MS44IDE2MDUzLjcsODU3MS44IAkJIi8+CgkJPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIxNjA1My43LDg1MzQuNyAxNjAzNS4xLDg1MzQuNyAxNjAzMy4xLDg1MzQuNyAxNjAzMy4xLDg1MzYuNyAxNjAzMy4xLDg1NTUuMiAxNjAzMy4xLDg1NTcuMiAKCQkJMTYwMzUuMSw4NTU3LjIgMTYwNTMuNyw4NTU3LjIgMTYwNTUuNyw4NTU3LjIgMTYwNTUuNyw4NTU1LjIgMTYwNTUuNyw4NTM2LjcgMTYwNTUuNyw4NTM0LjcgCQkiLz4KCQk8cG9seWdvbiBjbGFzcz0ic3QwIiBwb2ludHM9IjE2MDM1LjEsODY0NiAxNjAzMy4xLDg2NDYgMTYwMzMuMSw4NjQ4IDE2MDMzLjEsODY2Ni42IDE2MDMzLjEsODY2OC42IDE2MDM1LjEsODY2OC42IAoJCQkxNjA1My43LDg2NjguNiAxNjA1NS43LDg2NjguNiAxNjA1NS43LDg2NjYuNiAxNjA1NS43LDg2NDggMTYwNTUuNyw4NjQ2IDE2MDUzLjcsODY0NiAJCSIvPgoJCTxwb2x5Z29uIGNsYXNzPSJzdDAiIHBvaW50cz0iMTYwMzUuMSw4NjgzLjEgMTYwMzMuMSw4NjgzLjEgMTYwMzMuMSw4Njg1LjEgMTYwMzMuMSw4NzAzLjcgMTYwMzMuMSw4NzA1LjcgMTYwMzUuMSw4NzA1LjcgCgkJCTE2MDUzLjcsODcwNS43IDE2MDU1LjcsODcwNS43IDE2MDU1LjcsODcwMy43IDE2MDU1LjcsODY4NS4xIDE2MDU1LjcsODY4My4xIDE2MDUzLjcsODY4My4xIAkJIi8+CgkJPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIxNTk5OCw4NjgzLjEgMTU5OTYsODY4My4xIDE1OTk2LDg2ODUuMSAxNTk5Niw4NzAzLjcgMTU5OTYsODcwNS43IDE1OTk4LDg3MDUuNyAxNjAxNi42LDg3MDUuNyAKCQkJMTYwMTguNiw4NzA1LjcgMTYwMTguNiw4NzAzLjcgMTYwMTguNiw4Njg1LjEgMTYwMTguNiw4NjgzLjEgMTYwMTYuNiw4NjgzLjEgCQkiLz4KCQk8cG9seWdvbiBjbGFzcz0ic3QwIiBwb2ludHM9IjE1OTYwLjksODY4My4xIDE1OTU4LjksODY4My4xIDE1OTU4LjksODY4NS4xIDE1OTU4LjksODcwMy43IDE1OTU4LjksODcwNS43IDE1OTYwLjksODcwNS43IAoJCQkxNTk3OS41LDg3MDUuNyAxNTk4MS41LDg3MDUuNyAxNTk4MS41LDg3MDMuNyAxNTk4MS41LDg2ODUuMSAxNTk4MS41LDg2ODMuMSAxNTk3OS41LDg2ODMuMSAJCSIvPgoJCTxwb2x5Z29uIGNsYXNzPSJzdDAiIHBvaW50cz0iMTU5MjMuOCw4NjgzLjEgMTU5MjEuOCw4NjgzLjEgMTU5MjEuOCw4Njg1LjEgMTU5MjEuOCw4NzAzLjcgMTU5MjEuOCw4NzA1LjcgMTU5MjMuOCw4NzA1LjcgCgkJCTE1OTQyLjQsODcwNS43IDE1OTQ0LjQsODcwNS43IDE1OTQ0LjQsODcwMy43IDE1OTQ0LjQsODY4NS4xIDE1OTQ0LjQsODY4My4xIDE1OTQyLjQsODY4My4xIAkJIi8+CgkJPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIxNTg4Ni43LDg2ODMuMSAxNTg4NC43LDg2ODMuMSAxNTg4NC43LDg2ODUuMSAxNTg4NC43LDg3MDMuNyAxNTg4NC43LDg3MDUuNyAxNTg4Ni43LDg3MDUuNyAKCQkJMTU5MDUuMiw4NzA1LjcgMTU5MDcuMiw4NzA1LjcgMTU5MDcuMiw4NzAzLjcgMTU5MDcuMiw4Njg1LjEgMTU5MDcuMiw4NjgzLjEgMTU5MDUuMiw4NjgzLjEgCQkiLz4KCTwvZz4KPC9nPgo8L3N2Zz4K"
+        }
+      ],
       "alts": [
         {
           "name": "Dokku",
@@ -270,11 +310,22 @@
           "deploy": "https://docs.tsuru.io/stable/installing/index.html"
         }
       ],
-      "website": "https://heroku.com",
-      "id": "12uejiood"
+      "id": "12uejiood",
+      "category": "Deployment"
     },
     {
-      "main": "GitHub",
+      "commercial": [
+        {
+          "main": "GitHub",
+          "svg": "https://image.flaticon.com/icons/svg/25/25231.svg",
+          "website": "https://github.com"
+        },
+        {
+          "main": "BitBucket",
+          "website": "http://bitbucket.c",
+          "svg": "https://pbs.twimg.com/profile_images/1026981625291190272/35O2KIRX_400x400.jpg"
+        }
+      ],
       "alts": [
         {
           "name": "Gogs",
@@ -307,6 +358,16 @@
           "deploy": "https://marketplace.digitalocean.com/apps/gitea"
         },
         {
+          "name": "Codeberg",
+          "stars": "22",
+          "repo": "https://codeberg.org/Codeberg/Community",
+          "svg": "https://codeberg.org/img/logo-small.svg",
+          "license": "AGPL V3",
+          "site": "https://codeberg.org/",
+          "language": "Go",
+          "deploy": "https://codeberg.org/Codeberg/build-deploy-gitea"
+        },
+        {
           "name": "OneDev",
           "stars": "2.7K",
           "license": "MIT",
@@ -328,11 +389,21 @@
         }
       ],
       "id": "8bxlppy5h",
-      "svg": "https://github.githubassets.com/images/modules/logos_page/GitHub-Logo.png",
-      "website": "https://github.com"
+      "category": "Developer Tools"
     },
     {
-      "main": "1Password",
+      "commercial": [
+        {
+          "main": "1Password",
+          "svg": "https://1password.com/img/meta-og-image.png",
+          "website": "https://1password.com/"
+        },
+        {
+          "main": "LastPass",
+          "website": "https://www.lastpass.com/",
+          "svg": "https://www.vectorlogo.zone/logos/lastpass/lastpass-tile.svg"
+        }
+      ],
       "alts": [
         {
           "name": "KeePassXC",
@@ -373,6 +444,16 @@
           "deploy": "https://github.com/padloc/padloc#getting-started"
         },
         {
+          "name": "AuthPass",
+          "repo": "authpass/authpass",
+          "license": "GPL V3",
+          "stars": "135",
+          "site": "https://authpass.app/",
+          "language": "Dart",
+          "svg": "https://github.com/authpass/authpass/raw/master/_docs/authpass-logo.svg",
+          "deploy": "https://github.com/authpass/authpass#authpassapp---open-source-password-manager-for-mobile-and-desktop"
+        },
+        {
           "name": "Passwordcockpit",
           "repo": "passwordcockpit/passwordcockpit",
           "license": "BSD-3",
@@ -384,11 +465,16 @@
         }
       ],
       "id": "hvf9tctei",
-      "svg": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/1password-logo.svg/702px-1password-logo.svg.png",
-      "website": "https://1password.com/"
+      "category": "Password Managers"
     },
     {
-      "main": "TeamViewer",
+      "commercial": [
+        {
+          "main": "TeamViewer",
+          "website": "https://www.teamviewer.com/",
+          "svg": "https://upload.wikimedia.org/wikipedia/commons/3/31/TeamViewer_Logo_Icon_Only.svg"
+        }
+      ],
       "alts": [
         {
           "name": "Apache Guacamole™",
@@ -432,11 +518,16 @@
         }
       ],
       "id": "n1j0lce0m",
-      "website": "https://www.teamviewer.com/",
-      "svg": "https://www.teamviewer.com/wp-content/themes/tv-wordpress-theme/dist/media/logo-teamviewer.svg"
+      "category": "Developer Tools"
     },
     {
-      "main": "Google Docs",
+      "commercial": [
+        {
+          "main": "Google Docs",
+          "svg": "https://upload.wikimedia.org/wikipedia/commons/a/a7/Google_Docs_logo.svg",
+          "website": "https://www.google.com/intl/en_US/docs/about/"
+        }
+      ],
       "alts": [
         {
           "name": "CryptPad",
@@ -479,12 +570,17 @@
           "deploy": "https://github.com/codimd/server#installation--upgrading"
         }
       ],
-      "svg": "https://assets-global.website-files.com/580ea75512564ed05c3a8455/589347c705e0ff8065dcdf22_Google_Docs_wordmark.svg",
-      "website": "https://www.google.com/intl/en_US/docs/about/",
-      "id": " pqlrehguie"
+      "id": " pqlrehguie",
+      "category": "Cloud"
     },
     {
-      "main": "Amazon S3",
+      "commercial": [
+        {
+          "main": "Amazon S3",
+          "svg": "https://cdn.worldvectorlogo.com/logos/aws-s3.svg",
+          "website": "https://aws.amazon.com/s3/"
+        }
+      ],
       "alts": [
         {
           "name": "minio",
@@ -518,8 +614,7 @@
         }
       ],
       "id": "mui65dcfl",
-      "svg": "https://cdn-images-1.medium.com/fit/t/1600/480/1*DHe24MbDHtbkOeIJzxrfdA.png",
-      "website": "https://aws.amazon.com/s3/"
+      "category": "Deployment"
     },
     {
       "main": "Salesforce",
@@ -557,10 +652,24 @@
         }
       ],
       "website": "https://salesforce.com",
-      "id": "kpo1k2e123"
+      "id": "kpo1k2e123",
+      "commercial": [
+        {
+          "main": "Salesforce",
+          "svg": "https://cdn.worldvectorlogo.com/logos/salesforce-2.svg",
+          "website": "https://salesforce.com"
+        }
+      ],
+      "category": "CRM"
     },
     {
-      "main": "Zendesk",
+      "commercial": [
+        {
+          "main": "Zendesk",
+          "svg": "https://logosandtypes.com/wp-content/uploads/zendesk.svg",
+          "website": "https://www.zendesk.com/"
+        }
+      ],
       "alts": [
         {
           "name": "Zammad",
@@ -594,11 +703,16 @@
         }
       ],
       "id": "lzgn1ku9q",
-      "svg": "https://logos-download.com/wp-content/uploads/2016/10/Zendesk_logo_wordmark.png",
-      "website": "https://www.zendesk.com/"
+      "category": "Communication"
     },
     {
-      "main": "Google Drive",
+      "commercial": [
+        {
+          "main": "Google Drive",
+          "svg": "https://cdn.worldvectorlogo.com/logos/google-drive.svg",
+          "website": "https://google.com/drive"
+        }
+      ],
       "alts": [
         {
           "name": "NextCloud",
@@ -632,11 +746,16 @@
         }
       ],
       "id": "zt5htxj1r",
-      "svg": "https://www.actionstep.com/images/marketplace/integrations/google-drive.png",
-      "website": "https://google.com/drive"
+      "category": "Cloud"
     },
     {
-      "main": "cPanel",
+      "commercial": [
+        {
+          "main": "cPanel",
+          "svg": "https://www.crucialhosting.com/static/images/icons/icon-cpanel.svg",
+          "website": "https://cpanel.net/"
+        }
+      ],
       "alts": [
         {
           "name": "Vesta",
@@ -669,12 +788,17 @@
           "svg": "https://hestiacp.com/img/logo.png"
         }
       ],
-      "svg": "https://cdn.freebiesupply.com/logos/large/2x/cpanel-logo-svg-vector.svg",
-      "website": "https://cpanel.net/",
-      "id": " ewriieoke"
+      "id": " ewriieoke",
+      "category": "Developer Tools"
     },
     {
-      "main": "Facebook",
+      "commercial": [
+        {
+          "main": "Facebook",
+          "svg": "https://upload.wikimedia.org/wikipedia/commons/c/c2/F_icon.svg",
+          "website": "https://facebook.com"
+        }
+      ],
       "alts": [
         {
           "name": "Mastodon",
@@ -706,8 +830,7 @@
         }
       ],
       "id": "mvhgnbgfj",
-      "svg": "https://pngimg.com/uploads/facebook_logos/facebook_logos_PNG19749.png",
-      "website": "https://facebook.com"
+      "category": "Social Media"
     },
     {
       "main": "Trello",
@@ -745,11 +868,24 @@
       ],
       "svg": "https://d2k1ftgv7pobq7.cloudfront.net/meta/u/res/images/brand-assets/Logos/0099ec3754bf473d2bbf317204ab6fea/trello-logo-blue.png",
       "website": "https://trello.com/",
-      "id": " eyyrebbfy"
+      "id": " eyyrebbfy",
+      "commercial": [
+        {
+          "main": "Trello",
+          "svg": "https://cdn.worldvectorlogo.com/logos/trello.svg",
+          "website": "https://trello.com/"
+        }
+      ],
+      "category": "Product Management"
     },
     {
-      "main": "Intercom",
-      "svg": "https://cdn.freebiesupply.com/logos/large/2x/intercom-1-logo-svg-vector.svg",
+      "commercial": [
+        {
+          "main": "Intercom",
+          "svg": "https://cdn.worldvectorlogo.com/logos/intercom-2.svg",
+          "website": "https://intercom.com"
+        }
+      ],
       "alts": [
         {
           "name": "chatwoot",
@@ -773,7 +909,7 @@
         }
       ],
       "id": "txmr3k1l9",
-      "website": "https://intercom.com"
+      "category": "Communication"
     },
     {
       "main": "Zapier",
@@ -800,10 +936,24 @@
       ],
       "id": "tv9m27gmw",
       "svg": "https://cdn.zapier.com/zapier/images/logos/zapier-logo.png",
-      "website": "https://zapier.com"
+      "website": "https://zapier.com",
+      "commercial": [
+        {
+          "main": "Zapier",
+          "svg": "https://cdn.worldvectorlogo.com/logos/zapier.svg",
+          "website": "https://zapier.com"
+        }
+      ],
+      "category": "Automation"
     },
     {
-      "main": "YouTube",
+      "commercial": [
+        {
+          "main": "YouTube",
+          "svg": "https://cdn.worldvectorlogo.com/logos/youtube-3.svg",
+          "website": "https://youtube.com"
+        }
+      ],
       "alts": [
         {
           "name": "Peertube",
@@ -827,11 +977,16 @@
         }
       ],
       "id": "3kvfwzi1o",
-      "svg": "https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg",
-      "website": "https://youtube.com"
+      "category": "Social Media"
     },
     {
-      "main": "Algolia",
+      "commercial": [
+        {
+          "main": "Algolia",
+          "svg": "https://logosandtypes.com/wp-content/uploads/algolia.svg",
+          "website": "https://algolia.com"
+        }
+      ],
       "alts": [
         {
           "name": "Elastic Search",
@@ -855,8 +1010,7 @@
         }
       ],
       "id": "hfarlvwm9",
-      "svg": "https://upload.wikimedia.org/wikipedia/commons/6/69/Algolia-logo.svg",
-      "website": "https://algolia.com"
+      "category": "Developer Tools"
     },
     {
       "main": "Typeform",
@@ -884,10 +1038,24 @@
       ],
       "id": "tg03f7qhy",
       "svg": "https://cdn.freebiesupply.com/logos/large/2x/typeform-logo-png-transparent.png",
-      "website": "https://typeform.com"
+      "website": "https://typeform.com",
+      "commercial": [
+        {
+          "main": "Typeform",
+          "svg": "https://cdn.worldvectorlogo.com/logos/typeform-1.svg",
+          "website": "https://typeform.com"
+        }
+      ],
+      "category": "Form Builder"
     },
     {
-      "main": "Canny",
+      "commercial": [
+        {
+          "main": "Canny",
+          "svg": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOC4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSIwIDAgNDQ1LjkgNjM4IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA0NDUuOSA2MzgiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPGc+DQoJPGc+DQoJCTxwYXRoIGZpbGw9IiM1RjVERjkiIGQ9Ik0yMjQuNSw2MzhDMTAxLjEsNjM4LDAsNTM3LjgsMCw0MTQuN1YyMjMuM0MwLDEwMC4yLDEwMS4xLDAsMjI0LjUsMGMxMDkuNiwwLDIwMi44LDc4LjMsMjIwLjksMTg2LjENCgkJCWMyLjksMTcuNC04LjYsMzMuOC0yNiwzNi44Yy0xNy40LDIuOS0zMy43LTguOC0zNi43LTI2LjJjLTEzLTc3LTc4LjYtMTMyLjktMTU3LTEzMi45Yy04OC4yLDAtMTU5LjMsNzEuNi0xNTkuMywxNTkuNXYxOTEuNA0KCQkJYzAsODgsNzEuMSwxNTkuNSwxNTkuMywxNTkuNWM3OC4zLDAsMTQ0LjItNTUuOSwxNTcuMS0xMzIuOWMyLjktMTcuNCwxOS4zLTI5LjEsMzYuNi0yNi4yYzE3LjQsMi45LDI4LjYsMTkuNCwyNS43LDM2LjcNCgkJCUM0MjcuMiw1NTkuNywzMzQsNjM4LDIyNC41LDYzOHoiLz4NCgk8L2c+DQoJPGcgb3BhY2l0eT0iMC41Ij4NCgkJPHBhdGggZmlsbD0iIzVGNURGOSIgZD0iTTE1My42LDM0Ny43Yy0xNy42LDAtMzAuNy0xNC4zLTMwLjctMzEuOXYtOTIuM2MwLTU2LjgsNDUuOC0xMDMsMTAyLjgtMTAzYzM4LjksMCw3My45LDIxLjYsOTEuNyw1Ni40DQoJCQljOCwxNS43LDEuNywzNC45LTE0LDQyLjljLTE1LjcsOC0zNSwxLjgtNDMtMTMuOWMtNi44LTEzLjQtMjEtMjEuNy0zNS44LTIxLjdjLTIxLjgsMC00MC4yLDE3LjYtNDAuMiwzOS4ydjkyLjMNCgkJCUMxODQuMywzMzMuNCwxNzEuMiwzNDcuNywxNTMuNiwzNDcuN3oiLz4NCgk8L2c+DQo8L2c+DQo8L3N2Zz4NCg==",
+          "website": "https://canny.io/"
+        }
+      ],
       "alts": [
         {
           "name": "Fider",
@@ -910,11 +1078,17 @@
           "svg": "https://ph-files.imgix.net/be9188f7-f8a4-4959-9b3a-e685c5a9f364?auto=format"
         }
       ],
-      "svg": "https://media.featuredcustomers.com/Company.logo/Capture_IOoVH1i.PNG",
-      "website": "https://canny.io/"
+      "id": "weirgeywu",
+      "category": "Product Management"
     },
     {
-      "main": "Zoom",
+      "commercial": [
+        {
+          "main": "Zoom",
+          "website": "https://zoom.com",
+          "svg": "https://www.vumc.org/pmi/sites/default/files/public_files/Images/Zoom%20logo.png"
+        }
+      ],
       "alts": [
         {
           "name": "Jitsi",
@@ -928,11 +1102,16 @@
         }
       ],
       "id": "cufgpxuvc",
-      "website": "https://zoom.com",
-      "svg": "https://www.coconino.edu/resources/images/images/its/zoom-logo.png?i=050"
+      "category": "Communication"
     },
     {
-      "main": "Instagram",
+      "commercial": [
+        {
+          "main": "Instagram",
+          "svg": "https://cdn.worldvectorlogo.com/logos/instagram-2016.svg",
+          "website": "https://instagram.com"
+        }
+      ],
       "alts": [
         {
           "name": "Pixelfed",
@@ -946,11 +1125,16 @@
         }
       ],
       "id": "7e22r3p12",
-      "svg": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/1200px-Instagram_logo.svg.png",
-      "website": "https://instagram.com"
+      "category": "Social Media"
     },
     {
-      "main": "Segment",
+      "commercial": [
+        {
+          "main": "Segment",
+          "svg": "https://logosandtypes.com/wp-content/uploads/segment.svg",
+          "website": "https://segment.com"
+        }
+      ],
       "alts": [
         {
           "name": "Rudder",
@@ -963,11 +1147,16 @@
         }
       ],
       "id": "rsxg8idaz",
-      "svg": "https://help.clearbit.com/hc/article_attachments/360021277474/partner-segment-logo.png",
-      "website": "https://segment.com"
+      "category": "Analytics"
     },
     {
-      "main": "npm",
+      "commercial": [
+        {
+          "main": "npm",
+          "svg": "https://symbols.getvecta.com/stencil_89/68_npm-icon.5522e43817.svg",
+          "website": "https://www.npmjs.com"
+        }
+      ],
       "alts": [
         {
           "name": "Verdaccio",
@@ -981,11 +1170,16 @@
         }
       ],
       "id": "kwyzeihzt",
-      "svg": "https://upload.wikimedia.org/wikipedia/commons/d/db/Npm-logo.svg",
-      "website": "https://www.npmjs.com"
+      "category": "Developer Tools"
     },
     {
-      "main": "Auth0",
+      "commercial": [
+        {
+          "main": "Auth0",
+          "svg": "https://www.brandeps.com/logo-download/A/Auth0-logo-vector-01.svg",
+          "website": "https://auth0.com"
+        }
+      ],
       "alts": [
         {
           "name": "KeyCloak",
@@ -999,11 +1193,16 @@
         }
       ],
       "id": "n3ogcivro",
-      "svg": "https://user-images.githubusercontent.com/34615258/75075526-9d249e00-54c3-11ea-8a18-f278259caba2.png",
-      "website": "https://auth0.com"
+      "category": "Developer Tools"
     },
     {
-      "main": "Asana",
+      "commercial": [
+        {
+          "main": "Asana",
+          "svg": "https://cdn.worldvectorlogo.com/logos/asana-logo.svg",
+          "website": "https://asana.com"
+        }
+      ],
       "alts": [
         {
           "name": "LeanTime",
@@ -1016,11 +1215,16 @@
         }
       ],
       "id": "o6lgatqba",
-      "svg": "https://cdn.wimi-teamwork.com/static/medias/wimi-asana-logo.png",
-      "website": "https://asana.com"
+      "category": "Product Management"
     },
     {
-      "main": "HubSpot",
+      "commercial": [
+        {
+          "main": "HubSpot",
+          "svg": "https://cdn.worldvectorlogo.com/logos/hubspot-1.svg",
+          "website": "https://www.hubspot.com/"
+        }
+      ],
       "alts": [
         {
           "name": "Erxes",
@@ -1033,12 +1237,17 @@
           "svg": "https://opencollective-production.s3-us-west-1.amazonaws.com/a5ff26c0-b88a-11e8-b4ab-519dd68ec9a0.jpg"
         }
       ],
-      "id": "hubspot",
-      "svg": "https://www.hubspot.com/hubfs/HubSpot_Logos/HSLogo_color.svg",
-      "website": "https://www.hubspot.com/"
+      "id": "3327yhjhh",
+      "category": "CRM"
     },
     {
-      "main": "LogRocket",
+      "commercial": [
+        {
+          "main": "LogRocket",
+          "svg": "https://media.glassdoor.com/sqll/2504641/logrocket-squarelogo-1571154960969.png",
+          "website": "https://logrocket.com"
+        }
+      ],
       "alts": [
         {
           "name": "Sentry",
@@ -1049,14 +1258,26 @@
           "site": "https://sentry.io",
           "language": "Python",
           "deploy": "https://docs.sentry.io/server/"
+        },
+        {
+          "name": "GlitchTip",
+          "repo": "https://gitlab.com/glitchtip",
+          "svg": "https://glitchtip.com/assets/logo-again.svg",
+          "license": "MIT",
+          "site": "https://glitchtip.com/"
         }
       ],
       "id": "3dwh5h2gh",
-      "svg": "https://logrocket-assets.io/img/logo.png",
-      "website": "https://logrocket.com"
+      "category": "Developer Tools"
     },
     {
-      "main": "Oberlo",
+      "commercial": [
+        {
+          "main": "Oberlo",
+          "svg": "https://image.flaticon.com/icons/png/512/825/825517.png",
+          "website": "https://oberlo.com"
+        }
+      ],
       "alts": [
         {
           "name": "Openship",
@@ -1070,11 +1291,16 @@
         }
       ],
       "id": "5uv2jsadu",
-      "svg": "https://images.milled.com/2019-08-05/A6dBQIGfvORn3rqg/dPc3Rhvp77SD.png",
-      "website": "https://oberlo.com"
+      "category": "E-commerce"
     },
     {
-      "main": "LaunchDarkly",
+      "commercial": [
+        {
+          "main": "LaunchDarkly",
+          "svg": "https://res-2.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_256,w_256,f_auto,q_auto:eco/q0jz5ctb7ykronw9twux",
+          "website": "https://launchdarkly.com"
+        }
+      ],
       "alts": [
         {
           "name": "BulletTrain",
@@ -1085,14 +1311,28 @@
           "license": "BSD-3",
           "svg": "https://bullet-train.io/static/icons-192.png",
           "deploy": "https://heroku.com/deploy?template=https://github.com/BulletTrainHQ/bullet-train-api"
+        },
+        {
+          "name": "Unleash",
+          "site": "https://unleash.github.io/",
+          "repo": "unleash/unleash",
+          "language": "Javascript",
+          "stars": "1901",
+          "license": "APACHE2.0",
+          "svg": "https://unleash.github.io/img/logo-inverted.png"
         }
       ],
       "id": "zczpb2ekn",
-      "svg": "https://launchdarkly.com/static/LaunchDarkly_Horizontal_Primary_Logo_on_Light_RGB-c988374345c62ec9a6306bff974ec1c8.png",
-      "website": "https://launchdarkly.com"
+      "category": "Product Management"
     },
     {
-      "main": "Netlify",
+      "commercial": [
+        {
+          "main": "Netlify",
+          "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' id='logo' viewBox='0 0 40 40'%3E%3Cpath id='netlifyGem'%0Afill='%2300a6c0' d='M28.58865,14.135028 C28.58395,14.132628 28.57945,14.130928 28.57505,14.129228 C28.56675,14.126028 28.55905,14.123128 28.55185,14.116228 C28.52855,14.094228 28.51935,14.054728 28.52445,14.023128 L29.29675,9.296708 L32.92245,12.922528 L29.15235,14.526628 C29.14195,14.531128 29.13065,14.533428 29.11935,14.533428 C29.11195,14.533428 29.10775,14.533428 29.10405,14.532128 C29.09895,14.530328 29.09475,14.526128 29.08485,14.516428 C28.95165,14.368228 28.78625,14.236028 28.58865,14.135028 Z M33.84685,13.846928 L37.72315,17.723128 C38.52845,18.528528 38.93115,18.931228 39.07845,19.396928 C39.10025,19.465728 39.11815,19.535328 39.13225,19.605628 L29.86905,15.683328 C29.86435,15.681328 29.85945,15.679328 29.85445,15.677328 C29.81695,15.662128 29.77405,15.644828 29.77405,15.606528 C29.77405,15.568928 29.81825,15.550828 29.85505,15.535628 C29.85905,15.534028 29.86295,15.532428 29.86665,15.530928 L33.84685,13.846928 Z M38.97385,20.850028 C38.77395,21.226028 38.38415,21.615828 37.72315,22.276928 L33.35425,26.645728 L27.70205,25.468628 C27.69265,25.466628 27.68245,25.465028 27.67215,25.463328 C27.62275,25.455228 27.56865,25.446328 27.56865,25.400528 C27.51695,24.923528 27.29295,24.497728 26.91385,24.208228 C26.89075,24.185328 26.89725,24.149128 26.90325,24.115828 C26.90405,24.111128 26.90485,24.106528 26.90565,24.102028 L27.96935,17.576028 C27.97045,17.569128 27.97145,17.561828 27.97255,17.554428 C27.97945,17.504628 27.98765,17.446128 28.03385,17.446128 C28.50925,17.379028 28.91765,17.146528 29.19325,16.781228 C29.20155,16.770328 29.20805,16.760028 29.22035,16.754128 C29.25185,16.739228 29.29095,16.754828 29.32305,16.768328 L38.97385,20.850028 Z M32.34875,27.651228 L25.16275,34.837228 L26.39375,27.276728 C26.39425,27.273228 26.39475,27.269728 26.39515,27.266228 C26.39645,27.256728 26.39765,27.247328 26.40115,27.238228 C26.41075,27.213928 26.43715,27.203528 26.46215,27.193628 C26.46615,27.192028 26.47005,27.190528 26.47385,27.188928 C26.74695,27.075328 26.97865,26.895028 27.16905,26.672128 C27.19325,26.643828 27.22225,26.617428 27.25905,26.611128 C27.26725,26.609728 27.27975,26.610628 27.28795,26.612328 L32.34875,27.651228 Z M23.64205,36.358028 L22.83175,37.168328 L13.87735,24.226028 C13.87405,24.221328 13.87055,24.216628 13.86695,24.211928 C13.85285,24.193428 13.83845,24.174328 13.84055,24.151928 C13.84195,24.135728 13.85225,24.122628 13.86255,24.109628 C13.86585,24.105428 13.86925,24.101128 13.87225,24.096828 C13.89965,24.057628 13.92295,24.017628 13.94845,23.973728 C13.95505,23.962428 13.96175,23.950828 13.96875,23.938928 L13.97075,23.935628 C13.98465,23.911928 13.99785,23.889428 14.02215,23.876428 C14.04325,23.865228 14.07175,23.869928 14.09515,23.874828 L24.01635,25.920828 C24.04105,25.925928 24.07445,25.936328 24.09245,25.954028 C24.10525,25.966828 24.10795,25.980728 24.11095,25.996528 C24.11205,26.002828 24.11335,26.009428 24.11525,26.016228 C24.26085,26.528828 24.63425,26.972228 25.13915,27.171928 C25.16715,27.185728 25.15475,27.217328 25.14175,27.250428 C25.13575,27.265628 25.12965,27.281128 25.12725,27.295328 C25.00245,28.055728 23.92985,34.593128 23.64205,36.358028 Z M21.94995,38.049128 C21.35315,38.640128 21.00115,38.952628 20.60305,39.078528 C20.21065,39.202628 19.78935,39.202628 19.39695,39.078528 C18.93115,38.931228 18.52845,38.528528 17.72315,37.723128 L8.73041,28.730428 L11.07885,25.086928 C11.09045,25.068928 11.10095,25.052628 11.11845,25.040228 C11.14395,25.022128 11.18035,25.030828 11.21015,25.040128 C11.45185,25.114728 11.67995,25.145028 11.92335,25.145028 C12.23745,25.145028 12.53565,25.082328 12.84835,24.956928 C12.87475,24.946328 12.90215,24.940028 12.92335,24.958828 C12.93345,24.967828 12.94385,24.980228 12.95145,24.991328 L21.94995,38.049128 Z M7.86325,27.863228 L5.79956,25.799528 L9.8744,24.061628 C9.88486,24.057128 9.89611,24.054828 9.90748,24.054828 C9.94124,24.054828 9.96101,24.088628 9.97946,24.120128 C9.984,24.127928 9.98846,24.135528 9.99303,24.142428 C10.03191,24.201528 10.07078,24.253028 10.10966,24.304328 C10.11272,24.308328 10.11963,24.316028 10.12248,24.320128 C10.13403,24.337128 10.12557,24.353628 10.11446,24.370828 L7.86325,27.863228 Z M4.88716,24.887128 L2.27688,22.276928 C1.83293,21.832928 1.511345,21.511328 1.287443,21.234128 L9.22264,22.879628 C9.23201,22.881528 9.24212,22.883228 9.25244,22.884928 C9.30189,22.892928 9.35601,22.901828 9.35601,22.947628 C9.35601,22.997328 9.2973,23.020628 9.24713,23.040428 C9.23912,23.043628 9.23133,23.046728 9.22403,23.049828 L4.88716,24.887128 Z M0.83135,19.891928 C0.84039822,19.724728 0.8704545,19.558428 0.9215188,19.396928 C1.068812,18.931228 1.471502,18.528528 2.27688,17.723128 L5.61789,14.382128 C6.16841,15.190128 9.80487,20.443328 10.22934,21.051328 C10.23348,21.057228 10.238,21.063328 10.24261,21.069528 C10.26971,21.106128 10.29957,21.146428 10.26932,21.176328 C10.12296,21.337028 9.9766,21.512928 9.8737,21.704128 C9.86155,21.726628 9.84599,21.752228 9.8242,21.765728 C9.81094,21.773928 9.79737,21.771028 9.78225,21.767828 L9.77999,21.767428 L0.83135,19.891928 Z M6.51068,13.489328 L11.00195,8.998018 C11.42405,9.182688 12.96045,9.831958 14.33375,10.412338 C15.37465,10.852228 16.32225,11.252728 16.61955,11.381128 C16.64945,11.394028 16.67675,11.405828 16.68995,11.435628 C16.69785,11.453528 16.69395,11.477128 16.68995,11.496328 C16.65965,11.640028 16.64455,11.783728 16.64455,11.927428 C16.64455,12.455428 16.85135,12.949428 17.21315,13.324128 C17.24295,13.353528 17.21285,13.396628 17.18655,13.434428 C17.18165,13.441528 17.17685,13.448428 17.17265,13.455028 L12.61335,20.518228 C12.60095,20.537428 12.58965,20.555028 12.57045,20.567528 C12.54625,20.583328 12.51235,20.576228 12.48435,20.569128 C12.30665,20.524128 12.11625,20.494928 11.94065,20.494928 C11.77745,20.494928 11.59885,20.525528 11.41935,20.557628 L11.41775,20.557928 C11.39835,20.561428 11.38035,20.564728 11.36425,20.553028 C11.34665,20.540328 11.33135,20.519928 11.31905,20.502028 L6.51068,13.489328 Z M11.90875,8.091218 L17.72315,2.276888 C18.52845,1.471504 18.93115,1.068812 19.39695,0.9215196 C19.78935,0.7973975 20.21065,0.7973975 20.60305,0.9215197 C21.06885,1.068812 21.47155,1.471503 22.27685,2.276888 L23.53685,3.536838 L19.40185,9.941378 C19.38995,9.959798 19.37905,9.976588 19.36095,9.989048 C19.33595,10.006238 19.30055,9.998138 19.27135,9.989838 C19.06205,9.930318 18.85265,9.900558 18.64325,9.900558 C18.17805,9.900558 17.71285,10.070888 17.35105,10.360448 C17.32425,10.386938 17.28415,10.370608 17.24965,10.355608 C16.70965,10.121178 12.50965,8.345268 11.90875,8.091218 Z M24.41455,4.414568 L28.23345,8.233478 L27.31395,13.930628 C27.31325,13.935228 27.31265,13.940528 27.31215,13.946028 C27.31075,13.959128 27.30915,13.973528 27.30455,13.983828 C27.29555,14.003828 27.27585,14.008328 27.25485,14.013128 C27.24775,14.014728 27.24045,14.016428 27.23335,14.018728 C27.03995,14.081928 26.86055,14.170928 26.70645,14.285928 C26.69925,14.291328 26.69325,14.297628 26.68745,14.303728 C26.67585,14.316028 26.66495,14.327428 26.64705,14.328528 C26.63525,14.329228 26.61535,14.326628 26.60445,14.321928 L20.78625,11.849828 C20.78245,11.848228 20.77855,11.846628 20.77455,11.844928 C20.73775,11.829828 20.69365,11.811628 20.69365,11.774028 C20.66225,11.463028 20.55895,11.152128 20.39705,10.880028 C20.39295,10.873228 20.38875,10.866328 20.38435,10.859328 C20.35585,10.813428 20.32545,10.764668 20.34905,10.718018 L24.41455,4.414568 Z M20.48325,13.020928 L25.93675,15.331328 C25.96795,15.344528 25.99985,15.358028 26.01255,15.389428 C26.01925,15.406228 26.01605,15.428128 26.01265,15.445728 C25.99735,15.525228 25.98345,15.617028 25.98345,15.708728 L25.98345,15.862028 C25.98345,15.899528 25.94425,15.915828 25.90845,15.930528 C25.90445,15.932228 25.90045,15.933828 25.89665,15.935428 C25.03295,16.303828 13.76645,21.108128 13.74985,21.108128 C13.73265,21.108128 13.71545,21.108128 13.69815,21.091128 C13.66845,21.061728 13.69845,21.018628 13.72475,20.980728 C13.72965,20.973728 13.73445,20.966828 13.73875,20.960228 L18.22115,14.021128 C18.22375,14.017128 18.22635,14.013028 18.22895,14.008928 C18.25545,13.967028 18.28515,13.920328 18.33315,13.920328 C18.34845,13.922428 18.36355,13.924628 18.37835,13.926728 C18.48005,13.941428 18.57025,13.954428 18.66055,13.954428 C19.34065,13.954428 19.97045,13.622628 20.35125,13.057328 C20.36135,13.042328 20.37045,13.028928 20.38475,13.017728 C20.41195,12.996628 20.45155,13.007428 20.48325,13.020928 Z M14.23735,22.205528 L26.51755,16.969128 C26.51755,16.969128 26.53485,16.969228 26.55205,16.986228 C26.61935,17.052628 26.67605,17.098428 26.73055,17.139628 C26.73865,17.145728 26.74815,17.151228 26.75775,17.156828 C26.78295,17.171428 26.80855,17.186328 26.81025,17.213028 C26.81075,17.222228 26.80975,17.229228 26.80825,17.238328 L25.75565,23.699928 C25.75425,23.708128 25.75315,23.716828 25.75195,23.725628 C25.74525,23.776428 25.73775,23.833328 25.69055,23.833328 C25.11975,23.866528 24.61445,24.190728 24.31795,24.679928 C24.31635,24.682628 24.31475,24.685228 24.31315,24.687828 C24.29945,24.710928 24.28625,24.733028 24.26215,24.745128 C24.24185,24.755228 24.21475,24.750828 24.19265,24.746228 L14.40015,22.726028 C14.39085,22.724128 14.24765,22.207128 14.23735,22.205528 Z'%3E%3C/path%3E%3C/svg%3E",
+          "website": "https://netlify.com"
+        }
+      ],
       "alts": [
         {
           "name": "StaticDeploy",
@@ -1106,11 +1346,16 @@
         }
       ],
       "id": "gxfg2143l",
-      "svg": "https://www.netlify.com/img/press/logos/full-logo-light.png",
-      "website": "https://netlify.com"
+      "category": "Deployment"
     },
     {
-      "main": "Amplitude",
+      "commercial": [
+        {
+          "main": "Amplitude",
+          "svg": "https://www.vectorlogo.zone/logos/amplitude/amplitude-icon.svg",
+          "website": "https://amplitude.com/"
+        }
+      ],
       "alts": [
         {
           "name": "PostHog",
@@ -1118,14 +1363,13 @@
           "site": "https://posthog.com/",
           "language": "Python",
           "repo": "PostHog/posthog",
-          "stars": "1.7k",
+          "stars": "2k",
           "license": "MIT",
           "svg": "https://posthog.com/wp-content/uploads/2020/02/Group-10.png"
         }
       ],
       "id": "jvridinciu",
-      "svg": "https://www.vectorlogo.zone/logos/amplitude/amplitude-icon.svg",
-      "website": "https://amplitude.com/"
+      "category": "Product Management"
     }
   ]
 }

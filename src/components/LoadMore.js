@@ -39,7 +39,7 @@ export function LoadMore({ alts }) {
             </>
           ) : (
             <>
-              {alts.length - 5} More Alternatives
+              {alts.length - 5} More Alternative{alts.length - 5 !== 1 && "s"}
               <Icon ml={1} size={4} name="chevron-down" />
             </>
           )}

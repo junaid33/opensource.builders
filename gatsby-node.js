@@ -2,26 +2,35 @@ const path = require(`path`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
 const altsData = require("./content/alts/alts.json")
 
-
-
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
   const compTemplate = path.resolve(`./src/templates/comparisons.js`)
   altsData.alternatives.forEach(comp_object => {
-    var path = comp_object.main.replace(/\s+/g, "-").toLowerCase()
-    createPage({
-      path,
-      component: compTemplate,
-      context: comp_object,
+    comp_object.commercial.map(object => {
+      var path = object.main.replace(/\s+/g, "-").toLowerCase()
+      createPage({
+        path,
+        component: compTemplate,
+        context: {
+          name: object.main,
+          alternatives: comp_object.alts,
+        },
+      })
     })
   })
 
   const allData = []
 
-  altsData.alternatives.map(comp => {
+  altsData.alternatives.map((comp, index) => {
+    const flatComp = comp.commercial.map(a => a.main)
     const flat = comp.alts.map(alt => {
-      return { ...alt, main: comp.main, mainID: comp.id }
+      return {
+        ...alt,
+        main: flatComp,
+        mainID: comp.id,
+        category: comp.category,
+      }
     })
     allData.push(...flat)
   })
@@ -32,12 +41,12 @@ exports.createPages = async ({ graphql, actions }) => {
 
   createPage({
     path: `/`,
-    component: path.resolve(`./src/templates/ClientSearchTemplate.js`),
+    component: path.resolve(`./src/templates/index-with-search.js`),
     context: {
       compData: {
         allComps: allData,
         mainInfo: mainInfo,
-        options: {  
+        options: {
           indexStrategy: `Prefix match`,
           searchSanitizer: `Lower Case`,
           TitleIndex: true,

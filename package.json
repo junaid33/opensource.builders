@@ -42,6 +42,7 @@
     "prismjs": "^1.17.1",
     "prop-types": "^15.7.2",
     "react": "^16.10.2",
+    "react-bottom-scroll-listener": "^4.0.0",
     "react-dom": "^16.10.2",
     "react-helmet": "^5.2.1",
     "react-tinacms": "^0.8.0",

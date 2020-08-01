@@ -142,7 +142,7 @@
           "license": "AGPL",
           "stars": "100",
           "svg": "https://twake.app/medias/logo_big.png",
-          "deploy" : "https://doc.twake.app/installation"
+          "deploy": "https://doc.twake.app/installation"
         },
         {
           "name": "Wire",
@@ -1370,6 +1370,37 @@
       ],
       "id": "jvridinciu",
       "category": "Product Management"
+    },
+    {
+      "commercial": [
+        {
+          "main": "Medium",
+          "svg": "https://miro.medium.com/max/195/1*emiGsBgJu2KHWyjluhKXQw.png",
+          "website": "https://medium.com/"
+        }
+      ],
+      "alts": [
+        {
+          "name": "WriteFreely",
+          "site": "https://writefreely.org/",
+          "stars": "1.6K",
+          "license": "AGPL V3",
+          "language": "GO",
+          "repo": "writeas/writefreely",
+          "svg": "https://github.com/writeas/writefreely/blob/master/static/img/touch-icon-180.png?raw=true"
+        }, 
+        {
+          "name": "Sigle",
+          "site": "https://www.sigle.io/",
+          "stars": "149",
+          "license": "MIT",
+          "svg": "https://app.sigle.io/icon-192x192.png",
+          "language": "JS",
+          "repo": "pradel/sigle"
+        }
+      ],
+      "id": "fvlhaa4dg",
+      "category": "Blogging"
     }
   ]
 }

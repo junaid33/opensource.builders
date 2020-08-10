@@ -226,9 +226,9 @@
           "deploy": "https://render.com/deploy?repo=https://github.com/render-examples/open-web-analytics"
         },
         {
-          "name": "Plausible",
-          "repo": "plausible-insights/plausible",
-          "stars": "169",
+          "name": "Plausible Analytics",
+          "repo": "plausible/analytics",
+          "stars": "2.3K",
           "license": "MIT",
           "svg": "https://plausible.io/images/icon/plausible_logo_300px.png",
           "site": "https://plausible.io",

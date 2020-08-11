@@ -231,7 +231,7 @@
           "stars": "2.3K",
           "license": "MIT",
           "svg": "https://plausible.io/images/icon/plausible_logo_300px.png",
-          "site": "https://plausible.io",
+          "site": "https://plausible.io/",
           "language": "Elixir"
         }
       ],

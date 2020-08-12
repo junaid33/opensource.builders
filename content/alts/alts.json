@@ -1264,7 +1264,8 @@
           "repo": "https://gitlab.com/glitchtip",
           "svg": "https://glitchtip.com/assets/logo-again.svg",
           "license": "MIT",
-          "site": "https://glitchtip.com/"
+          "site": "https://glitchtip.com/",
+          "deploy": "https://glitchtip.com/documentation/install"
         }
       ],
       "id": "3dwh5h2gh",

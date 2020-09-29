@@ -1402,6 +1402,29 @@
       ],
       "id": "fvlhaa4dg",
       "category": "Blogging"
+    },
+    {
+      "commercial": [
+        {
+          "main": "Airtable",
+          "svg": "https://airtable.com/images/favicon/baymax/apple-touch-icon.png",
+          "website": "https://airtable.com"
+        }
+      ],
+      "alts": [
+        {
+          "name": "Baserow",
+          "site": "https://baserow.io",
+          "stars": "100",
+          "license": "MIT",
+          "language": "Python",
+          "repo": "https://gitlab.com/bramw/baserow",
+          "svg": "https://baserow.io/img/favicon_192.png",
+          "deploy": "https://baserow.io/docs/guides/demo-environment"
+        }
+      ],
+      "id": "hsywtsgej",
+      "category": "no-code"
     }
   ]
 }

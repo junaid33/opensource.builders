@@ -1007,6 +1007,16 @@
           "site": "https://www.meilisearch.com/",
           "language": "RUST",
           "deploy": "https://docs.meilisearch.com/guides/introduction/quick_start_guide.html"
+        },
+        {
+          "name": "Typesense",
+          "stars": "2.7K",
+          "license": "GPL-3.0",
+          "svg": "https://typesense.org/assets/images/typesense_logo.svg",
+          "repo": "typesense/typesense",
+          "site": "https://typesense.org/",
+          "language": "C++",
+          "deploy": "https://typesense.org/guide"
         }
       ],
       "id": "hfarlvwm9",

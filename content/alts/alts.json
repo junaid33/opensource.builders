@@ -864,6 +864,12 @@
           "stars": "4.9K",
           "license": "MIT",
           "svg": "https://user-images.githubusercontent.com/40141083/41202259-db1c76a8-6cb5-11e8-8cdc-cf6c3d560b3b.png"
+        },
+        {
+          "site": "https://planka.app/",
+          "name": "Planka",
+          "stars": "449",
+          "repo": "https://github.com/plankanban/planka"
         }
       ],
       "svg": "https://d2k1ftgv7pobq7.cloudfront.net/meta/u/res/images/brand-assets/Logos/0099ec3754bf473d2bbf317204ab6fea/trello-logo-blue.png",
@@ -1389,7 +1395,7 @@
           "language": "GO",
           "repo": "writeas/writefreely",
           "svg": "https://github.com/writeas/writefreely/blob/master/static/img/touch-icon-180.png?raw=true"
-        }, 
+        },
         {
           "name": "Sigle",
           "site": "https://www.sigle.io/",

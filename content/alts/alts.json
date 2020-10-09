@@ -206,6 +206,16 @@
           "deploy": "https://support.count.ly/hc/en-us/articles/360037814151-Deployment-scenarios"
         },
         {
+          "name": "Luckysheet",
+          "site": "https://mengshukeji.github.io/LuckysheetDocs/",
+          "repo": "mengshukeji/Luckysheet",
+          "language": "JS",
+          "svg": "https://minio.cnbabylon.com/public/luckysheet/logo.png",
+          "stars": "2.1k",
+          "license": "MIT",
+          "deploy": "https://mengshukeji.github.io/LuckysheetDocs/guide/#development-model"
+        },
+        {
           "name": "Ackee",
           "repo": "electerious/Ackee",
           "stars": "1.4K",

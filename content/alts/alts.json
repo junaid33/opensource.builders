@@ -1190,6 +1190,16 @@
           "site": "https://www.keycloak.org",
           "language": "JAVA",
           "deploy": "https://heroku.com/deploy?template=https://github.com/mieckert/keycloak-heroku/tree/master"
+        },
+        {
+          "name": "Osso",
+          "repo": "enterprise-oss/osso",
+          "stars": "5",
+          "license": "BSL",
+          "svg": "https://raw.githubusercontent.com/enterprise-oss/osso-docs/main/static/img/logo.svg",
+          "site": "https://ossoapp.com",
+          "language": "Ruby",
+          "deploy": "https://heroku.com/deploy?template=https://github.com/enterprise-oss/osso/tree/main"
         }
       ],
       "id": "n3ogcivro",

@@ -233,6 +233,15 @@
           "svg": "https://plausible.io/images/icon/plausible_logo_300px.png",
           "site": "https://plausible.io/",
           "language": "Elixir"
+        },
+        {
+          "name": "Kindmetrics",
+          "repo": "kindmetrics/kindmetrics",
+          "stars": "43",
+          "license": "MIT",
+          "svg": "https://kindmetrics.io/assets/images/apple-icon.png",
+          "site": "https://kindmetrics.io",
+          "language": "Crystal"
         }
       ],
       "website": "https://analytics.google.com/",

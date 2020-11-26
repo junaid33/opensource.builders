@@ -941,6 +941,16 @@
           "license": "Apache 2.0",
           "site": "https://n8n.io",
           "language": "TS"
+        },
+        {
+          "name": "ActiveWorkflow",
+          "repo": "automaticmode/active_workflow",
+          "site": "https://github.com/automaticmode/active_workflow",
+          "svg": "https://raw.githubusercontent.com/automaticmode/active_workflow/master/media/ActiveWorkflow-logo.svg",
+          "stars": "351",
+          "license": "MIT",
+          "language": "Ruby",
+          "deploy": "https://heroku.com/deploy?template=https://github.com/automaticmode/active_workflow&env[SINGLE_DYNO]=1"
         }
       ],
       "id": "tv9m27gmw",

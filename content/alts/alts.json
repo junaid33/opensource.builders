@@ -126,13 +126,13 @@
           "deploy": "https://marketplace.digitalocean.com/apps/zulip"
         },
         {
-          "name": "Riot",
+          "name": "Element",
           "license": "Apache 2.0",
-          "repo": "vector-im/riot-web",
-          "site": "http://riot.im",
+          "repo": "vector-im/element-web",
+          "site": "https://element.io/",
           "language": "JS",
-          "stars": "4.2K",
-          "svg": "https://about.riot.im/images/riot-nav.svg"
+          "stars": "5.8K",
+          "svg": "https://element.io/images/logo-mark-primary.svg"
         },
         {
           "name": "Twake",

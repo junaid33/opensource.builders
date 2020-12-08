@@ -1431,6 +1431,29 @@
       ],
       "id": "fvlhaa4dg",
       "category": "Blogging"
+    },
+    {
+      "commercial": [
+        {
+          "main": "EasyPost",
+          "svg": "https://assets.easypost.com/assets/images/branding/favicons/apple-touch-icon.00650288bca5f2eea5a83e5d8efdf807.png",
+          "website": "https://easypost.com/"
+        }
+      ],
+      "alts": [
+        {
+          "name": "Purplship",
+          "site": "https://purplship.com/",
+          "stars": "27",
+          "license": "AGPL V3",
+          "language": "Python",
+          "repo": "purplship/purplship-server",
+          "svg": "https://raw.githubusercontent.com/PurplShip/purplship-server/main/src/purpleserver/purpleserver/static/purpleserver/favicon-set/android-chrome-512x512.png",
+          "deploy": "https://heroku.com/deploy?template=https://github.com/PurplShip/purplship-server-demo/tree/main/"
+        }
+      ],
+      "id": "purplshipasdfihpwaoiher",
+      "category": "E-commerce"
     }
   ]
 }

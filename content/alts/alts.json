@@ -242,6 +242,16 @@
           "svg": "https://kindmetrics.io/assets/images/apple-icon.png",
           "site": "https://kindmetrics.io",
           "language": "Crystal"
+        },
+        {
+          "name": "umami",
+          "repo": "mikecao/umami",
+          "stars": "5.1K",
+          "license": "MIT",
+          "language": "JS",
+          "svg": "https://cdn.jsdelivr.net/gh/mikecao/umami.is/assets/logo.svg",
+          "site": "https://umami.is",
+          "deploy": "https://umami.is/docs/hosting"
         }
       ],
       "website": "https://analytics.google.com/",
@@ -1418,7 +1428,7 @@
           "language": "GO",
           "repo": "writeas/writefreely",
           "svg": "https://github.com/writeas/writefreely/blob/master/static/img/touch-icon-180.png?raw=true"
-        }, 
+        },
         {
           "name": "Sigle",
           "site": "https://www.sigle.io/",
@@ -1431,6 +1441,27 @@
       ],
       "id": "fvlhaa4dg",
       "category": "Blogging"
+    },
+    {
+      "commercial": [
+        {
+          "main": "Adobe Illustrator",
+          "svg": "https://www.vectorlogo.zone/logos/adobe_illustrator/adobe_illustrator-icon.svg",
+          "website": "https://www.adobe.com/products/illustrator.html"
+        }
+      ],
+      "alts": [
+        {
+          "name": "Inkscape",
+          "site": "https://inkscape.org",
+          "stars": "2064",
+          "license": "GNU GPL V3",
+          "svg": "https://www.vectorlogo.zone/logos/inkscape/inkscape-icon.svg",
+          "language": "C++",
+          "repo": "https://gitlab.com/inkscape/inkscape"
+        }
+      ],
+      "category": "Design"
     }
   ]
 }

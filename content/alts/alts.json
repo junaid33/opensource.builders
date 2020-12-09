@@ -244,13 +244,14 @@
           "language": "Crystal"
         },
         {
-            "name":"umami",
-            "repo":"mikecao/umami",
-            "stars":"5.1K",
-            "license":"MIT",
-            "svg":"https://cdn.jsdelivr.net/gh/mikecao/umami.is/assets/logo.svg",
-            "site":"https://umami.is",
-            "deploy":"https://umami.is/docs/hosting"
+          "name": "umami",
+          "repo": "mikecao/umami",
+          "stars": "5.1K",
+          "license": "MIT",
+          "language": "JS",
+          "svg": "https://cdn.jsdelivr.net/gh/mikecao/umami.is/assets/logo.svg",
+          "site": "https://umami.is",
+          "deploy": "https://umami.is/docs/hosting"
         }
       ],
       "website": "https://analytics.google.com/",

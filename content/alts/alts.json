@@ -9,7 +9,7 @@
         },
         {
           "main": "BigCommerce",
-          "svg": "https://images.ctfassets.net/ji35mhihvyjo/4X8mBlHCRaAQMMUWEIgQU8/2673daeefcbb7c4f38dffb312e77ca45/bigcommerce.svg",
+          "svg": "https://cdn.worldvectorlogo.com/logos/bigcommerce-1.svg",
           "website": "https://bigcommerce.com"
         }
       ],
@@ -20,7 +20,7 @@
           "site": "http://www.reactioncommerce.com/",
           "license": "GPL V3",
           "stars": "9.6K",
-          "svg": "https://user-images.githubusercontent.com/34615258/75008703-5e98d000-543e-11ea-912c-5678fb12e1a0.png",
+          "svg": "https://cdn.jsdelivr.net/gh/reactioncommerce/reaction/public/resources/reaction-logo.svg",
           "language": "JS",
           "deploy": "https://docs.reactioncommerce.com/docs/deploying-reaction-using-heroku"
         },
@@ -30,7 +30,7 @@
           "site": "https://saleor.io/",
           "license": "BSD-3",
           "stars": "6.6K",
-          "svg": "https://user-images.githubusercontent.com/34615258/75009087-5db46e00-543f-11ea-8bf3-fe057e6779da.png",
+          "svg": "https://i.trmt.me/logos/saleor/saleor.png",
           "language": "Python",
           "deploy": "https://heroku.com/deploy?template=https://github.com/mirumee/saleor"
         },
@@ -38,7 +38,7 @@
           "name": "WooCommerce",
           "stars": "5.8K",
           "license": "GPL",
-          "svg": "https://user-images.githubusercontent.com/34615258/75009182-a53afa00-543f-11ea-8e47-724cad625b44.png",
+          "svg": "https://cdn.worldvectorlogo.com/logos/woocommerce.svg",
           "repo": "woocommerce/woocommerce",
           "site": "http://www.woocommerce.com/",
           "language": "PHP",
@@ -55,7 +55,7 @@
           "stars": "5.6K",
           "license": "MIT",
           "name": "Sylius",
-          "svg": "https://media-exp1.licdn.com/dms/image/C4D0BAQEA7LMXgFhCoA/company-logo_200_200/0?e=2159024400&v=beta&t=l6oMKJERDt_Gzl1VXioCYow95n_YEGoukqCD-02NWmY",
+          "svg": "https://i.trmt.me/logos/stylius/logo.png",
           "deploy": "https://docs.sylius.com/en/1.6/cookbook/deployment/platform-sh.html"
         },
         {
@@ -64,7 +64,7 @@
           "site": "https://www.prestashop.com",
           "license": " OSL-3.0",
           "stars": "4.5K",
-          "svg": "https://avatars1.githubusercontent.com/u/2815696?s=200&v=4",
+          "svg": "https://i.trmt.me/logos/pretashop/logo.png",
           "language": "PHP",
           "deploy": "https://devdocs.prestashop.com/1.7/basics/installation/"
         },
@@ -72,7 +72,7 @@
           "name": "Bagisto",
           "stars": "2.1K",
           "license": "MIT",
-          "svg": "https://static.crozdesk.com/web_app_library/providers/logos/000/008/399/original/bagisto-1569908595-logo.png?1569908595",
+          "svg": "https://i.trmt.me/logos/bagisto/bagisto.png",
           "site": "https://bagisto.com",
           "language": "PHP",
           "repo": "bagisto/bagisto",
@@ -82,11 +82,11 @@
           "name": "Shopaholic",
           "stars": "370",
           "license": "GPL v3",
-          "svg": "https://raw.githubusercontent.com/oc-shopaholic/oc-shopaholic-plugin/master/assets/images/logo.png",
+          "svg": "https://cdn.jsdelivr.net/gh/oc-shopaholic/oc-shopaholic-plugin/assets/images/icon.svg",
           "language": "PHP",
           "site": "https://shopaholic.one",
           "deploy": "https://www.smashingmagazine.com/2020/03/october-cms-shopaholic",
-          "repo": "https://github.com/oc-shopaholic/oc-shopaholic-plugin"
+          "repo": "oc-shopaholic/oc-shopaholic-plugin"
         }
       ],
       "id": "wejrioewjr",
@@ -102,7 +102,7 @@
           "language": "JS",
           "license": "MIT",
           "stars": "25.5K",
-          "svg": "https://upload.wikimedia.org/wikipedia/commons/5/55/RocketChat_Logo_1024x1024.png",
+          "svg": "https://cdn.worldvectorlogo.com/logos/rocket-chat-1.svg",
           "deploy": "https://heroku.com/deploy?template=https://github.com/RocketChat/Rocket.Chat"
         },
         {
@@ -121,7 +121,7 @@
           "stars": "11.2K",
           "language": "Python",
           "site": "https://zulip.org/",
-          "svg": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Zulip_logo.svg/1200px-Zulip_logo.svg.png",
+          "svg": "https://cdn.worldvectorlogo.com/logos/zulip.svg",
           "license": "Apache 2.0",
           "deploy": "https://marketplace.digitalocean.com/apps/zulip"
         },
@@ -132,7 +132,7 @@
           "site": "https://element.io/",
           "language": "JS",
           "stars": "5.8K",
-          "svg": "https://element.io/images/logo-mark-primary.svg"
+          "svg": "https://cdn.jsdelivr.net/gh/vector-im/element-web/res/welcome/images/logo.svg"
         },
         {
           "name": "Twake",
@@ -141,7 +141,7 @@
           "language": "JS",
           "license": "AGPL",
           "stars": "100",
-          "svg": "https://twake.app/medias/logo_big.png",
+          "svg": "https://cdn.jsdelivr.net/gh/TwakeApp/Landing/public/medias/logo_big.png",
           "deploy": "https://doc.twake.app/installation"
         },
         {
@@ -151,11 +151,11 @@
           "site": "https://wire.com/en/",
           "language": "JS",
           "stars": "1.8K",
-          "svg": "https://brand.wire.com/public/Wire%20logo.svg"
+          "svg": "https://cdn.jsdelivr.net/gh/wireapp/brand/public/Wire%20logo.svg"
         }
       ],
       "id": "0pu87phxq",
-      "svg": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Slack_Technologies_Logo.svg",
+      "svg": "https://cdn.worldvectorlogo.com/logos/slack-new-logo.svg",
       "website": "https://slack.com",
       "commercial": [
         {
@@ -165,7 +165,7 @@
         },
         {
           "main": "Microsoft Teams",
-          "svg": "https://upload.wikimedia.org/wikipedia/commons/c/c9/Microsoft_Office_Teams_%282018%E2%80%93present%29.svg",
+          "svg": "https://cdn.worldvectorlogo.com/logos/microsoft-teams-1.svg",
           "website": "https://www.microsoft.com/en-us/microsoft-365/microsoft-teams/group-chat-software"
         }
       ],
@@ -182,7 +182,7 @@
           "repo": "Matomo-org/matomo",
           "license": "GPL V3",
           "stars": "12.8K",
-          "svg": "https://static.matomo.org/wp-content/uploads/2018/11/DefaultIcon.png",
+          "svg": "https://i.trmt.me/logos/matomo/matomo.png",
           "deploy": "https://render.com/deploy?repo=https://github.com/render-examples/matomo"
         },
         {
@@ -190,7 +190,7 @@
           "repo": "usefathom/fathom",
           "stars": "6.2K",
           "license": "MIT",
-          "svg": "https://pbs.twimg.com/profile_images/1192531063928762368/MaxeYpcK_400x400.jpg",
+          "svg": "https://cdn.jsdelivr.net/gh/usefathom/fathom/assets/src/img/favicon.png",
           "site": "https://usefathom.com/",
           "language": "Go",
           "deploy": "https://marketplace.digitalocean.com/apps/fathom-analytics"
@@ -200,7 +200,7 @@
           "repo": "countly/countly-server",
           "stars": "4.3K",
           "license": "AGPL V3-MOD",
-          "svg": "https://pbs.twimg.com/profile_images/704285378153467905/nxvtCKh0_400x400.jpg",
+          "svg": "https://i.trmt.me/logos/countly/conutly.jpg",
           "site": "https://count.ly",
           "language": "JS",
           "deploy": "https://support.count.ly/hc/en-us/articles/360037814151-Deployment-scenarios"
@@ -210,7 +210,7 @@
           "repo": "electerious/Ackee",
           "stars": "1.4K",
           "license": "MIT",
-          "svg": "https://img.stackshare.io/service/11335/Icon.png",
+          "svg": "https://cdn.jsdelivr.net/gh/electerious/Ackee/src/ui/images/favicon.ico",
           "site": "https://ackee.electerious.com",
           "language": "JS",
           "deploy": "https://heroku.com/deploy?template=https://github.com/electerious/Ackee/tree/master"
@@ -220,7 +220,7 @@
           "repo": "padams/Open-Web-Analytics",
           "stars": "1.2K",
           "license": "GPL V2",
-          "svg": "http://www.openwebanalytics.com/wp-content/uploads/2010/12/owa-logo-100w.png",
+          "svg": "https://cdn.jsdelivr.net/gh/Open-Web-Analytics/Open-Web-Analytics/modules/base/i/owa-logo-100w.png",
           "site": "http://www.openwebanalytics.com/",
           "language": "PHP",
           "deploy": "https://render.com/deploy?repo=https://github.com/render-examples/open-web-analytics"
@@ -230,7 +230,7 @@
           "repo": "plausible/analytics",
           "stars": "2.3K",
           "license": "MIT",
-          "svg": "https://plausible.io/images/icon/plausible_logo_300px.png",
+          "svg": "https://cdn.jsdelivr.net/gh/plausible/analytics/assets/static/images/icon/plausible_favicon.png",
           "site": "https://plausible.io/",
           "language": "Elixir"
         },
@@ -239,7 +239,7 @@
           "repo": "kindmetrics/kindmetrics",
           "stars": "43",
           "license": "MIT",
-          "svg": "https://kindmetrics.io/assets/images/apple-icon.png",
+          "svg": "https://cdn.jsdelivr.net/gh/kindmetrics/kindmetrics/public/apple-icon.png",
           "site": "https://kindmetrics.io",
           "language": "Crystal"
         },
@@ -336,13 +336,13 @@
       "commercial": [
         {
           "main": "GitHub",
-          "svg": "https://image.flaticon.com/icons/svg/25/25231.svg",
+          "svg": "https://cdn.worldvectorlogo.com/logos/github-icon-1.svg",
           "website": "https://github.com"
         },
         {
           "main": "BitBucket",
-          "website": "http://bitbucket.c",
-          "svg": "https://pbs.twimg.com/profile_images/1026981625291190272/35O2KIRX_400x400.jpg"
+          "website": "http://bitbucket.org",
+          "svg": "https://cdn.worldvectorlogo.com/logos/bitbucket-icon.svg"
         }
       ],
       "alts": [
@@ -571,7 +571,7 @@
         {
           "name": "Graphite Docs",
           "stars": "378",
-          "svg": "https://raw.githubusercontent.com/Graphite-Docs/graphite/master/public/images/mstile-310x310.png",
+          "svg": "https://cdn.jsdelivr.net/gh/Graphite-Docs/graphite/public/images/mstile-310x310.png",
           "license": "GPL V3",
           "repo": "Graphite-Docs/graphite",
           "site": "https://www.graphitedocs.com/",
@@ -579,14 +579,14 @@
           "deploy": "https://github.com/Graphite-Docs/graphite#install"
         },
         {
-          "name": "CodiMD",
-          "stars": "513",
-          "svg": "https://demo.codimd.org/codimd-icon-1024.png",
+          "name": "Hedgedoc",
+          "stars": "1.4K",
+          "svg": "https://cdn.jsdelivr.net/gh/hedgedoc/hedgedoc-logo/LOGOTYPE/SVG/HedgeDoc-Logo%201.svg",
           "license": "AGPL V3",
-          "repo": "codimd/server",
-          "site": "https://demo.codimd.org/",
+          "repo": "hedgedoc/hedgedoc",
+          "site": "https://hedgedoc.org/",
           "language": "JS",
-          "deploy": "https://github.com/codimd/server#installation--upgrading"
+          "deploy": "https://github.com/hedgedoc/hedgedoc#installation--upgrading"
         }
       ],
       "id": " pqlrehguie",
@@ -608,7 +608,7 @@
           "stars": "20.4K",
           "license": "Apache 2.0",
           "language": "Go",
-          "svg": "https://openebs.org/assets/images/workloads/minio.png",
+          "svg": "https://cdn.worldvectorlogo.com/logos/minio-1.svg",
           "deploy": "https://docs.min.io/docs/minio-deployment-quickstart-guide.html"
         },
         {
@@ -909,7 +909,7 @@
         {
           "name": "chatwoot",
           "stars": "3.4K",
-          "svg": "https://chatwoot.herokuapp.com/packs/media/widget/assets/images/logo-a1bb9ce7a33ef8e3b17f28d79a48cb28.svg",
+          "svg": "https://cdn.jsdelivr.net/gh/chatwoot/chatwoot/public/brand-assets/logo_thumbnail.svg",
           "repo": "chatwoot/chatwoot",
           "license": "MIT",
           "site": "https://www.chatwoot.com/",
@@ -998,7 +998,7 @@
           "name": "NodeTube",
           "stars": "1.6K",
           "license": "MIT",
-          "svg": "https://raw.githubusercontent.com/mayeaux/nodetube/master/media/logo.jpg",
+          "svg": "https://cdn.jsdelivr.net/gh/mayeaux/nodetube/media/logo.jpg",
           "repo": "mayeaux/nodetube",
           "site": "https://github.com/mayeaux/nodetube",
           "language": "JS",

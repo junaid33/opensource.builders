@@ -1205,7 +1205,7 @@
       "commercial": [
         {
           "main": "Auth0",
-          "shttps://cdn.jsdelivr.net/gh/gilbarbara/logos/logos/auth0.svgg",
+          "svg": "https://cdn.jsdelivr.net/gh/gilbarbara/logos/logos/auth0.svg",
           "website": "https://auth0.com"
         }
       ],

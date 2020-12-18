@@ -200,7 +200,7 @@
           "repo": "countly/countly-server",
           "stars": "4.3K",
           "license": "AGPL V3-MOD",
-          "svg": "https://i.trmt.me/logos/countly/conutly.jpg",
+          "svg": "https://i.trmt.me/logos/countly/countly.jpg",
           "site": "https://count.ly",
           "language": "JS",
           "deploy": "https://support.count.ly/hc/en-us/articles/360037814151-Deployment-scenarios"
@@ -596,7 +596,7 @@
       "commercial": [
         {
           "main": "Amazon S3",
-          "svg": "https://cdn.worldvectorlogo.com/logos/aws-s3.svg",
+          "svg": "https://cdn.jsdelivr.net/gh/gilbarbara/logos/logos/aws-s3.svg",
           "website": "https://aws.amazon.com/s3/"
         }
       ],
@@ -685,7 +685,7 @@
       "commercial": [
         {
           "main": "Zendesk",
-          "svg": "https://logosandtypes.com/wp-content/uploads/zendesk.svg",
+          "svg": "https://cdn.jsdelivr.net/gh/gilbarbara/logos/logos/zendesk.svg",
           "website": "https://www.zendesk.com/"
         }
       ],
@@ -998,7 +998,7 @@
           "name": "NodeTube",
           "stars": "1.6K",
           "license": "MIT",
-          "svg": "https://cdn.jsdelivr.net/gh/mayeaux/nodetube/media/logo.jpg",
+          "svg": "https://cdn.jsdelivr.net/gh/mayeaux/nodetube/media/logo.png",
           "repo": "mayeaux/nodetube",
           "site": "https://github.com/mayeaux/nodetube",
           "language": "JS",
@@ -1012,7 +1012,7 @@
       "commercial": [
         {
           "main": "Algolia",
-          "svg": "https://logosandtypes.com/wp-content/uploads/algolia.svg",
+          "svg": "https://cdn.worldvectorlogo.com/logos/algolia-4.svg",
           "website": "https://algolia.com"
         }
       ],
@@ -1160,7 +1160,7 @@
       "commercial": [
         {
           "main": "Segment",
-          "svg": "https://logosandtypes.com/wp-content/uploads/segment.svg",
+          "svg": "https://cdn.jsdelivr.net/gh/gilbarbara/logos/logos/segment.svg",
           "website": "https://segment.com"
         }
       ],
@@ -1182,7 +1182,7 @@
       "commercial": [
         {
           "main": "npm",
-          "svg": "https://symbols.getvecta.com/stencil_89/68_npm-icon.5522e43817.svg",
+          "svg": "https://cdn.jsdelivr.net/gh/gilbarbara/logos/logos/npm.svg",
           "website": "https://www.npmjs.com"
         }
       ],
@@ -1205,7 +1205,7 @@
       "commercial": [
         {
           "main": "Auth0",
-          "svg": "https://www.brandeps.com/logo-download/A/Auth0-logo-vector-01.svg",
+          "shttps://cdn.jsdelivr.net/gh/gilbarbara/logos/logos/auth0.svgg",
           "website": "https://auth0.com"
         }
       ],

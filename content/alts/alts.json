@@ -380,7 +380,7 @@
           "name": "Codeberg",
           "stars": "22",
           "repo": "https://codeberg.org/Codeberg/Community",
-          "svg": "https://i.trmt.me/codeberg/logo.svg",
+          "svg": "https://i.trmt.me/logos/codeberg/logo.svg",
           "license": "AGPL V3",
           "site": "https://codeberg.org/",
           "language": "Go",
@@ -477,7 +477,7 @@
           "repo": "passwordcockpit/passwordcockpit",
           "license": "BSD-3",
           "stars": "18",
-          "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images/passwordcockpit/image.svg",
+          "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images/passwordcockpit/image.png",
           "site": "https://passwordcockpit.com/",
           "language": "PHP",
           "deploy": "https://github.com/passwordcockpit/passwordcockpit#usage"
@@ -517,7 +517,7 @@
         },
         {
           "name": "MeshCentral",
-          "svg": "https://i.trmt.me/logos/meshcentral/logo.png",
+          "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images/meshcentral/logo.png",
           "site": "https://www.meshcommander.com/meshcentral2",
           "language": "JS",
           "repo": "Ylianst/MeshCentral",
@@ -528,7 +528,7 @@
         {
           "name": "Remotely",
           "stars": "233",
-          "svg": "https://cdn.jsdelivr.net/gh/lucent-sea/Remotely/Assets/Remotely_Icon.png",
+          "svg": "https://cdn.jsdelivr.net/gh/lucent-sea/Remotely@master/Assets/Remotely_Icon.png",
           "license": "GPL V3",
           "deploy": "https://github.com/Jay-Rad/Remotely/blob/master/README.md",
           "language": "JS",
@@ -685,7 +685,7 @@
       "commercial": [
         {
           "main": "Zendesk",
-          "svg": "https://cdn.jsdelivr.net/gh/gilbarbara/logos/logos/zendesk.svg",
+          "svg": "https://www.vectorlogo.zone/logos/zendesk/zendesk-icon.svg",
           "website": "https://www.zendesk.com/"
         }
       ],
@@ -756,7 +756,7 @@
         {
           "name": "OwnCloud",
           "stars": "7K",
-          "svg": "https://cdn.jsdelivr.net/gh/owncloud/owncloud.github.io/source/static/logo.png",
+          "svg": "https://cdn.jsdelivr.net/gh/owncloud/owncloud.github.io@source/static/logo.png",
           "license": "AGPL V3",
           "repo": "owncloud/core",
           "site": "https://owncloud.org/",
@@ -862,7 +862,7 @@
           "repo": "wekan/wekan",
           "stars": "15.5K",
           "license": "MIT",
-          "svg": "https://raw.githubusercontent.com/wekan/wekan/master/meta/icons/wekan-150.png"
+          "svg": "https://cdn.jsdelivr.net/wekan/wekan@master/meta/icons/wekan-150.png"
         },
         {
           "name": "Taiga",
@@ -921,7 +921,7 @@
           "repo": "chaskiq/chaskiq",
           "stars": "144",
           "license": "GPL V2",
-          "svg": "https://chaskiq.io/icons/icon-192x192.png?v=38c439bc2c86c4a2e167235e8bb0ce1c",
+          "svg": "https://cdn.jsdelivr.net/gh/chaskiq/chaskiq/app/assets/images/favicon.png",
           "site": "https://chaskiq.io/",
           "language": "JS",
           "deploy": " https://heroku.com/deploy?template=https://github.com/chaskiq/chaskiq"
@@ -956,7 +956,7 @@
           "name": "ActiveWorkflow",
           "repo": "automaticmode/active_workflow",
           "site": "https://github.com/automaticmode/active_workflow",
-          "svg": "https://raw.githubusercontent.com/automaticmode/active_workflow/master/media/ActiveWorkflow-logo.svg",
+          "svg": "https://cdn.jsdelivr.net/gh/automaticmode/active_workflow/media/ActiveWorkflow-Symbol.svg",
           "stars": "351",
           "license": "MIT",
           "language": "Ruby",
@@ -1160,7 +1160,7 @@
       "commercial": [
         {
           "main": "Segment",
-          "svg": "https://cdn.jsdelivr.net/gh/gilbarbara/logos/logos/segment.svg",
+          "svg": "https://www.vectorlogo.zone/logos/segment/segment-icon.svg",
           "website": "https://segment.com"
         }
       ],
@@ -1225,7 +1225,7 @@
           "repo": "enterprise-oss/osso",
           "stars": "5",
           "license": "BSL",
-          "svg": "https://raw.githubusercontent.com/enterprise-oss/osso-docs/main/static/img/logo.svg",
+          "svg": "https://cdn.jsdelivr.net/gh/enterprise-oss/osso-docs@main/static/img/logo.svg",
           "site": "https://ossoapp.com",
           "language": "Ruby",
           "deploy": "https://heroku.com/deploy?template=https://github.com/enterprise-oss/osso/tree/main"
@@ -1283,7 +1283,7 @@
       "commercial": [
         {
           "main": "LogRocket",
-          "svg": "https://media.glassdoor.com/sqll/2504641/logrocket-squarelogo-1571154960969.png",
+          "svg": "https://cdn.jsdelivr.net/gh/AliasIO/Wappalyzer/src/drivers/webextension/images/icons/LogRocket.svg",
           "website": "https://logrocket.com"
         }
       ],
@@ -1303,6 +1303,7 @@
           "repo": "https://gitlab.com/glitchtip",
           "svg": "https://glitchtip.com/assets/logo-again.svg",
           "license": "MIT",
+          "stars":"14",
           "site": "https://glitchtip.com/",
           "deploy": "https://glitchtip.com/documentation/install"
         }

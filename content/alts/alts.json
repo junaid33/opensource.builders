@@ -459,7 +459,7 @@
           "stars": "886",
           "site": "https://padloc.app/",
           "language": "TS",
-          "svg": "https://avatars2.githubusercontent.com/u/38265889",
+          "svg": "https://cdn.jsdelivr.net/gh/padloc/padloc/packages/app/assets/icons/192.png",
           "deploy": "https://github.com/padloc/padloc#getting-started"
         },
         {
@@ -477,9 +477,9 @@
           "repo": "passwordcockpit/passwordcockpit",
           "license": "BSD-3",
           "stars": "18",
+          "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images/passwordcockpit/image.svg",
           "site": "https://passwordcockpit.com/",
           "language": "PHP",
-          "svg": "https://avatars1.githubusercontent.com/u/45554572",
           "deploy": "https://github.com/passwordcockpit/passwordcockpit#usage"
         }
       ],
@@ -511,7 +511,7 @@
           "repo": "cedrozor/myrtille",
           "language": "C#",
           "deploy": "https://github.com/cedrozor/myrtille/blob/master/DOCUMENTATION.md#installation",
-          "svg": "https://avatars0.githubusercontent.com/u/17749498?s=400&v=4",
+          "svg": "https://cdn.jsdelivr.net/gh/cedrozor/myrtille@gh-pages/images/myrtille.png",
           "stars": "713",
           "license": "Apache 2.0"
         },
@@ -551,7 +551,7 @@
         {
           "name": "CryptPad",
           "stars": "1.6K",
-          "svg": "https://cryptpad.fr/customize/cryptpad-new-logo-colors-logoonly.png?ver=3.12.4",
+          "svg": "https://cdn.jsdelivr.net/gh/xwiki-labs/cryptpad/customize.dist/CryptPad_logo.svg",
           "license": "AGPL V3",
           "repo": "xwiki-labs/cryptpad",
           "site": "https://cryptpad.fr/",
@@ -561,7 +561,7 @@
         {
           "name": "ONLYOFFICE",
           "stars": "1.4K",
-          "svg": "https://res-5.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_120,w_120,f_auto,b_white,q_auto:eco/v1470826892/ph2jc5mrymrljhrhbnjj.png",
+          "svg": "https://cdn.jsdelivr.net/gh/ONLYOFFICE/desktop-apps/win-linux/extras/projicons/res/desktopeditors.ico",
           "license": "AGPL V3",
           "repo": "ONLYOFFICE/DocumentServer",
           "site": "https://www.onlyoffice.com/",
@@ -626,7 +626,7 @@
           "site": "https://www.swiftstack.com/",
           "stars": "2K",
           "license": "Apache 2.0",
-          "svg": "https://www.swiftstack.com/sites/default/files/swiftstack-logo-stacked-small.png",
+          "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images/swiftstack/swiftstack.png",
           "language": "Python",
           "repo": "openstack/swift",
           "deploy": "https://docs.openstack.org/swift/latest/deployment_guide.html"
@@ -637,7 +637,7 @@
     },
     {
       "main": "Salesforce",
-      "svg": "https://user-images.githubusercontent.com/3085186/75608678-a15a4800-5acf-11ea-9ddc-6bb922043585.png",
+      "svg": "https://www.vectorlogo.zone/logos/salesforce/salesforce-ar21.svg",
       "alts": [
         {
           "name": "Odoo",
@@ -707,7 +707,7 @@
           "language": "PHP",
           "site": "https://www.uvdesk.com/en/",
           "deploy": "https://www.uvdesk.com/en/blog/open-source-helpdesk-installation-on-ubuntu-uvdesk/",
-          "svg": "https://yt3.ggpht.com/a/AGF-l7-NdudzgErRaS3LGC3qIHjUM53t3Hmt4RpqUw=s900-c-k-c0xffffffff-no-rj-mo",
+          "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images/uvdesk/uvdesk.jpg",
           "repo": "uvdesk/community-skeleton"
         },
         {
@@ -1343,14 +1343,14 @@
       ],
       "alts": [
         {
-          "name": "BulletTrain",
-          "site": "https://bullet-train.io/",
-          "repo": "BulletTrainHQ/bullet-train-api",
+          "name": "FlagSmith",
+          "site": "https://www.flagsmith.com/",
+          "repo": "https://github.com/Flagsmith/flagsmith-api",
           "language": "Python",
-          "stars": "67",
+          "stars": "203",
           "license": "BSD-3",
-          "svg": "https://bullet-train.io/static/icons-192.png",
-          "deploy": "https://heroku.com/deploy?template=https://github.com/BulletTrainHQ/bullet-train-api"
+          "svg": "https://cdn.jsdelivr.net/gh/Flagsmith/flagsmith-frontend/web/images/favicon.ico",
+          "deploy": "https://heroku.com/deploy?template=https://github.com/Flagsmith/flagsmith-api"
         },
         {
           "name": "Unleash",

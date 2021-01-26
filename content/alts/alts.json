@@ -270,7 +270,7 @@
         {
           "main": "Heroku",
           "website": "https://heroku.com",
-          "svg": "https://slack-files2.s3-us-west-2.amazonaws.com/avatars/2018-07-10/396072065317_f8b9a63ed67ca0368c6e_512.png"
+          "svg": "https://www.vectorlogo.zone/logos/heroku/heroku-icon.svg"
         },
         {
           "main": "Render",
@@ -296,7 +296,7 @@
           "language": "Go",
           "license": "MIT",
           "stars": "17K",
-          "svg": "https://www.openfaas.com/images/openfaas/whale.png",
+          "svg": "https://cdn.jsdelivr.net/gh/openfaas/openfaas.github.io/images/openfaas/whale.png",
           "deploy": "https://marketplace.digitalocean.com/apps/openfaas"
         },
         {
@@ -306,14 +306,14 @@
           "name": "Flynn",
           "license": "BSD-3",
           "repo": "flynn/flynn",
-          "svg": "https://flynn.io/images/flynn-acaf9509.svg"
+          "svg": "https://i.trmt.me/logos/flynn/flynn.svg"
         },
         {
           "name": "Caprover",
           "repo": "CapRover/CapRover",
           "license": "Apache 2.0",
           "stars": "4.7K",
-          "svg": "https://caprover.com/img/logo.png",
+          "svg": "https://cdn.jsdelivr.net/gh/caprover/caprover-website/graphics/logo.svg",
           "language": "TS",
           "site": "https://CapRover.com",
           "deploy": "https://marketplace.digitalocean.com/apps/caprover?action=deploy&refcode=6410aa23d3f3"
@@ -370,7 +370,7 @@
           "name": "Gitea",
           "stars": "18.4K",
           "repo": "go-gitea/gitea",
-          "svg": "https://gitea.io/images/gitea.png",
+          "svg": "https://www.vectorlogo.zone/logos/giteaio/giteaio-icon.svg",
           "license": "MIT",
           "site": "https://gitea.io/en-us/",
           "language": "Go",
@@ -380,7 +380,7 @@
           "name": "Codeberg",
           "stars": "22",
           "repo": "https://codeberg.org/Codeberg/Community",
-          "svg": "https://codeberg.org/img/logo-small.svg",
+          "svg": "https://i.trmt.me/logos/codeberg/logo.svg",
           "license": "AGPL V3",
           "site": "https://codeberg.org/",
           "language": "Go",
@@ -390,7 +390,7 @@
           "name": "OneDev",
           "stars": "2.7K",
           "license": "MIT",
-          "svg": "https://code.onedev.io/img/logo.png",
+          "svg": "https://cdn.jsdelivr.net/gh/theonedev/onedev/server-core/src/main/java/io/onedev/server/web/img/logo.png",
           "site": "https://code.onedev.io/",
           "language": "Java",
           "repo": "theonedev/onedev",
@@ -414,7 +414,7 @@
       "commercial": [
         {
           "main": "1Password",
-          "svg": "https://1password.com/img/meta-og-image.png",
+          "svg": "https://www.vectorlogo.zone/logos/1password/1password-icon.svg",
           "website": "https://1password.com/"
         },
         {
@@ -431,7 +431,7 @@
           "site": "https://keepassxc.org/",
           "license": "GPL V3",
           "stars": "7.2K",
-          "svg": "https://upload.wikimedia.org/wikipedia/commons/c/c1/KeePassXC.svg"
+          "svg": "https://cdn.jsdelivr.net/gh/keepassxreboot/keepassxc-browser/keepassxc-browser/icons/keepassxc.svg"
         },
         {
           "name": "Bitwarden",
@@ -440,7 +440,7 @@
           "license": "AGPL V3",
           "language": "C#",
           "stars": "4.8K",
-          "svg": "https://avatars3.githubusercontent.com/u/15990069?s=400&v=4",
+          "svg": "https://www.vectorlogo.zone/logos/bitwarden/bitwarden-icon.svg",
           "deploy": "https://marketplace.digitalocean.com/apps/bitwarden"
         },
         {
@@ -450,7 +450,7 @@
           "stars": "3.2K",
           "site": "https://buttercup.pw",
           "language": "JS",
-          "svg": "https://is1-ssl.mzstatic.com/image/thumb/Purple123/v4/91/c5/cc/91c5ccb5-04ef-2bd2-e665-1079ef983c52/AppIcon-0-0-1x_U007emarketing-0-0-0-10-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/217x0w.png"
+          "svg": "https://cdn.jsdelivr.net/gh/buttercup/buttercup-website/static/img/buttercup.ico"
         },
         {
           "name": "Padloc",
@@ -459,7 +459,7 @@
           "stars": "886",
           "site": "https://padloc.app/",
           "language": "TS",
-          "svg": "https://avatars2.githubusercontent.com/u/38265889",
+          "svg": "https://cdn.jsdelivr.net/gh/padloc/padloc/packages/app/assets/icons/192.png",
           "deploy": "https://github.com/padloc/padloc#getting-started"
         },
         {
@@ -469,7 +469,7 @@
           "stars": "135",
           "site": "https://authpass.app/",
           "language": "Dart",
-          "svg": "https://github.com/authpass/authpass/raw/master/_docs/authpass-logo.svg",
+          "svg": "https://cdn.jsdelivr.net/gh/authpass/authpass/_docs/authpass-logo.svg",
           "deploy": "https://github.com/authpass/authpass#authpassapp---open-source-password-manager-for-mobile-and-desktop"
         },
         {
@@ -477,9 +477,9 @@
           "repo": "passwordcockpit/passwordcockpit",
           "license": "BSD-3",
           "stars": "18",
+          "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images/passwordcockpit/image.png",
           "site": "https://passwordcockpit.com/",
           "language": "PHP",
-          "svg": "https://avatars1.githubusercontent.com/u/45554572",
           "deploy": "https://github.com/passwordcockpit/passwordcockpit#usage"
         }
       ],
@@ -491,7 +491,7 @@
         {
           "main": "TeamViewer",
           "website": "https://www.teamviewer.com/",
-          "svg": "https://upload.wikimedia.org/wikipedia/commons/3/31/TeamViewer_Logo_Icon_Only.svg"
+          "svg": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMjQgMjQiIGlkPSJMYXllcl8xIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+PGc+PHBhdGggZD0iTTIxLDIzSDNjLTEuMTA0NTY5NiwwLTItMC44OTU0Mjk2LTItMlYzYzAtMS4xMDQ1Njk2LDAuODk1NDMwNC0yLDItMmgxOGMxLjEwNDU3MDQsMCwyLDAuODk1NDMwNCwyLDJ2MTggICBDMjMsMjIuMTA0NTcwNCwyMi4xMDQ1NzA0LDIzLDIxLDIzeiIgZmlsbD0iIzIxQjNFOCIvPjxwYXRoIGQ9Ik0yMSwxSDNDMS44OTU0NDY4LDEsMSwxLjg5NTM4NTcsMSwzdjAuMjVjMC0xLjEwNDYxNDMsMC44OTU0NDY4LTIsMi0yaDE4ICAgYzEuMTA0NTUzMiwwLDIsMC44OTUzODU3LDIsMlYzQzIzLDEuODk1Mzg1NywyMi4xMDQ1NTMyLDEsMjEsMXoiIGZpbGw9IiNGRkZGRkYiIG9wYWNpdHk9IjAuMiIvPjxwYXRoIGQ9Ik0yMSwyMi43NUgzYy0xLjEwNDU1MzIsMC0yLTAuODk1NDQ2OC0yLTJWMjFjMCwxLjEwNDU1MzIsMC44OTU0NDY4LDIsMiwyaDE4ICAgYzEuMTA0NTUzMiwwLDItMC44OTU0NDY4LDItMnYtMC4yNUMyMywyMS44NTQ1NTMyLDIyLjEwNDU1MzIsMjIuNzUsMjEsMjIuNzV6IiBmaWxsPSIjMDEwMTAxIiBvcGFjaXR5PSIwLjEiLz48cGF0aCBkPSJNMTIsM2MtNC45NzA1ODExLDAtOSw0LjAyOTQxODktOSw5YzAsNC45NzA1Miw0LjAyOTQxODksOSw5LDlzOS00LjAyOTQ4LDktOSAgIEMyMSw3LjAyOTQxODksMTYuOTcwNTgxMSwzLDEyLDN6IE0xNC45OTkyNjc2LDE0Ljk5OTI2NzZMMTUuNSwxM2gtN2wwLjQ5OTIwNjUsMi4wMDA3OTM1TDUsMTJsNC4wMDA3MzI0LTIuOTk5MjY3Nkw4LjUsMTFoNyAgIGwtMC41MDA3OTM1LTEuOTk5MjA2NUwxOSwxMkwxNC45OTkyNjc2LDE0Ljk5OTI2NzZ6IiBmaWxsPSIjRkZGRkZGIi8+PHBhdGggZD0iTTEyLDMuMjVjMy45ODI0ODI5LDAsNy4zNTE5NDU5LDIuNTIzMDMwMyw4LjU5NzQyOTMsNi4wODAyODEzICAgQzE5LjQ2OTk4NzksNS42NDY4MDk2LDE2LjA1MjczNDQsMywxMiwzUzQuNTM1NDA4NSw1LjYyOTQ3MzIsMy40MDc5NjcxLDkuMzEyOTQ1NEM0LjY1MzQ1MDUsNS43NTU2OTM5LDguMDE3NTE3MSwzLjI1LDEyLDMuMjV6IiBmaWxsPSIjRkZGRkZGIiBvcGFjaXR5PSIwLjIiLz48cGF0aCBkPSJNMTIsMjAuNzVjLTMuNjI0NjgxNSwwLTYuNzQxNTQ3Ni0yLjA5MDAzODMtOC4yMTEzOTUzLTUuMTQ3NjE1NCAgIGMtMC4xNDUwOTItMC4zMDE4MjA4LTAuMjc0MTM1Ni0wLjYxMzA2OTUtMC4zODYwMzQ1LTAuOTMyNjY1OGMwLjE0MDY1NSwwLjQ1OTUzNDYsMC4zMTY5NDg3LDAuOTAyOTM0MSwwLjUyNTY2ODYsMS4zMjcwNzMxICAgQzUuMzkyNTQ3MSwxOC45NzI0MDQ1LDguNDUyODY3NSwyMSwxMiwyMWMzLjYyNzE1MjQsMCw2Ljc0MDk1OTItMi4xMDYyMjIyLDguMTYzMTgxMy01LjE4OTIyMjMgICBjMC4wNzY3NTU1LTAuMTY2Mzg0NywwLjE0ODU4NDQtMC4zMzU2MTMzLDAuMjE1Mjk5Ni0wLjUwNzUwOTJjMC4wNzgzMzEtMC4yMDE4MjMyLDAuMTQ5NjE0My0wLjQwNzMyMzgsMC4yMTM1NTI1LTAuNjE2MjEzOCAgIEMxOS4zNDY1NSwxOC4yNDQzMDY2LDE1Ljk4MjQ4MjksMjAuNzUsMTIsMjAuNzV6IiBmaWxsPSIjMDEwMTAxIiBvcGFjaXR5PSIwLjEiLz48cG9seWdvbiBmaWxsPSIjMDEwMTAxIiBpZD0iWE1MSURfMTU2MF8iIG9wYWNpdHk9IjAuMSIgcG9pbnRzPSIxOSwxMiAxNC45OTkyMDc1LDkuMDAwNzkyNSAxNS41LDExIDguNSwxMSA5LjAwMDcyNTcsOS4wMDA3MjU3ICAgIDUsMTIgOC45OTkxOTEzLDE1LjAwMDgwODcgOC41LDEzIDE1LjUsMTMgMTQuOTk5Mjc0MywxNC45OTkyNzQzICAiLz48bGluZWFyR3JhZGllbnQgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIGlkPSJTVkdJRF8xXyIgeDE9IjExLjkyNDI3MDYiIHgyPSIyMi4zMzg0NzgxIiB5MT0iMTIuMDc1NzI5NCIgeTI9IjIyLjQ4OTkzNjgiPjxzdG9wIG9mZnNldD0iMCIgc3R5bGU9InN0b3AtY29sb3I6IzAxMDEwMTtzdG9wLW9wYWNpdHk6MC4xIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdHlsZT0ic3RvcC1jb2xvcjojMDEwMTAxO3N0b3Atb3BhY2l0eTowIi8+PC9saW5lYXJHcmFkaWVudD48cGF0aCBkPSJNMTkuNTk0Mjk5Myw3LjE1NTg4MzhsLTAuMDExNTk2NywwLjAwOTI3NzNDMjAuNDc1NjQ3LDguNTYyNjIyMSwyMSwxMC4yMTg1NjY5LDIxLDEyICAgYzAsNC45NzA1Mi00LjAyOTQxODksOS05LDljLTIuNDg0OTI0MywwLTQuNzM0NTU4MS0xLjAwNzA4MDEtNi4zNjMxNTkyLTIuNjM1MzE0OWwtMC4wMDc1MDczLDAuMDA1OTgxNEwxMC4yNTg2NjcsMjNIMjEgICBjMS4xMDQ1NTMyLDAsMi0wLjg5NTQ0NjgsMi0yVjEwLjU2MTU4NDVMMTkuNTk0Mjk5Myw3LjE1NTg4Mzh6IiBmaWxsPSJ1cmwoI1NWR0lEXzFfKSIvPjxsaW5lYXJHcmFkaWVudCBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgaWQ9IlNWR0lEXzJfIiB4MT0iLTAuNjUyNzkyNCIgeDI9IjI0LjY1Mjc5MiIgeTE9IjYuMDk5OTA2IiB5Mj0iMTcuOTAwMDkzMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdHlsZT0ic3RvcC1jb2xvcjojRkZGRkZGO3N0b3Atb3BhY2l0eTowLjIiLz48c3RvcCBvZmZzZXQ9IjEiIHN0eWxlPSJzdG9wLWNvbG9yOiNGRkZGRkY7c3RvcC1vcGFjaXR5OjAiLz48L2xpbmVhckdyYWRpZW50PjxwYXRoIGQ9Ik0yMSwyM0gzYy0xLjEwNDU2OTYsMC0yLTAuODk1NDI5Ni0yLTJWM2MwLTEuMTA0NTY5NiwwLjg5NTQzMDQtMiwyLTJoMTggICBjMS4xMDQ1NzA0LDAsMiwwLjg5NTQzMDQsMiwydjE4QzIzLDIyLjEwNDU3MDQsMjIuMTA0NTcwNCwyMywyMSwyM3oiIGZpbGw9InVybCgjU1ZHSURfMl8pIi8+PC9nPjxnLz48Zy8+PGcvPjxnLz48Zy8+PGcvPjxnLz48Zy8+PGcvPjxnLz48Zy8+PGcvPjxnLz48Zy8+PGcvPjwvc3ZnPg=="
         }
       ],
       "alts": [
@@ -500,7 +500,7 @@
           "repo": "apache/guacamole-server",
           "site": "https://guacamole.apache.org/",
           "language": "C",
-          "svg": "https://pbs.twimg.com/profile_images/1083257074291634176/yFo3_y6p_400x400.jpg",
+          "svg": "https://cdn.jsdelivr.net/gh/apache/guacamole-website/images/guacamole-logo-64.png",
           "stars": "1.2K",
           "license": "Apache 2.0",
           "deploy": "https://guacamole.apache.org/doc/gug/installing-guacamole.html"
@@ -511,13 +511,13 @@
           "repo": "cedrozor/myrtille",
           "language": "C#",
           "deploy": "https://github.com/cedrozor/myrtille/blob/master/DOCUMENTATION.md#installation",
-          "svg": "https://avatars0.githubusercontent.com/u/17749498?s=400&v=4",
+          "svg": "https://cdn.jsdelivr.net/gh/cedrozor/myrtille@gh-pages/images/myrtille.png",
           "stars": "713",
           "license": "Apache 2.0"
         },
         {
           "name": "MeshCentral",
-          "svg": "https://pbs.twimg.com/profile_images/538050195666137088/azKzkG-M_400x400.png",
+          "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images/meshcentral/logo.png",
           "site": "https://www.meshcommander.com/meshcentral2",
           "language": "JS",
           "repo": "Ylianst/MeshCentral",
@@ -528,7 +528,7 @@
         {
           "name": "Remotely",
           "stars": "233",
-          "svg": "https://remotely.one/media/Remotely_Icon_Transparent.png",
+          "svg": "https://cdn.jsdelivr.net/gh/lucent-sea/Remotely@master/Assets/Remotely_Icon.png",
           "license": "GPL V3",
           "deploy": "https://github.com/Jay-Rad/Remotely/blob/master/README.md",
           "language": "JS",
@@ -543,7 +543,7 @@
       "commercial": [
         {
           "main": "Google Docs",
-          "svg": "https://upload.wikimedia.org/wikipedia/commons/a/a7/Google_Docs_logo.svg",
+          "svg": "https://cdn.worldvectorlogo.com/logos/google-docs-icon-2.svg",
           "website": "https://www.google.com/intl/en_US/docs/about/"
         }
       ],
@@ -551,7 +551,7 @@
         {
           "name": "CryptPad",
           "stars": "1.6K",
-          "svg": "https://cryptpad.fr/customize/cryptpad-new-logo-colors-logoonly.png?ver=3.12.4",
+          "svg": "https://cdn.jsdelivr.net/gh/xwiki-labs/cryptpad/customize.dist/CryptPad_logo.svg",
           "license": "AGPL V3",
           "repo": "xwiki-labs/cryptpad",
           "site": "https://cryptpad.fr/",
@@ -561,7 +561,7 @@
         {
           "name": "ONLYOFFICE",
           "stars": "1.4K",
-          "svg": "https://res-5.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_120,w_120,f_auto,b_white,q_auto:eco/v1470826892/ph2jc5mrymrljhrhbnjj.png",
+          "svg": "https://cdn.jsdelivr.net/gh/ONLYOFFICE/desktop-apps/win-linux/extras/projicons/res/desktopeditors.ico",
           "license": "AGPL V3",
           "repo": "ONLYOFFICE/DocumentServer",
           "site": "https://www.onlyoffice.com/",
@@ -618,7 +618,7 @@
           "repo": "ceph/ceph",
           "license": "LGPL V3",
           "stars": "7.4K",
-          "svg": "https://gitlab.cern.ch/uploads/-/system/project/avatar/24868/Ceph_Logo_.png",
+          "svg": "https://www.vectorlogo.zone/logos/ceph/ceph-icon.svg",
           "deploy": "https://docs.ceph.com/docs/master/start/"
         },
         {
@@ -626,7 +626,7 @@
           "site": "https://www.swiftstack.com/",
           "stars": "2K",
           "license": "Apache 2.0",
-          "svg": "https://www.swiftstack.com/sites/default/files/swiftstack-logo-stacked-small.png",
+          "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images/swiftstack/swiftstack.png",
           "language": "Python",
           "repo": "openstack/swift",
           "deploy": "https://docs.openstack.org/swift/latest/deployment_guide.html"
@@ -637,7 +637,7 @@
     },
     {
       "main": "Salesforce",
-      "svg": "https://user-images.githubusercontent.com/3085186/75608678-a15a4800-5acf-11ea-9ddc-6bb922043585.png",
+      "svg": "https://www.vectorlogo.zone/logos/salesforce/salesforce-ar21.svg",
       "alts": [
         {
           "name": "Odoo",
@@ -685,7 +685,7 @@
       "commercial": [
         {
           "main": "Zendesk",
-          "svg": "https://cdn.jsdelivr.net/gh/gilbarbara/logos/logos/zendesk.svg",
+          "svg": "https://www.vectorlogo.zone/logos/zendesk/zendesk-icon.svg",
           "website": "https://www.zendesk.com/"
         }
       ],
@@ -707,7 +707,7 @@
           "language": "PHP",
           "site": "https://www.uvdesk.com/en/",
           "deploy": "https://www.uvdesk.com/en/blog/open-source-helpdesk-installation-on-ubuntu-uvdesk/",
-          "svg": "https://yt3.ggpht.com/a/AGF-l7-NdudzgErRaS3LGC3qIHjUM53t3Hmt4RpqUw=s900-c-k-c0xffffffff-no-rj-mo",
+          "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images/uvdesk/uvdesk.jpg",
           "repo": "uvdesk/community-skeleton"
         },
         {
@@ -717,7 +717,7 @@
           "language": "RUBY",
           "site": "https://helpy.io/",
           "deploy": "https://github.com/helpyio/helpy#getting-started",
-          "svg": "https://raw.githubusercontent.com/helpyio/helpy/59c142c8c4da903c2cecdfcc426d7e8d582bfdb0/app/assets/images/helpy-logo.png",
+          "svg": "https://cdn.jsdelivr.net/gh/helpyio/helpy/app/assets/images/helpy-logo.png",
           "repo": "helpyio/helpy"
         }
       ],
@@ -736,7 +736,7 @@
         {
           "name": "NextCloud",
           "stars": "9.8K",
-          "svg": "https://nextcloud.com/wp-content/themes/next/assets/img/common/nextcloud-square-logo.png?x53054",
+          "svg": "https://www.vectorlogo.zone/logos/nextcloud/nextcloud-icon.svg",
           "license": "AGPL V3",
           "repo": "nextcloud/server",
           "site": "https://nextcloud.com",
@@ -756,7 +756,7 @@
         {
           "name": "OwnCloud",
           "stars": "7K",
-          "svg": "https://raw.githubusercontent.com/owncloud/owncloud.github.io/source/static/logo.png",
+          "svg": "https://cdn.jsdelivr.net/gh/owncloud/owncloud.github.io@source/static/logo.png",
           "license": "AGPL V3",
           "repo": "owncloud/core",
           "site": "https://owncloud.org/",
@@ -862,7 +862,7 @@
           "repo": "wekan/wekan",
           "stars": "15.5K",
           "license": "MIT",
-          "svg": "https://raw.githubusercontent.com/wekan/wekan/master/meta/icons/wekan-150.png"
+          "svg": "https://cdn.jsdelivr.net/wekan/wekan@master/meta/icons/wekan-150.png"
         },
         {
           "name": "Taiga",
@@ -921,7 +921,7 @@
           "repo": "chaskiq/chaskiq",
           "stars": "144",
           "license": "GPL V2",
-          "svg": "https://chaskiq.io/icons/icon-192x192.png?v=38c439bc2c86c4a2e167235e8bb0ce1c",
+          "svg": "https://cdn.jsdelivr.net/gh/chaskiq/chaskiq/app/assets/images/favicon.png",
           "site": "https://chaskiq.io/",
           "language": "JS",
           "deploy": " https://heroku.com/deploy?template=https://github.com/chaskiq/chaskiq"
@@ -956,7 +956,7 @@
           "name": "ActiveWorkflow",
           "repo": "automaticmode/active_workflow",
           "site": "https://github.com/automaticmode/active_workflow",
-          "svg": "https://raw.githubusercontent.com/automaticmode/active_workflow/master/media/ActiveWorkflow-logo.svg",
+          "svg": "https://cdn.jsdelivr.net/gh/automaticmode/active_workflow/media/ActiveWorkflow-Symbol.svg",
           "stars": "351",
           "license": "MIT",
           "language": "Ruby",
@@ -1012,7 +1012,7 @@
       "commercial": [
         {
           "main": "Algolia",
-          "svg": "https://cdn.worldvectorlogo.com/logos/algolia-4.svg",
+          "svg": "https://www.vectorlogo.zone/logos/algolia/algolia-icon.svg",
           "website": "https://algolia.com"
         }
       ],
@@ -1160,7 +1160,7 @@
       "commercial": [
         {
           "main": "Segment",
-          "svg": "https://cdn.jsdelivr.net/gh/gilbarbara/logos/logos/segment.svg",
+          "svg": "https://www.vectorlogo.zone/logos/segment/segment-icon.svg",
           "website": "https://segment.com"
         }
       ],
@@ -1225,7 +1225,7 @@
           "repo": "enterprise-oss/osso",
           "stars": "5",
           "license": "BSL",
-          "svg": "https://raw.githubusercontent.com/enterprise-oss/osso-docs/main/static/img/logo.svg",
+          "svg": "https://cdn.jsdelivr.net/gh/enterprise-oss/osso-docs@main/static/img/logo.svg",
           "site": "https://ossoapp.com",
           "language": "Ruby",
           "deploy": "https://heroku.com/deploy?template=https://github.com/enterprise-oss/osso/tree/main"
@@ -1283,7 +1283,7 @@
       "commercial": [
         {
           "main": "LogRocket",
-          "svg": "https://media.glassdoor.com/sqll/2504641/logrocket-squarelogo-1571154960969.png",
+          "svg": "https://cdn.jsdelivr.net/gh/AliasIO/Wappalyzer/src/drivers/webextension/images/icons/LogRocket.svg",
           "website": "https://logrocket.com"
         }
       ],
@@ -1303,6 +1303,7 @@
           "repo": "https://gitlab.com/glitchtip",
           "svg": "https://glitchtip.com/assets/logo-again.svg",
           "license": "MIT",
+          "stars":"14",
           "site": "https://glitchtip.com/",
           "deploy": "https://glitchtip.com/documentation/install"
         }
@@ -1343,14 +1344,14 @@
       ],
       "alts": [
         {
-          "name": "BulletTrain",
-          "site": "https://bullet-train.io/",
-          "repo": "BulletTrainHQ/bullet-train-api",
+          "name": "FlagSmith",
+          "site": "https://www.flagsmith.com/",
+          "repo": "https://github.com/Flagsmith/flagsmith-api",
           "language": "Python",
-          "stars": "67",
+          "stars": "203",
           "license": "BSD-3",
-          "svg": "https://bullet-train.io/static/icons-192.png",
-          "deploy": "https://heroku.com/deploy?template=https://github.com/BulletTrainHQ/bullet-train-api"
+          "svg": "https://cdn.jsdelivr.net/gh/Flagsmith/flagsmith-frontend/web/images/favicon.ico",
+          "deploy": "https://heroku.com/deploy?template=https://github.com/Flagsmith/flagsmith-api"
         },
         {
           "name": "Unleash",

@@ -1462,6 +1462,7 @@
           "repo": "https://gitlab.com/inkscape/inkscape"
         }
       ],
+      "id": "ea1a547be",
       "category": "Design"
     },
     { "commercial": [
@@ -1483,6 +1484,7 @@
           "deploy": "https://www.univention.com/downloads/ucs-in-the-cloud/ucs-ec2-image/"
         }
       ],
+      "id": "efb17e0ad",
       "category": "Cloud"
     }
   ]

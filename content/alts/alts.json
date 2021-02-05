@@ -1479,7 +1479,8 @@
           "license": "AGPL V3",
           "stars": "71",
           "svg": "https://www.univention.de/wp-content/uploads/2019/03/univention_corporate_server_Icon_Logo.svg",
-          "language": "Python"
+          "language": "Python",
+          "deploy": "https://www.univention.com/downloads/ucs-in-the-cloud/ucs-ec2-image/"
         }
       ],
       "category": "Cloud"

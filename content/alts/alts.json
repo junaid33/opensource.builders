@@ -1462,7 +1462,30 @@
           "repo": "https://gitlab.com/inkscape/inkscape"
         }
       ],
+      "id": "ea1a547be",
       "category": "Design"
+    },
+    { "commercial": [
+        {
+          "main": "Microsoft Active Directory",
+          "svg": "https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg",
+          "website": "https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-adts/d2435927-0999-4c62-8c6d-13ba31a52e1a"
+        }
+      ],
+      "alts": [
+        {
+          "name": "Univention Corporate Server",
+          "repo": "univention/univention-corporate-server",
+          "site": "https://www.univention.com/",
+          "license": "AGPL V3",
+          "stars": "71",
+          "svg": "https://www.univention.de/wp-content/uploads/2019/03/univention_corporate_server_Icon_Logo.svg",
+          "language": "Python",
+          "deploy": "https://www.univention.com/downloads/ucs-in-the-cloud/ucs-ec2-image/"
+        }
+      ],
+      "id": "efb17e0ad",
+      "category": "Cloud"
     }
   ]
 }

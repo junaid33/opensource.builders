@@ -30,7 +30,7 @@
           "site": "https://saleor.io/",
           "license": "BSD-3",
           "stars": "6.6K",
-          "svg": "https://i.trmt.me/logos/saleor/saleor.png",
+          "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images/saleor/saleor.png",
           "language": "Python",
           "deploy": "https://heroku.com/deploy?template=https://github.com/mirumee/saleor"
         },
@@ -55,7 +55,7 @@
           "stars": "5.6K",
           "license": "MIT",
           "name": "Sylius",
-          "svg": "https://i.trmt.me/logos/stylius/logo.png",
+          "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images/stylius/logo.png",
           "deploy": "https://docs.sylius.com/en/1.6/cookbook/deployment/platform-sh.html"
         },
         {
@@ -64,7 +64,7 @@
           "site": "https://www.prestashop.com",
           "license": " OSL-3.0",
           "stars": "4.5K",
-          "svg": "https://i.trmt.me/logos/pretashop/logo.png",
+          "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images/pretashop/logo.png",
           "language": "PHP",
           "deploy": "https://devdocs.prestashop.com/1.7/basics/installation/"
         },
@@ -72,7 +72,7 @@
           "name": "Bagisto",
           "stars": "2.1K",
           "license": "MIT",
-          "svg": "https://i.trmt.me/logos/bagisto/bagisto.png",
+          "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images/bagisto/bagisto.png",
           "site": "https://bagisto.com",
           "language": "PHP",
           "repo": "bagisto/bagisto",
@@ -182,7 +182,7 @@
           "repo": "Matomo-org/matomo",
           "license": "GPL V3",
           "stars": "12.8K",
-          "svg": "https://i.trmt.me/logos/matomo/matomo.png",
+          "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images/matomo/matomo.png",
           "deploy": "https://render.com/deploy?repo=https://github.com/render-examples/matomo"
         },
         {
@@ -200,7 +200,7 @@
           "repo": "countly/countly-server",
           "stars": "4.3K",
           "license": "AGPL V3-MOD",
-          "svg": "https://i.trmt.me/logos/countly/countly.jpg",
+          "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images/countly/countly.jpg",
           "site": "https://count.ly",
           "language": "JS",
           "deploy": "https://support.count.ly/hc/en-us/articles/360037814151-Deployment-scenarios"
@@ -306,14 +306,14 @@
           "name": "Flynn",
           "license": "BSD-3",
           "repo": "flynn/flynn",
-          "svg": "https://i.trmt.me/logos/flynn/flynn.svg"
+          "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images/flynn/flynn.svg"
         },
         {
           "name": "Caprover",
           "repo": "CapRover/CapRover",
           "license": "Apache 2.0",
           "stars": "4.7K",
-          "svg": "https://cdn.jsdelivr.net/gh/caprover/caprover-website/graphics/logo.svg",
+          "svg": "https://cdn.jsdelivr.net/gh/caprover/caprover-website@master/website/static/img/logo.png",
           "language": "TS",
           "site": "https://CapRover.com",
           "deploy": "https://marketplace.digitalocean.com/apps/caprover?action=deploy&refcode=6410aa23d3f3"
@@ -323,7 +323,7 @@
           "repo": "tsuru/tsuru",
           "license": "BSD-3",
           "stars": "3.3K",
-          "svg": "https://avatars3.githubusercontent.com/u/6999787",
+          "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images/tsuru/tsuru.png",
           "language": "GO",
           "site": "https://tsuru.io/",
           "deploy": "https://docs.tsuru.io/stable/installing/index.html"
@@ -350,7 +350,7 @@
           "name": "Gogs",
           "stars": "33.5K",
           "license": "MIT",
-          "svg": "https://avatars2.githubusercontent.com/u/6656686?s=400&v=4",
+          "svg": "https://cdn.jsdelivr.net/gh/gogs/gogs@main/public/img/favicon.png",
           "site": "https://gogs.io/",
           "language": "GO",
           "repo": "gogs/gogs",
@@ -380,7 +380,7 @@
           "name": "Codeberg",
           "stars": "22",
           "repo": "https://codeberg.org/Codeberg/Community",
-          "svg": "https://i.trmt.me/logos/codeberg/logo.svg",
+          "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images/codeberg/logo.svg",
           "license": "AGPL V3",
           "site": "https://codeberg.org/",
           "language": "Go",
@@ -400,7 +400,7 @@
           "name": "Pagure",
           "stars": "158",
           "license": "GPL v2+",
-          "svg": "https://docs.pagure.org/pagure/_static/pagure.png",
+          "svg": "https://cdn.jsdelivr.net/gh/Pagure/pagure@master/tests/pagure.png",
           "site": "https://pagure.io/pagure",
           "language": "Python",
           "repo": "Pagure/pagure",
@@ -545,6 +545,11 @@
           "main": "Google Docs",
           "svg": "https://cdn.worldvectorlogo.com/logos/google-docs-icon-2.svg",
           "website": "https://www.google.com/intl/en_US/docs/about/"
+        },
+        {
+          "main": "Office Online",
+          "svg": "https://cdn.jsdelivr.net/gh/jaywcjlove/logo@master/img/office.svg",
+          "website": "https://office.com"
         }
       ],
       "alts": [
@@ -559,17 +564,27 @@
           "deploy": "https://github.com/xwiki-labs/cryptpad/wiki/Installation-guide"
         },
         {
+          "name": "Colabora Online",
+          "stars": "220",
+          "svg": "https://www.vectorlogo.zone/logos/collabora/collabora-icon.svg",
+          "license": "MPL V2",
+          "repo": "CollaboraOnline/online",
+          "site": "https://www.collabora.com/code",
+          "language": "JS/C++",
+          "deploy": "https://www.collaboraoffice.com/code/"
+        },
+        {
           "name": "ONLYOFFICE",
           "stars": "1.4K",
           "svg": "https://cdn.jsdelivr.net/gh/ONLYOFFICE/desktop-apps/win-linux/extras/projicons/res/desktopeditors.ico",
           "license": "AGPL V3",
           "repo": "ONLYOFFICE/DocumentServer",
           "site": "https://www.onlyoffice.com/",
-          "language": "JS",
+          "language": "C#/JS",
           "deploy": "https://helpcenter.onlyoffice.com/"
         },
         {
-          "name": "Graphite Docs",
+          "name": "Graphite Docs(Discontinued)",
           "stars": "378",
           "svg": "https://cdn.jsdelivr.net/gh/Graphite-Docs/graphite/public/images/mstile-310x310.png",
           "license": "GPL V3",
@@ -636,16 +651,14 @@
       "category": "Deployment"
     },
     {
-      "main": "Salesforce",
-      "svg": "https://www.vectorlogo.zone/logos/salesforce/salesforce-ar21.svg",
       "alts": [
         {
           "name": "Odoo",
           "repo": "odoo/odoo",
           "site": "https://www.odoo.com/",
           "license": "GPL V3",
-          "stars": "16.8K",
-          "svg": "https://user-images.githubusercontent.com/3085186/75608557-7b807380-5ace-11ea-9144-18bdfcefcf9e.png",
+          "stars": "20.4K",
+          "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images/odoo/odoo.png",
           "language": "Python",
           "deploy": "https://www.odoo.com/documentation/master/setup/install.html"
         },
@@ -654,20 +667,29 @@
           "repo": "salesagility/SuiteCRM",
           "site": "https://www.suitecrm.com/",
           "license": "AGPL-3.0",
-          "stars": "1.9K",
-          "svg": "https://user-images.githubusercontent.com/3085186/75608635-49234600-5acf-11ea-8612-b24c50b58e68.png",
+          "stars": "2.4K",
+          "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images/suitecrm/suitecrm.png",
           "language": "PHP",
           "deploy": "https://docs.suitecrm.com/admin/installation-guide/"
         },
         {
-          "name": "Crust CRM",
-          "repo": "crusttech",
-          "site": "https://www.crust.tech/",
+          "name": "Corteza",
+          "repo": "cortezaproject/corteza-server",
+          "site": "https://cortezaproject.org/",
           "license": "Apache-2.0",
-          "svg": "https://avatars2.githubusercontent.com/u/40803294?s=200&v=4",
+          "svg": "https://cdn.jsdelivr.net/gh/cortezaproject/corteza-webapp-compose@develop/public/favicon32x32.png",
           "language": "Go",
           "deploy": "https://docs.cortezaproject.org/",
-          "stars": "25"
+          "stars": "172"
+        },
+        {
+          "name": "Erpnext",
+          "repo": "frappe/erpnext",
+          "site": "https://erpnext.com/",
+          "license": "GPL V3",
+          "svg": "https://cdn.jsdelivr.net/gh/frappe/erpnext@develop/erpnext/public/images/erpnext-logo.png",
+          "language": "Python",
+          "stars": "7.6K"
         }
       ],
       "website": "https://salesforce.com",
@@ -677,6 +699,11 @@
           "main": "Salesforce",
           "svg": "https://cdn.worldvectorlogo.com/logos/salesforce-2.svg",
           "website": "https://salesforce.com"
+        },
+        {
+          "main": "SAP",
+          "svg": "https://www.vectorlogo.zone/logos/sap/sap-icon.svg",
+          "website": "https://sap.com"
         }
       ],
       "category": "CRM"
@@ -862,7 +889,7 @@
           "repo": "wekan/wekan",
           "stars": "15.5K",
           "license": "MIT",
-          "svg": "https://cdn.jsdelivr.net/wekan/wekan@master/meta/icons/wekan-150.png"
+          "svg": "https://cdn.jsdelivr.net/gh/wekan/wekan@master/meta/icons/wekan-150.svg"
         },
         {
           "name": "Taiga",
@@ -1020,7 +1047,7 @@
         {
           "name": "Elastic Search",
           "stars": "47.1K",
-          "license": "Apache 2.0",
+          "license": "SSPL v1",
           "svg": "https://cdn.worldvectorlogo.com/logos/elasticsearch.svg",
           "repo": "elastic/elasticsearch",
           "site": "https://www.elastic.co/elasticsearch",
@@ -1303,7 +1330,7 @@
           "repo": "https://gitlab.com/glitchtip",
           "svg": "https://glitchtip.com/assets/logo-again.svg",
           "license": "MIT",
-          "stars":"14",
+          "stars": "14",
           "site": "https://glitchtip.com/",
           "deploy": "https://glitchtip.com/documentation/install"
         }
@@ -1360,7 +1387,7 @@
           "language": "Javascript",
           "stars": "1901",
           "license": "APACHE2.0",
-          "svg": "https://unleash.github.io/img/logo-inverted.png"
+          "svg": "https://cdn.jsdelivr.net/gh/unleash/unleash.github.io/img/logo-inverted.png"
         }
       ],
       "id": "zczpb2ekn",
@@ -1428,7 +1455,7 @@
           "license": "AGPL V3",
           "language": "GO",
           "repo": "writeas/writefreely",
-          "svg": "https://github.com/writeas/writefreely/blob/master/static/img/touch-icon-180.png?raw=true"
+          "svg": "https://cdn.jsdelivr.net/gh/writeas/writefreely@master/static/img/touch-icon-180.png"
         },
         {
           "name": "Sigle",

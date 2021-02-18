@@ -1492,7 +1492,8 @@
       "id": "ea1a547be",
       "category": "Design"
     },
-    { "commercial": [
+    {
+      "commercial": [
         {
           "main": "Microsoft Active Directory",
           "svg": "https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg",
@@ -1506,13 +1507,64 @@
           "site": "https://www.univention.com/",
           "license": "AGPL V3",
           "stars": "71",
-          "svg": "https://www.univention.de/wp-content/uploads/2019/03/univention_corporate_server_Icon_Logo.svg",
+          "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images@develop/univention/univention.svg",
           "language": "Python",
           "deploy": "https://www.univention.com/downloads/ucs-in-the-cloud/ucs-ec2-image/"
         }
       ],
       "id": "efb17e0ad",
       "category": "Cloud"
+    },
+    {
+      "commercial": [
+        {
+          "main": "Figma",
+          "svg": "https://www.vectorlogo.zone/logos/figma/figma-icon.svg",
+          "website": "https://figma.com"
+        },
+        {
+          "main": "Framer",
+          "svg": "https://www.vectorlogo.zone/logos/framer/framer-icon.svg",
+          "website": "https://framer.com"
+        },
+        {
+          "main": "Sketch",
+          "svg": "https://www.vectorlogo.zone/logos/sketchapp/sketchapp-icon.svg",
+          "website": "https://sketch.com"
+        },
+        {
+          "main": "Adobe XD",
+          "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images@develop/adobe/xd.svg",
+          "website": "https://www.adobe.com/products/xd.html"
+        },
+        {
+          "main": "InVision",
+          "svg": "https://www.vectorlogo.zone/logos/invisionapp/invisionapp-icon.svg",
+          "website": "https://invisionapp.com"
+        }
+      ],
+      "alts": [
+        {
+          "name": "Penpot",
+          "repo": "penpot/penpot",
+          "site": "https://penpot.app/",
+          "license": "MPL V2",
+          "stars": "3.1K",
+          "svg": "https://cdn.jsdelivr.net/gh/penpot/penpot@develop/frontend/resources/images/favicon.png",
+          "language": "Clojure",
+          "deploy": "https://github.com/penpot/penpot/blob/develop/docs/05-Configuration-Guide.md"
+        },
+        {
+          "name": "Quant UX",
+          "repo": "KlausSchaefers/quant-ux",
+          "site": "https://quant-ux.com/#/",
+          "license": "GPL V3",
+          "stars": "213",
+          "svg": "https://cdn.jsdelivr.net/gh/KlausSchaefers/quant-ux@master/public/icons/favicon.ico",
+          "language": "JS"
+        }
+      ],
+      "category": "Design"
     }
   ]
 }

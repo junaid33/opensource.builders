@@ -13,7 +13,8 @@ import { Box, Divider } from "@chakra-ui/core"
 /**
  * STEP 1: Import the json hooks
  */
-import { useLocalJsonForm, useGlobalJsonForm } from "gatsby-tinacms-json"
+import { useJsonForm } from "gatsby-tinacms-json"
+// import { useLocalJsonForm } from "gatsby-tinacms-json"
 
 const Bio = () => {
   /**
@@ -46,12 +47,12 @@ const Bio = () => {
   `)
 
   /**
-   * STEP 3: Make the author editable with `useLocalJsonForm`
+   * STEP 3: Make the author editable with `useJsonForm`
    *
    * Then checkout `useGlobalJsonForm`
    */
 
-  const [{ author, social }] = useLocalJsonForm(data.author, {
+  const [{ author }] = useJsonForm(data.author, {
     label: "Author bio",
     fields: [
       { name: "rawJson.author", label: "Author Name", component: "text" },

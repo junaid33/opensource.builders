@@ -1581,7 +1581,7 @@
           "site": "https://appwrite.io/",
           "license": "BSD-3-Clause",
           "stars": "5.9K",
-          "svg": "https://appwrite.io/images/appwrite.svg",
+          "svg": "https://appwrite.io/images/appwrite.svg"
         }
       ],
       "category": "Backend as a Service"

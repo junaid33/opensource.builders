@@ -1565,6 +1565,26 @@
         }
       ],
       "category": "Design"
+    },
+    {
+      "commercial": [
+        {
+          "main": "Firebase",
+          "svg": "https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg",
+          "website": "https://firebase.google.com"
+        }
+      ],
+      "alts": [
+        {
+          "name": "Appwrite",
+          "repo": "appwrite/appwrite",
+          "site": "https://appwrite.io/",
+          "license": "BSD 3-Clause",
+          "stars": "5.9K",
+          "svg": "https://appwrite.io/images/appwrite.svg",
+        }
+      ],
+      "category": "BaaS"
     }
   ]
 }

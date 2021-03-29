@@ -167,6 +167,11 @@
           "main": "Microsoft Teams",
           "svg": "https://cdn.worldvectorlogo.com/logos/microsoft-teams-1.svg",
           "website": "https://www.microsoft.com/en-us/microsoft-365/microsoft-teams/group-chat-software"
+        },
+        {
+          "main": "Discord",
+          "svg": "https://cdn.worldvectorlogo.com/logos/discord.svg",
+          "website": "https://dis.gd"
         }
       ],
       "category": "Communication"
@@ -1566,5 +1571,29 @@
       ],
       "category": "Design"
     }
-  ]
+  ],
+  {
+    "commercial":
+    [
+    {
+          "main": "ClubHouse",
+          "svg":"https://cdn.jsdelivr.net/gh/kogeletey/ossb-images@develop/clubhouse/clubhouse.svg",
+          "website": "https://joinclubhouse.com"
+    },
+    {
+          "main": "Twitter Spaces",
+          "svg":"https://cdn.jsdelivr.net/gh/kogeletey/ossb-images@develop/twitter/spaces.png",
+          "website": "https://help.twitter.com/en/using-twitter/spaces"
+    }
+],
+  {
+      "name": "Jam",
+      "repo": "https://gitlab.com/jam-systems/jam",
+      "site": "https://jam.systems/",
+      "license": "AGPL V3",
+      "stars": "160",
+      "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images@develop/jam/jam.png",
+      "language": "JS"
+  }
+  }
 }

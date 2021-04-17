@@ -300,15 +300,6 @@
           "deploy": "https://marketplace.digitalocean.com/apps/openfaas"
         },
         {
-          "site": "https://flynn.io/",
-          "language": "Go",
-          "stars": "7.5K",
-          "name": "Flynn",
-          "license": "BSD-3",
-          "repo": "flynn/flynn",
-          "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images/flynn/flynn.svg"
-        },
-        {
           "name": "Caprover",
           "repo": "CapRover/CapRover",
           "license": "Apache 2.0",

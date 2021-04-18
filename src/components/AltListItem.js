@@ -237,6 +237,7 @@ export default function AltListItem({ alt }) {
                 strokeWidth="0"
                 version="1.1"
                 height="1.2em"
+                height=
                 width="1.2em"
                 viewBox="0 0 32 32"
                 xmlns="http://www.w3.org/2000/svg"

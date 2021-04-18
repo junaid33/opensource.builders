@@ -1578,33 +1578,6 @@
       ],
       "id": "gio7ua",
       "category": "Design"
-    },
-    {
-      "commercial": [
-        {
-          "main": "ClubHouse",
-          "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images@develop/clubhouse/clubhouse.png",
-          "website": "https://joinclubhouse.com"
-        },
-        {
-          "main": "Twitter Spaces",
-          "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images@develop/twitter/spaces.jpg",
-          "website": "https://help.twitter.com/en/using-twitter/spaces"
-        }
-      ],
-      "alts": [
-        {
-          "name": "Jam",
-          "repo": "https://gitlab.com/jam-systems/jam",
-          "site": "https://jam.systems/",
-          "license": "AGPL V3",
-          "stars": "160",
-          "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images@develop/jam/jam.png",
-          "language": "JS"
-        }
-      ],
-      "id": "si134ua",
-      "category": "VoiceChat"
     }
   ]
 }

@@ -18,7 +18,7 @@ module.exports = {
           "gatsby-tinacms-json",
         ],
         sidebar: {
-          hidden: process.env.NODE_ENV === "production",
+          enabled: process.env.NODE_ENV !== "production",
           position: "displace",
         },
       },

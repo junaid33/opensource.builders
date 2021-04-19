@@ -8,7 +8,7 @@ export default function CompGroup({ comp, commercial, alts }) {
     <Box mb={16} width={{ base: "100%", lg: "50%" }}>
       <Box mx={{ base: 0, sm: 1 }}>
         <Box display="flex">
-          {commercial.map(com => (
+          {commercial.map((com) => (
             <Box display="flex" alignItems="center" ml={2}>
               <Tooltip
                 bg="rgb(45, 55, 72)"
@@ -38,7 +38,7 @@ export default function CompGroup({ comp, commercial, alts }) {
         <Divider borderColor="gray.400" />
         <Box display="flex" flexWrap="wrap">
           {alts.length <= 5 ? (
-            alts.map(alt => <AltListItem alt={alt} />)
+            alts.map((alt) => <AltListItem alt={alt} />)
           ) : (
             <LoadMore alts={alts} />
           )}

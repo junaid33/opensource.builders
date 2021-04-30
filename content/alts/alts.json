@@ -340,6 +340,11 @@
     {
       "commercial": [
         {
+          "main": "Upsource",
+          "website": "https://www.jetbrains.com/upsource/",
+          "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images@develop/jetbrains/upsource.svg"
+        },
+        {
           "main": "GitHub",
           "svg": "https://cdn.worldvectorlogo.com/logos/github-icon-1.svg",
           "website": "https://github.com"

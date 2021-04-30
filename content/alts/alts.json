@@ -308,7 +308,7 @@
           "site": "https://flynn.io/",
           "language": "Go",
           "stars": "7.5K",
-          "name": "Flynn",
+          "name": "Flynn(UNMAINTAINED)",
           "license": "BSD-3",
           "repo": "flynn/flynn",
           "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images/flynn/flynn.svg"
@@ -352,7 +352,7 @@
         {
           "main": "Upsource",
           "website": "https://www.jetbrains.com/upsource/",
-          "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images@develop/jetbrains/upsource.svg"
+          "svg": "https://cdn.jsdelivr.net/gh/detain/svg-logos@master/svg/upsource-icon.svg"
         }
       ],
       "alts": [
@@ -1349,6 +1349,7 @@
           "name": "GlitchTip",
           "repo": "https://gitlab.com/glitchtip",
           "svg": "https://glitchtip.com/assets/logo-again.svg",
+          "language": "Python",
           "license": "MIT",
           "stars": "14",
           "site": "https://glitchtip.com/",
@@ -1357,18 +1358,6 @@
       ],
       "id": "3dwh5h2gh",
       "category": "Developer Tools"
-    },
-    {
-      "commercial": [
-        {
-          "main": "Oberlo",
-          "svg": "https://image.flaticon.com/icons/png/512/825/825517.png",
-          "website": "https://oberlo.com"
-        }
-      ],
-      "alts": [],
-      "id": "5uv2jsadu",
-      "category": "E-commerce"
     },
     {
       "commercial": [
@@ -1598,6 +1587,44 @@
           "stars": "160",
           "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images@develop/jam/jam.png",
           "language": "JS"
+        }
+      ]
+    },
+    {
+      "commercial": [
+        {
+          "main": "IOS",
+          "svg": "https://www.vectorlogo.zone/logos/apple/apple-icon.svg",
+          "website": "https://www.apple.com/ios/ios-14/"
+        }
+      ],
+      "alts": [
+        {
+          "name": "Android",
+          "repo": "https://android.googlesource.com/platform/manifest/",
+          "svg": "https://www.vectorlogo.zone/logos/android/android-icon.svg",
+          "stars": "38K",
+          "license": "Apache 2.0",
+          "site": "https://android.com",
+          "language": "C/Java/Kotlin"
+        },
+        {
+          "name": "Lineage OS",
+          "repo": "LineageOS/android",
+          "site": "https://lineageos.org/",
+          "license": "Apache 2.0",
+          "stars": "2.3K",
+          "svg": "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons@latest/icons/lineageos.svg",
+          "language": "C/Java/Kotlin"
+        },
+        {
+          "name": "Postmarket OS",
+          "repo": "https://gitlab.com/postmarketOS/linux-postmarketos",
+          "site": "https://postmarketos.org",
+          "license": "GPL v2",
+          "stars": "238",
+          "svg": "https://www.vectorlogo.zone/logos/postmarketos/postmarketos-icon.svg",
+          "language": "C"
         }
       ]
     }

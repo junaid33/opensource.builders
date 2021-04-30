@@ -117,8 +117,8 @@
           "repo": "zulip/zulip",
           "stars": "11.2K",
           "language": "Python",
-          "site": "https://zulip.org/",
-          "svg": "https://cdn.worldvectorlogo.com/logos/zulip.svg",
+          "site": "https://zulip.com/",
+          "svg": "https://cdn.jsdelivr.net/gh/zulip/zulip@master/static/images/logo/zulip-icon-square.svg",
           "license": "Apache 2.0",
           "deploy": "https://marketplace.digitalocean.com/apps/zulip"
         },

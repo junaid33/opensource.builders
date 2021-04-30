@@ -72,7 +72,7 @@ class Search extends Component {
    * in which the results will be added to the state
    */
 
-  licenseFilter = e => {
+  licenseFilter = (e) => {
     const { search, searchQuery, language, category } = this.state
     const queryResult = search.search(
       searchQuery + " " + e + " " + language + " " + category
@@ -83,7 +83,7 @@ class Search extends Component {
     })
   }
 
-  languageFilter = e => {
+  languageFilter = (e) => {
     const { search, searchQuery, license, category } = this.state
     const queryResult = search.search(
       searchQuery + " " + license + " " + e + " " + category
@@ -94,7 +94,7 @@ class Search extends Component {
     })
   }
 
-  categoryFilter = e => {
+  categoryFilter = (e) => {
     const { search, searchQuery, language, license } = this.state
     const queryResult = search.search(
       searchQuery + " " + license + " " + language + " " + e
@@ -107,7 +107,7 @@ class Search extends Component {
     console.log({ queryResult })
   }
 
-  searchData = e => {
+  searchData = (e) => {
     console.log(e)
     const { search, license, language, category } = this.state
     const queryResult = search.search(
@@ -119,7 +119,7 @@ class Search extends Component {
     })
   }
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault()
   }
 
@@ -140,7 +140,7 @@ class Search extends Component {
       searchQuery === `` && license === `` && language === `` && category === ``
         ? this.props.mainInfo.slice(0, this.props.loadCount)
         : this.props.mainInfo
-        
+
     const categories = [
       "E-commerce",
       "Developer Tools",
@@ -218,7 +218,7 @@ class Search extends Component {
                 pr="4.5rem"
                 placeholder="Search for anything"
                 value={searchQuery}
-                onChange={e => {
+                onChange={(e) => {
                   this.searchData(e.target.value)
                 }}
                 boxShadow="sm"
@@ -263,7 +263,7 @@ class Search extends Component {
                         >
                           All
                         </PseudoBox>
-                        {categories.map(c => (
+                        {categories.map((c) => (
                           <PseudoBox
                             px={3}
                             py={1}
@@ -306,7 +306,7 @@ class Search extends Component {
                         >
                           All
                         </PseudoBox>
-                        {licenses.map(c => (
+                        {licenses.map((c) => (
                           <PseudoBox
                             px={3}
                             py={1}
@@ -349,7 +349,7 @@ class Search extends Component {
                         >
                           All
                         </PseudoBox>
-                        {languages.map(c => (
+                        {languages.map((c) => (
                           <PseudoBox
                             px={3}
                             py={1}
@@ -374,9 +374,9 @@ class Search extends Component {
                 </Box>
               </Box>
               <Box display="flex" flexWrap="wrap" width="100%">
-                {compLoad.map(comp => {
+                {compLoad.map((comp) => {
                   const match = queryResults.filter(
-                    alt => alt.mainID === comp.id
+                    (alt) => alt.mainID === comp.id
                   )
                   if (match.length > 0) {
                     return (

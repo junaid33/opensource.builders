@@ -6,8 +6,8 @@ exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
   const compTemplate = path.resolve(`./src/templates/comparisons.js`)
-  altsData.alternatives.forEach(comp_object => {
-    comp_object.commercial.map(object => {
+  altsData.alternatives.forEach((comp_object) => {
+    comp_object.commercial.map((object) => {
       var path = object.main.replace(/\s+/g, "-").toLowerCase()
       createPage({
         path,
@@ -23,8 +23,8 @@ exports.createPages = async ({ graphql, actions }) => {
   const allData = []
 
   altsData.alternatives.map((comp, index) => {
-    const flatComp = comp.commercial.map(a => a.main)
-    const flat = comp.alts.map(alt => {
+    const flatComp = comp.commercial.map((a) => a.main)
+    const flat = comp.alts.map((alt) => {
       return {
         ...alt,
         main: flatComp,

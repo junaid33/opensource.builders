@@ -31,13 +31,13 @@ Opensource.builders is a website to find and request open-source alternatives to
 1.  **Open the source code and start editing!**
 
     Your site is now running at `http://localhost:8000`!
-    
-### Online one-click setup 
+
+### Online one-click setup
 
 To edit website online, check out the CodeSandbox:
 
 https://codesandbox.io/s/github/junaid33/opensource.builders
-    
+
 ## Want to add a open-source project?
 
 There are 2 ways to add a new open-source project

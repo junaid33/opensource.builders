@@ -18,13 +18,12 @@ module.exports = {
           "gatsby-tinacms-json",
         ],
         sidebar: {
-          hidden: process.env.NODE_ENV === "production",
+          enabled: process.env.NODE_ENV !== "production",
           position: "displace",
         },
       },
     },
     {
-
       resolve: "gatsby-plugin-chakra-ui",
       options: {
         /**
@@ -36,7 +35,7 @@ module.exports = {
          */
         isUsingColorMode: false,
       },
-    },    
+    },
     {
       resolve: `gatsby-plugin-layout`,
       options: {
@@ -97,14 +96,14 @@ module.exports = {
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     {
-      resolve: 'gatsby-plugin-fathom',
+      resolve: "gatsby-plugin-fathom",
       options: {
         // Fathom server URL. Defaults to `cdn.usefathom.com`
-        trackingUrl: 'fathom-anjh.onrender.com',
+        trackingUrl: "fathom-anjh.onrender.com",
         // Unique site id
-        siteId: 'IRCCY',
+        siteId: "IRCCY",
         // Domain whitelist
-      }
+      },
     },
     `gatsby-plugin-feed`,
     {

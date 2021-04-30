@@ -6,7 +6,7 @@ import { useLocalJsonForm } from "gatsby-tinacms-json"
 import SEO from "../components/seo"
 import ClientSearch from "../components/ClientSearch"
 
-const SearchTemplate = props => {
+const SearchTemplate = (props) => {
   const [loadCount, setLoadCount] = useState(6)
 
   const { pageContext } = props

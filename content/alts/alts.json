@@ -43,7 +43,10 @@
           "site": "http://www.woocommerce.com/",
           "language": "PHP",
           "deploy": "https://marketplace.digitalocean.com/apps/wordpress",
-          "main": ["Shopify", "idgaf"]
+          "main": [
+            "Shopify",
+            "idgaf"
+          ]
         },
         {
           "repo": "Sylius/Sylius",
@@ -1358,8 +1361,7 @@
           "website": "https://oberlo.com"
         }
       ],
-      "alts": [
-      ],
+      "alts": [],
       "id": "5uv2jsadu",
       "category": "E-commerce"
     },
@@ -1573,12 +1575,12 @@
       "commercial": [
         {
           "main": "ClubHouse",
-          "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images@develop/clubhouse/clubhouse.png",
+          "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images@develop/clubhouse/clubhouse.svg",
           "website": "https://joinclubhouse.com"
         },
         {
           "main": "Twitter Spaces",
-          "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images@develop/twitter/spaces.jpg",
+          "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images@develop/twitter/spaces.png",
           "website": "https://help.twitter.com/en/using-twitter/spaces"
         }
       ],
@@ -1592,33 +1594,7 @@
           "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images@develop/jam/jam.png",
           "language": "JS"
         }
-      ],
-      "id": "si134ua",
-      "category": "VoiceChat"
+      ]
     }
-  ],
-  {
-    "commercial":
-    [
-    {
-          "main": "ClubHouse",
-          "svg":"https://cdn.jsdelivr.net/gh/kogeletey/ossb-images@develop/clubhouse/clubhouse.svg",
-          "website": "https://joinclubhouse.com"
-    },
-    {
-          "main": "Twitter Spaces",
-          "svg":"https://cdn.jsdelivr.net/gh/kogeletey/ossb-images@develop/twitter/spaces.png",
-          "website": "https://help.twitter.com/en/using-twitter/spaces"
-    }
-],
-  {
-      "name": "Jam",
-      "repo": "https://gitlab.com/jam-systems/jam",
-      "site": "https://jam.systems/",
-      "license": "AGPL V3",
-      "stars": "160",
-      "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images@develop/jam/jam.png",
-      "language": "JS"
-  }
-  }
+  ]
 }

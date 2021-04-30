@@ -70,7 +70,7 @@
     "clean": "rimraf .cache public",
     "build": "gatsby build",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
-    "start": "gatsby start",
+    "start": "gatsby develop",
     "serve": "gatsby serve"
   }
 }

@@ -24,8 +24,8 @@ export default () => {
         },
       }
     )
-      .then(response => response.json()) // parse JSON from request
-      .then(resultData => {
+      .then((response) => response.json()) // parse JSON from request
+      .then((resultData) => {
         resultData.sort((a, b) =>
           a.reactions.total_count < b.reactions.total_count ? 1 : -1
         )
@@ -70,7 +70,7 @@ export default () => {
         py={4}
       >
         <Box flex={7} px={2}>
-          {requests.map(req => (
+          {requests.map((req) => (
             <Box
               mb={3}
               width="100%"

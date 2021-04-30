@@ -121,12 +121,13 @@ export default function Header({ children, location }) {
                   </PopoverTrigger>
                   <PopoverContent zIndex={4} width="200px" py={2} bg="gray.800">
                     <PopoverBody>
-                      {process.env.NODE_ENV === "development" && navItem({
-                        to: "/edit",
-                        name: "Edit",
-                        my: 2,
-                        onClick: onClose,
-                      })}
+                      {process.env.NODE_ENV === "development" &&
+                        navItem({
+                          to: "/edit",
+                          name: "Edit",
+                          my: 2,
+                          onClick: onClose,
+                        })}
                       {navItem({
                         to: "/",
                         name: "Alternatives",
@@ -176,7 +177,7 @@ export default function Header({ children, location }) {
               )}
             </Popover>
           </>
-          <Box  display={{ base: "none", sm: "flex" }}>
+          <Box display={{ base: "none", sm: "flex" }}>
             {process.env.NODE_ENV === "development" &&
               navItem({ to: "/edit", name: "Edit" })}
             {navItem({ to: "/", name: "Alternatives" })}

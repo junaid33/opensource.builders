@@ -1,6 +1,6 @@
 import React from "react"
 
-const Logo = props => (
+const Logo = (props) => (
   <svg
     x="0px"
     y="0px"

@@ -1588,7 +1588,9 @@
           "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images@develop/jam/jam.png",
           "language": "JS"
         }
-      ]
+      ],
+      "id": "gjfifj",
+      "category": "VoiceChat"
     },
     {
       "commercial": [
@@ -1626,7 +1628,9 @@
           "svg": "https://www.vectorlogo.zone/logos/postmarketos/postmarketos-icon.svg",
           "language": "C"
         }
-      ]
+      ],
+      "id": "gj4jiofj",
+      "category": "OS"
     }
   ]
 }

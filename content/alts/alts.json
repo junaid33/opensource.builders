@@ -43,7 +43,10 @@
           "site": "http://www.woocommerce.com/",
           "language": "PHP",
           "deploy": "https://marketplace.digitalocean.com/apps/wordpress",
-          "main": ["Shopify", "idgaf"]
+          "main": [
+            "Shopify",
+            "idgaf"
+          ]
         },
         {
           "repo": "Sylius/Sylius",
@@ -1358,8 +1361,7 @@
           "website": "https://oberlo.com"
         }
       ],
-      "alts": [
-      ],
+      "alts": [],
       "id": "5uv2jsadu",
       "category": "E-commerce"
     },
@@ -1615,7 +1617,7 @@
         }
       ],
       "id": "efb25e0ad",
-      "category": "Backend as a Service"
+      "category": "Developer Tools"
     }
   ]
 }

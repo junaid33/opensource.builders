@@ -1574,6 +1574,27 @@
     {
       "commercial": [
         {
+          "main": "Firebase",
+          "svg": "https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg",
+          "website": "https://firebase.google.com"
+        }
+      ],
+      "alts": [
+        {
+          "name": "Appwrite",
+          "repo": "appwrite/appwrite",
+          "site": "https://appwrite.io/",
+          "license": "BSD-3",
+          "stars": "6.7K",
+          "svg": "https://appwrite.io/images/appwrite.svg"
+        }
+      ],
+      "id": "si135ie",
+      "category": "Developer Tools"
+    },
+    {
+      "commercial": [
+        {
           "main": "ClubHouse",
           "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images@develop/clubhouse/clubhouse.png",
           "website": "https://joinclubhouse.com"
@@ -1597,26 +1618,6 @@
       ],
       "id": "si134ua",
       "category": "VoiceChat"
-    },
-    {
-      "commercial": [
-        {
-          "main": "Firebase",
-          "svg": "https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg",
-          "website": "https://firebase.google.com"
-        }
-      ],
-      "alts": [
-        {
-          "name": "Appwrite",
-          "repo": "appwrite/appwrite",
-          "site": "https://appwrite.io/",
-          "license": "BSD-3",
-          "stars": "5.9K",
-          "svg": "https://appwrite.io/images/appwrite.svg"
-        }
-      ],
-      "category": "Developer Tools"
     }
   ]
 }

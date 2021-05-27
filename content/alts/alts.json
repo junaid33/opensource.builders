@@ -25,7 +25,8 @@
           "site": "https://baserow.io",
           "language": "Python",
           "stars": "656",
-          "svg": "https://assets.gitlab-static.net/uploads/-/system/project/avatar/10858056/logo.jpg?width=64"
+          "svg": "https://assets.gitlab-static.net/uploads/-/system/project/avatar/10858056/logo.jpg?width=64",
+          "deploy": "https://gitlab.com/bramw/baserow#try-out-baserow-on-your-machine"
         }
       ],
       "id": "f7g585m1q",

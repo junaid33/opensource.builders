@@ -16,7 +16,7 @@
           "site": "https://www.nocodb.com",
           "svg": "https://pbs.twimg.com/profile_images/1220397429243240449/UxUrX8F3_400x400.jpg",
           "stars": "4.4K",
-          "deploy": "",
+          "deploy": "https://heroku.com/deploy?template=https://github.com/npgia/nocodb-seed-heroku",
           "language": "JS"
         },
         {

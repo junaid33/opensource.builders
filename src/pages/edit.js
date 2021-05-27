@@ -143,6 +143,7 @@ const Index = ({ data, location }) => {
               "Product Management",
               "Automation",
               "CRM",
+              "Visual Database"
             ],
           },
         ],

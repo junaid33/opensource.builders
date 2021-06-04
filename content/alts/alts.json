@@ -3,6 +3,38 @@
     {
       "commercial": [
         {
+          "main": "Airtable",
+          "svg": "https://seeklogo.com/images/A/airtable-logo-216B9AF035-seeklogo.com.png",
+          "website": "https://airtable.com/"
+        }
+      ],
+      "alts": [
+        {
+          "name": "NocoDB",
+          "repo": "nocodb/nocodb",
+          "license": "AGPL-3.0",
+          "site": "https://www.nocodb.com",
+          "svg": "https://pbs.twimg.com/profile_images/1220397429243240449/UxUrX8F3_400x400.jpg",
+          "stars": "4.4K",
+          "deploy": "https://heroku.com/deploy?template=https://github.com/npgia/nocodb-seed-heroku",
+          "language": "JS"
+        },
+        {
+          "name": "Baserow",
+          "repo": "https://gitlab.com/bramw/baserow",
+          "site": "https://baserow.io",
+          "language": "Python",
+          "stars": "656",
+          "svg": "https://assets.gitlab-static.net/uploads/-/system/project/avatar/10858056/logo.jpg?width=64",
+          "deploy": "https://gitlab.com/bramw/baserow#try-out-baserow-on-your-machine"
+        }
+      ],
+      "id": "f7g585m1q",
+      "category": "Visual Database"
+    },
+    {
+      "commercial": [
+        {
           "main": "Shopify",
           "svg": "https://cdn.worldvectorlogo.com/logos/shopify.svg",
           "website": "https://shopify.com"
@@ -43,7 +75,10 @@
           "site": "http://www.woocommerce.com/",
           "language": "PHP",
           "deploy": "https://marketplace.digitalocean.com/apps/wordpress",
-          "main": ["Shopify", "idgaf"]
+          "main": [
+            "Shopify",
+            "idgaf"
+          ]
         },
         {
           "repo": "Sylius/Sylius",
@@ -1358,8 +1393,7 @@
           "website": "https://oberlo.com"
         }
       ],
-      "alts": [
-      ],
+      "alts": [],
       "id": "5uv2jsadu",
       "category": "E-commerce"
     },

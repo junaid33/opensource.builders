@@ -56,23 +56,21 @@
   "devDependencies": {
     "prettier": "^2.1.2"
   },
-  "homepage": "https://github.com/tinacms/gatsby-starter-tinacms#readme",
+  "homepage": "https://opensource.builders",
   "keywords": [
-    "gatsby"
+    "opensource"
   ],
   "license": "MIT",
   "main": "n/a",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tinacms/gatsby-starter-tinacms.git"
+    "url": "git+https://github.com/junaid33/opensource.builders.git"
   },
   "scripts": {
     "clean": "rimraf .cache public",
     "build": "gatsby build",
-    "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
-    "start": "npm run develop",
-    "serve": "gatsby serve",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing \""
+    "start": "gatsby develop",
+    "serve": "gatsby serve"
   }
 }

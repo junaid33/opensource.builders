@@ -75,10 +75,7 @@
           "site": "http://www.woocommerce.com/",
           "language": "PHP",
           "deploy": "https://marketplace.digitalocean.com/apps/wordpress",
-          "main": [
-            "Shopify",
-            "idgaf"
-          ]
+          "main": ["Shopify", "idgaf"]
         },
         {
           "repo": "Sylius/Sylius",
@@ -340,7 +337,7 @@
           "site": "https://flynn.io/",
           "language": "Go",
           "stars": "7.5K",
-          "name": "Flynn",
+          "name": "Flynn(UNMAINTAINED)",
           "license": "BSD-3",
           "repo": "flynn/flynn",
           "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images/flynn/flynn.svg"
@@ -380,6 +377,11 @@
           "main": "BitBucket",
           "website": "http://bitbucket.org",
           "svg": "https://cdn.worldvectorlogo.com/logos/bitbucket-icon.svg"
+        },
+        {
+          "main": "Upsource",
+          "website": "https://www.jetbrains.com/upsource/",
+          "svg": "https://cdn.jsdelivr.net/gh/detain/svg-logos@master/svg/upsource-icon.svg"
         }
       ],
       "alts": [
@@ -1376,6 +1378,7 @@
           "name": "GlitchTip",
           "repo": "https://gitlab.com/glitchtip",
           "svg": "https://glitchtip.com/assets/logo-again.svg",
+          "language": "Python",
           "license": "MIT",
           "stars": "14",
           "site": "https://glitchtip.com/",
@@ -1607,12 +1610,12 @@
       "commercial": [
         {
           "main": "ClubHouse",
-          "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images@develop/clubhouse/clubhouse.png",
+          "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images@develop/clubhouse/clubhouse.svg",
           "website": "https://joinclubhouse.com"
         },
         {
           "main": "Twitter Spaces",
-          "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images@develop/twitter/spaces.jpg",
+          "svg": "https://cdn.jsdelivr.net/gh/kogeletey/ossb-images@develop/twitter/spaces.png",
           "website": "https://help.twitter.com/en/using-twitter/spaces"
         }
       ],
@@ -1627,7 +1630,7 @@
           "language": "JS"
         }
       ],
-      "id": "si134ua",
+      "id": "gjfifj",
       "category": "VoiceChat"
     },
     {
@@ -1650,6 +1653,46 @@
       ],
       "id": "si135ie",
       "category": "Developer Tools"
+    },
+    {
+      "commercial": [
+        {
+          "main": "IOS",
+          "svg": "https://www.vectorlogo.zone/logos/apple/apple-icon.svg",
+          "website": "https://www.apple.com/ios/ios-14/"
+        }
+      ],
+      "alts": [
+        {
+          "name": "Android",
+          "repo": "https://android.googlesource.com/platform/manifest/",
+          "svg": "https://www.vectorlogo.zone/logos/android/android-icon.svg",
+          "stars": "38K",
+          "license": "Apache 2.0",
+          "site": "https://android.com",
+          "language": "C/Java/Kotlin"
+        },
+        {
+          "name": "Lineage OS",
+          "repo": "LineageOS/android",
+          "site": "https://lineageos.org/",
+          "license": "Apache 2.0",
+          "stars": "2.3K",
+          "svg": "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons@latest/icons/lineageos.svg",
+          "language": "C/Java/Kotlin"
+        },
+        {
+          "name": "Postmarket OS",
+          "repo": "https://gitlab.com/postmarketOS/linux-postmarketos",
+          "site": "https://postmarketos.org",
+          "license": "GPL v2",
+          "stars": "238",
+          "svg": "https://www.vectorlogo.zone/logos/postmarketos/postmarketos-icon.svg",
+          "language": "C"
+        }
+      ],
+      "id": "xj4jiofj",
+      "category": "OS"
     }
   ]
 }

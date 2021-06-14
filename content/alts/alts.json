@@ -75,7 +75,10 @@
           "site": "http://www.woocommerce.com/",
           "language": "PHP",
           "deploy": "https://marketplace.digitalocean.com/apps/wordpress",
-          "main": ["Shopify", "idgaf"]
+          "main": [
+            "Shopify",
+            "idgaf"
+          ]
         },
         {
           "repo": "Sylius/Sylius",

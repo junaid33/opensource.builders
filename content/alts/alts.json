@@ -1649,6 +1649,16 @@
           "license": "BSD-3",
           "stars": "6.7K",
           "svg": "https://appwrite.io/images/appwrite.svg"
+        },
+        {
+          "name": "Supabase",
+          "repo": "supabase/supabase",
+          "site": "https://supabase.io/",
+          "license": "Apache 2.0",
+          "stars": "14K",
+          "svg": "https://raw.githubusercontent.com/simple-icons/simple-icons/master/icons/supabase.svg",
+          "language": "TypeScript",
+          "deploy": "https://supabase.io/docs/guides/self-hosting"
         }
       ],
       "id": "si135ie",

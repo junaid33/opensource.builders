@@ -11,12 +11,12 @@ import {
   Link,
   PseudoBox,
 } from "@chakra-ui/core"
-import { useLocalJsonForm } from "gatsby-tinacms-json"
+import { useJsonForm } from "gatsby-tinacms-json"
 import SEO from "../components/seo"
 import CompGroup from "../components/CompGroup"
 
 const Index = ({ data, location }) => {
-  const [{ alternatives }] = useLocalJsonForm(data.altsJson, {
+  const [{ alternatives }] = useJsonForm(data.altsJson, {
     label: "Add an app comparison",
     fields: [
       {

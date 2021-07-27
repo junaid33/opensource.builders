@@ -10,6 +10,7 @@ module.exports = {
   },
   plugins: [
     {
+      enabled: process.env.NODE_ENV !== 'production',
       resolve: "gatsby-plugin-tinacms",
       options: {
         plugins: [
@@ -18,7 +19,6 @@ module.exports = {
           "gatsby-tinacms-json",
         ],
         sidebar: {
-          enabled: process.env.NODE_ENV !== "production",
           position: "displace",
         },
       },

@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { useBottomScrollListener } from "react-bottom-scroll-listener"
 import { Box, Text, Icon } from "@chakra-ui/core"
 import { graphql } from "gatsby"
-import { useLocalJsonForm } from "gatsby-tinacms-json"
+import { useJsonForm } from "gatsby-tinacms-json"
 import SEO from "../components/seo"
 import ClientSearch from "../components/ClientSearch"
 

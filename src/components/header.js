@@ -112,9 +112,9 @@ export default function Header({ children, location }) {
                         <path
                           d="M4 6H20M4 12H20M4 18H20"
                           stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                         />
                       </svg>
                     </Button>
@@ -161,7 +161,7 @@ export default function Header({ children, location }) {
                         <svg
                           stroke="#ffffff"
                           fill="#ffffff"
-                          stroke-width="0"
+                          strokeWidth="0"
                           version="1.1"
                           viewBox="0 0 32 32"
                           height="1.2em"
@@ -196,7 +196,7 @@ export default function Header({ children, location }) {
               <svg
                 stroke="#ffffff"
                 fill="#ffffff"
-                stroke-width="0"
+                strokeWidth="0"
                 version="1.1"
                 viewBox="0 0 32 32"
                 height="1.2em"

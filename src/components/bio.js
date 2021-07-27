@@ -14,7 +14,7 @@ import { Box, Divider } from "@chakra-ui/core"
  * STEP 1: Import the json hooks
  */
 import { useJsonForm } from "gatsby-tinacms-json"
-// import { useLocalJsonForm } from "gatsby-tinacms-json"
+// import { useJsonForm } from "gatsby-tinacms-json"
 
 const Bio = () => {
   /**

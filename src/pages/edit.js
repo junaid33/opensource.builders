@@ -24,15 +24,13 @@ const Index = ({ data, location }) => {
         name: "rawJson.alternatives",
         component: "group-list",
         description: "Comparisons List",
-        itemProps: item => ({
+        itemProps: (item) => ({
           label: item.commercial[0].main,
         }),
         defaultItem: () => ({
           main: "New Comparison",
           alts: [],
-          id: Math.random()
-            .toString(36)
-            .substr(2, 9),
+          id: Math.random().toString(36).substr(2, 9),
         }),
         fields: [
           // {
@@ -55,7 +53,7 @@ const Index = ({ data, location }) => {
             name: "commercial",
             component: "group-list",
             description: "Commercial Apps",
-            itemProps: item => ({
+            itemProps: (item) => ({
               label: item.main,
             }),
             fields: [
@@ -81,7 +79,7 @@ const Index = ({ data, location }) => {
             name: "alts",
             component: "group-list",
             description: "Alternatives List",
-            itemProps: item => ({
+            itemProps: (item) => ({
               label: item.name,
             }),
             fields: [
@@ -145,6 +143,7 @@ const Index = ({ data, location }) => {
               "Product Management",
               "Automation",
               "CRM",
+              "Visual Database",
             ],
           },
         ],
@@ -187,7 +186,7 @@ const Index = ({ data, location }) => {
         px={2}
         py={4}
       >
-        {data.altsJson.alternatives.map(comp => (
+        {data.altsJson.alternatives.map((comp) => (
           <CompGroup
             comp={comp}
             commercial={comp.commercial}

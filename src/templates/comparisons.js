@@ -1,6 +1,6 @@
 import React from "react"
 
-export default props => {
+export default (props) => {
   const { pageContext } = props
 
   console.log(pageContext)

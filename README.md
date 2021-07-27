@@ -1,6 +1,5 @@
-<!-- AUTO-GENERATED-CONTENT:START (STARTER) -->
 <h1 align="center">
-Opensource.builders Gatsby Starter
+Opensource.builders
 </h1>
 
 Opensource.builders is a website to find and request open-source alternatives to popular software you already use.
@@ -31,19 +30,18 @@ Opensource.builders is a website to find and request open-source alternatives to
 1.  **Open the source code and start editing!**
 
     Your site is now running at `http://localhost:8000`!
-    
-### Online one-click setup 
+
+### Online one-click setup
 
 To edit website online, check out the CodeSandbox:
 
 https://codesandbox.io/s/github/junaid33/opensource.builders
-    
+
 ## Want to add a open-source project?
 
 There are 2 ways to add a new open-source project
 
 1. Go to http://localhost:8000/edit. You will see a blue pencil icon on the bottom left. When you click it, it opens TinaCMS. You can add comparisons and alternatives here and change the data on existing ones. Once done, the data is automatically saved and you can send a PR which I can preview and accept quickly.
-
 2. All the data is saved here:
 
 https://github.com/junaid33/opensource.builders/blob/master/content/alts/alts.json

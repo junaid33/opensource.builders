@@ -10,10 +10,10 @@ export function LoadMore({ alts }) {
 
   return (
     <>
-      {fiveAlts.map(alt => (
+      {fiveAlts.map((alt) => (
         <AltListItem alt={alt} />
       ))}
-      {show && restAlts.map(alt => <AltListItem alt={alt} />)}
+      {show && restAlts.map((alt) => <AltListItem alt={alt} />)}
       <Box cursor="pointer" width="100%" display="flex" justifyContent="center">
         <Text
           display="flex"

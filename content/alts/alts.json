@@ -108,6 +108,16 @@
           "deploy": "https://webkul.com/blog/laravel-ecommerce-website"
         },
         {
+          "name": "Medusa Commerce",
+          "stars": "953",
+          "license": "MIT",
+          "svg": "https://user-images.githubusercontent.com/7554214/129161578-19b83dc8-fac5-4520-bd48-53cba676edd2.png",
+          "language": "JS",
+          "site": "https://www.medusa-commerce.com",
+          "deploy": "https://docs.medusa-commerce.com/tutorial/creating-your-medusa-server",
+          "repo": "medusajs/medusa"
+        },
+        {
           "name": "Shopaholic",
           "stars": "370",
           "license": "GPL v3",

@@ -174,6 +174,25 @@
           "svg": "https://cdn.jsdelivr.net/gh/vector-im/element-web/res/welcome/images/logo.svg"
         },
         {
+          "name": "Wire",
+          "license": "GPL V3",
+          "repo": "wireapp/wire",
+          "site": "https://wire.com/en/",
+          "language": "JS",
+          "stars": "1.8K",
+          "svg": "https://cdn.jsdelivr.net/gh/wireapp/brand/public/Wire%20logo.svg"
+        },
+        {
+          "name": "Revolt",
+          "repo": "revoltchat/revolt",
+          "site": "https://revolt.chat/",
+          "language": "TS/Rust",
+          "license": "AGPL-3.0",
+          "stars": "679",
+          "svg": "https://avatars.githubusercontent.com/u/57727799?s=200&v=4",
+          "deploy": "https://github.com/revoltchat/self-hosted/blob/master/README.md"
+        },
+        {
           "name": "Twake",
           "repo": "TwakeApp/Twake",
           "site": "https://twake.app/",
@@ -182,15 +201,6 @@
           "stars": "100",
           "svg": "https://cdn.jsdelivr.net/gh/TwakeApp/Landing/public/medias/logo_big.png",
           "deploy": "https://doc.twake.app/installation"
-        },
-        {
-          "name": "Wire",
-          "license": "GPL V3",
-          "repo": "wireapp/wire",
-          "site": "https://wire.com/en/",
-          "language": "JS",
-          "stars": "1.8K",
-          "svg": "https://cdn.jsdelivr.net/gh/wireapp/brand/public/Wire%20logo.svg"
         }
       ],
       "id": "0pu87phxq",

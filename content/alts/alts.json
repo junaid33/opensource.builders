@@ -1211,6 +1211,16 @@
           "stars": "140",
           "license": "Apache-2.0 License",
           "svg": "https://cdn.logchimp.codecarrot.net/logchimp_circular_logo.png"
+        },
+        {
+          "name": "ClearFlask",
+          "deploy": "https://github.com/clearflask/clearflask/blob/master/INSTALLATION.md",
+          "site": "https://clearflask.com/",
+          "language": "JAVA",
+          "repo": "clearflask/clearflask",
+          "stars": "5",
+          "license": "AGPL V3",
+          "svg": "https://clearflask.com/img/clearflask-logo.png"
         }
       ],
       "id": "weirgeywu",

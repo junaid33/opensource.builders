@@ -3,6 +3,29 @@
     {
       "commercial": [
         {
+          "main": "Notion",
+          "svg": "https://seeklogo.com/images/N/notion-app-logo-009B1538E8-seeklogo.com.png",
+          "website": "https://notion.so/"
+        }
+      ],
+      "alts": [
+        {
+          "name": "Appflowy",
+          "repo": "AppFlowy-IO/appflowy",
+          "license": "AGPL-3.0",
+          "site": "https://www.appflowy.io/",
+          "svg": "https://images.squarespace-cdn.com/content/v1/617f6f16b877c06711e87373/49b534d9-d762-4772-aa2f-a2dc72949844/favicon.ico?format=100w",
+          "stars": "1K",
+          "deploy": "https://github.com/AppFlowy-IO/appflowy#getting-started",
+          "language": "Rust,Dart"
+        }
+      ],
+      "id": "",
+      "category": "Documentation"
+    },
+    {
+      "commercial": [
+        {
           "main": "Airtable",
           "svg": "https://seeklogo.com/images/A/airtable-logo-216B9AF035-seeklogo.com.png",
           "website": "https://airtable.com/"

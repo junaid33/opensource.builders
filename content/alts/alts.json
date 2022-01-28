@@ -3,6 +3,29 @@
     {
       "commercial": [
         {
+          "main": "OpenVPN Access Server",
+          "svg": "https://user-images.githubusercontent.com/52545545/151466720-887f3971-8664-4eef-ba5b-71ea12aa3168.svg",
+          "website": "https://openvpn.net/access-server/"
+        }
+      ],
+      "alts": [
+        {
+          "name": "Firezone",
+          "repo": "https://github.com/firezone/firezone",
+          "svg": "https://user-images.githubusercontent.com/52545545/151467193-30161446-226b-4e51-8c58-2052e0f4ae88.svg",
+          "stars": "1.1K",
+          "license": "Apache 2.0",
+          "site": "https://www.firez.one/",
+          "deploy": "https://docs.firez.one/docs/deploy/",
+          "language": "Elixir/Ruby"
+        }
+      ],
+      "id": "",
+      "category": "Security"
+    },
+    {
+      "commercial": [
+        {
           "main": "Notion",
           "svg": "https://seeklogo.com/images/N/notion-app-logo-009B1538E8-seeklogo.com.png",
           "website": "https://notion.so/"

@@ -795,6 +795,16 @@
           "svg": "https://cdn.jsdelivr.net/gh/frappe/erpnext@develop/erpnext/public/images/erpnext-logo.png",
           "language": "Python",
           "stars": "7.6K"
+        },
+        {
+          "name": "Moqui",
+          "repo": "moqui/moqui-framework",
+          "site": "https://moqui.org/",
+          "license": "CC0 1.0",
+          "svg": "https://avatars.githubusercontent.com/u/8334323?s=200&v=4",
+          "language": "Java/Groovy",
+          "deploy": "https://moqui.org/m/docs/framework/Run+and+Deploy",
+          "stars": "255"
         }
       ],
       "website": "https://salesforce.com",
@@ -1158,6 +1168,16 @@
           "site": "https://www.elastic.co/elasticsearch",
           "language": "JAVA",
           "deploy": "https://www.elastic.co/guide/en/cloud/current/ec-create-deployment.html"
+        },
+        {
+          "name": "Open Search",
+          "stars": "4.6K",
+          "license": "Apache 2.0",
+          "svg": "https://avatars.githubusercontent.com/u/80134844?s=200&v=4",
+          "repo": "opensearch-project/OpenSearch",
+          "site": "https://opensearch.org/docs/latest/opensearch/index/",
+          "language": "JAVA",
+          "deploy": "https://opensearch.org/docs/latest/opensearch/install/index/"
         },
         {
           "name": "MeiliSearch",

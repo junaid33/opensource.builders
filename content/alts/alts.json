@@ -1814,6 +1814,29 @@
       ],
       "id": "xj4jiofj",
       "category": "OS"
-    }
+    },
+    {
+      "commercial": [
+        {
+          "main": "Twilio",
+          "website": "https://twilio.com",
+          "svg": "https://upload.wikimedia.org/wikipedia/commons/7/7e/Twilio-logo-red.svg"
+        }
+      ],
+      "alts": [
+        {
+          "name": "Eqivo",
+          "repo": "rtckit/eqivo",
+          "site": "https://eqivo.org/",
+          "license": "MIT",
+          "stars": "3",
+          "svg": "https://raw.github.com/rtckit/media/master/eqivo/readme-splash.png",
+          "language": "PHP",
+          "deploy": "https://eqivo.org/#getting-started"
+        }
+      ],
+      "id": "bfrx789j",
+      "category": "Communication"
+    },
   ]
 }

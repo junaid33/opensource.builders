@@ -1837,6 +1837,29 @@
       ],
       "id": "bfrx789j",
       "category": "Communication"
+    },
+    {
+      "commercial": [
+        {
+          "main": "Confluent Cloud",
+          "svg": "https://www.vectorlogo.zone/logos/confluentio/confluentio-icon.svg",
+          "website": "https://www.confluent.io/confluent-cloud/"
+        }
+      ],
+      "alts": [
+        {
+          "name": "Benthos",
+          "stars": "4.2K",
+          "license": "MIT",
+          "svg": "https://www.benthos.dev/img/logo_hero.svg",
+          "repo": "benthosdev/benthos",
+          "site": "https://www.benthos.dev/",
+          "language": "Go",
+          "deploy": "https://github.com/benthosdev/benthos#install"
+        }
+      ],
+      "id": "atrwvqc5p",
+      "category": "Data Streaming"
     }
   ]
 }

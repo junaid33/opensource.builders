@@ -1820,7 +1820,7 @@
         {
           "main": "Twilio",
           "website": "https://twilio.com",
-          "svg": "https://upload.wikimedia.org/wikipedia/commons/7/7e/Twilio-logo-red.svg"
+          "svg": "https://www.twilio.com/assets/icons/twilio-icon.svg"
         }
       ],
       "alts": [
@@ -1829,8 +1829,8 @@
           "repo": "rtckit/eqivo",
           "site": "https://eqivo.org/",
           "license": "MIT",
-          "stars": "3",
-          "svg": "https://raw.github.com/rtckit/media/master/eqivo/readme-splash.png",
+          "stars": "14",
+          "svg": "https://raw.githubusercontent.com/rtckit/media/master/eqivo/favicon.png",
           "language": "PHP",
           "deploy": "https://eqivo.org/#getting-started"
         }

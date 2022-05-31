@@ -3,7 +3,21 @@ import { Box, Divider, Link, Tooltip } from "@chakra-ui/core"
 import AltListItem from "./AltListItem"
 import { LoadMore } from "./LoadMore"
 
+// Shuffles an array in-place using the Durstenfeld shuffle algorithm
+const shuffle = (array) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    const temp = array[i]
+    array[i] = array[j]
+    array[j] = temp
+  }
+
+  return array
+}
+
 export default function CompGroup({ comp, commercial, alts }) {
+  const shuffled = shuffle(alts)
+
   return (
     <Box mb={16} width={{ base: "100%", lg: "50%" }}>
       <Box mx={{ base: 0, sm: 1 }}>
@@ -37,10 +51,10 @@ export default function CompGroup({ comp, commercial, alts }) {
         </Box>
         <Divider borderColor="gray.400" />
         <Box display="flex" flexWrap="wrap">
-          {alts.length <= 5 ? (
-            alts.map((alt) => <AltListItem alt={alt} />)
+          {shuffled.length <= 5 ? (
+            shuffled.map((alt) => <AltListItem alt={alt} />)
           ) : (
-            <LoadMore alts={alts} />
+            <LoadMore alts={shuffled} />
           )}
         </Box>
       </Box>

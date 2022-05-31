@@ -352,6 +352,15 @@
           "svg": "https://cdn.jsdelivr.net/gh/mikecao/umami.is/assets/logo.svg",
           "site": "https://umami.is",
           "deploy": "https://umami.is/docs/hosting"
+        },
+        {
+          "name": "Swetrix",
+          "repo": "swetrix/swetrix-js",
+          "stars": "29",
+          "license": "MIT",
+          "svg": "https://cdn.jsdelivr.net/gh/swetrix/swetrix-fe/public/logo192.png",
+          "site": "https://swetrix.com/",
+          "language": "JS"
         }
       ],
       "website": "https://analytics.google.com/",

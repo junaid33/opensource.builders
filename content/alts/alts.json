@@ -1104,6 +1104,15 @@
           "language": "TS"
         },
         {
+          "name": "automatisch",
+          "stars": "440",
+          "svg": "https://raw.githubusercontent.com/automatisch/automatisch/0abc614a787ad7da6f6c05191169b5ecdeac8194/packages/web/public/favicon.ico",
+          "repo": "automatisch/automatisch",
+          "license": "AGPL V3",
+          "site": "https://automatisch.io",
+          "language": "TS"
+        },
+        {
           "name": "ActiveWorkflow",
           "repo": "automaticmode/active_workflow",
           "site": "https://github.com/automaticmode/active_workflow",

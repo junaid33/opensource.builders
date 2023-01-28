@@ -1437,15 +1437,15 @@
     {
       "commercial": [
         {
-          "main": "Asana",
-          "svg": "https://cdn.worldvectorlogo.com/logos/asana-logo.svg",
-          "website": "https://asana.com"
+          "main": "Jira",
+          "svg": "https://cdn.worldvectorlogo.com/logos/jira-1.svg",
+          "website": "https://jira.com"
         }
       ],
       "alts": [
         {
           "name": "LeanTime",
-          "stars": "227",
+          "stars": "1985",
           "site": "https://leantime.io/",
           "repo": "leantime/leantime",
           "language": "PHP",

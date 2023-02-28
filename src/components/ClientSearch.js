@@ -143,6 +143,7 @@ class Search extends Component {
 
     const categories = [
       "E-commerce",
+      "Hospitality",
       "Developer Tools",
       "Social Media",
       "Communication",

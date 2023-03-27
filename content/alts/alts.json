@@ -33,6 +33,16 @@
       ],
       "alts": [
         {
+          "name": "AFFiNE",
+          "repo": "toeverything/AFFiNE",
+          "license": "MPL-2.0",
+          "site": "https://affine.pro/",
+          "svg": "https://affine.pro/favicon.ico",
+          "stars": "14K",
+          "deploy": "https://github.com/toeverything/AFFiNE",
+          "language": "Rust,TS"
+        },
+        {
           "name": "Appflowy",
           "repo": "AppFlowy-IO/appflowy",
           "license": "AGPL-3.0",

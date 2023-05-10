@@ -414,6 +414,16 @@
           "svg": "https://cdn.jsdelivr.net/gh/swetrix/swetrix-fe/public/logo192.png",
           "site": "https://swetrix.com/",
           "language": "JS"
+        },
+        {
+          "name": "Aptabase",
+          "repo": "aptabase/aptabase",
+          "stars": "38",
+          "license": "AGPL V3",
+          "svg": "https://cdn.jsdelivr.net/gh/aptabase/aptabase-com/public/logo-email.png",
+          "site": "https://aptabase.com",
+          "language": "C#",
+          "deploy": "https://github.com/aptabase/aptabase/wiki/How-to-Self-Host-Aptabase"
         }
       ],
       "website": "https://analytics.google.com/",

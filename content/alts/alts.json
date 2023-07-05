@@ -644,6 +644,15 @@
           "svg": "https://cdn.jsdelivr.net/gh/keepassxreboot/keepassxc-browser/keepassxc-browser/icons/keepassxc.svg"
         },
         {
+          "name": "Passbolt",
+          "repo": "https://github.com/passbolt/passbolt_api",
+          "language": "PHP",
+          "site": "https://www.passbolt.com/",
+          "license": "AGPL V3",
+          "stars": "3.9K",
+          "svg": "https://www.passbolt.com/brandguidelines/Passbolt-logo-secondary.svg"
+        },
+        {
           "name": "Bitwarden",
           "site": "https://bitwarden.com",
           "repo": "bitwarden/server",

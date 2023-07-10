@@ -616,6 +616,16 @@
           "repo": "Pagure/pagure",
           "deploy": "https://docs.pagure.org/pagure/install.html"
         }
+        {
+          "name": "OpenMeter",
+          "stars": "424",
+          "license": "Apache 2.0",
+          "svg": "https://cdn.jsdelivr.net/gh/openmeterio/openmeter@main/assets/logo.png",
+          "site": "http://openmeter.io",
+          "language": "Go",
+          "repo": "openmeterio/openmeter",
+          "deploy": "https://openmeter.io/docs/getting-started/deploy#heading-kind"
+        }
       ],
       "id": "8bxlppy5h",
       "category": "Developer Tools"

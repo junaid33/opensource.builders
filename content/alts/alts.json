@@ -1466,6 +1466,16 @@
           "language": "PHP",
           "deploy": "https://docs.pixelfed.org/installing-pixelfed/",
           "svg": "https://avatars0.githubusercontent.com/u/38410642?s=200&v=4"
+        },
+        {
+          "name": "Igloo Social",
+          "repo": "Ash110/Igloo",
+          "site": "https://igloosocial.com",
+          "stars": "14",
+          "license": "MIT",
+          "language": "JS",
+          "deploy": "https://github.com/Ash110/Igloo/blob/master/README.md",
+          "svg": "https://github.com/Ash110/Igloo/blob/master/client/public/logo192.png?raw=true"
         }
       ],
       "id": "7e22r3p12",

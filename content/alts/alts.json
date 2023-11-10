@@ -1630,6 +1630,39 @@
     {
       "commercial": [
         {
+          "main": "QuickBooks",
+          "svg": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Intuit_QuickBooks_logo.png/250px-Intuit_QuickBooks_logo.png",
+          "website": "https://quickbooks.intuit.com"
+        },
+        {
+          "main": "FreshBooks",
+          "svg": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/FreshBooks_Cloud_Accounting_Logo.svg/203px-FreshBooks_Cloud_Accounting_Logo.svg.png",
+          "website": "https://freshbooks.com"
+        },
+        {
+          "main": "Wave Accounting",
+          "svg": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Wave_logo_RGB.png/220px-Wave_logo_RGB.png",
+          "website": "https://waveapps.com"
+        }
+      ],
+      "alts": [
+        {
+          "name": "Akaunting",
+          "stars": "3K",
+          "license": "GPL V3",
+          "repo": "akaunting/akaunting",
+          "svg": "https://akaunting.com/public/images/logo/akaunting-logo.svg",
+          "site": "https://akaunting.com",
+          "language": "PHP",
+          "deploy": "https://marketplace.digitalocean.com/apps/akaunting"
+        }
+      ],
+      "id": "5uv2jsadu",
+      "category": "Accounting"
+    },
+    {
+      "commercial": [
+        {
           "main": "Oberlo",
           "svg": "https://image.flaticon.com/icons/png/512/825/825517.png",
           "website": "https://oberlo.com"

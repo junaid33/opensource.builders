@@ -1286,6 +1286,39 @@
     {
       "commercial": [
         {
+          "main": "GoodReads",
+          "svg": "https://upload.wikimedia.org/wikipedia/commons/b/b6/Font_Awesome_5_brands_goodreads.svg",
+          "website": "https://goodreads.com"
+        }
+      ],
+      "alts": [
+        {
+          "name": "OpenLibrary",
+          "stars": "2.2K",
+          "license": "AGPL V3",
+          "svg": "https://openlibrary.org/static/images/openlibrary-152x152.png",
+          "repo": "internetarchive/openlibrary",
+          "site": "https://openlibrary.org",
+          "language": "Python",
+          "deploy": "https://github.com/internetarchive/openlibrary/blob/master/Readme.md"
+        },
+        {
+          "name": "LearnAwesome",
+          "stars": "158",
+          "license": "AGPL V3",
+          "svg": "https://raw.githubusercontent.com/learn-awesome/learn/master/public/stream/assets/img/logo-mobile.png",
+          "repo": "learn-awesome/learn",
+          "site": "https://learnawesome.org",
+          "language": "RUBY",
+          "deploy": "https://github.com/learn-awesome/learn/blob/master/README.md"
+        }
+      ],
+      "id": "2gz563xtw",
+      "category": "Social Media"
+    },
+    {
+      "commercial": [
+        {
           "main": "Algolia",
           "svg": "https://www.vectorlogo.zone/logos/algolia/algolia-icon.svg",
           "website": "https://algolia.com"

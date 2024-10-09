@@ -1998,6 +1998,15 @@
           "svg": "https://raw.githubusercontent.com/simple-icons/simple-icons/master/icons/supabase.svg",
           "language": "TypeScript",
           "deploy": "https://supabase.io/docs/guides/self-hosting"
+        },
+        {
+          "name": "Manifest",
+          "repo": "https://github.com/mnfst/manifest",
+          "site": "https://manifest.build/",
+          "license": "MIT",
+          "stars": "604",
+          "language": "TypeScript",
+          "svg": "https://manifest.build/assets/images/logo-peacock.svg"
         }
       ],
       "id": "si135ie",

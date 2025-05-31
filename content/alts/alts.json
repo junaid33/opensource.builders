@@ -1998,6 +1998,15 @@
           "svg": "https://raw.githubusercontent.com/simple-icons/simple-icons/master/icons/supabase.svg",
           "language": "TypeScript",
           "deploy": "https://supabase.io/docs/guides/self-hosting"
+        },
+        {
+          "name": "Fusio",
+          "repo": "apioo/fusio",
+          "site": "https://www.fusio-project.org/",
+          "license": "Apache 2.0",
+          "stars": "2K",
+          "svg": "https://www.fusio-project.org/media/logo.svg",
+          "language": "PHP"
         }
       ],
       "id": "si135ie",

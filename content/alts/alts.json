@@ -2007,6 +2007,15 @@
           "stars": "2K",
           "svg": "https://www.fusio-project.org/media/logo.svg",
           "language": "PHP"
+        },
+        {
+          "name": "Intlayer",
+          "repo": "https://github.com/aymericzip/intlayer",
+          "site": "https://intlayer.org/",
+          "license": "Apache 2.0",
+          "stars": "100",
+          "svg": "https://intlayer.org/logo.svg",
+          "language": "TypeScript"
         }
       ],
       "id": "si135ie",

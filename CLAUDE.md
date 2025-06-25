@@ -6,43 +6,64 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 - `npm run dev` - Build Keystone + migrate + start Next.js dev server
 - `npm run build` - Build Keystone + migrate + build Next.js for production
+- `npm run start` - Start production Next.js server
+- `npm run lint` - Run ESLint code quality checks
 - `npm run migrate:gen` - Generate and apply new database migrations
 - `npm run migrate` - Deploy existing migrations to database
 
 ## Architecture Overview
 
-This is a Next.js 15 + KeystoneJS 6 application with a **dual dashboard architecture**:
+This is an **open source software directory** built with Next.js 15 + KeystoneJS 6, featuring a **dual dashboard architecture**:
 
 - **Backend**: KeystoneJS 6 provides GraphQL API, authentication, and database operations
 - **Frontend**: Two parallel admin interfaces sharing the same backend
   - `dashboard/` - Original KeystoneJS implementation (feature-complete)
   - `dashboard2/` - Refactored implementation (work in progress)
+- **Public Site**: Landing page with tool directory (`features/landing/`)
 
 ## Key Directories
 
 - `features/keystone/` - Backend configuration
-  - `models/` - Keystone list definitions (User, Role, Todo)
+  - `models/` - Keystone list definitions for tools, categories, features, etc.
   - `access.ts` - Role-based permission logic
   - `mutations/` - Custom GraphQL mutations
+  - `utils/` - Logo resolution and utility functions
 
 - `features/dashboard/` - Original admin interface
   - `actions/` - Server actions for data operations
   - `components/` - Reusable UI components
   - `screens/` - Page-level components
-  - `views/` - Field type implementations
+  - `views/` - Field type implementations (extensive KeystoneJS field system)
 
 - `features/dashboard2/` - Refactored admin interface (in development)
   - More modular architecture with improved TypeScript
+  - `keystone-source-study/` - Analysis of KeystoneJS internals
+
+- `features/landing/` - Public-facing directory
+  - `components/` - Tool cards, alternatives lists, hero sections
+  - `screens/` - Landing page implementation
 
 - `app/` - Next.js App Router with parallel routes for both dashboards
+- `components/` - Shared UI components (Radix primitives, shadcn/ui)
 
-## Data Models & Permissions
+## Data Models & Relationships
 
-**Core Models**: User, Role, Todo with sophisticated relationship handling
+**Primary Models**:
+- `Tool` - Open source software entries with metadata, logos, relationships
+- `Category` - Tool categorization system
+- `Feature` - Software features/capabilities
+- `Alternative` - Proprietary/open source alternative relationships
+- `TechStack` - Technology stack associations
+- `Flow` - User journey/workflow associations
+- `DeploymentOption` - Hosting and deployment methods
+
+**Junction Models**: `ToolFeature`, `ToolTechStack`, `ToolFlow` for many-to-many relationships
+
+**Auth Models**: `User`, `Role` with sophisticated permission system
 
 **Permission System**: Role-based access control with granular permissions:
-- `canAccessDashboard`, `canManagePeople`, `canManageRoles`
-- `canCreateTodos`, `canManageAllTodos`
+- `canAccessDashboard`, `canManagePeople`, `canManageRoles`  
+- `canManageTools`, `canManageCategories`
 - `canSeeOtherPeople`, `canEditOtherPeople`
 
 ## Architecture Patterns
@@ -53,12 +74,17 @@ This is a Next.js 15 + KeystoneJS 6 application with a **dual dashboard architec
 
 **GraphQL Integration**: Dynamic query building from field controllers with SWR for client-side data fetching.
 
+**Logo Resolution System**: Intelligent logo handling with fallback to generated letter avatars (`features/keystone/utils/logo-resolver.ts`).
+
+**Dual Dashboard Pattern**: Two parallel admin interfaces allow for incremental refactoring while maintaining functionality.
+
 ## Tech Stack
 
 - **Frontend**: Next.js 15 (App Router), React 19, TypeScript
-- **Backend**: KeystoneJS 6, Prisma ORM, PostgreSQL
-- **UI**: Radix UI primitives, Tailwind CSS, Lucide React icons
+- **Backend**: KeystoneJS 6, Prisma ORM, PostgreSQL  
+- **UI**: Radix UI primitives, Tailwind CSS 4, Lucide React icons, shadcn/ui components
 - **Data**: GraphQL (GraphQL Yoga), SWR for client state
+- **Tools**: ESLint, motion-primitives for animations
 
 ## Development Notes
 
@@ -67,3 +93,6 @@ This is a Next.js 15 + KeystoneJS 6 application with a **dual dashboard architec
 - Use server actions for data mutations in dashboard components
 - Field implementations follow KeystoneJS controller patterns
 - Permission checks integrated throughout the UI layer
+- The `views/` directories contain extensive field type implementations - understand the controller pattern before modifying
+- Logo resolution handles URL, SVG, and generated letter avatars automatically
+- Database migrations are handled via Prisma - always run `migrate:gen` after schema changes

@@ -16,14 +16,11 @@ export function getFieldTypeFromViewsIndex(viewsIndex: number): string {
     2: "password",
     3: "relationship",
     4: "checkbox",
-    5: "document",
+    5: "timestamp",
     6: "integer",
-    7: "bigInt",
-    8: "float",
-    9: "decimal",
-    10: "select",
-    11: "timestamp",
-    12: "json"
+    7: "select",
+    8: "decimal",
+    9: "json"
   };
 
   const fieldType = viewsIndexToType[viewsIndex];

@@ -6,13 +6,18 @@ export type Session = {
     role: {
       id: string
       name: string
-      canCreateTodos: boolean
-      canManageAllTodos: boolean
       canSeeOtherPeople: boolean
       canEditOtherPeople: boolean
       canManagePeople: boolean
       canManageRoles: boolean
       canAccessDashboard: boolean
+      canManageTools: boolean
+      canManageCategories: boolean
+      canManageFeatures: boolean
+      canManageAlternatives: boolean
+      canManageDeploymentOptions: boolean
+      canManageTechStacks: boolean
+      canManageFlows: boolean
     }
   }
 }
@@ -26,35 +31,18 @@ export function isSignedIn({ session }: AccessArgs) {
 }
 
 export const permissions = {
-  canCreateTodos: ({ session }: AccessArgs) => session?.data.role?.canCreateTodos ?? false,
-  canManageAllTodos: ({ session }: AccessArgs) => session?.data.role?.canManageAllTodos ?? false,
   canManagePeople: ({ session }: AccessArgs) => session?.data.role?.canManagePeople ?? false,
   canManageRoles: ({ session }: AccessArgs) => session?.data.role?.canManageRoles ?? false,
+  canManageTools: ({ session }: AccessArgs) => session?.data.role?.canManageTools ?? false,
+  canManageCategories: ({ session }: AccessArgs) => session?.data.role?.canManageCategories ?? false,
+  canManageFeatures: ({ session }: AccessArgs) => session?.data.role?.canManageFeatures ?? false,
+  canManageAlternatives: ({ session }: AccessArgs) => session?.data.role?.canManageAlternatives ?? false,
+  canManageDeploymentOptions: ({ session }: AccessArgs) => session?.data.role?.canManageDeploymentOptions ?? false,
+  canManageTechStacks: ({ session }: AccessArgs) => session?.data.role?.canManageTechStacks ?? false,
+  canManageFlows: ({ session }: AccessArgs) => session?.data.role?.canManageFlows ?? false,
 }
 
 export const rules = {
-  canReadTodos: ({ session }: AccessArgs) => {
-    if (!session) return false
-
-    if (session.data.role?.canManageAllTodos) {
-      return {
-        OR: [
-          { assignedTo: { id: { equals: session.itemId } } },
-          { assignedTo: null, isPrivate: { equals: true } },
-          { NOT: { isPrivate: { equals: true } } },
-        ],
-      }
-    }
-
-    return { assignedTo: { id: { equals: session.itemId } } }
-  },
-  canManageTodos: ({ session }: AccessArgs) => {
-    if (!session) return false
-
-    if (session.data.role?.canManageAllTodos) return true
-
-    return { assignedTo: { id: { equals: session.itemId } } }
-  },
   canReadPeople: ({ session }: AccessArgs) => {
     if (!session) return false
 

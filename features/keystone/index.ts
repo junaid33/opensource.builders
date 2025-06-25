@@ -23,13 +23,18 @@ const { withAuth } = createAuth({
       role: {
         create: {
           name: "Admin",
-          canCreateTodos: true,
-          canManageAllTodos: true,
           canSeeOtherPeople: true,
           canEditOtherPeople: true,
           canManagePeople: true,
           canManageRoles: true,
           canAccessDashboard: true,
+          canManageTools: true,
+          canManageCategories: true,
+          canManageFeatures: true,
+          canManageAlternatives: true,
+          canManageDeploymentOptions: true,
+          canManageTechStacks: true,
+          canManageFlows: true,
         },
       },
     },
@@ -40,13 +45,18 @@ const { withAuth } = createAuth({
     role {
       id
       name
-      canCreateTodos
-      canManageAllTodos
       canSeeOtherPeople
       canEditOtherPeople
       canManagePeople
       canManageRoles
       canAccessDashboard
+      canManageTools
+      canManageCategories
+      canManageFeatures
+      canManageAlternatives
+      canManageDeploymentOptions
+      canManageTechStacks
+      canManageFlows
     }
   `,
 });

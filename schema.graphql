@@ -7,8 +7,6 @@ type User {
   email: String
   password: PasswordState
   role: Role
-  tasks(where: TodoWhereInput! = {}, orderBy: [TodoOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TodoWhereUniqueInput): [Todo!]
-  tasksCount(where: TodoWhereInput! = {}): Int
 }
 
 type PasswordState {
@@ -26,7 +24,6 @@ input UserWhereInput {
   id: IDFilter
   name: StringFilter
   role: RoleWhereInput
-  tasks: TodoManyRelationFilter
 }
 
 input IDFilter {
@@ -74,12 +71,6 @@ input NestedStringFilter {
   not: NestedStringFilter
 }
 
-input TodoManyRelationFilter {
-  every: TodoWhereInput
-  some: TodoWhereInput
-  none: TodoWhereInput
-}
-
 input UserOrderByInput {
   id: OrderDirection
   name: OrderDirection
@@ -95,20 +86,12 @@ input UserUpdateInput {
   email: String
   password: String
   role: RoleRelateToOneForUpdateInput
-  tasks: TodoRelateToManyForUpdateInput
 }
 
 input RoleRelateToOneForUpdateInput {
   create: RoleCreateInput
   connect: RoleWhereUniqueInput
   disconnect: Boolean
-}
-
-input TodoRelateToManyForUpdateInput {
-  disconnect: [TodoWhereUniqueInput!]
-  set: [TodoWhereUniqueInput!]
-  create: [TodoCreateInput!]
-  connect: [TodoWhereUniqueInput!]
 }
 
 input UserUpdateArgs {
@@ -121,7 +104,6 @@ input UserCreateInput {
   email: String
   password: String
   role: RoleRelateToOneForCreateInput
-  tasks: TodoRelateToManyForCreateInput
 }
 
 input RoleRelateToOneForCreateInput {
@@ -129,21 +111,21 @@ input RoleRelateToOneForCreateInput {
   connect: RoleWhereUniqueInput
 }
 
-input TodoRelateToManyForCreateInput {
-  create: [TodoCreateInput!]
-  connect: [TodoWhereUniqueInput!]
-}
-
 type Role {
   id: ID!
   name: String
-  canCreateTodos: Boolean
-  canManageAllTodos: Boolean
   canSeeOtherPeople: Boolean
   canEditOtherPeople: Boolean
   canManagePeople: Boolean
   canManageRoles: Boolean
   canAccessDashboard: Boolean
+  canManageTools: Boolean
+  canManageCategories: Boolean
+  canManageFeatures: Boolean
+  canManageAlternatives: Boolean
+  canManageDeploymentOptions: Boolean
+  canManageTechStacks: Boolean
+  canManageFlows: Boolean
   assignedTo(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserWhereUniqueInput): [User!]
   assignedToCount(where: UserWhereInput! = {}): Int
 }
@@ -158,13 +140,18 @@ input RoleWhereInput {
   NOT: [RoleWhereInput!]
   id: IDFilter
   name: StringFilter
-  canCreateTodos: BooleanFilter
-  canManageAllTodos: BooleanFilter
   canSeeOtherPeople: BooleanFilter
   canEditOtherPeople: BooleanFilter
   canManagePeople: BooleanFilter
   canManageRoles: BooleanFilter
   canAccessDashboard: BooleanFilter
+  canManageTools: BooleanFilter
+  canManageCategories: BooleanFilter
+  canManageFeatures: BooleanFilter
+  canManageAlternatives: BooleanFilter
+  canManageDeploymentOptions: BooleanFilter
+  canManageTechStacks: BooleanFilter
+  canManageFlows: BooleanFilter
   assignedTo: UserManyRelationFilter
 }
 
@@ -182,24 +169,34 @@ input UserManyRelationFilter {
 input RoleOrderByInput {
   id: OrderDirection
   name: OrderDirection
-  canCreateTodos: OrderDirection
-  canManageAllTodos: OrderDirection
   canSeeOtherPeople: OrderDirection
   canEditOtherPeople: OrderDirection
   canManagePeople: OrderDirection
   canManageRoles: OrderDirection
   canAccessDashboard: OrderDirection
+  canManageTools: OrderDirection
+  canManageCategories: OrderDirection
+  canManageFeatures: OrderDirection
+  canManageAlternatives: OrderDirection
+  canManageDeploymentOptions: OrderDirection
+  canManageTechStacks: OrderDirection
+  canManageFlows: OrderDirection
 }
 
 input RoleUpdateInput {
   name: String
-  canCreateTodos: Boolean
-  canManageAllTodos: Boolean
   canSeeOtherPeople: Boolean
   canEditOtherPeople: Boolean
   canManagePeople: Boolean
   canManageRoles: Boolean
   canAccessDashboard: Boolean
+  canManageTools: Boolean
+  canManageCategories: Boolean
+  canManageFeatures: Boolean
+  canManageAlternatives: Boolean
+  canManageDeploymentOptions: Boolean
+  canManageTechStacks: Boolean
+  canManageFlows: Boolean
   assignedTo: UserRelateToManyForUpdateInput
 }
 
@@ -217,13 +214,18 @@ input RoleUpdateArgs {
 
 input RoleCreateInput {
   name: String
-  canCreateTodos: Boolean
-  canManageAllTodos: Boolean
   canSeeOtherPeople: Boolean
   canEditOtherPeople: Boolean
   canManagePeople: Boolean
   canManageRoles: Boolean
   canAccessDashboard: Boolean
+  canManageTools: Boolean
+  canManageCategories: Boolean
+  canManageFeatures: Boolean
+  canManageAlternatives: Boolean
+  canManageDeploymentOptions: Boolean
+  canManageTechStacks: Boolean
+  canManageFlows: Boolean
   assignedTo: UserRelateToManyForCreateInput
 }
 
@@ -232,53 +234,212 @@ input UserRelateToManyForCreateInput {
   connect: [UserWhereUniqueInput!]
 }
 
-type Todo {
+type Category {
   id: ID!
-  label: String
-  description: Todo_description_Document
-  isComplete: Boolean
-  isPrivate: Boolean
-  priority: Int
-  largeNumber: BigInt
-  weight: Float
-  budget: Decimal
-  status: String
-  dueDate: DateTime
-  metadata: JSON
-  secretNote: PasswordState
-  assignedTo: User
+  name: String
+  slug: String
+  description: String
+  icon: String
+  color: String
+  createdAt: DateTime
+  tools(where: ToolWhereInput! = {}, orderBy: [ToolOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ToolWhereUniqueInput): [Tool!]
+  toolsCount(where: ToolWhereInput! = {}): Int
+  features(where: FeatureWhereInput! = {}, orderBy: [FeatureOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FeatureWhereUniqueInput): [Feature!]
+  featuresCount(where: FeatureWhereInput! = {}): Int
+  flows(where: FlowWhereInput! = {}, orderBy: [FlowOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FlowWhereUniqueInput): [Flow!]
+  flowsCount(where: FlowWhereInput! = {}): Int
 }
-
-type Todo_description_Document {
-  document(hydrateRelationships: Boolean! = false): JSON!
-}
-
-scalar BigInt
-
-scalar Decimal
 
 scalar DateTime @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
 
-input TodoWhereUniqueInput {
+input CategoryWhereUniqueInput {
   id: ID
+  slug: String
 }
 
-input TodoWhereInput {
-  AND: [TodoWhereInput!]
-  OR: [TodoWhereInput!]
-  NOT: [TodoWhereInput!]
+input CategoryWhereInput {
+  AND: [CategoryWhereInput!]
+  OR: [CategoryWhereInput!]
+  NOT: [CategoryWhereInput!]
   id: IDFilter
-  label: StringFilter
-  isComplete: BooleanFilter
-  isPrivate: BooleanFilter
-  priority: IntNullableFilter
-  largeNumber: BigIntNullableFilter
-  weight: FloatNullableFilter
-  budget: DecimalNullableFilter
+  name: StringFilter
+  slug: StringFilter
+  description: StringFilter
+  icon: StringFilter
+  color: StringFilter
+  createdAt: DateTimeNullableFilter
+  tools: ToolManyRelationFilter
+  features: FeatureManyRelationFilter
+  flows: FlowManyRelationFilter
+}
+
+input DateTimeNullableFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: DateTimeNullableFilter
+}
+
+input ToolManyRelationFilter {
+  every: ToolWhereInput
+  some: ToolWhereInput
+  none: ToolWhereInput
+}
+
+input FeatureManyRelationFilter {
+  every: FeatureWhereInput
+  some: FeatureWhereInput
+  none: FeatureWhereInput
+}
+
+input FlowManyRelationFilter {
+  every: FlowWhereInput
+  some: FlowWhereInput
+  none: FlowWhereInput
+}
+
+input CategoryOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  slug: OrderDirection
+  description: OrderDirection
+  icon: OrderDirection
+  color: OrderDirection
+  createdAt: OrderDirection
+}
+
+input CategoryUpdateInput {
+  name: String
+  slug: String
+  description: String
+  icon: String
+  color: String
+  createdAt: DateTime
+  tools: ToolRelateToManyForUpdateInput
+  features: FeatureRelateToManyForUpdateInput
+  flows: FlowRelateToManyForUpdateInput
+}
+
+input ToolRelateToManyForUpdateInput {
+  disconnect: [ToolWhereUniqueInput!]
+  set: [ToolWhereUniqueInput!]
+  create: [ToolCreateInput!]
+  connect: [ToolWhereUniqueInput!]
+}
+
+input FeatureRelateToManyForUpdateInput {
+  disconnect: [FeatureWhereUniqueInput!]
+  set: [FeatureWhereUniqueInput!]
+  create: [FeatureCreateInput!]
+  connect: [FeatureWhereUniqueInput!]
+}
+
+input FlowRelateToManyForUpdateInput {
+  disconnect: [FlowWhereUniqueInput!]
+  set: [FlowWhereUniqueInput!]
+  create: [FlowCreateInput!]
+  connect: [FlowWhereUniqueInput!]
+}
+
+input CategoryUpdateArgs {
+  where: CategoryWhereUniqueInput!
+  data: CategoryUpdateInput!
+}
+
+input CategoryCreateInput {
+  name: String
+  slug: String
+  description: String
+  icon: String
+  color: String
+  createdAt: DateTime
+  tools: ToolRelateToManyForCreateInput
+  features: FeatureRelateToManyForCreateInput
+  flows: FlowRelateToManyForCreateInput
+}
+
+input ToolRelateToManyForCreateInput {
+  create: [ToolCreateInput!]
+  connect: [ToolWhereUniqueInput!]
+}
+
+input FeatureRelateToManyForCreateInput {
+  create: [FeatureCreateInput!]
+  connect: [FeatureWhereUniqueInput!]
+}
+
+input FlowRelateToManyForCreateInput {
+  create: [FlowCreateInput!]
+  connect: [FlowWhereUniqueInput!]
+}
+
+type Tool {
+  id: ID!
+  name: String
+  slug: String
+  description: String
+  websiteUrl: String
+  repositoryUrl: String
+  logoUrl: String
+  logoSvg: String
+  isOpenSource: Boolean
+  category: Category
+  license: String
+  githubStars: Int
+  status: String
+  pricingModel: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  features(where: ToolFeatureWhereInput! = {}, orderBy: [ToolFeatureOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ToolFeatureWhereUniqueInput): [ToolFeature!]
+  featuresCount(where: ToolFeatureWhereInput! = {}): Int
+  proprietaryAlternatives(where: AlternativeWhereInput! = {}, orderBy: [AlternativeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AlternativeWhereUniqueInput): [Alternative!]
+  proprietaryAlternativesCount(where: AlternativeWhereInput! = {}): Int
+  openSourceAlternatives(where: AlternativeWhereInput! = {}, orderBy: [AlternativeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AlternativeWhereUniqueInput): [Alternative!]
+  openSourceAlternativesCount(where: AlternativeWhereInput! = {}): Int
+  deploymentOptions(where: DeploymentOptionWhereInput! = {}, orderBy: [DeploymentOptionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DeploymentOptionWhereUniqueInput): [DeploymentOption!]
+  deploymentOptionsCount(where: DeploymentOptionWhereInput! = {}): Int
+  techStacks(where: ToolTechStackWhereInput! = {}, orderBy: [ToolTechStackOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ToolTechStackWhereUniqueInput): [ToolTechStack!]
+  techStacksCount(where: ToolTechStackWhereInput! = {}): Int
+  flows(where: ToolFlowWhereInput! = {}, orderBy: [ToolFlowOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ToolFlowWhereUniqueInput): [ToolFlow!]
+  flowsCount(where: ToolFlowWhereInput! = {}): Int
+  resolvedLogo: JSON
+}
+
+input ToolWhereUniqueInput {
+  id: ID
+  slug: String
+}
+
+input ToolWhereInput {
+  AND: [ToolWhereInput!]
+  OR: [ToolWhereInput!]
+  NOT: [ToolWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  slug: StringFilter
+  description: StringFilter
+  websiteUrl: StringFilter
+  repositoryUrl: StringFilter
+  logoUrl: StringFilter
+  logoSvg: StringFilter
+  isOpenSource: BooleanFilter
+  category: CategoryWhereInput
+  license: StringFilter
+  githubStars: IntNullableFilter
   status: StringNullableFilter
-  dueDate: DateTimeNullableFilter
-  secretNote: PasswordFilter
-  assignedTo: UserWhereInput
+  pricingModel: StringNullableFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+  features: ToolFeatureManyRelationFilter
+  proprietaryAlternatives: AlternativeManyRelationFilter
+  openSourceAlternatives: AlternativeManyRelationFilter
+  deploymentOptions: DeploymentOptionManyRelationFilter
+  techStacks: ToolTechStackManyRelationFilter
+  flows: ToolFlowManyRelationFilter
 }
 
 input IntNullableFilter {
@@ -290,39 +451,6 @@ input IntNullableFilter {
   gt: Int
   gte: Int
   not: IntNullableFilter
-}
-
-input BigIntNullableFilter {
-  equals: BigInt
-  in: [BigInt!]
-  notIn: [BigInt!]
-  lt: BigInt
-  lte: BigInt
-  gt: BigInt
-  gte: BigInt
-  not: BigIntNullableFilter
-}
-
-input FloatNullableFilter {
-  equals: Float
-  in: [Float!]
-  notIn: [Float!]
-  lt: Float
-  lte: Float
-  gt: Float
-  gte: Float
-  not: FloatNullableFilter
-}
-
-input DecimalNullableFilter {
-  equals: Decimal
-  in: [Decimal!]
-  notIn: [Decimal!]
-  lt: Decimal
-  lte: Decimal
-  gt: Decimal
-  gte: Decimal
-  not: DecimalNullableFilter
 }
 
 input StringNullableFilter {
@@ -340,80 +468,730 @@ input StringNullableFilter {
   not: StringNullableFilter
 }
 
-input DateTimeNullableFilter {
-  equals: DateTime
-  in: [DateTime!]
-  notIn: [DateTime!]
-  lt: DateTime
-  lte: DateTime
-  gt: DateTime
-  gte: DateTime
-  not: DateTimeNullableFilter
+input ToolFeatureManyRelationFilter {
+  every: ToolFeatureWhereInput
+  some: ToolFeatureWhereInput
+  none: ToolFeatureWhereInput
 }
 
-input PasswordFilter {
-  isSet: Boolean!
+input AlternativeManyRelationFilter {
+  every: AlternativeWhereInput
+  some: AlternativeWhereInput
+  none: AlternativeWhereInput
 }
 
-input TodoOrderByInput {
+input DeploymentOptionManyRelationFilter {
+  every: DeploymentOptionWhereInput
+  some: DeploymentOptionWhereInput
+  none: DeploymentOptionWhereInput
+}
+
+input ToolTechStackManyRelationFilter {
+  every: ToolTechStackWhereInput
+  some: ToolTechStackWhereInput
+  none: ToolTechStackWhereInput
+}
+
+input ToolFlowManyRelationFilter {
+  every: ToolFlowWhereInput
+  some: ToolFlowWhereInput
+  none: ToolFlowWhereInput
+}
+
+input ToolOrderByInput {
   id: OrderDirection
-  label: OrderDirection
-  isComplete: OrderDirection
-  isPrivate: OrderDirection
-  priority: OrderDirection
-  largeNumber: OrderDirection
-  weight: OrderDirection
-  budget: OrderDirection
+  name: OrderDirection
+  slug: OrderDirection
+  description: OrderDirection
+  websiteUrl: OrderDirection
+  repositoryUrl: OrderDirection
+  logoUrl: OrderDirection
+  logoSvg: OrderDirection
+  isOpenSource: OrderDirection
+  license: OrderDirection
+  githubStars: OrderDirection
   status: OrderDirection
-  dueDate: OrderDirection
+  pricingModel: OrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
 }
 
-input TodoUpdateInput {
-  label: String
-  description: JSON
-  isComplete: Boolean
-  isPrivate: Boolean
-  priority: Int
-  largeNumber: BigInt
-  weight: Float
-  budget: Decimal
+input ToolUpdateInput {
+  name: String
+  slug: String
+  description: String
+  websiteUrl: String
+  repositoryUrl: String
+  logoUrl: String
+  logoSvg: String
+  isOpenSource: Boolean
+  category: CategoryRelateToOneForUpdateInput
+  license: String
+  githubStars: Int
   status: String
-  dueDate: DateTime
-  metadata: JSON
-  secretNote: String
-  assignedTo: UserRelateToOneForUpdateInput
+  pricingModel: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  features: ToolFeatureRelateToManyForUpdateInput
+  proprietaryAlternatives: AlternativeRelateToManyForUpdateInput
+  openSourceAlternatives: AlternativeRelateToManyForUpdateInput
+  deploymentOptions: DeploymentOptionRelateToManyForUpdateInput
+  techStacks: ToolTechStackRelateToManyForUpdateInput
+  flows: ToolFlowRelateToManyForUpdateInput
 }
 
-input UserRelateToOneForUpdateInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
+input CategoryRelateToOneForUpdateInput {
+  create: CategoryCreateInput
+  connect: CategoryWhereUniqueInput
   disconnect: Boolean
 }
 
-input TodoUpdateArgs {
-  where: TodoWhereUniqueInput!
-  data: TodoUpdateInput!
+input ToolFeatureRelateToManyForUpdateInput {
+  disconnect: [ToolFeatureWhereUniqueInput!]
+  set: [ToolFeatureWhereUniqueInput!]
+  create: [ToolFeatureCreateInput!]
+  connect: [ToolFeatureWhereUniqueInput!]
 }
 
-input TodoCreateInput {
-  label: String
-  description: JSON
-  isComplete: Boolean
-  isPrivate: Boolean
-  priority: Int
-  largeNumber: BigInt
-  weight: Float
-  budget: Decimal
+input AlternativeRelateToManyForUpdateInput {
+  disconnect: [AlternativeWhereUniqueInput!]
+  set: [AlternativeWhereUniqueInput!]
+  create: [AlternativeCreateInput!]
+  connect: [AlternativeWhereUniqueInput!]
+}
+
+input DeploymentOptionRelateToManyForUpdateInput {
+  disconnect: [DeploymentOptionWhereUniqueInput!]
+  set: [DeploymentOptionWhereUniqueInput!]
+  create: [DeploymentOptionCreateInput!]
+  connect: [DeploymentOptionWhereUniqueInput!]
+}
+
+input ToolTechStackRelateToManyForUpdateInput {
+  disconnect: [ToolTechStackWhereUniqueInput!]
+  set: [ToolTechStackWhereUniqueInput!]
+  create: [ToolTechStackCreateInput!]
+  connect: [ToolTechStackWhereUniqueInput!]
+}
+
+input ToolFlowRelateToManyForUpdateInput {
+  disconnect: [ToolFlowWhereUniqueInput!]
+  set: [ToolFlowWhereUniqueInput!]
+  create: [ToolFlowCreateInput!]
+  connect: [ToolFlowWhereUniqueInput!]
+}
+
+input ToolUpdateArgs {
+  where: ToolWhereUniqueInput!
+  data: ToolUpdateInput!
+}
+
+input ToolCreateInput {
+  name: String
+  slug: String
+  description: String
+  websiteUrl: String
+  repositoryUrl: String
+  logoUrl: String
+  logoSvg: String
+  isOpenSource: Boolean
+  category: CategoryRelateToOneForCreateInput
+  license: String
+  githubStars: Int
   status: String
-  dueDate: DateTime
-  metadata: JSON
-  secretNote: String
-  assignedTo: UserRelateToOneForCreateInput
+  pricingModel: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  features: ToolFeatureRelateToManyForCreateInput
+  proprietaryAlternatives: AlternativeRelateToManyForCreateInput
+  openSourceAlternatives: AlternativeRelateToManyForCreateInput
+  deploymentOptions: DeploymentOptionRelateToManyForCreateInput
+  techStacks: ToolTechStackRelateToManyForCreateInput
+  flows: ToolFlowRelateToManyForCreateInput
 }
 
-input UserRelateToOneForCreateInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
+input CategoryRelateToOneForCreateInput {
+  create: CategoryCreateInput
+  connect: CategoryWhereUniqueInput
+}
+
+input ToolFeatureRelateToManyForCreateInput {
+  create: [ToolFeatureCreateInput!]
+  connect: [ToolFeatureWhereUniqueInput!]
+}
+
+input AlternativeRelateToManyForCreateInput {
+  create: [AlternativeCreateInput!]
+  connect: [AlternativeWhereUniqueInput!]
+}
+
+input DeploymentOptionRelateToManyForCreateInput {
+  create: [DeploymentOptionCreateInput!]
+  connect: [DeploymentOptionWhereUniqueInput!]
+}
+
+input ToolTechStackRelateToManyForCreateInput {
+  create: [ToolTechStackCreateInput!]
+  connect: [ToolTechStackWhereUniqueInput!]
+}
+
+input ToolFlowRelateToManyForCreateInput {
+  create: [ToolFlowCreateInput!]
+  connect: [ToolFlowWhereUniqueInput!]
+}
+
+type Feature {
+  id: ID!
+  name: String
+  slug: String
+  description: String
+  category: Category
+  featureType: String
+  createdAt: DateTime
+  tools(where: ToolFeatureWhereInput! = {}, orderBy: [ToolFeatureOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ToolFeatureWhereUniqueInput): [ToolFeature!]
+  toolsCount(where: ToolFeatureWhereInput! = {}): Int
+}
+
+input FeatureWhereUniqueInput {
+  id: ID
+  slug: String
+}
+
+input FeatureWhereInput {
+  AND: [FeatureWhereInput!]
+  OR: [FeatureWhereInput!]
+  NOT: [FeatureWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  slug: StringFilter
+  description: StringFilter
+  category: CategoryWhereInput
+  featureType: StringNullableFilter
+  createdAt: DateTimeNullableFilter
+  tools: ToolFeatureManyRelationFilter
+}
+
+input FeatureOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  slug: OrderDirection
+  description: OrderDirection
+  featureType: OrderDirection
+  createdAt: OrderDirection
+}
+
+input FeatureUpdateInput {
+  name: String
+  slug: String
+  description: String
+  category: CategoryRelateToOneForUpdateInput
+  featureType: String
+  createdAt: DateTime
+  tools: ToolFeatureRelateToManyForUpdateInput
+}
+
+input FeatureUpdateArgs {
+  where: FeatureWhereUniqueInput!
+  data: FeatureUpdateInput!
+}
+
+input FeatureCreateInput {
+  name: String
+  slug: String
+  description: String
+  category: CategoryRelateToOneForCreateInput
+  featureType: String
+  createdAt: DateTime
+  tools: ToolFeatureRelateToManyForCreateInput
+}
+
+type ToolFeature {
+  id: ID!
+  tool: Tool
+  feature: Feature
+  implementationNotes: String
+  qualityScore: Int
+  verified: Boolean
+  createdAt: DateTime
+}
+
+input ToolFeatureWhereUniqueInput {
+  id: ID
+}
+
+input ToolFeatureWhereInput {
+  AND: [ToolFeatureWhereInput!]
+  OR: [ToolFeatureWhereInput!]
+  NOT: [ToolFeatureWhereInput!]
+  id: IDFilter
+  tool: ToolWhereInput
+  feature: FeatureWhereInput
+  implementationNotes: StringFilter
+  qualityScore: IntNullableFilter
+  verified: BooleanFilter
+  createdAt: DateTimeNullableFilter
+}
+
+input ToolFeatureOrderByInput {
+  id: OrderDirection
+  implementationNotes: OrderDirection
+  qualityScore: OrderDirection
+  verified: OrderDirection
+  createdAt: OrderDirection
+}
+
+input ToolFeatureUpdateInput {
+  tool: ToolRelateToOneForUpdateInput
+  feature: FeatureRelateToOneForUpdateInput
+  implementationNotes: String
+  qualityScore: Int
+  verified: Boolean
+  createdAt: DateTime
+}
+
+input ToolRelateToOneForUpdateInput {
+  create: ToolCreateInput
+  connect: ToolWhereUniqueInput
+  disconnect: Boolean
+}
+
+input FeatureRelateToOneForUpdateInput {
+  create: FeatureCreateInput
+  connect: FeatureWhereUniqueInput
+  disconnect: Boolean
+}
+
+input ToolFeatureUpdateArgs {
+  where: ToolFeatureWhereUniqueInput!
+  data: ToolFeatureUpdateInput!
+}
+
+input ToolFeatureCreateInput {
+  tool: ToolRelateToOneForCreateInput
+  feature: FeatureRelateToOneForCreateInput
+  implementationNotes: String
+  qualityScore: Int
+  verified: Boolean
+  createdAt: DateTime
+}
+
+input ToolRelateToOneForCreateInput {
+  create: ToolCreateInput
+  connect: ToolWhereUniqueInput
+}
+
+input FeatureRelateToOneForCreateInput {
+  create: FeatureCreateInput
+  connect: FeatureWhereUniqueInput
+}
+
+type Alternative {
+  id: ID!
+  proprietaryTool: Tool
+  openSourceTool: Tool
+  similarityScore: Decimal
+  matchType: String
+  comparisonNotes: String
+  createdAt: DateTime
+}
+
+scalar Decimal
+
+input AlternativeWhereUniqueInput {
+  id: ID
+}
+
+input AlternativeWhereInput {
+  AND: [AlternativeWhereInput!]
+  OR: [AlternativeWhereInput!]
+  NOT: [AlternativeWhereInput!]
+  id: IDFilter
+  proprietaryTool: ToolWhereInput
+  openSourceTool: ToolWhereInput
+  similarityScore: DecimalNullableFilter
+  matchType: StringNullableFilter
+  comparisonNotes: StringFilter
+  createdAt: DateTimeNullableFilter
+}
+
+input DecimalNullableFilter {
+  equals: Decimal
+  in: [Decimal!]
+  notIn: [Decimal!]
+  lt: Decimal
+  lte: Decimal
+  gt: Decimal
+  gte: Decimal
+  not: DecimalNullableFilter
+}
+
+input AlternativeOrderByInput {
+  id: OrderDirection
+  similarityScore: OrderDirection
+  matchType: OrderDirection
+  comparisonNotes: OrderDirection
+  createdAt: OrderDirection
+}
+
+input AlternativeUpdateInput {
+  proprietaryTool: ToolRelateToOneForUpdateInput
+  openSourceTool: ToolRelateToOneForUpdateInput
+  similarityScore: Decimal
+  matchType: String
+  comparisonNotes: String
+  createdAt: DateTime
+}
+
+input AlternativeUpdateArgs {
+  where: AlternativeWhereUniqueInput!
+  data: AlternativeUpdateInput!
+}
+
+input AlternativeCreateInput {
+  proprietaryTool: ToolRelateToOneForCreateInput
+  openSourceTool: ToolRelateToOneForCreateInput
+  similarityScore: Decimal
+  matchType: String
+  comparisonNotes: String
+  createdAt: DateTime
+}
+
+type DeploymentOption {
+  id: ID!
+  tool: Tool
+  platform: String
+  deployUrl: String
+  templateUrl: String
+  difficulty: String
+  estimatedTime: String
+  requirements: JSON
+  isVerified: Boolean
+  createdAt: DateTime
+}
+
+input DeploymentOptionWhereUniqueInput {
+  id: ID
+}
+
+input DeploymentOptionWhereInput {
+  AND: [DeploymentOptionWhereInput!]
+  OR: [DeploymentOptionWhereInput!]
+  NOT: [DeploymentOptionWhereInput!]
+  id: IDFilter
+  tool: ToolWhereInput
+  platform: StringFilter
+  deployUrl: StringFilter
+  templateUrl: StringFilter
+  difficulty: StringNullableFilter
+  estimatedTime: StringFilter
+  isVerified: BooleanFilter
+  createdAt: DateTimeNullableFilter
+}
+
+input DeploymentOptionOrderByInput {
+  id: OrderDirection
+  platform: OrderDirection
+  deployUrl: OrderDirection
+  templateUrl: OrderDirection
+  difficulty: OrderDirection
+  estimatedTime: OrderDirection
+  isVerified: OrderDirection
+  createdAt: OrderDirection
+}
+
+input DeploymentOptionUpdateInput {
+  tool: ToolRelateToOneForUpdateInput
+  platform: String
+  deployUrl: String
+  templateUrl: String
+  difficulty: String
+  estimatedTime: String
+  requirements: JSON
+  isVerified: Boolean
+  createdAt: DateTime
+}
+
+input DeploymentOptionUpdateArgs {
+  where: DeploymentOptionWhereUniqueInput!
+  data: DeploymentOptionUpdateInput!
+}
+
+input DeploymentOptionCreateInput {
+  tool: ToolRelateToOneForCreateInput
+  platform: String
+  deployUrl: String
+  templateUrl: String
+  difficulty: String
+  estimatedTime: String
+  requirements: JSON
+  isVerified: Boolean
+  createdAt: DateTime
+}
+
+type TechStack {
+  id: ID!
+  name: String
+  type: String
+  color: String
+  iconUrl: String
+  tools(where: ToolTechStackWhereInput! = {}, orderBy: [ToolTechStackOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ToolTechStackWhereUniqueInput): [ToolTechStack!]
+  toolsCount(where: ToolTechStackWhereInput! = {}): Int
+}
+
+input TechStackWhereUniqueInput {
+  id: ID
+}
+
+input TechStackWhereInput {
+  AND: [TechStackWhereInput!]
+  OR: [TechStackWhereInput!]
+  NOT: [TechStackWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  type: StringNullableFilter
+  color: StringFilter
+  iconUrl: StringFilter
+  tools: ToolTechStackManyRelationFilter
+}
+
+input TechStackOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  type: OrderDirection
+  color: OrderDirection
+  iconUrl: OrderDirection
+}
+
+input TechStackUpdateInput {
+  name: String
+  type: String
+  color: String
+  iconUrl: String
+  tools: ToolTechStackRelateToManyForUpdateInput
+}
+
+input TechStackUpdateArgs {
+  where: TechStackWhereUniqueInput!
+  data: TechStackUpdateInput!
+}
+
+input TechStackCreateInput {
+  name: String
+  type: String
+  color: String
+  iconUrl: String
+  tools: ToolTechStackRelateToManyForCreateInput
+}
+
+type ToolTechStack {
+  id: ID!
+  tool: Tool
+  techStack: TechStack
+  isPrimary: Boolean
+}
+
+input ToolTechStackWhereUniqueInput {
+  id: ID
+}
+
+input ToolTechStackWhereInput {
+  AND: [ToolTechStackWhereInput!]
+  OR: [ToolTechStackWhereInput!]
+  NOT: [ToolTechStackWhereInput!]
+  id: IDFilter
+  tool: ToolWhereInput
+  techStack: TechStackWhereInput
+  isPrimary: BooleanFilter
+}
+
+input ToolTechStackOrderByInput {
+  id: OrderDirection
+  isPrimary: OrderDirection
+}
+
+input ToolTechStackUpdateInput {
+  tool: ToolRelateToOneForUpdateInput
+  techStack: TechStackRelateToOneForUpdateInput
+  isPrimary: Boolean
+}
+
+input TechStackRelateToOneForUpdateInput {
+  create: TechStackCreateInput
+  connect: TechStackWhereUniqueInput
+  disconnect: Boolean
+}
+
+input ToolTechStackUpdateArgs {
+  where: ToolTechStackWhereUniqueInput!
+  data: ToolTechStackUpdateInput!
+}
+
+input ToolTechStackCreateInput {
+  tool: ToolRelateToOneForCreateInput
+  techStack: TechStackRelateToOneForCreateInput
+  isPrimary: Boolean
+}
+
+input TechStackRelateToOneForCreateInput {
+  create: TechStackCreateInput
+  connect: TechStackWhereUniqueInput
+}
+
+type Flow {
+  id: ID!
+  name: String
+  slug: String
+  description: String
+  category: Category
+  steps: JSON
+  userPersona: String
+  difficulty: String
+  estimatedTime: String
+  createdAt: DateTime
+  tools(where: ToolFlowWhereInput! = {}, orderBy: [ToolFlowOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ToolFlowWhereUniqueInput): [ToolFlow!]
+  toolsCount(where: ToolFlowWhereInput! = {}): Int
+}
+
+input FlowWhereUniqueInput {
+  id: ID
+  slug: String
+}
+
+input FlowWhereInput {
+  AND: [FlowWhereInput!]
+  OR: [FlowWhereInput!]
+  NOT: [FlowWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  slug: StringFilter
+  description: StringFilter
+  category: CategoryWhereInput
+  userPersona: StringFilter
+  difficulty: StringNullableFilter
+  estimatedTime: StringFilter
+  createdAt: DateTimeNullableFilter
+  tools: ToolFlowManyRelationFilter
+}
+
+input FlowOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  slug: OrderDirection
+  description: OrderDirection
+  userPersona: OrderDirection
+  difficulty: OrderDirection
+  estimatedTime: OrderDirection
+  createdAt: OrderDirection
+}
+
+input FlowUpdateInput {
+  name: String
+  slug: String
+  description: String
+  category: CategoryRelateToOneForUpdateInput
+  steps: JSON
+  userPersona: String
+  difficulty: String
+  estimatedTime: String
+  createdAt: DateTime
+  tools: ToolFlowRelateToManyForUpdateInput
+}
+
+input FlowUpdateArgs {
+  where: FlowWhereUniqueInput!
+  data: FlowUpdateInput!
+}
+
+input FlowCreateInput {
+  name: String
+  slug: String
+  description: String
+  category: CategoryRelateToOneForCreateInput
+  steps: JSON
+  userPersona: String
+  difficulty: String
+  estimatedTime: String
+  createdAt: DateTime
+  tools: ToolFlowRelateToManyForCreateInput
+}
+
+type ToolFlow {
+  id: ID!
+  tool: Tool
+  flow: Flow
+  implementationNotes: String
+  easeOfUseScore: Int
+  stepsRequired: Int
+  requiresPlugins: Boolean
+  verified: Boolean
+  createdAt: DateTime
+}
+
+input ToolFlowWhereUniqueInput {
+  id: ID
+}
+
+input ToolFlowWhereInput {
+  AND: [ToolFlowWhereInput!]
+  OR: [ToolFlowWhereInput!]
+  NOT: [ToolFlowWhereInput!]
+  id: IDFilter
+  tool: ToolWhereInput
+  flow: FlowWhereInput
+  implementationNotes: StringFilter
+  easeOfUseScore: IntNullableFilter
+  stepsRequired: IntNullableFilter
+  requiresPlugins: BooleanFilter
+  verified: BooleanFilter
+  createdAt: DateTimeNullableFilter
+}
+
+input ToolFlowOrderByInput {
+  id: OrderDirection
+  implementationNotes: OrderDirection
+  easeOfUseScore: OrderDirection
+  stepsRequired: OrderDirection
+  requiresPlugins: OrderDirection
+  verified: OrderDirection
+  createdAt: OrderDirection
+}
+
+input ToolFlowUpdateInput {
+  tool: ToolRelateToOneForUpdateInput
+  flow: FlowRelateToOneForUpdateInput
+  implementationNotes: String
+  easeOfUseScore: Int
+  stepsRequired: Int
+  requiresPlugins: Boolean
+  verified: Boolean
+  createdAt: DateTime
+}
+
+input FlowRelateToOneForUpdateInput {
+  create: FlowCreateInput
+  connect: FlowWhereUniqueInput
+  disconnect: Boolean
+}
+
+input ToolFlowUpdateArgs {
+  where: ToolFlowWhereUniqueInput!
+  data: ToolFlowUpdateInput!
+}
+
+input ToolFlowCreateInput {
+  tool: ToolRelateToOneForCreateInput
+  flow: FlowRelateToOneForCreateInput
+  implementationNotes: String
+  easeOfUseScore: Int
+  stepsRequired: Int
+  requiresPlugins: Boolean
+  verified: Boolean
+  createdAt: DateTime
+}
+
+input FlowRelateToOneForCreateInput {
+  create: FlowCreateInput
+  connect: FlowWhereUniqueInput
 }
 
 """
@@ -434,12 +1212,66 @@ type Mutation {
   updateRoles(data: [RoleUpdateArgs!]!): [Role]
   deleteRole(where: RoleWhereUniqueInput!): Role
   deleteRoles(where: [RoleWhereUniqueInput!]!): [Role]
-  createTodo(data: TodoCreateInput!): Todo
-  createTodos(data: [TodoCreateInput!]!): [Todo]
-  updateTodo(where: TodoWhereUniqueInput!, data: TodoUpdateInput!): Todo
-  updateTodos(data: [TodoUpdateArgs!]!): [Todo]
-  deleteTodo(where: TodoWhereUniqueInput!): Todo
-  deleteTodos(where: [TodoWhereUniqueInput!]!): [Todo]
+  createCategory(data: CategoryCreateInput!): Category
+  createCategories(data: [CategoryCreateInput!]!): [Category]
+  updateCategory(where: CategoryWhereUniqueInput!, data: CategoryUpdateInput!): Category
+  updateCategories(data: [CategoryUpdateArgs!]!): [Category]
+  deleteCategory(where: CategoryWhereUniqueInput!): Category
+  deleteCategories(where: [CategoryWhereUniqueInput!]!): [Category]
+  createTool(data: ToolCreateInput!): Tool
+  createTools(data: [ToolCreateInput!]!): [Tool]
+  updateTool(where: ToolWhereUniqueInput!, data: ToolUpdateInput!): Tool
+  updateTools(data: [ToolUpdateArgs!]!): [Tool]
+  deleteTool(where: ToolWhereUniqueInput!): Tool
+  deleteTools(where: [ToolWhereUniqueInput!]!): [Tool]
+  createFeature(data: FeatureCreateInput!): Feature
+  createFeatures(data: [FeatureCreateInput!]!): [Feature]
+  updateFeature(where: FeatureWhereUniqueInput!, data: FeatureUpdateInput!): Feature
+  updateFeatures(data: [FeatureUpdateArgs!]!): [Feature]
+  deleteFeature(where: FeatureWhereUniqueInput!): Feature
+  deleteFeatures(where: [FeatureWhereUniqueInput!]!): [Feature]
+  createToolFeature(data: ToolFeatureCreateInput!): ToolFeature
+  createToolFeatures(data: [ToolFeatureCreateInput!]!): [ToolFeature]
+  updateToolFeature(where: ToolFeatureWhereUniqueInput!, data: ToolFeatureUpdateInput!): ToolFeature
+  updateToolFeatures(data: [ToolFeatureUpdateArgs!]!): [ToolFeature]
+  deleteToolFeature(where: ToolFeatureWhereUniqueInput!): ToolFeature
+  deleteToolFeatures(where: [ToolFeatureWhereUniqueInput!]!): [ToolFeature]
+  createAlternative(data: AlternativeCreateInput!): Alternative
+  createAlternatives(data: [AlternativeCreateInput!]!): [Alternative]
+  updateAlternative(where: AlternativeWhereUniqueInput!, data: AlternativeUpdateInput!): Alternative
+  updateAlternatives(data: [AlternativeUpdateArgs!]!): [Alternative]
+  deleteAlternative(where: AlternativeWhereUniqueInput!): Alternative
+  deleteAlternatives(where: [AlternativeWhereUniqueInput!]!): [Alternative]
+  createDeploymentOption(data: DeploymentOptionCreateInput!): DeploymentOption
+  createDeploymentOptions(data: [DeploymentOptionCreateInput!]!): [DeploymentOption]
+  updateDeploymentOption(where: DeploymentOptionWhereUniqueInput!, data: DeploymentOptionUpdateInput!): DeploymentOption
+  updateDeploymentOptions(data: [DeploymentOptionUpdateArgs!]!): [DeploymentOption]
+  deleteDeploymentOption(where: DeploymentOptionWhereUniqueInput!): DeploymentOption
+  deleteDeploymentOptions(where: [DeploymentOptionWhereUniqueInput!]!): [DeploymentOption]
+  createTechStack(data: TechStackCreateInput!): TechStack
+  createTechStacks(data: [TechStackCreateInput!]!): [TechStack]
+  updateTechStack(where: TechStackWhereUniqueInput!, data: TechStackUpdateInput!): TechStack
+  updateTechStacks(data: [TechStackUpdateArgs!]!): [TechStack]
+  deleteTechStack(where: TechStackWhereUniqueInput!): TechStack
+  deleteTechStacks(where: [TechStackWhereUniqueInput!]!): [TechStack]
+  createToolTechStack(data: ToolTechStackCreateInput!): ToolTechStack
+  createToolTechStacks(data: [ToolTechStackCreateInput!]!): [ToolTechStack]
+  updateToolTechStack(where: ToolTechStackWhereUniqueInput!, data: ToolTechStackUpdateInput!): ToolTechStack
+  updateToolTechStacks(data: [ToolTechStackUpdateArgs!]!): [ToolTechStack]
+  deleteToolTechStack(where: ToolTechStackWhereUniqueInput!): ToolTechStack
+  deleteToolTechStacks(where: [ToolTechStackWhereUniqueInput!]!): [ToolTechStack]
+  createFlow(data: FlowCreateInput!): Flow
+  createFlows(data: [FlowCreateInput!]!): [Flow]
+  updateFlow(where: FlowWhereUniqueInput!, data: FlowUpdateInput!): Flow
+  updateFlows(data: [FlowUpdateArgs!]!): [Flow]
+  deleteFlow(where: FlowWhereUniqueInput!): Flow
+  deleteFlows(where: [FlowWhereUniqueInput!]!): [Flow]
+  createToolFlow(data: ToolFlowCreateInput!): ToolFlow
+  createToolFlows(data: [ToolFlowCreateInput!]!): [ToolFlow]
+  updateToolFlow(where: ToolFlowWhereUniqueInput!, data: ToolFlowUpdateInput!): ToolFlow
+  updateToolFlows(data: [ToolFlowUpdateArgs!]!): [ToolFlow]
+  deleteToolFlow(where: ToolFlowWhereUniqueInput!): ToolFlow
+  deleteToolFlows(where: [ToolFlowWhereUniqueInput!]!): [ToolFlow]
   endSession: Boolean!
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
@@ -469,9 +1301,36 @@ type Query {
   role(where: RoleWhereUniqueInput!): Role
   roles(where: RoleWhereInput! = {}, orderBy: [RoleOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: RoleWhereUniqueInput): [Role!]
   rolesCount(where: RoleWhereInput! = {}): Int
-  todo(where: TodoWhereUniqueInput!): Todo
-  todos(where: TodoWhereInput! = {}, orderBy: [TodoOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TodoWhereUniqueInput): [Todo!]
-  todosCount(where: TodoWhereInput! = {}): Int
+  category(where: CategoryWhereUniqueInput!): Category
+  categories(where: CategoryWhereInput! = {}, orderBy: [CategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CategoryWhereUniqueInput): [Category!]
+  categoriesCount(where: CategoryWhereInput! = {}): Int
+  tool(where: ToolWhereUniqueInput!): Tool
+  tools(where: ToolWhereInput! = {}, orderBy: [ToolOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ToolWhereUniqueInput): [Tool!]
+  toolsCount(where: ToolWhereInput! = {}): Int
+  feature(where: FeatureWhereUniqueInput!): Feature
+  features(where: FeatureWhereInput! = {}, orderBy: [FeatureOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FeatureWhereUniqueInput): [Feature!]
+  featuresCount(where: FeatureWhereInput! = {}): Int
+  toolFeature(where: ToolFeatureWhereUniqueInput!): ToolFeature
+  toolFeatures(where: ToolFeatureWhereInput! = {}, orderBy: [ToolFeatureOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ToolFeatureWhereUniqueInput): [ToolFeature!]
+  toolFeaturesCount(where: ToolFeatureWhereInput! = {}): Int
+  alternative(where: AlternativeWhereUniqueInput!): Alternative
+  alternatives(where: AlternativeWhereInput! = {}, orderBy: [AlternativeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AlternativeWhereUniqueInput): [Alternative!]
+  alternativesCount(where: AlternativeWhereInput! = {}): Int
+  deploymentOption(where: DeploymentOptionWhereUniqueInput!): DeploymentOption
+  deploymentOptions(where: DeploymentOptionWhereInput! = {}, orderBy: [DeploymentOptionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DeploymentOptionWhereUniqueInput): [DeploymentOption!]
+  deploymentOptionsCount(where: DeploymentOptionWhereInput! = {}): Int
+  techStack(where: TechStackWhereUniqueInput!): TechStack
+  techStacks(where: TechStackWhereInput! = {}, orderBy: [TechStackOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TechStackWhereUniqueInput): [TechStack!]
+  techStacksCount(where: TechStackWhereInput! = {}): Int
+  toolTechStack(where: ToolTechStackWhereUniqueInput!): ToolTechStack
+  toolTechStacks(where: ToolTechStackWhereInput! = {}, orderBy: [ToolTechStackOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ToolTechStackWhereUniqueInput): [ToolTechStack!]
+  toolTechStacksCount(where: ToolTechStackWhereInput! = {}): Int
+  flow(where: FlowWhereUniqueInput!): Flow
+  flows(where: FlowWhereInput! = {}, orderBy: [FlowOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FlowWhereUniqueInput): [Flow!]
+  flowsCount(where: FlowWhereInput! = {}): Int
+  toolFlow(where: ToolFlowWhereUniqueInput!): ToolFlow
+  toolFlows(where: ToolFlowWhereInput! = {}, orderBy: [ToolFlowOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ToolFlowWhereUniqueInput): [ToolFlow!]
+  toolFlowsCount(where: ToolFlowWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
   redirectToInit: Boolean

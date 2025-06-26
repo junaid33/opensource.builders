@@ -1,4 +1,8 @@
-import { ExternalLink, Star, Shield, Calendar, Code, Users, MapPin } from 'lucide-react'
+import { ExternalLink, Star, Shield, Calendar, Code, Users, MapPin, TrendingUp, Activity } from 'lucide-react'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Separator } from "@/components/ui/separator"
 
 interface ToolSidebarProps {
   tool: {
@@ -34,22 +38,26 @@ export default function ToolSidebar({ tool }: ToolSidebarProps) {
     {
       label: 'Features',
       value: tool.features.length,
-      icon: Star
+      icon: Star,
+      color: 'text-yellow-600'
     },
     {
       label: 'Tech Stacks',
       value: tool.techStacks.length,
-      icon: Code
+      icon: Code,
+      color: 'text-blue-600'
     },
     {
       label: 'Deployment Options',
       value: tool.deploymentOptions.length,
-      icon: MapPin
+      icon: MapPin,
+      color: 'text-green-600'
     },
     {
       label: 'Alternatives',
       value: tool.proprietaryAlternatives.length + tool.openSourceAlternatives.length,
-      icon: Users
+      icon: Users,
+      color: 'text-purple-600'
     }
   ]
 
@@ -57,141 +65,178 @@ export default function ToolSidebar({ tool }: ToolSidebarProps) {
     <div className="sticky top-8 space-y-6">
       
       {/* Quick Stats Card */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Stats</h3>
-        <div className="space-y-3">
+      <Card className="bg-background border-border">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-lg font-semibold text-foreground flex items-center gap-2">
+            <Activity className="w-5 h-5 text-primary" />
+            Quick Stats
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
           {stats.map((stat, index) => {
             const Icon = stat.icon
             return (
-              <div key={index} className="flex items-center justify-between">
-                <div className="flex items-center text-sm text-gray-600">
-                  <Icon className="w-4 h-4 mr-2" />
+              <div key={index} className="flex items-center justify-between p-3 rounded-lg bg-muted/30 border border-border hover:bg-muted/50 transition-colors">
+                <div className="flex items-center text-sm text-muted-foreground">
+                  <div className="bg-primary/10 rounded-md p-1.5 mr-3">
+                    <Icon className={`w-4 h-4 ${stat.color}`} />
+                  </div>
                   {stat.label}
                 </div>
-                <span className="text-sm font-medium text-gray-900">
+                <Badge variant="secondary" className="font-semibold">
                   {stat.value}
-                </span>
+                </Badge>
               </div>
             )
           })}
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
       {/* Tool Info Card */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Tool Information</h3>
-        <div className="space-y-4">
+      <Card className="bg-background border-border">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-lg font-semibold text-foreground flex items-center gap-2">
+            <TrendingUp className="w-5 h-5 text-primary" />
+            Tool Information
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
           
           {/* Category */}
           {tool.category && (
-            <div>
-              <dt className="text-sm font-medium text-gray-500 mb-1">Category</dt>
-              <dd className="text-sm text-gray-900">{tool.category.name}</dd>
+            <div className="p-3 rounded-lg bg-muted/30 border border-border">
+              <dt className="text-sm font-medium text-muted-foreground mb-1">Category</dt>
+              <dd className="text-sm text-foreground font-medium">{tool.category.name}</dd>
             </div>
           )}
 
           {/* License */}
           {tool.license && (
-            <div>
-              <dt className="text-sm font-medium text-gray-500 mb-1">License</dt>
-              <dd className="flex items-center text-sm text-gray-900">
+            <div className="p-3 rounded-lg bg-muted/30 border border-border">
+              <dt className="text-sm font-medium text-muted-foreground mb-1">License</dt>
+              <dd className="flex items-center text-sm text-foreground">
                 <Shield className="w-4 h-4 mr-2 text-blue-500" />
-                {tool.license}
+                <Badge variant="outline">{tool.license}</Badge>
               </dd>
             </div>
           )}
 
           {/* GitHub Stars */}
           {tool.githubStars && (
-            <div>
-              <dt className="text-sm font-medium text-gray-500 mb-1">GitHub Stars</dt>
-              <dd className="flex items-center text-sm text-gray-900">
+            <div className="p-3 rounded-lg bg-muted/30 border border-border">
+              <dt className="text-sm font-medium text-muted-foreground mb-1">GitHub Stars</dt>
+              <dd className="flex items-center text-sm text-foreground">
                 <Star className="w-4 h-4 mr-2 text-yellow-500" />
-                {tool.githubStars.toLocaleString()}
+                <Badge variant="outline" className="font-semibold">
+                  {tool.githubStars.toLocaleString()}
+                </Badge>
               </dd>
             </div>
           )}
 
           {/* Open Source Status */}
-          <div>
-            <dt className="text-sm font-medium text-gray-500 mb-1">Type</dt>
-            <dd className="flex items-center text-sm text-gray-900">
+          <div className="p-3 rounded-lg bg-muted/30 border border-border">
+            <dt className="text-sm font-medium text-muted-foreground mb-1">Type</dt>
+            <dd className="flex items-center text-sm text-foreground">
               <Code className="w-4 h-4 mr-2 text-green-500" />
-              {tool.isOpenSource ? 'Open Source' : 'Proprietary'}
+              <Badge variant={tool.isOpenSource ? "default" : "secondary"}>
+                {tool.isOpenSource ? 'Open Source' : 'Proprietary'}
+              </Badge>
             </dd>
           </div>
 
           {/* Added Date */}
-          <div>
-            <dt className="text-sm font-medium text-gray-500 mb-1">Added</dt>
-            <dd className="flex items-center text-sm text-gray-900">
-              <Calendar className="w-4 h-4 mr-2 text-gray-400" />
+          <div className="p-3 rounded-lg bg-muted/30 border border-border">
+            <dt className="text-sm font-medium text-muted-foreground mb-1">Added</dt>
+            <dd className="flex items-center text-sm text-foreground">
+              <Calendar className="w-4 h-4 mr-2 text-gray-500" />
               {formatDate(tool.createdAt)}
             </dd>
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
       {/* Action Buttons Card */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Links</h3>
-        <div className="space-y-3">
+      <Card className="bg-background border-border">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-lg font-semibold text-foreground">Links</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3">
           
           {tool.websiteUrl && (
-            <a
-              href={tool.websiteUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full inline-flex items-center justify-center px-4 py-2.5 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-lg hover:bg-indigo-700 transition-colors"
+            <Button
+              variant="default"
+              className="w-full justify-center"
+              asChild
             >
-              Visit Website
-              <ExternalLink className="w-4 h-4 ml-2" />
-            </a>
+              <a
+                href={tool.websiteUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Visit Website
+                <ExternalLink className="w-4 h-4 ml-2" />
+              </a>
+            </Button>
           )}
 
           {tool.repositoryUrl && (
-            <a
-              href={tool.repositoryUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full inline-flex items-center justify-center px-4 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+            <Button
+              variant="outline"
+              className="w-full justify-center"
+              asChild
             >
-              <Code className="w-4 h-4 mr-2" />
-              Source Code
-            </a>
+              <a
+                href={tool.repositoryUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Code className="w-4 h-4 mr-2" />
+                Source Code
+              </a>
+            </Button>
           )}
 
           {!tool.websiteUrl && !tool.repositoryUrl && (
-            <p className="text-sm text-gray-500 text-center py-4">
-              No external links available
-            </p>
+            <div className="text-center py-6">
+              <p className="text-sm text-muted-foreground">
+                No external links available
+              </p>
+            </div>
           )}
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
       {/* Feature Types Summary */}
       {tool.features.length > 0 && (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Feature Types</h3>
-          <div className="space-y-2">
-            {Object.entries(
-              tool.features.reduce((acc: Record<string, number>, feature) => {
-                const type = feature.feature.featureType || 'Other'
-                acc[type] = (acc[type] || 0) + 1
-                return acc
-              }, {})
-            ).map(([type, count]) => (
-              <div key={type} className="flex items-center justify-between">
-                <span className="text-sm text-gray-600 capitalize">
-                  {type.replace('_', ' ')}
-                </span>
-                <span className="text-sm font-medium text-gray-900">
-                  {count}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
+        <Card className="bg-background border-border">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-lg font-semibold text-foreground">Feature Types</CardTitle>
+            <CardDescription>
+              Breakdown by feature categories
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              {Object.entries(
+                tool.features.reduce((acc: Record<string, number>, feature) => {
+                  const type = feature.feature.featureType || 'Other'
+                  acc[type] = (acc[type] || 0) + 1
+                  return acc
+                }, {})
+              ).map(([type, count]) => (
+                <div key={type} className="flex items-center justify-between p-2 rounded-lg bg-muted/30">
+                  <span className="text-sm text-foreground capitalize font-medium">
+                    {type.replace('_', ' ')}
+                  </span>
+                  <Badge variant="secondary" className="font-semibold">
+                    {count}
+                  </Badge>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
       )}
     </div>
   )

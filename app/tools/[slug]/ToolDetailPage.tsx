@@ -1,11 +1,14 @@
 import Link from 'next/link'
-import { ArrowLeft, ExternalLink, Star, Calendar, Shield, Code, Users, Zap } from 'lucide-react'
+import { ArrowLeft, ExternalLink, Star, Calendar, Shield, Code, Users, Zap, Sparkles } from 'lucide-react'
 import ToolLogo from '@/features/landing/components/ToolLogo'
 import ToolSidebar from './ToolSidebar'
 import FeatureShowcase from './FeatureShowcase'
 import AlternativesComparison from './AlternativesComparison'
 import TechStackDisplay from './TechStackDisplay'
 import DeploymentOptions from './DeploymentOptions'
+import { Card, CardContent } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 
 interface ToolDetailPageProps {
   tool: {
@@ -112,111 +115,120 @@ export default function ToolDetailPage({ tool }: ToolDetailPageProps) {
   }
 
   return (
-    <section className="min-h-screen bg-gray-50">
+    <section className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="pt-8 pb-16">
           
           {/* Back Navigation */}
           <div className="mb-8">
-            <Link 
-              href="/" 
-              className="inline-flex items-center text-sm text-gray-500 hover:text-gray-700 transition-colors"
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Directory
-            </Link>
+            <Button variant="ghost" size="sm" asChild>
+              <Link href="/" className="text-muted-foreground hover:text-foreground">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back to Directory
+              </Link>
+            </Button>
           </div>
 
           {/* Hero Section */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 mb-8">
-            <div className="flex flex-col lg:flex-row lg:items-start gap-6">
-              
-              {/* Logo and Basic Info */}
-              <div className="flex items-start gap-6">
-                <ToolLogo 
-                  name={tool.name}
-                  resolvedLogo={resolvedLogo}
-                  size={72}
-                  className="rounded-xl border border-gray-200 shadow-sm"
-                />
+          <Card className="bg-background/95 backdrop-blur-sm border-border shadow-xl mb-8 overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5" />
+            <CardContent className="p-8 relative">
+              <div className="flex flex-col lg:flex-row lg:items-start gap-6">
                 
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <h1 className="text-3xl font-bold text-gray-900">{tool.name}</h1>
-                    {tool.isOpenSource && (
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                        <Code className="w-3 h-3 mr-1" />
-                        Open Source
-                      </span>
-                    )}
-                    {tool.license && (
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                        <Shield className="w-3 h-3 mr-1" />
-                        {tool.license}
-                      </span>
-                    )}
+                {/* Logo and Basic Info */}
+                <div className="flex items-start gap-6">
+                  <div className="relative">
+                    <ToolLogo 
+                      name={tool.name}
+                      resolvedLogo={resolvedLogo}
+                      size={72}
+                      className="rounded-xl border border-border shadow-lg ring-4 ring-background"
+                    />
+                    <div className="absolute -top-1 -right-1">
+                      <Sparkles className="w-5 h-5 text-primary animate-pulse" />
+                    </div>
                   </div>
+                  
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-3">
+                      <h1 className="text-3xl font-bold text-foreground bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text">{tool.name}</h1>
+                      {tool.isOpenSource && (
+                        <Badge className="bg-green-100 text-green-800 border-green-200 dark:bg-green-900/30 dark:text-green-400 dark:border-green-900">
+                          <Code className="w-3 h-3 mr-1" />
+                          Open Source
+                        </Badge>
+                      )}
+                      {tool.license && (
+                        <Badge className="bg-blue-100 text-blue-800 border-blue-200 dark:bg-blue-900/30 dark:text-blue-400 dark:border-blue-900">
+                          <Shield className="w-3 h-3 mr-1" />
+                          {tool.license}
+                        </Badge>
+                      )}
+                    </div>
 
-                  {tool.category && (
-                    <p className="text-sm text-gray-500 mb-3">
-                      <span className="inline-flex items-center">
-                        <span className="w-2 h-2 bg-indigo-400 rounded-full mr-2"></span>
-                        {tool.category.name}
-                      </span>
-                    </p>
-                  )}
-
-                  <p className="text-gray-600 text-lg leading-relaxed mb-4">
-                    {tool.description}
-                  </p>
-
-                  {/* Quick Stats */}
-                  <div className="flex items-center gap-6 text-sm text-gray-500">
-                    {tool.githubStars && (
-                      <span className="inline-flex items-center">
-                        <Star className="w-4 h-4 mr-1" />
-                        {tool.githubStars.toLocaleString()} stars
-                      </span>
+                    {tool.category && (
+                      <div className="mb-4">
+                        <Badge variant="outline" className="text-sm">
+                          <span className="w-2 h-2 bg-primary rounded-full mr-2"></span>
+                          {tool.category.name}
+                        </Badge>
+                      </div>
                     )}
-                    <span className="inline-flex items-center">
-                      <Calendar className="w-4 h-4 mr-1" />
-                      Added {formatDate(tool.createdAt)}
-                    </span>
-                    <span className="inline-flex items-center">
-                      <Zap className="w-4 h-4 mr-1" />
-                      {tool.features.length} features
-                    </span>
+
+                    <p className="text-muted-foreground text-lg leading-relaxed mb-6">
+                      {tool.description}
+                    </p>
+
+                    {/* Quick Stats */}
+                    <div className="flex items-center gap-6 text-sm text-muted-foreground">
+                      {tool.githubStars && (
+                        <Badge variant="outline" className="flex items-center gap-1">
+                          <Star className="w-4 h-4 text-yellow-500" />
+                          {tool.githubStars.toLocaleString()} stars
+                        </Badge>
+                      )}
+                      <Badge variant="outline" className="flex items-center gap-1">
+                        <Calendar className="w-4 h-4" />
+                        Added {formatDate(tool.createdAt)}
+                      </Badge>
+                      <Badge variant="outline" className="flex items-center gap-1">
+                        <Zap className="w-4 h-4" />
+                        {tool.features.length} features
+                      </Badge>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row lg:flex-col gap-3 lg:shrink-0">
-                {tool.websiteUrl && (
-                  <a
-                    href={tool.websiteUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center px-4 py-2.5 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-lg hover:bg-indigo-700 transition-colors"
-                  >
-                    Visit Website
-                    <ExternalLink className="w-4 h-4 ml-2" />
-                  </a>
-                )}
-                {tool.repositoryUrl && (
-                  <a
-                    href={tool.repositoryUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center px-4 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-                  >
-                    <Code className="w-4 h-4 mr-2" />
-                    Source Code
-                  </a>
-                )}
+                {/* Action Buttons */}
+                <div className="flex flex-col sm:flex-row lg:flex-col gap-3 lg:shrink-0">
+                  {tool.websiteUrl && (
+                    <Button size="lg" asChild>
+                      <a
+                        href={tool.websiteUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Visit Website
+                        <ExternalLink className="w-4 h-4 ml-2" />
+                      </a>
+                    </Button>
+                  )}
+                  {tool.repositoryUrl && (
+                    <Button variant="outline" size="lg" asChild>
+                      <a
+                        href={tool.repositoryUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Code className="w-4 h-4 mr-2" />
+                        Source Code
+                      </a>
+                    </Button>
+                  )}
+                </div>
               </div>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
 
           {/* Main Content Layout */}
           <div className="flex flex-col lg:flex-row gap-8">
@@ -249,9 +261,9 @@ export default function ToolDetailPage({ tool }: ToolDetailPageProps) {
             </div>
 
             {/* Sidebar */}
-            <aside className="lg:w-80">
+            <div className="lg:w-80">
               <ToolSidebar tool={tool} />
-            </aside>
+            </div>
           </div>
         </div>
       </div>

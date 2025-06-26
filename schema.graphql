@@ -125,7 +125,6 @@ type Role {
   canManageAlternatives: Boolean
   canManageDeploymentOptions: Boolean
   canManageTechStacks: Boolean
-  canManageFlows: Boolean
   assignedTo(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserWhereUniqueInput): [User!]
   assignedToCount(where: UserWhereInput! = {}): Int
 }
@@ -151,7 +150,6 @@ input RoleWhereInput {
   canManageAlternatives: BooleanFilter
   canManageDeploymentOptions: BooleanFilter
   canManageTechStacks: BooleanFilter
-  canManageFlows: BooleanFilter
   assignedTo: UserManyRelationFilter
 }
 
@@ -180,7 +178,6 @@ input RoleOrderByInput {
   canManageAlternatives: OrderDirection
   canManageDeploymentOptions: OrderDirection
   canManageTechStacks: OrderDirection
-  canManageFlows: OrderDirection
 }
 
 input RoleUpdateInput {
@@ -196,7 +193,6 @@ input RoleUpdateInput {
   canManageAlternatives: Boolean
   canManageDeploymentOptions: Boolean
   canManageTechStacks: Boolean
-  canManageFlows: Boolean
   assignedTo: UserRelateToManyForUpdateInput
 }
 
@@ -225,7 +221,6 @@ input RoleCreateInput {
   canManageAlternatives: Boolean
   canManageDeploymentOptions: Boolean
   canManageTechStacks: Boolean
-  canManageFlows: Boolean
   assignedTo: UserRelateToManyForCreateInput
 }
 
@@ -246,8 +241,6 @@ type Category {
   toolsCount(where: ToolWhereInput! = {}): Int
   features(where: FeatureWhereInput! = {}, orderBy: [FeatureOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FeatureWhereUniqueInput): [Feature!]
   featuresCount(where: FeatureWhereInput! = {}): Int
-  flows(where: FlowWhereInput! = {}, orderBy: [FlowOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FlowWhereUniqueInput): [Flow!]
-  flowsCount(where: FlowWhereInput! = {}): Int
 }
 
 scalar DateTime @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
@@ -270,7 +263,6 @@ input CategoryWhereInput {
   createdAt: DateTimeNullableFilter
   tools: ToolManyRelationFilter
   features: FeatureManyRelationFilter
-  flows: FlowManyRelationFilter
 }
 
 input DateTimeNullableFilter {
@@ -296,12 +288,6 @@ input FeatureManyRelationFilter {
   none: FeatureWhereInput
 }
 
-input FlowManyRelationFilter {
-  every: FlowWhereInput
-  some: FlowWhereInput
-  none: FlowWhereInput
-}
-
 input CategoryOrderByInput {
   id: OrderDirection
   name: OrderDirection
@@ -321,7 +307,6 @@ input CategoryUpdateInput {
   createdAt: DateTime
   tools: ToolRelateToManyForUpdateInput
   features: FeatureRelateToManyForUpdateInput
-  flows: FlowRelateToManyForUpdateInput
 }
 
 input ToolRelateToManyForUpdateInput {
@@ -338,13 +323,6 @@ input FeatureRelateToManyForUpdateInput {
   connect: [FeatureWhereUniqueInput!]
 }
 
-input FlowRelateToManyForUpdateInput {
-  disconnect: [FlowWhereUniqueInput!]
-  set: [FlowWhereUniqueInput!]
-  create: [FlowCreateInput!]
-  connect: [FlowWhereUniqueInput!]
-}
-
 input CategoryUpdateArgs {
   where: CategoryWhereUniqueInput!
   data: CategoryUpdateInput!
@@ -359,7 +337,6 @@ input CategoryCreateInput {
   createdAt: DateTime
   tools: ToolRelateToManyForCreateInput
   features: FeatureRelateToManyForCreateInput
-  flows: FlowRelateToManyForCreateInput
 }
 
 input ToolRelateToManyForCreateInput {
@@ -370,11 +347,6 @@ input ToolRelateToManyForCreateInput {
 input FeatureRelateToManyForCreateInput {
   create: [FeatureCreateInput!]
   connect: [FeatureWhereUniqueInput!]
-}
-
-input FlowRelateToManyForCreateInput {
-  create: [FlowCreateInput!]
-  connect: [FlowWhereUniqueInput!]
 }
 
 type Tool {
@@ -404,8 +376,6 @@ type Tool {
   deploymentOptionsCount(where: DeploymentOptionWhereInput! = {}): Int
   techStacks(where: ToolTechStackWhereInput! = {}, orderBy: [ToolTechStackOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ToolTechStackWhereUniqueInput): [ToolTechStack!]
   techStacksCount(where: ToolTechStackWhereInput! = {}): Int
-  flows(where: ToolFlowWhereInput! = {}, orderBy: [ToolFlowOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ToolFlowWhereUniqueInput): [ToolFlow!]
-  flowsCount(where: ToolFlowWhereInput! = {}): Int
   resolvedLogo: JSON
 }
 
@@ -439,7 +409,6 @@ input ToolWhereInput {
   openSourceAlternatives: AlternativeManyRelationFilter
   deploymentOptions: DeploymentOptionManyRelationFilter
   techStacks: ToolTechStackManyRelationFilter
-  flows: ToolFlowManyRelationFilter
 }
 
 input IntNullableFilter {
@@ -492,12 +461,6 @@ input ToolTechStackManyRelationFilter {
   none: ToolTechStackWhereInput
 }
 
-input ToolFlowManyRelationFilter {
-  every: ToolFlowWhereInput
-  some: ToolFlowWhereInput
-  none: ToolFlowWhereInput
-}
-
 input ToolOrderByInput {
   id: OrderDirection
   name: OrderDirection
@@ -537,7 +500,6 @@ input ToolUpdateInput {
   openSourceAlternatives: AlternativeRelateToManyForUpdateInput
   deploymentOptions: DeploymentOptionRelateToManyForUpdateInput
   techStacks: ToolTechStackRelateToManyForUpdateInput
-  flows: ToolFlowRelateToManyForUpdateInput
 }
 
 input CategoryRelateToOneForUpdateInput {
@@ -574,13 +536,6 @@ input ToolTechStackRelateToManyForUpdateInput {
   connect: [ToolTechStackWhereUniqueInput!]
 }
 
-input ToolFlowRelateToManyForUpdateInput {
-  disconnect: [ToolFlowWhereUniqueInput!]
-  set: [ToolFlowWhereUniqueInput!]
-  create: [ToolFlowCreateInput!]
-  connect: [ToolFlowWhereUniqueInput!]
-}
-
 input ToolUpdateArgs {
   where: ToolWhereUniqueInput!
   data: ToolUpdateInput!
@@ -607,7 +562,6 @@ input ToolCreateInput {
   openSourceAlternatives: AlternativeRelateToManyForCreateInput
   deploymentOptions: DeploymentOptionRelateToManyForCreateInput
   techStacks: ToolTechStackRelateToManyForCreateInput
-  flows: ToolFlowRelateToManyForCreateInput
 }
 
 input CategoryRelateToOneForCreateInput {
@@ -633,11 +587,6 @@ input DeploymentOptionRelateToManyForCreateInput {
 input ToolTechStackRelateToManyForCreateInput {
   create: [ToolTechStackCreateInput!]
   connect: [ToolTechStackWhereUniqueInput!]
-}
-
-input ToolFlowRelateToManyForCreateInput {
-  create: [ToolFlowCreateInput!]
-  connect: [ToolFlowWhereUniqueInput!]
 }
 
 type Feature {
@@ -1037,163 +986,6 @@ input TechStackRelateToOneForCreateInput {
   connect: TechStackWhereUniqueInput
 }
 
-type Flow {
-  id: ID!
-  name: String
-  slug: String
-  description: String
-  category: Category
-  steps: JSON
-  userPersona: String
-  difficulty: String
-  estimatedTime: String
-  createdAt: DateTime
-  tools(where: ToolFlowWhereInput! = {}, orderBy: [ToolFlowOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ToolFlowWhereUniqueInput): [ToolFlow!]
-  toolsCount(where: ToolFlowWhereInput! = {}): Int
-}
-
-input FlowWhereUniqueInput {
-  id: ID
-  slug: String
-}
-
-input FlowWhereInput {
-  AND: [FlowWhereInput!]
-  OR: [FlowWhereInput!]
-  NOT: [FlowWhereInput!]
-  id: IDFilter
-  name: StringFilter
-  slug: StringFilter
-  description: StringFilter
-  category: CategoryWhereInput
-  userPersona: StringFilter
-  difficulty: StringNullableFilter
-  estimatedTime: StringFilter
-  createdAt: DateTimeNullableFilter
-  tools: ToolFlowManyRelationFilter
-}
-
-input FlowOrderByInput {
-  id: OrderDirection
-  name: OrderDirection
-  slug: OrderDirection
-  description: OrderDirection
-  userPersona: OrderDirection
-  difficulty: OrderDirection
-  estimatedTime: OrderDirection
-  createdAt: OrderDirection
-}
-
-input FlowUpdateInput {
-  name: String
-  slug: String
-  description: String
-  category: CategoryRelateToOneForUpdateInput
-  steps: JSON
-  userPersona: String
-  difficulty: String
-  estimatedTime: String
-  createdAt: DateTime
-  tools: ToolFlowRelateToManyForUpdateInput
-}
-
-input FlowUpdateArgs {
-  where: FlowWhereUniqueInput!
-  data: FlowUpdateInput!
-}
-
-input FlowCreateInput {
-  name: String
-  slug: String
-  description: String
-  category: CategoryRelateToOneForCreateInput
-  steps: JSON
-  userPersona: String
-  difficulty: String
-  estimatedTime: String
-  createdAt: DateTime
-  tools: ToolFlowRelateToManyForCreateInput
-}
-
-type ToolFlow {
-  id: ID!
-  tool: Tool
-  flow: Flow
-  implementationNotes: String
-  easeOfUseScore: Int
-  stepsRequired: Int
-  requiresPlugins: Boolean
-  verified: Boolean
-  createdAt: DateTime
-}
-
-input ToolFlowWhereUniqueInput {
-  id: ID
-}
-
-input ToolFlowWhereInput {
-  AND: [ToolFlowWhereInput!]
-  OR: [ToolFlowWhereInput!]
-  NOT: [ToolFlowWhereInput!]
-  id: IDFilter
-  tool: ToolWhereInput
-  flow: FlowWhereInput
-  implementationNotes: StringFilter
-  easeOfUseScore: IntNullableFilter
-  stepsRequired: IntNullableFilter
-  requiresPlugins: BooleanFilter
-  verified: BooleanFilter
-  createdAt: DateTimeNullableFilter
-}
-
-input ToolFlowOrderByInput {
-  id: OrderDirection
-  implementationNotes: OrderDirection
-  easeOfUseScore: OrderDirection
-  stepsRequired: OrderDirection
-  requiresPlugins: OrderDirection
-  verified: OrderDirection
-  createdAt: OrderDirection
-}
-
-input ToolFlowUpdateInput {
-  tool: ToolRelateToOneForUpdateInput
-  flow: FlowRelateToOneForUpdateInput
-  implementationNotes: String
-  easeOfUseScore: Int
-  stepsRequired: Int
-  requiresPlugins: Boolean
-  verified: Boolean
-  createdAt: DateTime
-}
-
-input FlowRelateToOneForUpdateInput {
-  create: FlowCreateInput
-  connect: FlowWhereUniqueInput
-  disconnect: Boolean
-}
-
-input ToolFlowUpdateArgs {
-  where: ToolFlowWhereUniqueInput!
-  data: ToolFlowUpdateInput!
-}
-
-input ToolFlowCreateInput {
-  tool: ToolRelateToOneForCreateInput
-  flow: FlowRelateToOneForCreateInput
-  implementationNotes: String
-  easeOfUseScore: Int
-  stepsRequired: Int
-  requiresPlugins: Boolean
-  verified: Boolean
-  createdAt: DateTime
-}
-
-input FlowRelateToOneForCreateInput {
-  create: FlowCreateInput
-  connect: FlowWhereUniqueInput
-}
-
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -1260,18 +1052,6 @@ type Mutation {
   updateToolTechStacks(data: [ToolTechStackUpdateArgs!]!): [ToolTechStack]
   deleteToolTechStack(where: ToolTechStackWhereUniqueInput!): ToolTechStack
   deleteToolTechStacks(where: [ToolTechStackWhereUniqueInput!]!): [ToolTechStack]
-  createFlow(data: FlowCreateInput!): Flow
-  createFlows(data: [FlowCreateInput!]!): [Flow]
-  updateFlow(where: FlowWhereUniqueInput!, data: FlowUpdateInput!): Flow
-  updateFlows(data: [FlowUpdateArgs!]!): [Flow]
-  deleteFlow(where: FlowWhereUniqueInput!): Flow
-  deleteFlows(where: [FlowWhereUniqueInput!]!): [Flow]
-  createToolFlow(data: ToolFlowCreateInput!): ToolFlow
-  createToolFlows(data: [ToolFlowCreateInput!]!): [ToolFlow]
-  updateToolFlow(where: ToolFlowWhereUniqueInput!, data: ToolFlowUpdateInput!): ToolFlow
-  updateToolFlows(data: [ToolFlowUpdateArgs!]!): [ToolFlow]
-  deleteToolFlow(where: ToolFlowWhereUniqueInput!): ToolFlow
-  deleteToolFlows(where: [ToolFlowWhereUniqueInput!]!): [ToolFlow]
   endSession: Boolean!
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
@@ -1325,12 +1105,6 @@ type Query {
   toolTechStack(where: ToolTechStackWhereUniqueInput!): ToolTechStack
   toolTechStacks(where: ToolTechStackWhereInput! = {}, orderBy: [ToolTechStackOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ToolTechStackWhereUniqueInput): [ToolTechStack!]
   toolTechStacksCount(where: ToolTechStackWhereInput! = {}): Int
-  flow(where: FlowWhereUniqueInput!): Flow
-  flows(where: FlowWhereInput! = {}, orderBy: [FlowOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FlowWhereUniqueInput): [Flow!]
-  flowsCount(where: FlowWhereInput! = {}): Int
-  toolFlow(where: ToolFlowWhereUniqueInput!): ToolFlow
-  toolFlows(where: ToolFlowWhereInput! = {}, orderBy: [ToolFlowOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ToolFlowWhereUniqueInput): [ToolFlow!]
-  toolFlowsCount(where: ToolFlowWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
   redirectToInit: Boolean

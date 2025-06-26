@@ -36,7 +36,6 @@ model Role {
   canManageAlternatives      Boolean @default(false)
   canManageDeploymentOptions Boolean @default(false)
   canManageTechStacks        Boolean @default(false)
-  canManageFlows             Boolean @default(false)
   assignedTo                 User[]  @relation("User_role")
 }
 
@@ -50,7 +49,6 @@ model Category {
   createdAt   DateTime? @default(now())
   tools       Tool[]    @relation("Tool_category")
   features    Feature[] @relation("Feature_category")
-  flows       Flow[]    @relation("Flow_category")
 }
 
 model Tool {
@@ -76,7 +74,6 @@ model Tool {
   openSourceAlternatives  Alternative[]      @relation("Alternative_openSourceTool")
   deploymentOptions       DeploymentOption[] @relation("DeploymentOption_tool")
   techStacks              ToolTechStack[]    @relation("ToolTechStack_tool")
-  flows                   ToolFlow[]         @relation("ToolFlow_tool")
 
   @@index([categoryId])
 }
@@ -160,38 +157,4 @@ model ToolTechStack {
 
   @@index([toolId])
   @@index([techStackId])
-}
-
-model Flow {
-  id            String     @id @default(cuid())
-  name          String     @default("")
-  slug          String     @unique @default("")
-  description   String     @default("")
-  category      Category?  @relation("Flow_category", fields: [categoryId], references: [id])
-  categoryId    String?    @map("category")
-  steps         Json?
-  userPersona   String     @default("")
-  difficulty    String?
-  estimatedTime String     @default("")
-  createdAt     DateTime?  @default(now())
-  tools         ToolFlow[] @relation("ToolFlow_flow")
-
-  @@index([categoryId])
-}
-
-model ToolFlow {
-  id                  String    @id @default(cuid())
-  tool                Tool?     @relation("ToolFlow_tool", fields: [toolId], references: [id])
-  toolId              String?   @map("tool")
-  flow                Flow?     @relation("ToolFlow_flow", fields: [flowId], references: [id])
-  flowId              String?   @map("flow")
-  implementationNotes String    @default("")
-  easeOfUseScore      Int?
-  stepsRequired       Int?
-  requiresPlugins     Boolean   @default(false)
-  verified            Boolean   @default(false)
-  createdAt           DateTime? @default(now())
-
-  @@index([toolId])
-  @@index([flowId])
 }

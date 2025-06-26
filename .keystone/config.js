@@ -36,7 +36,7 @@ module.exports = __toCommonJS(keystone_exports);
 
 // features/keystone/index.ts
 var import_auth = require("@keystone-6/auth");
-var import_core14 = require("@keystone-6/core");
+var import_core12 = require("@keystone-6/core");
 var import_config = require("dotenv/config");
 
 // features/keystone/models/User.ts
@@ -56,8 +56,7 @@ var permissions = {
   canManageFeatures: ({ session }) => session?.data.role?.canManageFeatures ?? false,
   canManageAlternatives: ({ session }) => session?.data.role?.canManageAlternatives ?? false,
   canManageDeploymentOptions: ({ session }) => session?.data.role?.canManageDeploymentOptions ?? false,
-  canManageTechStacks: ({ session }) => session?.data.role?.canManageTechStacks ?? false,
-  canManageFlows: ({ session }) => session?.data.role?.canManageFlows ?? false
+  canManageTechStacks: ({ session }) => session?.data.role?.canManageTechStacks ?? false
 };
 var rules = {
   canReadPeople: ({ session }) => {
@@ -169,7 +168,6 @@ var Role = (0, import_core2.list)({
     canManageAlternatives: (0, import_fields2.checkbox)({ defaultValue: false }),
     canManageDeploymentOptions: (0, import_fields2.checkbox)({ defaultValue: false }),
     canManageTechStacks: (0, import_fields2.checkbox)({ defaultValue: false }),
-    canManageFlows: (0, import_fields2.checkbox)({ defaultValue: false }),
     assignedTo: (0, import_fields2.relationship)({
       ref: "User.role",
       many: true,
@@ -241,10 +239,6 @@ var Category = (0, import_core3.list)({
     }),
     features: (0, import_fields3.relationship)({
       ref: "Feature.category",
-      many: true
-    }),
-    flows: (0, import_fields3.relationship)({
-      ref: "Flow.category",
       many: true
     })
   }
@@ -499,10 +493,6 @@ var Tool = (0, import_core4.list)({
     }),
     techStacks: (0, import_fields4.relationship)({
       ref: "ToolTechStack.tool",
-      many: true
-    }),
-    flows: (0, import_fields4.relationship)({
-      ref: "ToolFlow.tool",
       many: true
     }),
     // Virtual field that provides intelligent logo resolution
@@ -922,153 +912,6 @@ var ToolTechStack = (0, import_core11.list)({
   }
 });
 
-// features/keystone/models/Flow.ts
-var import_core12 = require("@keystone-6/core");
-var import_fields11 = require("@keystone-6/core/fields");
-var Flow = (0, import_core12.list)({
-  access: {
-    operation: {
-      query: () => true,
-      // Allow public read access
-      create: permissions.canManageFlows,
-      update: permissions.canManageFlows,
-      delete: permissions.canManageFlows
-    }
-  },
-  ui: {
-    hideCreate: (args) => !permissions.canManageFlows(args),
-    hideDelete: (args) => !permissions.canManageFlows(args),
-    listView: {
-      initialColumns: ["name", "slug", "category", "difficulty", "userPersona", "createdAt"]
-    },
-    itemView: {
-      defaultFieldMode: (args) => permissions.canManageFlows(args) ? "edit" : "read"
-    }
-  },
-  fields: {
-    name: (0, import_fields11.text)({
-      validation: {
-        isRequired: true,
-        length: { max: 100 }
-      }
-    }),
-    slug: (0, import_fields11.text)({
-      validation: {
-        isRequired: true,
-        length: { max: 100 }
-      },
-      isIndexed: "unique"
-    }),
-    description: (0, import_fields11.text)({
-      ui: {
-        displayMode: "textarea"
-      }
-    }),
-    category: (0, import_fields11.relationship)({
-      ref: "Category.flows",
-      ui: {
-        displayMode: "select"
-      }
-    }),
-    steps: (0, import_fields11.json)(),
-    userPersona: (0, import_fields11.text)({
-      label: "User Persona",
-      validation: {
-        length: { max: 100 }
-      }
-    }),
-    difficulty: (0, import_fields11.select)({
-      options: [
-        { label: "Beginner", value: "beginner" },
-        { label: "Intermediate", value: "intermediate" },
-        { label: "Advanced", value: "advanced" },
-        { label: "Expert", value: "expert" }
-      ]
-    }),
-    estimatedTime: (0, import_fields11.text)({
-      label: "Estimated Time",
-      validation: {
-        length: { max: 50 }
-      }
-    }),
-    createdAt: (0, import_fields11.timestamp)({
-      defaultValue: { kind: "now" }
-    }),
-    tools: (0, import_fields11.relationship)({
-      ref: "ToolFlow.flow",
-      many: true
-    })
-  }
-});
-
-// features/keystone/models/ToolFlow.ts
-var import_core13 = require("@keystone-6/core");
-var import_fields12 = require("@keystone-6/core/fields");
-var ToolFlow = (0, import_core13.list)({
-  access: {
-    operation: {
-      query: () => true,
-      // Allow public read access
-      create: permissions.canManageFlows,
-      update: permissions.canManageFlows,
-      delete: permissions.canManageFlows
-    }
-  },
-  ui: {
-    hideCreate: (args) => !permissions.canManageFlows(args),
-    hideDelete: (args) => !permissions.canManageFlows(args),
-    listView: {
-      initialColumns: ["tool", "flow", "easeOfUseScore", "verified", "createdAt"]
-    },
-    itemView: {
-      defaultFieldMode: (args) => permissions.canManageFlows(args) ? "edit" : "read"
-    }
-  },
-  fields: {
-    tool: (0, import_fields12.relationship)({
-      ref: "Tool.flows",
-      ui: {
-        displayMode: "select"
-      }
-    }),
-    flow: (0, import_fields12.relationship)({
-      ref: "Flow.tools",
-      ui: {
-        displayMode: "select"
-      }
-    }),
-    implementationNotes: (0, import_fields12.text)({
-      label: "Implementation Notes",
-      ui: {
-        displayMode: "textarea"
-      }
-    }),
-    easeOfUseScore: (0, import_fields12.integer)({
-      label: "Ease of Use Score",
-      validation: {
-        min: 1,
-        max: 10
-      }
-    }),
-    stepsRequired: (0, import_fields12.integer)({
-      label: "Steps Required",
-      validation: {
-        min: 1
-      }
-    }),
-    requiresPlugins: (0, import_fields12.checkbox)({
-      label: "Requires Plugins",
-      defaultValue: false
-    }),
-    verified: (0, import_fields12.checkbox)({
-      defaultValue: false
-    }),
-    createdAt: (0, import_fields12.timestamp)({
-      defaultValue: { kind: "now" }
-    })
-  }
-});
-
 // features/keystone/models/index.ts
 var models = {
   User,
@@ -1080,9 +923,7 @@ var models = {
   Alternative,
   DeploymentOption,
   TechStack,
-  ToolTechStack,
-  Flow,
-  ToolFlow
+  ToolTechStack
 };
 
 // features/keystone/index.ts
@@ -1144,8 +985,7 @@ var { withAuth } = (0, import_auth.createAuth)({
           canManageFeatures: true,
           canManageAlternatives: true,
           canManageDeploymentOptions: true,
-          canManageTechStacks: true,
-          canManageFlows: true
+          canManageTechStacks: true
         }
       }
     }
@@ -1167,12 +1007,11 @@ var { withAuth } = (0, import_auth.createAuth)({
       canManageAlternatives
       canManageDeploymentOptions
       canManageTechStacks
-      canManageFlows
     }
   `
 });
 var keystone_default = withAuth(
-  (0, import_core14.config)({
+  (0, import_core12.config)({
     db: {
       provider: "postgresql",
       url: databaseURL

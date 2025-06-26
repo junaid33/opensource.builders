@@ -8,8 +8,6 @@ import { Alternative } from './Alternative';
 import { DeploymentOption } from './DeploymentOption';
 import { TechStack } from './TechStack';
 import { ToolTechStack } from './ToolTechStack';
-import { Flow } from './Flow';
-import { ToolFlow } from './ToolFlow';
 
 export const models = {
   User,
@@ -22,8 +20,6 @@ export const models = {
   DeploymentOption,
   TechStack,
   ToolTechStack,
-  Flow,
-  ToolFlow,
 };
 
 export default models;

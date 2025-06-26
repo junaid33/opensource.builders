@@ -34,7 +34,6 @@ const { withAuth } = createAuth({
           canManageAlternatives: true,
           canManageDeploymentOptions: true,
           canManageTechStacks: true,
-          canManageFlows: true,
         },
       },
     },
@@ -56,7 +55,6 @@ const { withAuth } = createAuth({
       canManageAlternatives
       canManageDeploymentOptions
       canManageTechStacks
-      canManageFlows
     }
   `,
 });

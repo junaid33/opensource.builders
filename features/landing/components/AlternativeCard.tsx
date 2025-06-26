@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { Star, ExternalLink } from 'lucide-react'
 import ToolLogo from './ToolLogo'
+import { DonutChart } from '@/components/ui/donut-chart'
 
 interface ResolvedLogo {
   type: 'svg' | 'url' | 'favicon' | 'letter'
@@ -8,6 +9,14 @@ interface ResolvedLogo {
   domain?: string
   verified?: boolean
   svg?: string
+}
+
+interface Feature {
+  id: string
+  name: string
+  slug: string
+  description: string
+  featureType: string
 }
 
 interface AlternativeCardProps {
@@ -30,6 +39,10 @@ interface AlternativeCardProps {
       name: string
     }
   }>
+  features?: Array<{
+    feature: Feature
+  }>
+  totalProprietaryFeatures?: number
 }
 
 export default function AlternativeCard({
@@ -44,8 +57,12 @@ export default function AlternativeCard({
   githubStars,
   category,
   isOpenSource,
-  proprietaryAlternatives
+  proprietaryAlternatives,
+  features = [],
+  totalProprietaryFeatures = 0
 }: AlternativeCardProps) {
+  const matchingFeatures = features.length
+  const compatibilityScore = totalProprietaryFeatures > 0 ? Math.round((matchingFeatures / totalProprietaryFeatures) * 100) : 0
   return (
     <div className="group border-b border-gray-200 pb-6">
       <div className="flex items-start space-x-4">
@@ -96,6 +113,32 @@ export default function AlternativeCard({
               <p className="text-gray-600 text-sm mb-3 line-clamp-2">
                 {description}
               </p>
+
+              {/* Feature Compatibility */}
+              {totalProprietaryFeatures > 0 && (
+                <div className="mb-3 p-3 bg-gray-50 rounded-lg">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm font-medium text-gray-700">Feature Compatibility</span>
+                    <span className="text-sm text-gray-500">{compatibilityScore}%</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <DonutChart 
+                      value={matchingFeatures} 
+                      total={totalProprietaryFeatures}
+                      size={40}
+                      strokeWidth={4}
+                    />
+                    <div className="text-xs text-gray-600">
+                      <div className="font-medium">{matchingFeatures} of {totalProprietaryFeatures} features</div>
+                      {matchingFeatures < totalProprietaryFeatures && (
+                        <div className="text-gray-500 mt-1">
+                          Missing: {totalProprietaryFeatures - matchingFeatures} features
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* Metadata */}
               <div className="flex items-center space-x-4 text-sm text-gray-500">

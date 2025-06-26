@@ -96,3 +96,24 @@ This is an **open source software directory** built with Next.js 15 + KeystoneJS
 - The `views/` directories contain extensive field type implementations - understand the controller pattern before modifying
 - Logo resolution handles URL, SVG, and generated letter avatars automatically
 - Database migrations are handled via Prisma - always run `migrate:gen` after schema changes
+
+## Current Project Status
+
+**Database State (as of 2025-06-25)**:
+- **167 tools** loaded with full metadata and relationships
+- **Alternative relationships** established (NocoDB↔Airtable, RustDesk↔TeamViewer, etc.)
+- **Logo SVGs** integrated from mock data where available
+- **Features**: 90+ features across categories (some cleanup needed)
+- **Flows**: 90+ flows (many redundant, recommend simplifying to features only)
+
+**Next Phase - UI Data Integration**:
+- Replace mock data in landing page with real GraphQL queries
+- `ProprietarySoftware.tsx` - currently uses hardcoded `proprietarySoftware` array
+- `AlternativesQuery.tsx` - currently uses hardcoded `mockAlternatives` array
+- Add feature/similarity scoring to alternative cards
+
+**Recommendation - Data Model Simplification**:
+Consider dropping complex "flows" in favor of simple **similarity scores (1-10)** plus **key differentiators**:
+- Example: "WooCommerce vs Shopify: 8/10 similarity"
+- Missing features clearly listed: "Hosted solution, Advanced analytics"
+- More user-friendly than tracking 90+ complex flows with personas/difficulty

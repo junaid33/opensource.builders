@@ -17,7 +17,6 @@ export type Session = {
       canManageAlternatives: boolean
       canManageDeploymentOptions: boolean
       canManageTechStacks: boolean
-      canManageFlows: boolean
     }
   }
 }
@@ -39,7 +38,6 @@ export const permissions = {
   canManageAlternatives: ({ session }: AccessArgs) => session?.data.role?.canManageAlternatives ?? false,
   canManageDeploymentOptions: ({ session }: AccessArgs) => session?.data.role?.canManageDeploymentOptions ?? false,
   canManageTechStacks: ({ session }: AccessArgs) => session?.data.role?.canManageTechStacks ?? false,
-  canManageFlows: ({ session }: AccessArgs) => session?.data.role?.canManageFlows ?? false,
 }
 
 export const rules = {

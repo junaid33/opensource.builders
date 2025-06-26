@@ -34,7 +34,6 @@ export const Role = list({
     canManageAlternatives: checkbox({ defaultValue: false }),
     canManageDeploymentOptions: checkbox({ defaultValue: false }),
     canManageTechStacks: checkbox({ defaultValue: false }),
-    canManageFlows: checkbox({ defaultValue: false }),
     assignedTo: relationship({
       ref: 'User.role',
       many: true,

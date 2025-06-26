@@ -138,10 +138,6 @@ export const Tool = list({
       ref: 'ToolTechStack.tool',
       many: true,
     }),
-    flows: relationship({
-      ref: 'ToolFlow.tool',
-      many: true,
-    }),
     // Virtual field that provides intelligent logo resolution
     resolvedLogo: virtual({
       field: graphql.field({

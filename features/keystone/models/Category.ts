@@ -58,14 +58,9 @@ export const Category = list({
     tools: relationship({
       ref: 'Tool.category',
       many: true,
-
     }),
     features: relationship({
       ref: 'Feature.category',
-      many: true,
-    }),
-    flows: relationship({
-      ref: 'Flow.category',
       many: true,
     }),
   },

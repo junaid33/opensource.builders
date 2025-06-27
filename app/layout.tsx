@@ -35,7 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${handwriting.variable} ${silkscreen.variable} font-inter antialiased bg-white text-gray-800`}
+        className={`${inter.variable} ${handwriting.variable} ${silkscreen.variable} font-inter antialiased`}
       >
         {children}
       </body>

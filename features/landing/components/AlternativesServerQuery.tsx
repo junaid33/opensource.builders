@@ -92,7 +92,6 @@ export default async function AlternativesServerQuery({ selectedSoftware, filter
             totalFeatures={alternative.totalProprietaryFeatures}
             compatibilityScore={alternative.compatibilityScore}
             alternatives={[{ name: selectedSoftware }]}
-            toolSlug={alternative.slug}
           />
         ))}
       </div>

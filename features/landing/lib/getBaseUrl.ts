@@ -21,6 +21,12 @@ export function getBaseUrl(): string {
  * Get the GraphQL endpoint URL
  */
 export function getGraphQLEndpoint(): string {
+  // In development, use the Keystone API server on port 3003
+  if (process.env.NODE_ENV === 'development') {
+    return 'http://localhost:3003/api/graphql';
+  }
+  
+  // In production, use the same origin
   const baseUrl = getBaseUrl();
   return `${baseUrl}/api/graphql`;
 }

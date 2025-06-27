@@ -37,17 +37,32 @@ interface OpenSourceAlternativeProps {
   totalFeatures?: number;
   compatibilityScore?: number;
   alternatives?: Alternative[];
-  toolSlug?: string;
+  onFeatureClick?: (feature: string) => void;
+  selectedFeatures?: string[];
 }
 
 // Mini Feature Donut Component
-function FeatureDonut({ feature }: { feature: Feature }) {
+function FeatureDonut({ 
+  feature, 
+  onClick, 
+  isSelected = false 
+}: { 
+  feature: Feature; 
+  onClick?: () => void;
+  isSelected?: boolean;
+}) {
   const isCompatible = feature.compatible !== false;
   
   if (!isCompatible) {
     // For inactive features, show a fully red donut with opacity
     return (
-      <div className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full border bg-background text-xs">
+      <div 
+        className={cn(
+          "inline-flex items-center gap-1.5 px-2 py-1 rounded-full border bg-background text-xs cursor-pointer transition-colors",
+          isSelected ? "border-orange-500 bg-orange-50" : "hover:bg-muted/50"
+        )}
+        onClick={onClick}
+      >
         <div className="relative w-3 h-3">
           <svg width="12" height="12" viewBox="0 0 12 12" className="transform -rotate-90">
             <circle
@@ -68,12 +83,19 @@ function FeatureDonut({ feature }: { feature: Feature }) {
   }
   
   return (
-    <div className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full border bg-background text-xs">
+    <div 
+      className={cn(
+        "inline-flex items-center gap-1.5 px-2 py-1 rounded-full border bg-background text-xs cursor-pointer transition-colors",
+        isSelected ? "border-orange-500 bg-orange-50" : "hover:bg-muted/50"
+      )}
+      onClick={onClick}
+    >
       <MiniDonutChart
-        value={1}
+        value={isSelected ? 1 : 1}
         total={1}
         size={12}
         strokeWidth={2}
+        className={isSelected ? "text-orange-500" : ""}
       />
       <span className="font-medium text-foreground">
         {feature.name}
@@ -103,7 +125,8 @@ export function DisplayCard({
   totalFeatures,
   compatibilityScore,
   alternatives = [],
-  toolSlug,
+  onFeatureClick,
+  selectedFeatures = [],
   // Legacy props for compatibility
   title,
   starCount,
@@ -121,6 +144,7 @@ export function DisplayCard({
 }) {
   const [isHovered, setIsHovered] = useState(false);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+  const [showAllFeatures, setShowAllFeatures] = useState(false);
   const [resolvedAlternatives, setResolvedAlternatives] = useState<Array<Alternative & { resolvedLogo?: string }>>([]);
 
   // Use legacy props if new ones aren't provided
@@ -180,22 +204,16 @@ export function DisplayCard({
     return stars.toString();
   };
 
-  const handleCardClick = () => {
-    if (toolSlug) {
-      window.location.href = `/tools/${toolSlug}`;
-    }
-  };
 
   return (
     <Card
       className={cn(
-        "group relative overflow-hidden border border-border bg-background p-6 transition-all duration-300 hover:shadow-lg hover:shadow-black/5 hover:-translate-y-1 cursor-pointer",
+        "group relative overflow-hidden border border-border bg-background p-6 transition-all duration-300 hover:shadow-lg hover:shadow-black/5 hover:-translate-y-1",
         "dark:hover:shadow-white/5",
         className
       )}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      onClick={handleCardClick}
     >
       {/* Header Section */}
       <div className="flex items-start justify-between">
@@ -330,7 +348,7 @@ export function DisplayCard({
           <div className="mt-4 space-y-3">
             <div className="flex flex-wrap gap-2">
               {displayFeatures
-                .slice(0, 8)
+                .slice(0, showAllFeatures ? displayFeatures.length : 8)
                 .sort((a, b) => {
                   // Sort compatible features first
                   const aCompatible = a.compatible !== false;
@@ -340,14 +358,27 @@ export function DisplayCard({
                   return 0;
                 })
                 .map((feature, index) => (
-                  <FeatureDonut key={index} feature={feature} />
+                  <FeatureDonut 
+                    key={index} 
+                    feature={feature}
+                    onClick={() => onFeatureClick?.(feature.name)}
+                    isSelected={selectedFeatures.includes(feature.name)}
+                  />
                 ))}
+              {!showAllFeatures && displayFeatures.length > 8 && (
+                <div 
+                  className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full border bg-muted/30 text-xs cursor-pointer hover:bg-muted/50 transition-colors"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowAllFeatures(true);
+                  }}
+                >
+                  <span className="font-medium text-muted-foreground">
+                    +{displayFeatures.length - 8} more features
+                  </span>
+                </div>
+              )}
             </div>
-            {displayFeatures.length > 8 && (
-              <p className="text-xs text-muted-foreground">
-                +{displayFeatures.length - 8} more features
-              </p>
-            )}
           </div>
         </details>
       )}

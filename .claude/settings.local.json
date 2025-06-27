@@ -29,7 +29,10 @@
       "Bash(npx tsc:*)",
       "Bash(npx tsx:*)",
       "Bash(KEYSTONE_AUTH_TOKEN=ey... npx tsx scripts/update-ecommerce-features.ts)",
-      "Bash(npm run migrate:gen:*)"
+      "Bash(npm run migrate:gen:*)",
+      "WebFetch(domain:originui.com)",
+      "WebFetch(domain:plausible.io)",
+      "WebFetch(domain:supabase.com)"
     ],
     "deny": []
   }

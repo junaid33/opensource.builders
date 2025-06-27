@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import Navbar from '@/components/ui/navbar'
 
 export default function Hero() {
   return (
@@ -8,6 +9,8 @@ export default function Hero() {
       <div className="absolute inset-0 bg-gradient-to-b from-zinc-100 to-white pointer-events-none -z-10" aria-hidden="true" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <Navbar />
+
         <div className="pt-28 pb-8 md:pt-36 md:pb-16">
           {/* Hero content */}
           <div className="max-w-3xl text-center md:text-left">

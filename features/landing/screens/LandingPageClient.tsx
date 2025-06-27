@@ -4,6 +4,7 @@ import { useState, ReactNode } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Hero from '../components/Hero'
 import ProprietarySoftware from '../components/ProprietarySoftware'
+import Navbar from '@/components/ui/navbar'
 
 interface LandingPageClientProps {
   initialSelectedSoftware: string
@@ -20,7 +21,7 @@ export function LandingPageClient({ initialSelectedSoftware, sidebarSlot, altern
     setSelectedSoftware(software)
     
     // Update URL with selected software
-    const params = new URLSearchParams(searchParams.toString())
+    const params = new URLSearchParams(searchParams?.toString() || '')
     if (software !== 'Shopify') {
       params.set('software', software)
     } else {

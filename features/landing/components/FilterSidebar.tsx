@@ -6,19 +6,24 @@ import { X } from 'lucide-react'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 
 export interface FilterState {
   categories: string[]
   licenses: string[]
   githubStars: string[]
   alternatives: string[]
+  features: string[]
 }
 
 interface FilterSidebarProps {
   availableCategories?: Array<{ name: string; count: number }>
   selectedSoftware?: string
   proprietaryTools?: string[]
+  availableFeatures?: Array<{ name: string; count: number }>
   onFiltersChange?: (filters: FilterState) => void
+  onSoftwareChange?: (software: string) => void
+  onFeatureClick?: (feature: string) => void
 }
 
 const LICENSE_OPTIONS = [
@@ -38,7 +43,7 @@ const GITHUB_STAR_RANGES = [
 ]
 
 
-export default function FilterSidebar({ availableCategories = [], selectedSoftware, proprietaryTools = [], onFiltersChange }: FilterSidebarProps) {
+export default function FilterSidebar({ availableCategories = [], selectedSoftware, proprietaryTools = [], availableFeatures = [], onFiltersChange, onSoftwareChange, onFeatureClick }: FilterSidebarProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
   
@@ -48,8 +53,9 @@ export default function FilterSidebar({ availableCategories = [], selectedSoftwa
     const licenses = searchParams.get('licenses')?.split(',').filter(Boolean) || []
     const githubStars = searchParams.get('stars')?.split(',').filter(Boolean) || []
     const alternatives = searchParams.get('alternatives')?.split(',').filter(Boolean) || []
+    const features = searchParams.get('features')?.split(',').filter(Boolean) || []
     
-    return { categories, licenses, githubStars, alternatives }
+    return { categories, licenses, githubStars, alternatives, features }
   })
 
   // Update URL when filters change
@@ -81,6 +87,12 @@ export default function FilterSidebar({ availableCategories = [], selectedSoftwa
       params.delete('alternatives')
     }
     
+    if (filters.features.length > 0) {
+      params.set('features', filters.features.join(','))
+    } else {
+      params.delete('features')
+    }
+    
     const newUrl = params.toString() ? `?${params.toString()}` : '/'
     router.push(newUrl, { scroll: false })
     
@@ -92,7 +104,7 @@ export default function FilterSidebar({ availableCategories = [], selectedSoftwa
     setFilters(prev => ({ ...prev, [key]: value }))
   }
 
-  const toggleArrayFilter = (key: 'categories' | 'licenses' | 'githubStars' | 'alternatives', value: string) => {
+  const toggleArrayFilter = (key: 'categories' | 'licenses' | 'githubStars' | 'alternatives' | 'features', value: string) => {
     setFilters(prev => ({
       ...prev,
       [key]: prev[key].includes(value) 
@@ -106,15 +118,24 @@ export default function FilterSidebar({ availableCategories = [], selectedSoftwa
       categories: [],
       licenses: [],
       githubStars: [],
-      alternatives: []
+      alternatives: [],
+      features: []
     })
+  }
+
+  const handleSoftwareChange = (software: string) => {
+    const params = new URLSearchParams(searchParams.toString())
+    params.set('software', software)
+    const newUrl = `?${params.toString()}`
+    router.push(newUrl, { scroll: false })
+    onSoftwareChange?.(software)
   }
 
   const hasActiveFilters = filters.categories.length > 0 || 
                           filters.licenses.length > 0 || 
                           filters.githubStars.length > 0 ||
                           filters.alternatives.length > 0 ||
-                          !!selectedSoftware
+                          filters.features.length > 0
 
   return (
     <aside className="mb-8 md:mb-0 md:w-64 lg:w-72 md:ml-12 lg:ml-20 md:shrink-0 md:order-1">
@@ -140,12 +161,6 @@ export default function FilterSidebar({ availableCategories = [], selectedSoftwa
             <div className="mb-6 pb-4 border-b border-gray-200">
               <div className="text-xs text-gray-500 mb-2">Active filters:</div>
               <div className="flex flex-wrap gap-1">
-                {selectedSoftware && (
-                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-purple-100 text-purple-700 text-xs rounded-md">
-                    {selectedSoftware}
-                    <span className="text-purple-500 text-[10px]">alternatives to</span>
-                  </span>
-                )}
                 {filters.alternatives.map(alternative => (
                   <span key={alternative} className="inline-flex items-center gap-1 px-2 py-1 bg-purple-100 text-purple-700 text-xs rounded-md">
                     {alternative}
@@ -182,11 +197,38 @@ export default function FilterSidebar({ availableCategories = [], selectedSoftwa
                     />
                   </span>
                 ))}
+                {filters.features.map(feature => (
+                  <span key={feature} className="inline-flex items-center gap-1 px-2 py-1 bg-orange-100 text-orange-700 text-xs rounded-md">
+                    {feature}
+                    <X 
+                      className="w-3 h-3 cursor-pointer hover:text-orange-900" 
+                      onClick={() => toggleArrayFilter('features', feature)}
+                    />
+                  </span>
+                ))}
               </div>
             </div>
           )}
 
           <div className="grid grid-cols-1 gap-6">
+            {/* Proprietary Software Select - Moved to top */}
+            <div>
+              <div className="text-sm text-gray-800 font-semibold mb-3">Alternatives to</div>
+              <div className="text-xs text-gray-500 mb-2">Currently showing alternatives to:</div>
+              <Select value={selectedSoftware || ''} onValueChange={handleSoftwareChange}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select software..." />
+                </SelectTrigger>
+                <SelectContent>
+                  {proprietaryTools.map((software) => (
+                    <SelectItem key={software} value={software}>
+                      {software}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
             {/* Categories */}
             <div>
               <div className="text-sm text-gray-800 font-semibold mb-3">Category</div>
@@ -258,27 +300,35 @@ export default function FilterSidebar({ availableCategories = [], selectedSoftwa
               </div>
             </div>
 
-            {/* Alternatives To */}
-            <div>
-              <div className="text-sm text-gray-800 font-semibold mb-3">Alternatives to</div>
-              <div className="space-y-2 max-h-48 overflow-y-auto">
-                {proprietaryTools.map((software) => (
-                  <div key={software} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={`alternative-${software}`}
-                      checked={filters.alternatives.includes(software)}
-                      onCheckedChange={() => toggleArrayFilter('alternatives', software)}
-                    />
-                    <label 
-                      htmlFor={`alternative-${software}`}
-                      className="text-sm text-gray-600 cursor-pointer"
-                    >
-                      {software}
-                    </label>
-                  </div>
-                ))}
+            {/* Features */}
+            {availableFeatures.length > 0 && (
+              <div>
+                <div className="text-sm text-gray-800 font-semibold mb-3">Features</div>
+                <div className="space-y-2 max-h-48 overflow-y-auto">
+                  {availableFeatures.slice(0, 15).map((feature) => (
+                    <div key={feature.name} className="flex items-center space-x-2">
+                      <Checkbox
+                        id={`feature-${feature.name}`}
+                        checked={filters.features.includes(feature.name)}
+                        onCheckedChange={() => toggleArrayFilter('features', feature.name)}
+                      />
+                      <label 
+                        htmlFor={`feature-${feature.name}`}
+                        className="text-sm text-gray-600 cursor-pointer flex-1 truncate"
+                      >
+                        {feature.name} ({feature.count})
+                      </label>
+                    </div>
+                  ))}
+                  {availableFeatures.length > 15 && (
+                    <div className="text-xs text-gray-500 italic">
+                      +{availableFeatures.length - 15} more features
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
+            )}
+
           </div>
         </Card>
       </div>

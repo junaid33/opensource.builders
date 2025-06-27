@@ -73,7 +73,6 @@ model Tool {
   proprietaryAlternatives Alternative[]      @relation("Alternative_proprietaryTool")
   openSourceAlternatives  Alternative[]      @relation("Alternative_openSourceTool")
   deploymentOptions       DeploymentOption[] @relation("DeploymentOption_tool")
-  techStacks              ToolTechStack[]    @relation("ToolTechStack_tool")
 
   @@index([categoryId])
 }
@@ -123,38 +122,12 @@ model Alternative {
 }
 
 model DeploymentOption {
-  id            String    @id @default(cuid())
-  tool          Tool?     @relation("DeploymentOption_tool", fields: [toolId], references: [id])
-  toolId        String?   @map("tool")
-  platform      String    @default("")
-  deployUrl     String    @default("")
-  templateUrl   String    @default("")
-  difficulty    String?
-  estimatedTime String    @default("")
-  requirements  Json?
-  isVerified    Boolean   @default(false)
-  createdAt     DateTime? @default(now())
+  id        String    @id @default(cuid())
+  tool      Tool?     @relation("DeploymentOption_tool", fields: [toolId], references: [id])
+  toolId    String?   @map("tool")
+  platform  String    @default("")
+  deployUrl String    @default("")
+  createdAt DateTime? @default(now())
 
   @@index([toolId])
-}
-
-model TechStack {
-  id      String          @id @default(cuid())
-  name    String          @default("")
-  type    String?
-  color   String          @default("")
-  iconUrl String          @default("")
-  tools   ToolTechStack[] @relation("ToolTechStack_techStack")
-}
-
-model ToolTechStack {
-  id          String     @id @default(cuid())
-  tool        Tool?      @relation("ToolTechStack_tool", fields: [toolId], references: [id])
-  toolId      String?    @map("tool")
-  techStack   TechStack? @relation("ToolTechStack_techStack", fields: [techStackId], references: [id])
-  techStackId String?    @map("techStack")
-  isPrimary   Boolean    @default(false)
-
-  @@index([toolId])
-  @@index([techStackId])
 }

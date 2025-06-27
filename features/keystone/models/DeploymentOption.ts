@@ -1,8 +1,7 @@
 import { list } from '@keystone-6/core'
-import { allOperations } from '@keystone-6/core/access'
-import { checkbox, json, relationship, select, text, timestamp } from '@keystone-6/core/fields'
+import { relationship, text, timestamp } from '@keystone-6/core/fields'
 
-import { isSignedIn, permissions } from '../access'
+import { permissions } from '../access'
 
 export const DeploymentOption = list({
   access: {
@@ -17,7 +16,7 @@ export const DeploymentOption = list({
     hideCreate: args => !permissions.canManageDeploymentOptions(args),
     hideDelete: args => !permissions.canManageDeploymentOptions(args),
     listView: {
-      initialColumns: ['tool', 'platform', 'difficulty', 'isVerified', 'createdAt'],
+      initialColumns: ['tool', 'platform', 'createdAt'],
     },
     itemView: {
       defaultFieldMode: args => (permissions.canManageDeploymentOptions(args) ? 'edit' : 'read'),
@@ -35,37 +34,18 @@ export const DeploymentOption = list({
         isRequired: true,
         length: { max: 100 },
       },
+      ui: {
+        description: 'Platform name (e.g., Vercel, Railway, Render)',
+      },
     }),
     deployUrl: text({
       label: 'Deploy URL',
       validation: {
         length: { max: 500 },
       },
-    }),
-    templateUrl: text({
-      label: 'Template URL',
-      validation: {
-        length: { max: 500 },
+      ui: {
+        description: 'One-click deploy URL',
       },
-    }),
-    difficulty: select({
-      options: [
-        { label: 'Beginner', value: 'beginner' },
-        { label: 'Intermediate', value: 'intermediate' },
-        { label: 'Advanced', value: 'advanced' },
-        { label: 'Expert', value: 'expert' },
-      ],
-    }),
-    estimatedTime: text({
-      label: 'Estimated Time',
-      validation: {
-        length: { max: 50 },
-      },
-    }),
-    requirements: json(),
-    isVerified: checkbox({
-      label: 'Is Verified',
-      defaultValue: false,
     }),
     createdAt: timestamp({
       defaultValue: { kind: 'now' },

@@ -197,8 +197,36 @@ export function DisplayCard({
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
                       <p className="text-[13px] font-medium">Features ({featuresCount})</p>
-                      {compatibilityScore !== undefined && (
-                        <span className="text-xs text-green-400">{compatibilityScore}%</span>
+                      {compatibilityScore !== undefined && totalFeatures !== undefined && (
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs text-muted-foreground">
+                            {featuresCount}/{totalFeatures}
+                          </span>
+                          <div className="relative w-5 h-5">
+                            <svg className="w-5 h-5 transform -rotate-90">
+                              <circle
+                                cx="10"
+                                cy="10"
+                                r="8"
+                                fill="transparent"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                className="text-gray-600"
+                              />
+                              <circle
+                                cx="10"
+                                cy="10"
+                                r="8"
+                                fill="transparent"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeDasharray={`${(compatibilityScore / 100) * 50.3} 50.3`}
+                                strokeLinecap="round"
+                                className="text-green-400 transition-all duration-300 ease-in-out"
+                              />
+                            </svg>
+                          </div>
+                        </div>
                       )}
                     </div>
                     {features.length > 0 ? (

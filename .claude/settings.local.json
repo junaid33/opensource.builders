@@ -28,7 +28,8 @@
       "Bash(npm run build:*)",
       "Bash(npx tsc:*)",
       "Bash(npx tsx:*)",
-      "Bash(KEYSTONE_AUTH_TOKEN=ey... npx tsx scripts/update-ecommerce-features.ts)"
+      "Bash(KEYSTONE_AUTH_TOKEN=ey... npx tsx scripts/update-ecommerce-features.ts)",
+      "Bash(npm run migrate:gen:*)"
     ],
     "deny": []
   }

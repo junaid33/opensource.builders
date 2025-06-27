@@ -62,24 +62,10 @@ async function getToolBySlug(slug: string) {
             license
           }
         }
-        techStacks {
-          techStack {
-            id
-            name
-            type
-            color
-            iconUrl
-          }
-        }
         deploymentOptions {
           id
           platform
           deployUrl
-          templateUrl
-          difficulty
-          estimatedTime
-          requirements
-          isVerified
         }
       }
     }

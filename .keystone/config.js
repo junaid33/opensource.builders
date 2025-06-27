@@ -36,7 +36,7 @@ module.exports = __toCommonJS(keystone_exports);
 
 // features/keystone/index.ts
 var import_auth = require("@keystone-6/auth");
-var import_core12 = require("@keystone-6/core");
+var import_core10 = require("@keystone-6/core");
 var import_config = require("dotenv/config");
 
 // features/keystone/models/User.ts
@@ -491,10 +491,6 @@ var Tool = (0, import_core4.list)({
       ref: "DeploymentOption.tool",
       many: true
     }),
-    techStacks: (0, import_fields4.relationship)({
-      ref: "ToolTechStack.tool",
-      many: true
-    }),
     // Virtual field that provides intelligent logo resolution
     resolvedLogo: (0, import_fields4.virtual)({
       field: import_core5.graphql.field({
@@ -751,7 +747,7 @@ var DeploymentOption = (0, import_core9.list)({
     hideCreate: (args) => !permissions.canManageDeploymentOptions(args),
     hideDelete: (args) => !permissions.canManageDeploymentOptions(args),
     listView: {
-      initialColumns: ["tool", "platform", "difficulty", "isVerified", "createdAt"]
+      initialColumns: ["tool", "platform", "createdAt"]
     },
     itemView: {
       defaultFieldMode: (args) => permissions.canManageDeploymentOptions(args) ? "edit" : "read"
@@ -768,146 +764,22 @@ var DeploymentOption = (0, import_core9.list)({
       validation: {
         isRequired: true,
         length: { max: 100 }
+      },
+      ui: {
+        description: "Platform name (e.g., Vercel, Railway, Render)"
       }
     }),
     deployUrl: (0, import_fields8.text)({
       label: "Deploy URL",
       validation: {
         length: { max: 500 }
+      },
+      ui: {
+        description: "One-click deploy URL"
       }
-    }),
-    templateUrl: (0, import_fields8.text)({
-      label: "Template URL",
-      validation: {
-        length: { max: 500 }
-      }
-    }),
-    difficulty: (0, import_fields8.select)({
-      options: [
-        { label: "Beginner", value: "beginner" },
-        { label: "Intermediate", value: "intermediate" },
-        { label: "Advanced", value: "advanced" },
-        { label: "Expert", value: "expert" }
-      ]
-    }),
-    estimatedTime: (0, import_fields8.text)({
-      label: "Estimated Time",
-      validation: {
-        length: { max: 50 }
-      }
-    }),
-    requirements: (0, import_fields8.json)(),
-    isVerified: (0, import_fields8.checkbox)({
-      label: "Is Verified",
-      defaultValue: false
     }),
     createdAt: (0, import_fields8.timestamp)({
       defaultValue: { kind: "now" }
-    })
-  }
-});
-
-// features/keystone/models/TechStack.ts
-var import_core10 = require("@keystone-6/core");
-var import_fields9 = require("@keystone-6/core/fields");
-var TechStack = (0, import_core10.list)({
-  access: {
-    operation: {
-      query: () => true,
-      // Allow public read access
-      create: permissions.canManageTechStacks,
-      update: permissions.canManageTechStacks,
-      delete: permissions.canManageTechStacks
-    }
-  },
-  ui: {
-    hideCreate: (args) => !permissions.canManageTechStacks(args),
-    hideDelete: (args) => !permissions.canManageTechStacks(args),
-    listView: {
-      initialColumns: ["name", "type", "color"]
-    },
-    itemView: {
-      defaultFieldMode: (args) => permissions.canManageTechStacks(args) ? "edit" : "read"
-    }
-  },
-  fields: {
-    name: (0, import_fields9.text)({
-      validation: {
-        isRequired: true,
-        length: { max: 100 }
-      }
-    }),
-    type: (0, import_fields9.select)({
-      options: [
-        { label: "Programming Language", value: "language" },
-        { label: "Framework", value: "framework" },
-        { label: "Library", value: "library" },
-        { label: "Database", value: "database" },
-        { label: "Cloud Service", value: "cloud" },
-        { label: "DevOps Tool", value: "devops" },
-        { label: "Container", value: "container" },
-        { label: "Runtime", value: "runtime" },
-        { label: "Build Tool", value: "build" },
-        { label: "Other", value: "other" }
-      ]
-    }),
-    color: (0, import_fields9.text)({
-      validation: {
-        length: { max: 7 }
-      }
-    }),
-    iconUrl: (0, import_fields9.text)({
-      label: "Icon URL",
-      validation: {
-        length: { max: 500 }
-      }
-    }),
-    tools: (0, import_fields9.relationship)({
-      ref: "ToolTechStack.techStack",
-      many: true
-    })
-  }
-});
-
-// features/keystone/models/ToolTechStack.ts
-var import_core11 = require("@keystone-6/core");
-var import_fields10 = require("@keystone-6/core/fields");
-var ToolTechStack = (0, import_core11.list)({
-  access: {
-    operation: {
-      query: () => true,
-      // Allow public read access
-      create: permissions.canManageTools,
-      update: permissions.canManageTools,
-      delete: permissions.canManageTools
-    }
-  },
-  ui: {
-    hideCreate: (args) => !permissions.canManageTools(args),
-    hideDelete: (args) => !permissions.canManageTools(args),
-    listView: {
-      initialColumns: ["tool", "techStack", "isPrimary"]
-    },
-    itemView: {
-      defaultFieldMode: (args) => permissions.canManageTools(args) ? "edit" : "read"
-    }
-  },
-  fields: {
-    tool: (0, import_fields10.relationship)({
-      ref: "Tool.techStacks",
-      ui: {
-        displayMode: "select"
-      }
-    }),
-    techStack: (0, import_fields10.relationship)({
-      ref: "TechStack.tools",
-      ui: {
-        displayMode: "select"
-      }
-    }),
-    isPrimary: (0, import_fields10.checkbox)({
-      label: "Is Primary",
-      defaultValue: false
     })
   }
 });
@@ -921,9 +793,7 @@ var models = {
   Feature,
   ToolFeature,
   Alternative,
-  DeploymentOption,
-  TechStack,
-  ToolTechStack
+  DeploymentOption
 };
 
 // features/keystone/index.ts
@@ -1011,7 +881,7 @@ var { withAuth } = (0, import_auth.createAuth)({
   `
 });
 var keystone_default = withAuth(
-  (0, import_core12.config)({
+  (0, import_core10.config)({
     db: {
       provider: "postgresql",
       url: databaseURL

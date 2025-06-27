@@ -218,7 +218,7 @@ export default function ProprietarySoftware({ onSoftwareSelect }: ProprietarySof
       <div className="relative m-auto max-w-7xl px-6">
         <div className="flex flex-col items-center">
           <div className="mb-8">
-            <p className="font-handwriting text-3xl text-indigo-500 text-center">Popular proprietary software</p>
+            <p className="font-silkscreen text-3xl text-sky-500 text-center">Popular proprietary software</p>
             <p className="text-sm text-gray-600 text-center mt-2">Click any software to see open source alternatives</p>
           </div>
           <div className="relative py-6 w-full">

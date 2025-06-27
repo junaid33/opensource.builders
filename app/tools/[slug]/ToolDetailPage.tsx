@@ -4,7 +4,6 @@ import ToolLogo from '@/features/landing/components/ToolLogo'
 import ToolSidebar from './ToolSidebar'
 import FeatureShowcase from './FeatureShowcase'
 import AlternativesComparison from './AlternativesComparison'
-import TechStackDisplay from './TechStackDisplay'
 import DeploymentOptions from './DeploymentOptions'
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -63,24 +62,10 @@ interface ToolDetailPageProps {
         license?: string
       }
     }>
-    techStacks: Array<{
-      techStack: {
-        id: string
-        name: string
-        slug: string
-        description: string
-        category: string
-      }
-    }>
     deploymentOptions: Array<{
       id: string
       platform: string
       deployUrl?: string
-      templateUrl?: string
-      difficulty?: string
-      estimatedTime?: string
-      requirements?: any
-      isVerified: boolean
     }>
   }
 }
@@ -242,9 +227,6 @@ export default function ToolDetailPage({ tool }: ToolDetailPageProps) {
               )}
 
               {/* Tech Stack Section */}
-              {tool.techStacks.length > 0 && (
-                <TechStackDisplay techStacks={tool.techStacks} />
-              )}
 
               {/* Deployment Options */}
               {tool.deploymentOptions.length > 0 && (

@@ -134,10 +134,6 @@ export const Tool = list({
       ref: 'DeploymentOption.tool',
       many: true,
     }),
-    techStacks: relationship({
-      ref: 'ToolTechStack.tool',
-      many: true,
-    }),
     // Virtual field that provides intelligent logo resolution
     resolvedLogo: virtual({
       field: graphql.field({

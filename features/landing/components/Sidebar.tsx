@@ -10,7 +10,7 @@ export default function Sidebar() {
       <div data-sticky="" data-margin-top="32" data-sticky-for="768" data-sticky-wrap="">
         <div className="relative bg-gray-50 rounded-xl border border-gray-200 p-5">
           <div className="absolute top-5 right-5 leading-none">
-            <button className="text-sm font-medium text-indigo-500 hover:underline">Clear</button>
+            <button className="text-sm font-medium text-blue-500 hover:underline">Clear</button>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-1 gap-6">

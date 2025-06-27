@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Nothing_You_Could_Do } from "next/font/google";
+import { Inter, Audiowide, Silkscreen } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -8,8 +8,15 @@ const inter = Inter({
   display: 'swap'
 });
 
-const handwriting = Nothing_You_Could_Do({
+const handwriting = Audiowide({
   variable: "--font-handwriting",
+  subsets: ["latin"],
+  weight: '400',
+  display: 'swap'
+});
+
+const silkscreen = Silkscreen({
+  variable: "--font-silkscreen",
   subsets: ["latin"],
   weight: '400',
   display: 'swap'
@@ -28,7 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${handwriting.variable} font-inter antialiased bg-white text-gray-800`}
+        className={`${inter.variable} ${handwriting.variable} ${silkscreen.variable} font-inter antialiased bg-white text-gray-800`}
       >
         {children}
       </body>

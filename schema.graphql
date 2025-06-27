@@ -374,8 +374,6 @@ type Tool {
   openSourceAlternativesCount(where: AlternativeWhereInput! = {}): Int
   deploymentOptions(where: DeploymentOptionWhereInput! = {}, orderBy: [DeploymentOptionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DeploymentOptionWhereUniqueInput): [DeploymentOption!]
   deploymentOptionsCount(where: DeploymentOptionWhereInput! = {}): Int
-  techStacks(where: ToolTechStackWhereInput! = {}, orderBy: [ToolTechStackOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ToolTechStackWhereUniqueInput): [ToolTechStack!]
-  techStacksCount(where: ToolTechStackWhereInput! = {}): Int
   resolvedLogo: JSON
 }
 
@@ -408,7 +406,6 @@ input ToolWhereInput {
   proprietaryAlternatives: AlternativeManyRelationFilter
   openSourceAlternatives: AlternativeManyRelationFilter
   deploymentOptions: DeploymentOptionManyRelationFilter
-  techStacks: ToolTechStackManyRelationFilter
 }
 
 input IntNullableFilter {
@@ -455,12 +452,6 @@ input DeploymentOptionManyRelationFilter {
   none: DeploymentOptionWhereInput
 }
 
-input ToolTechStackManyRelationFilter {
-  every: ToolTechStackWhereInput
-  some: ToolTechStackWhereInput
-  none: ToolTechStackWhereInput
-}
-
 input ToolOrderByInput {
   id: OrderDirection
   name: OrderDirection
@@ -499,7 +490,6 @@ input ToolUpdateInput {
   proprietaryAlternatives: AlternativeRelateToManyForUpdateInput
   openSourceAlternatives: AlternativeRelateToManyForUpdateInput
   deploymentOptions: DeploymentOptionRelateToManyForUpdateInput
-  techStacks: ToolTechStackRelateToManyForUpdateInput
 }
 
 input CategoryRelateToOneForUpdateInput {
@@ -529,13 +519,6 @@ input DeploymentOptionRelateToManyForUpdateInput {
   connect: [DeploymentOptionWhereUniqueInput!]
 }
 
-input ToolTechStackRelateToManyForUpdateInput {
-  disconnect: [ToolTechStackWhereUniqueInput!]
-  set: [ToolTechStackWhereUniqueInput!]
-  create: [ToolTechStackCreateInput!]
-  connect: [ToolTechStackWhereUniqueInput!]
-}
-
 input ToolUpdateArgs {
   where: ToolWhereUniqueInput!
   data: ToolUpdateInput!
@@ -561,7 +544,6 @@ input ToolCreateInput {
   proprietaryAlternatives: AlternativeRelateToManyForCreateInput
   openSourceAlternatives: AlternativeRelateToManyForCreateInput
   deploymentOptions: DeploymentOptionRelateToManyForCreateInput
-  techStacks: ToolTechStackRelateToManyForCreateInput
 }
 
 input CategoryRelateToOneForCreateInput {
@@ -582,11 +564,6 @@ input AlternativeRelateToManyForCreateInput {
 input DeploymentOptionRelateToManyForCreateInput {
   create: [DeploymentOptionCreateInput!]
   connect: [DeploymentOptionWhereUniqueInput!]
-}
-
-input ToolTechStackRelateToManyForCreateInput {
-  create: [ToolTechStackCreateInput!]
-  connect: [ToolTechStackWhereUniqueInput!]
 }
 
 type Feature {
@@ -810,11 +787,6 @@ type DeploymentOption {
   tool: Tool
   platform: String
   deployUrl: String
-  templateUrl: String
-  difficulty: String
-  estimatedTime: String
-  requirements: JSON
-  isVerified: Boolean
   createdAt: DateTime
 }
 
@@ -830,10 +802,6 @@ input DeploymentOptionWhereInput {
   tool: ToolWhereInput
   platform: StringFilter
   deployUrl: StringFilter
-  templateUrl: StringFilter
-  difficulty: StringNullableFilter
-  estimatedTime: StringFilter
-  isVerified: BooleanFilter
   createdAt: DateTimeNullableFilter
 }
 
@@ -841,10 +809,6 @@ input DeploymentOptionOrderByInput {
   id: OrderDirection
   platform: OrderDirection
   deployUrl: OrderDirection
-  templateUrl: OrderDirection
-  difficulty: OrderDirection
-  estimatedTime: OrderDirection
-  isVerified: OrderDirection
   createdAt: OrderDirection
 }
 
@@ -852,11 +816,6 @@ input DeploymentOptionUpdateInput {
   tool: ToolRelateToOneForUpdateInput
   platform: String
   deployUrl: String
-  templateUrl: String
-  difficulty: String
-  estimatedTime: String
-  requirements: JSON
-  isVerified: Boolean
   createdAt: DateTime
 }
 
@@ -869,121 +828,7 @@ input DeploymentOptionCreateInput {
   tool: ToolRelateToOneForCreateInput
   platform: String
   deployUrl: String
-  templateUrl: String
-  difficulty: String
-  estimatedTime: String
-  requirements: JSON
-  isVerified: Boolean
   createdAt: DateTime
-}
-
-type TechStack {
-  id: ID!
-  name: String
-  type: String
-  color: String
-  iconUrl: String
-  tools(where: ToolTechStackWhereInput! = {}, orderBy: [ToolTechStackOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ToolTechStackWhereUniqueInput): [ToolTechStack!]
-  toolsCount(where: ToolTechStackWhereInput! = {}): Int
-}
-
-input TechStackWhereUniqueInput {
-  id: ID
-}
-
-input TechStackWhereInput {
-  AND: [TechStackWhereInput!]
-  OR: [TechStackWhereInput!]
-  NOT: [TechStackWhereInput!]
-  id: IDFilter
-  name: StringFilter
-  type: StringNullableFilter
-  color: StringFilter
-  iconUrl: StringFilter
-  tools: ToolTechStackManyRelationFilter
-}
-
-input TechStackOrderByInput {
-  id: OrderDirection
-  name: OrderDirection
-  type: OrderDirection
-  color: OrderDirection
-  iconUrl: OrderDirection
-}
-
-input TechStackUpdateInput {
-  name: String
-  type: String
-  color: String
-  iconUrl: String
-  tools: ToolTechStackRelateToManyForUpdateInput
-}
-
-input TechStackUpdateArgs {
-  where: TechStackWhereUniqueInput!
-  data: TechStackUpdateInput!
-}
-
-input TechStackCreateInput {
-  name: String
-  type: String
-  color: String
-  iconUrl: String
-  tools: ToolTechStackRelateToManyForCreateInput
-}
-
-type ToolTechStack {
-  id: ID!
-  tool: Tool
-  techStack: TechStack
-  isPrimary: Boolean
-}
-
-input ToolTechStackWhereUniqueInput {
-  id: ID
-}
-
-input ToolTechStackWhereInput {
-  AND: [ToolTechStackWhereInput!]
-  OR: [ToolTechStackWhereInput!]
-  NOT: [ToolTechStackWhereInput!]
-  id: IDFilter
-  tool: ToolWhereInput
-  techStack: TechStackWhereInput
-  isPrimary: BooleanFilter
-}
-
-input ToolTechStackOrderByInput {
-  id: OrderDirection
-  isPrimary: OrderDirection
-}
-
-input ToolTechStackUpdateInput {
-  tool: ToolRelateToOneForUpdateInput
-  techStack: TechStackRelateToOneForUpdateInput
-  isPrimary: Boolean
-}
-
-input TechStackRelateToOneForUpdateInput {
-  create: TechStackCreateInput
-  connect: TechStackWhereUniqueInput
-  disconnect: Boolean
-}
-
-input ToolTechStackUpdateArgs {
-  where: ToolTechStackWhereUniqueInput!
-  data: ToolTechStackUpdateInput!
-}
-
-input ToolTechStackCreateInput {
-  tool: ToolRelateToOneForCreateInput
-  techStack: TechStackRelateToOneForCreateInput
-  isPrimary: Boolean
-}
-
-input TechStackRelateToOneForCreateInput {
-  create: TechStackCreateInput
-  connect: TechStackWhereUniqueInput
 }
 
 """
@@ -1040,18 +885,6 @@ type Mutation {
   updateDeploymentOptions(data: [DeploymentOptionUpdateArgs!]!): [DeploymentOption]
   deleteDeploymentOption(where: DeploymentOptionWhereUniqueInput!): DeploymentOption
   deleteDeploymentOptions(where: [DeploymentOptionWhereUniqueInput!]!): [DeploymentOption]
-  createTechStack(data: TechStackCreateInput!): TechStack
-  createTechStacks(data: [TechStackCreateInput!]!): [TechStack]
-  updateTechStack(where: TechStackWhereUniqueInput!, data: TechStackUpdateInput!): TechStack
-  updateTechStacks(data: [TechStackUpdateArgs!]!): [TechStack]
-  deleteTechStack(where: TechStackWhereUniqueInput!): TechStack
-  deleteTechStacks(where: [TechStackWhereUniqueInput!]!): [TechStack]
-  createToolTechStack(data: ToolTechStackCreateInput!): ToolTechStack
-  createToolTechStacks(data: [ToolTechStackCreateInput!]!): [ToolTechStack]
-  updateToolTechStack(where: ToolTechStackWhereUniqueInput!, data: ToolTechStackUpdateInput!): ToolTechStack
-  updateToolTechStacks(data: [ToolTechStackUpdateArgs!]!): [ToolTechStack]
-  deleteToolTechStack(where: ToolTechStackWhereUniqueInput!): ToolTechStack
-  deleteToolTechStacks(where: [ToolTechStackWhereUniqueInput!]!): [ToolTechStack]
   endSession: Boolean!
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
@@ -1099,12 +932,6 @@ type Query {
   deploymentOption(where: DeploymentOptionWhereUniqueInput!): DeploymentOption
   deploymentOptions(where: DeploymentOptionWhereInput! = {}, orderBy: [DeploymentOptionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DeploymentOptionWhereUniqueInput): [DeploymentOption!]
   deploymentOptionsCount(where: DeploymentOptionWhereInput! = {}): Int
-  techStack(where: TechStackWhereUniqueInput!): TechStack
-  techStacks(where: TechStackWhereInput! = {}, orderBy: [TechStackOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TechStackWhereUniqueInput): [TechStack!]
-  techStacksCount(where: TechStackWhereInput! = {}): Int
-  toolTechStack(where: ToolTechStackWhereUniqueInput!): ToolTechStack
-  toolTechStacks(where: ToolTechStackWhereInput! = {}, orderBy: [ToolTechStackOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ToolTechStackWhereUniqueInput): [ToolTechStack!]
-  toolTechStacksCount(where: ToolTechStackWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
   redirectToInit: Boolean

@@ -21,7 +21,6 @@ interface ToolSidebarProps {
     features: Array<any>
     proprietaryAlternatives: Array<any>
     openSourceAlternatives: Array<any>
-    techStacks: Array<any>
     deploymentOptions: Array<any>
   }
 }
@@ -40,12 +39,6 @@ export default function ToolSidebar({ tool }: ToolSidebarProps) {
       value: tool.features.length,
       icon: Star,
       color: 'text-yellow-600'
-    },
-    {
-      label: 'Tech Stacks',
-      value: tool.techStacks.length,
-      icon: Code,
-      color: 'text-blue-600'
     },
     {
       label: 'Deployment Options',

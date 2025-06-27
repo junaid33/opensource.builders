@@ -6,8 +6,6 @@ import { Feature } from './Feature';
 import { ToolFeature } from './ToolFeature';
 import { Alternative } from './Alternative';
 import { DeploymentOption } from './DeploymentOption';
-import { TechStack } from './TechStack';
-import { ToolTechStack } from './ToolTechStack';
 
 export const models = {
   User,
@@ -18,8 +16,6 @@ export const models = {
   ToolFeature,
   Alternative,
   DeploymentOption,
-  TechStack,
-  ToolTechStack,
 };
 
 export default models;

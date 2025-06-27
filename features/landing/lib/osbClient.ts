@@ -14,8 +14,8 @@ export type OSBResponse<T = any> =
 /**
  * Create a GraphQL client for public queries
  */
-async function createGraphQLClient(): Promise<GraphQLClient> {
-  const endpoint = await getGraphQLEndpoint();
+function createGraphQLClient(): GraphQLClient {
+  const endpoint = getGraphQLEndpoint();
   return new GraphQLClient(endpoint, {
     credentials: 'include',
   });
@@ -88,7 +88,7 @@ export async function osbClient<T = any>(
 ): Promise<OSBResponse<T>> {
   try {
     // Create GraphQL client
-    const client = await createGraphQLClient();
+    const client = createGraphQLClient();
 
     // Make the request
     const data = await client.request<T>(query, variables);

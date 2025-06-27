@@ -1,14 +1,16 @@
 import { Suspense } from 'react'
 import AlternativeCard from './AlternativeCard'
-import AlternativesQuery from './AlternativesQuery'
+import AlternativesServerQuery from './AlternativesServerQuery'
 
-export default function AlternativesList() {
+interface AlternativesListProps {
+  selectedSoftware?: string
+}
+
+export default function AlternativesList({ selectedSoftware = 'Shopify' }: AlternativesListProps) {
   return (
     <div className="pb-8 md:pb-16" id="alternatives">
-      <h2 className="text-3xl font-bold mb-10">Open Source Alternatives</h2>
-      
-      <Suspense fallback={<AlternativesLoading />}>
-        <AlternativesQuery />
+      <Suspense fallback={<AlternativesLoading />} key={selectedSoftware}>
+        <AlternativesServerQuery selectedSoftware={selectedSoftware} />
       </Suspense>
     </div>
   )

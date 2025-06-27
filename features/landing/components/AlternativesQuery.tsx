@@ -1,6 +1,7 @@
-import { DisplayCard } from '@/components/ui/display-card'
+import { DisplayCard } from '@/features/landing/components/display-card'
 import { osbClient } from '../lib/osbClient'
 import { TooltipProvider } from '@/components/ui/tooltip'
+import { Badge } from '@/components/ui/badge'
 
 interface AlternativesQueryProps {
   selectedSoftware?: string
@@ -24,44 +25,38 @@ async function fetchAlternatives(proprietaryTool: string) {
         }
       }
       
-      # Get alternatives
-      alternatives: tools(where: { 
-        isOpenSource: { equals: true }
-        openSourceAlternatives: { 
-          some: { 
-            proprietaryTool: { 
-              name: { equals: $proprietaryTool } 
-            } 
-          } 
+      # Get alternatives using the Alternative relationship
+      alternatives(where: { 
+        proprietaryTool: { 
+          name: { equals: $proprietaryTool } 
         } 
       }) {
         id
-        name
-        slug
-        description
-        websiteUrl
-        repositoryUrl
-        logoUrl
-        logoSvg
-        license
-        githubStars
-        isOpenSource
-        category {
+        similarityScore
+        openSourceTool {
+          id
           name
           slug
-        }
-        proprietaryAlternatives {
-          proprietaryTool {
-            name
-          }
-        }
-        features {
-          feature {
-            id
+          description
+          websiteUrl
+          repositoryUrl
+          logoUrl
+          logoSvg
+          license
+          githubStars
+          isOpenSource
+          category {
             name
             slug
-            description
-            featureType
+          }
+          features {
+            feature {
+              id
+              name
+              slug
+              description
+              featureType
+            }
           }
         }
       }
@@ -84,30 +79,54 @@ export default async function AlternativesQuery({ selectedSoftware = 'Shopify' }
   const proprietaryFeatures = data.proprietaryTool?.[0]?.features || []
   const alternatives = data.alternatives || []
 
-  // Create resolved logo for each alternative
-  const alternativesWithLogos = alternatives.map((alt: any) => ({
-    ...alt,
-    resolvedLogo: alt.logoSvg ? {
-      type: 'svg' as const,
-      data: alt.logoSvg,
-      verified: true
-    } : alt.logoUrl ? {
-      type: 'url' as const,
-      data: alt.logoUrl,
-      verified: true
-    } : {
-      type: 'letter' as const,
-      data: alt.name.charAt(0),
-      svg: `<svg width="56" height="56" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="28" cy="28" r="28" fill="#3B82F6"/>
-              <text x="28" y="28" dy="0.35em" text-anchor="middle" 
-                    fill="white" font-family="system-ui, sans-serif" 
-                    font-size="28" font-weight="600">${alt.name.charAt(0)}</text>
-            </svg>`,
-      verified: true
-    },
-    totalProprietaryFeatures: proprietaryFeatures.length
-  }))
+  // Create resolved logo and feature compatibility for each alternative
+  const alternativesWithLogos = alternatives.map((altRelation: any) => {
+    const alt = altRelation.openSourceTool
+    if (!alt) return null
+
+    // Map proprietary features to check compatibility
+    const proprietaryFeatureIds = new Set(proprietaryFeatures.map((f: any) => f.feature.id))
+    const alternativeFeatureIds = new Set(alt.features?.map((f: any) => f.feature.id) || [])
+    
+    // Create features array with compatibility information
+    const featuresWithCompatibility = proprietaryFeatures.map((propFeature: any) => ({
+      name: propFeature.feature.name,
+      compatible: alternativeFeatureIds.has(propFeature.feature.id),
+      featureType: propFeature.feature.featureType
+    }))
+
+    const compatibilityScore = proprietaryFeatures.length > 0 
+      ? Math.round(((alt.features?.length || 0) / proprietaryFeatures.length) * 100) 
+      : 0
+
+    return {
+      ...alt,
+      id: altRelation.id,
+      similarityScore: altRelation.similarityScore,
+      resolvedLogo: alt.logoSvg ? {
+        type: 'svg' as const,
+        data: alt.logoSvg,
+        verified: true
+      } : alt.logoUrl ? {
+        type: 'url' as const,
+        data: alt.logoUrl,
+        verified: true
+      } : {
+        type: 'letter' as const,
+        data: alt.name.charAt(0),
+        svg: `<svg width="56" height="56" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="28" cy="28" r="28" fill="#3B82F6"/>
+                <text x="28" y="28" dy="0.35em" text-anchor="middle" 
+                      fill="white" font-family="system-ui, sans-serif" 
+                      font-size="28" font-weight="600">${alt.name.charAt(0)}</text>
+              </svg>`,
+        verified: true
+      },
+      totalProprietaryFeatures: proprietaryFeatures.length,
+      featuresWithCompatibility,
+      compatibilityScore
+    }
+  }).filter(Boolean)
 
   if (alternatives.length === 0) {
     return (
@@ -127,19 +146,36 @@ export default async function AlternativesQuery({ selectedSoftware = 'Shopify' }
           
           {/* Selected Software Display */}
           {data.proprietaryTool?.[0] && (
-            <div className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-8 h-8 bg-blue-100 rounded-sm flex items-center justify-center">
-                  <span className="text-blue-600 font-semibold text-sm">
-                    {selectedSoftware.charAt(0)}
-                  </span>
+            <div className="mb-8 p-6 bg-muted/30 rounded-xl border border-border shadow-sm">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
+                    <span className="text-white font-bold text-lg">
+                      {selectedSoftware.charAt(0)}
+                    </span>
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <h3 className="font-bold text-gray-900 text-lg">{selectedSoftware}</h3>
+                      <Badge variant="outline" className="gap-1.5">
+                        <span
+                          className="size-1.5 rounded-full bg-orange-500"
+                          aria-hidden="true"
+                        />
+                        Proprietary
+                      </Badge>
+                    </div>
+                    <p className="text-sm text-gray-600 font-medium">
+                      {proprietaryFeatures.length} features analyzed • Finding open source alternatives
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-semibold text-gray-900">{selectedSoftware}</h3>
-                  <p className="text-sm text-gray-600">
-                    {proprietaryFeatures.length} features • Showing alternatives below
-                  </p>
-                </div>
+                                 <div className="hidden sm:flex items-center gap-2 text-sm text-muted-foreground">
+                   <div className="flex items-center gap-1">
+                     <div className="w-2 h-2 bg-primary rounded-full"></div>
+                     <span>Reference Tool</span>
+                   </div>
+                 </div>
               </div>
             </div>
           )}
@@ -149,29 +185,22 @@ export default async function AlternativesQuery({ selectedSoftware = 'Shopify' }
           </p>
         </div>
         
-        <div className="grid gap-4">
+        <div className="grid gap-6">
           {alternativesWithLogos.map((alternative: any) => (
             <DisplayCard 
               key={alternative.id}
-              title={alternative.name}
+              name={alternative.name}
               description={alternative.description}
-              websiteUrl={alternative.websiteUrl}
-              repositoryUrl={alternative.repositoryUrl}
-              starCount={alternative.githubStars}
               license={alternative.license}
+              isOpenSource={alternative.isOpenSource}
+              githubStars={alternative.githubStars}
+              features={alternative.featuresWithCompatibility}
+              repositoryUrl={alternative.repositoryUrl}
+              websiteUrl={alternative.websiteUrl}
               logoSvg={alternative.logoSvg}
-              featuresCount={alternative.features.length}
               totalFeatures={alternative.totalProprietaryFeatures}
-              compatibilityScore={alternative.totalProprietaryFeatures > 0 ? Math.round((alternative.features.length / alternative.totalProprietaryFeatures) * 100) : 0}
-              missingFeatures={alternative.totalProprietaryFeatures - alternative.features.length}
-              features={alternative.features.map((f: any) => ({
-                name: f.feature.name,
-                featureType: f.feature.featureType
-              }))}
-              alternatives={alternative.proprietaryAlternatives?.map((alt: any) => ({
-                name: alt.proprietaryTool.name,
-                icon: undefined
-              })) || []}
+              compatibilityScore={alternative.compatibilityScore}
+              alternatives={[{ name: selectedSoftware }]}
               toolSlug={alternative.slug}
             />
           ))}

@@ -32,7 +32,11 @@
       "Bash(npm run migrate:gen:*)",
       "WebFetch(domain:originui.com)",
       "WebFetch(domain:plausible.io)",
-      "WebFetch(domain:supabase.com)"
+      "WebFetch(domain:supabase.com)",
+      "WebFetch(domain:localhost)",
+      "Bash(-H \"Content-Type: application/json\" )",
+      "Bash(-d @test-graphql.json)",
+      "Bash(mv:*)"
     ],
     "deny": []
   }

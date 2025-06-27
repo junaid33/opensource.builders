@@ -10,66 +10,11 @@ interface FilterOptions {
   categories?: string[]
   licenses?: string[]
   githubStars?: string[]
-}
-
-function buildWhereClause(filters: FilterOptions) {
-  const conditions: any[] = []
-
-  // Category filter
-  if (filters.categories && filters.categories.length > 0) {
-    conditions.push({
-      category: {
-        name: { in: filters.categories }
-      }
-    })
-  }
-
-  // License filter
-  if (filters.licenses && filters.licenses.length > 0) {
-    conditions.push({
-      license: { in: filters.licenses }
-    })
-  }
-
-  // GitHub stars filter
-  if (filters.githubStars && filters.githubStars.length > 0) {
-    const starConditions: any[] = []
-    
-    filters.githubStars.forEach(range => {
-      switch (range) {
-        case '1000-5000':
-          starConditions.push({
-            AND: [
-              { githubStars: { gte: 1000 } },
-              { githubStars: { lt: 5000 } }
-            ]
-          })
-          break
-        case '5000-10000':
-          starConditions.push({
-            AND: [
-              { githubStars: { gte: 5000 } },
-              { githubStars: { lt: 10000 } }
-            ]
-          })
-          break
-        case '10000+':
-          starConditions.push({
-            githubStars: { gte: 10000 }
-          })
-          break
-      }
-    })
-    
-    if (starConditions.length > 0) {
-      conditions.push({ OR: starConditions })
-    }
-  }
-
-  return conditions.length > 0 ? { AND: conditions } : {}
+  features?: string[]
 }
 
 async function fetchAlternativesServer(proprietaryTool: string, filters: FilterOptions = {}) {
+
   const query = `
     query GetAlternatives($proprietaryTool: String!) {
       # Get the proprietary tool and its features
@@ -87,12 +32,8 @@ async function fetchAlternativesServer(proprietaryTool: string, filters: FilterO
         }
       }
       
-      # Get all alternatives - no filtering
-      alternatives(where: { 
-        proprietaryTool: { 
-          name: { equals: $proprietaryTool } 
-        }
-      }) {
+      # Get all alternatives - we'll filter client-side for now
+      alternatives(where: { proprietaryTool: { name: { equals: $proprietaryTool } } }) {
         id
         similarityScore
         openSourceTool {
@@ -138,9 +79,61 @@ async function fetchAlternativesServer(proprietaryTool: string, filters: FilterO
     }
   }
 
+  // Apply client-side filtering if filters are provided
+  let filteredAlternatives = response.data.alternatives || []
+  
+  if (filters.features && filters.features.length > 0) {
+    filteredAlternatives = filteredAlternatives.filter((altRelation: any) => {
+      const alt = altRelation.openSourceTool
+      if (!alt?.features) return false
+      
+      const toolFeatureNames = new Set(alt.features.map((f: any) => f.feature.name))
+      
+      // Check if tool has ALL selected features (AND logic)
+      return filters.features!.every(featureName => toolFeatureNames.has(featureName))
+    })
+  }
+  
+  if (filters.categories && filters.categories.length > 0) {
+    filteredAlternatives = filteredAlternatives.filter((altRelation: any) => {
+      const alt = altRelation.openSourceTool
+      return alt?.category && filters.categories!.includes(alt.category.name)
+    })
+  }
+  
+  if (filters.licenses && filters.licenses.length > 0) {
+    filteredAlternatives = filteredAlternatives.filter((altRelation: any) => {
+      const alt = altRelation.openSourceTool
+      return alt?.license && filters.licenses!.includes(alt.license)
+    })
+  }
+  
+  if (filters.githubStars && filters.githubStars.length > 0) {
+    filteredAlternatives = filteredAlternatives.filter((altRelation: any) => {
+      const alt = altRelation.openSourceTool
+      const stars = alt?.githubStars || 0
+      
+      return filters.githubStars!.some(range => {
+        switch (range) {
+          case '1000-5000':
+            return stars >= 1000 && stars < 5000
+          case '5000-10000':
+            return stars >= 5000 && stars < 10000
+          case '10000+':
+            return stars >= 10000
+          default:
+            return false
+        }
+      })
+    })
+  }
+
   return {
     success: true,
-    data: response.data
+    data: {
+      proprietaryTool: response.data.proprietaryTool,
+      alternatives: filteredAlternatives
+    }
   }
 }
 
@@ -190,4 +183,44 @@ async function fetchCategoriesServer() {
   }
 }
 
-export { fetchAlternativesServer, fetchCategoriesServer, type FilterOptions }
+// Fetch available features for the sidebar
+async function fetchFeaturesServer() {
+  const query = `
+    query GetFeatures {
+      features {
+        id
+        name
+        featureType
+        tools {
+          id
+        }
+      }
+    }
+  `
+
+  const response = await keystoneClient(query, {})
+  
+  if (!response.success) {
+    console.error('Failed to fetch features:', response.error)
+    return {
+      success: false,
+      error: response.error,
+      data: []
+    }
+  }
+
+  // Transform to include tool counts and sort by usage
+  const featuresWithCounts = response.data.features.map((feature: any) => ({
+    name: feature.name,
+    count: feature.tools.length,
+    featureType: feature.featureType
+  })).filter((feature: any) => feature.count > 0) // Only include features with tools
+   .sort((a: any, b: any) => b.count - a.count) // Sort by tool count descending
+
+  return {
+    success: true,
+    data: featuresWithCounts
+  }
+}
+
+export { fetchAlternativesServer, fetchCategoriesServer, fetchFeaturesServer, type FilterOptions }

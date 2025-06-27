@@ -2,7 +2,7 @@ import { Suspense } from 'react'
 import { LandingPageClient } from './LandingPageClient'
 import AlternativesServerQuery from '../components/AlternativesServerQuery'
 import FilterSidebar from '../components/FilterSidebar'
-import { fetchCategoriesServer, type FilterOptions } from '../actions/getAlternatives'
+import { fetchCategoriesServer, fetchFeaturesServer, type FilterOptions } from '../actions/getAlternatives'
 import { getProprietaryTools } from '../actions/getProprietaryTools'
 
 interface LandingPageProps {
@@ -38,16 +38,19 @@ export async function LandingPage({ searchParams }: LandingPageProps) {
   const resolvedSearchParams = await searchParams || {}
   const selectedSoftware = resolvedSearchParams.software?.toString() || 'Shopify'
   
-  // Parse filters from URL params
+  // Parse filters from URL params (following dashboard pattern)
   const filters: FilterOptions = {
     categories: resolvedSearchParams.categories?.toString().split(',').filter(Boolean) || [],
     licenses: resolvedSearchParams.licenses?.toString().split(',').filter(Boolean) || [],
-    githubStars: resolvedSearchParams.stars?.toString().split(',').filter(Boolean) || []
+    githubStars: resolvedSearchParams.stars?.toString().split(',').filter(Boolean) || [],
+    features: resolvedSearchParams.features?.toString().split(',').filter(Boolean) || []
   }
 
-  // Fetch categories and proprietary tools for the sidebar
+  // Fetch categories, features, and proprietary tools for the sidebar
   const categoriesResponse = await fetchCategoriesServer()
+  const featuresResponse = await fetchFeaturesServer()
   const availableCategories = categoriesResponse.success ? categoriesResponse.data : []
+  const availableFeatures = featuresResponse.success ? featuresResponse.data : []
   const proprietaryTools = await getProprietaryTools()
 
   // Create a unique key for Suspense to trigger re-renders
@@ -58,7 +61,8 @@ export async function LandingPage({ searchParams }: LandingPageProps) {
       initialSelectedSoftware={selectedSoftware}
       sidebarSlot={
         <FilterSidebar 
-          availableCategories={availableCategories} 
+          availableCategories={availableCategories}
+          availableFeatures={availableFeatures}
           selectedSoftware={selectedSoftware}
           proprietaryTools={proprietaryTools}
         />

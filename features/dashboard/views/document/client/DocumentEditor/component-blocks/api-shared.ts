@@ -1,10 +1,10 @@
 import type {
-  GField,
-  GArg,
-  GInputType,
-  GOutputType,
-  GNullableInputType,
-} from '@keystone-6/core/graphql-ts'
+  Field as GField,
+  Arg as GArg,
+  InputType as GInputType,
+  OutputType as GOutputType,
+  NullableInputType as GNullableInputType,
+} from '@graphql-ts/schema'
 import type { KeystoneContext } from '@keystone-6/core/types'
 import type { ReactElement, ReactNode } from 'react'
 
@@ -52,7 +52,7 @@ export type FormField<Value extends FormFieldValue, Options> = {
       { value: Value },
       Record<string, GArg<GInputType, boolean>>,
       GOutputType<KeystoneContext>,
-      Value,
+      any,
       KeystoneContext
     >
   }

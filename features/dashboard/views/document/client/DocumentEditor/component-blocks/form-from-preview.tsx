@@ -1,4 +1,5 @@
 import { useList } from '@keystone-6/core/admin-ui/context'
+import { RelationshipSelect } from '@/features/dashboard/views/relationship/client/components/RelationshipSelect'
 
 import { Button } from '@/components/ui/button'
 import { Dialog as ShadDialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogTrigger, DialogClose } from '@/components/ui/dialog'
@@ -211,7 +212,7 @@ function ArrayFieldPreview(props: DefaultFieldProps<'array'>) {
             })
           }
           return (
-            <ShadDialog open={modalState !== 'closed'} onOpenChange={(open) => !open && setModalState('closed')}>
+            <ShadDialog open={true} onOpenChange={(open) => !open && setModalState('closed')}>
               <DialogContent>
                 <DialogHeader>
                   <DialogTitle>Edit item</DialogTitle>
@@ -271,12 +272,11 @@ function RelationshipFieldPreview(props: DefaultFieldProps<'relationship'>) {
         labelField={list.labelField}
         searchFields={searchFields}
         extraSelection={schema.selection || ''}
-        portalMenu
         state={
           schema.many
             ? {
                 kind: 'many',
-                value: (value ?? []).map((x: any) => ({
+                value: (Array.isArray(value) ? value : []).map((x: any) => ({
                   id: x.id,
                   label: x.label || x.id,
                   data: x.data,
@@ -285,10 +285,10 @@ function RelationshipFieldPreview(props: DefaultFieldProps<'relationship'>) {
               }
             : {
                 kind: 'one',
-                value: value
+                value: value && !Array.isArray(value)
                   ? {
                       ...value,
-                      label: value.label || value.id,
+                      label: (value as any).label || (value as any).id,
                     }
                   : null,
                 onChange: onChange,

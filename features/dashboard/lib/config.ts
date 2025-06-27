@@ -1,1 +1,2 @@
-export const basePath = "/dashboard";
+// Dashboard configuration
+export const basePath = '/dashboard';

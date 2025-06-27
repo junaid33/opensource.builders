@@ -1,12 +1,15 @@
+/**
+ * UserProfileClient - dashboard user profile dropdown
+ * Based on Dashboard1's UserProfileClient with dashboard styling
+ */
+
 "use client";
 
 import {
   ArrowUpRight,
-  BookOpen,
   ChevronsUpDown,
   Database,
   LogOut,
-  PlayCircle,
   Palette,
 } from "lucide-react";
 
@@ -26,7 +29,6 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { signOut } from "@/features/dashboard/actions/auth";
 import { ThemeSwitcher } from "@/components/ui/theme-switcher";
 
 interface User {
@@ -51,7 +53,7 @@ export function UserProfileClient({ user }: UserProfileClientProps) {
     : user.email.slice(0, 2).toUpperCase();
 
   const handleSignOut = async () => {
-    await signOut();
+    // Use dashboard signout endpoint
     window.location.href = "/dashboard/signin";
   };
 
@@ -110,7 +112,10 @@ export function UserProfileClient({ user }: UserProfileClientProps) {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem className="gap-3">
+              <DropdownMenuItem 
+                className="gap-3"
+                onClick={() => window.open('/api/graphql', '_blank')}
+              >
                 <Database className="h-4 w-4 text-muted-foreground" />
                 <span className="text-sm">GraphQL API</span>
               </DropdownMenuItem>

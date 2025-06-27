@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useList } from "@/features/dashboard/hooks/useAdminMeta";
-import { getRelationshipOptions } from "@/features/dashboard/actions";
+import { getRelationshipOptions } from "@/features/dashboard/actions/relationship";
 import { Select, MultiSelect } from "./Select";
 import type { Option } from "./Select";
 import useSWR from "swr";
@@ -9,6 +8,14 @@ import { validate as validateUUID } from "uuid";
 interface RelationshipSelectProps {
   list: {
     key: string;
+    labelField: string;
+    graphql?: {
+      names: {
+        whereInputName: string;
+        listQueryName: string;
+        listQueryCountName: string;
+      };
+    };
   };
   labelField: string;
   isDisabled?: boolean;
@@ -82,8 +89,8 @@ export function RelationshipSelect({
   const [accumulatedOptions, setAccumulatedOptions] = useState<Option[]>([]);
   const PAGE_SIZE = 10;
 
-  // Use our list hook to get list data
-  const { list: listData, isLoading: listLoading } = useList(list.key);
+  // The list already has the GraphQL names from getAdminMetaAction
+  const listData = list;
 
   // Create where clause from search
   const where = createFilterConditions(search, listData, searchFields);
@@ -95,13 +102,13 @@ export function RelationshipSelect({
   }, [search]);
 
   // Fetch options using the list query with search filtering
-  const { data: optionsData, isLoading: optionsLoading } = useSWR(
-    listData && listData.gqlNames
+  const { data: optionsData, isLoading: optionsLoading, error } = useSWR(
+    listData && listData.graphql?.names
       ? ["relationshipOptions", list.key, labelField, search, page]
       : null,
     async () => {
-      if (!listData || !listData.gqlNames) {
-        throw new Error("List data or gqlNames not available");
+      if (!listData || !listData.graphql?.names) {
+        throw new Error("List data or graphql names not available");
       }
 
       const result = await getRelationshipOptions(
@@ -112,14 +119,14 @@ export function RelationshipSelect({
         labelField,
         extraSelection,
         {
-          whereInputName: listData.gqlNames.whereInputName,
-          listQueryName: listData.gqlNames.listQueryName,
-          listQueryCountName: listData.gqlNames.listQueryCountName,
+          whereInputName: listData.graphql.names.whereInputName,
+          listQueryName: listData.graphql.names.listQueryName,
+          listQueryCountName: listData.graphql.names.listQueryCountName,
         }
       );
 
       if (result.success) {
-        const responseData = result.data ?? { items: [], count: 0 }; // Default if data is null/undefined
+        const responseData = result.success && 'data' in result ? (result.data ?? { items: [], count: 0 }) : { items: [], count: 0 };
         const newOptions = (responseData.items ?? []).map((item: any) => ({
           value: item.id,
           label: item[labelField],
@@ -147,9 +154,10 @@ export function RelationshipSelect({
     }
   );
 
-  const isLoading = listLoading || optionsLoading;
+  const isLoading = optionsLoading;
   const currentOptions =
     page === 0 ? optionsData?.items ?? [] : accumulatedOptions; // Use nullish coalescing
+
 
   const handleSearch = useCallback(async (searchValue: string): Promise<Option[]> => {
     setSearch(searchValue);
@@ -157,7 +165,7 @@ export function RelationshipSelect({
     setAccumulatedOptions([]);
 
     // Wait for SWR to fetch the data
-    if (!listData || !listData.gqlNames) {
+    if (!listData || !listData.graphql?.names) {
       return [];
     }
 
@@ -170,15 +178,15 @@ export function RelationshipSelect({
       labelField,
       extraSelection,
       {
-        whereInputName: listData.gqlNames.whereInputName,
-        listQueryName: listData.gqlNames.listQueryName,
-        listQueryCountName: listData.gqlNames.listQueryCountName,
+        whereInputName: listData.graphql.names.whereInputName,
+        listQueryName: listData.graphql.names.listQueryName,
+        listQueryCountName: listData.graphql.names.listQueryCountName,
       }
     );
 
     if (result.success) {
       // Map items safely, providing default empty array
-      return (result.data?.items ?? []).map((item: any) => ({
+      return (result.success && 'data' in result ? (result.data?.items ?? []) : []).map((item: any) => ({
         value: item.id,
         label: item[labelField],
         data: item,
@@ -189,17 +197,57 @@ export function RelationshipSelect({
     }
   }, [listData, labelField, extraSelection, searchFields, PAGE_SIZE]);
 
+
   if (state.kind === "many") {
     return (
-      <MultiSelect
-        value={state.value?.map((item: any) => ({
-          value: item.id,
-          label: item.label || item[labelField],
-          data: item,
-        })) || []}
+      <div>
+        <MultiSelect
+          value={state.value?.map((item: any) => ({
+            value: item.id,
+            label: item.label || item[labelField],
+            data: item,
+          })) || []}
+          onChange={(value) => {
+            state.onChange(
+              value.map((x) => ({ id: x.value, label: x.label, data: x.data }))
+            );
+          }}
+          onInputChange={handleSearch}
+          isDisabled={isDisabled}
+          autoFocus={autoFocus}
+          isLoading={isLoading}
+          options={currentOptions}
+          aria-describedby={ariaDescribedby}
+          placeholder={placeholder}
+          controlShouldRenderValue={controlShouldRenderValue}
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <Select
+        value={
+          state.value
+            ? {
+                value: state.value.id,
+                label: state.value.label || state.value[labelField],
+                data: state.value,
+              }
+            : null
+        }
         onChange={(value) => {
+          // Make sure we're passing the correct format to state.onChange
+          // This is critical for the form system to work correctly
           state.onChange(
-            value.map((x) => ({ id: x.value, label: x.label, data: x.data }))
+            value
+              ? {
+                  id: value.value,
+                  label: value.label,
+                  data: value.data,
+                }
+              : null
           );
         }}
         onInputChange={handleSearch}
@@ -211,41 +259,6 @@ export function RelationshipSelect({
         placeholder={placeholder}
         controlShouldRenderValue={controlShouldRenderValue}
       />
-    );
-  }
-
-  return (
-    <Select
-      value={
-        state.value
-          ? {
-              value: state.value.id,
-              label: state.value.label || state.value[labelField],
-              data: state.value,
-            }
-          : null
-      }
-      onChange={(value) => {
-        // Make sure we're passing the correct format to state.onChange
-        // This is critical for the form system to work correctly
-        state.onChange(
-          value
-            ? {
-                id: value.value,
-                label: value.label,
-                data: value.data,
-              }
-            : null
-        );
-      }}
-      onInputChange={handleSearch}
-      isDisabled={isDisabled}
-      autoFocus={autoFocus}
-      isLoading={isLoading}
-      options={currentOptions}
-      aria-describedby={ariaDescribedby}
-      placeholder={placeholder}
-      controlShouldRenderValue={controlShouldRenderValue}
-    />
+    </div>
   );
 }

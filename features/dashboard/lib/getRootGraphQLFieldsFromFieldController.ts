@@ -1,28 +1,24 @@
-import { type FragmentDefinitionNode, parse, type SelectionSetNode } from 'graphql'
-import type { FieldController, JSONValue } from '@/features/dashboard/types'
-import { weakMemoize } from './weakMemoize'
-
-function extractRootFields(selectedFields: Set<string>, selectionSet: SelectionSetNode): void {
-  selectionSet.selections.forEach(selection => {
-    if (selection.kind === 'Field') {
-      selectedFields.add(selection.alias ? selection.alias.value : selection.name.value)
+// Extract GraphQL fields from a field controller
+export function getRootGraphQLFieldsFromFieldController(controller: any): string[] {
+  if (!controller) return [];
+  
+  // If the controller has a graphqlSelection, parse it
+  if (controller.graphqlSelection) {
+    const selection = controller.graphqlSelection;
+    
+    // Handle simple field selections like "fieldName" 
+    if (typeof selection === 'string' && !selection.includes('{')) {
+      return [selection];
     }
-    if (selection.kind === 'InlineFragment') {
-      extractRootFields(selectedFields, selection.selectionSet)
+    
+    // Handle complex selections with nested fields
+    // This is a simplified parser - KeystoneJS uses more sophisticated parsing
+    const matches = selection.match(/(\w+)\s*(?:\{|$)/g);
+    if (matches) {
+      return matches.map((match: string) => match.replace(/\s*\{.*/, '').trim());
     }
-    // FragmentSpread will never happen for the use cases of getRootFieldsFromSelection
-  })
-}
-
-export const getRootGraphQLFieldsFromFieldController = weakMemoize(
-  (controller: FieldController<unknown, JSONValue>): string[] => {
-    const ast = parse(`fragment X on Y {
-  id
-  ${controller.graphqlSelection}
-  }`)
-    const selectedFields = new Set<string>()
-    const fragmentNode = ast.definitions[0] as FragmentDefinitionNode
-    extractRootFields(selectedFields, fragmentNode.selectionSet)
-    return [...selectedFields]
   }
-) 
+  
+  // Fallback to the field path/key
+  return [controller.path || controller.key || 'id'];
+}

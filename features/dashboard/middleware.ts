@@ -1,8 +1,39 @@
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
-import { keystoneClient } from "@/features/dashboard/lib/keystoneClient";
+import { getGraphQLEndpoint } from "@/features/dashboard/lib/getBaseUrl";
+import { GraphQLClient, ClientError } from 'graphql-request';
 
 const basePath = "/dashboard";
+
+// Create a GraphQL client for middleware with explicit headers
+async function createMiddlewareGraphQLClient(headers: Record<string, string>): Promise<GraphQLClient> {
+  const endpoint = await getGraphQLEndpoint();
+  return new GraphQLClient(endpoint, {
+    credentials: 'include',
+    headers,
+  });
+}
+
+// Format GraphQL errors (adapted from dashboard keystoneClient)
+function formatGraphQLErrors(error: ClientError): { message: string; errors?: any[] } {
+  if (!error.response) {
+    return { message: error.message };
+  }
+
+  const errors = error.response.errors;
+  if (!errors) {
+    return { message: error.message };
+  }
+
+  const message = errors
+    .map((err: any) => err.message)
+    .join('\n');
+
+  return { 
+    message,
+    errors: errors 
+  };
+}
 
 // Lightweight check for redirectToInit status only
 export async function checkInitStatus(request: NextRequest) {
@@ -16,16 +47,17 @@ export async function checkInitStatus(request: NextRequest) {
     cookie: request.headers.get("cookie") || "",
   };
 
-  const result = await keystoneClient(query, {}, { headers });
-  
-  if (result.success) {
-    return result.data.redirectToInit;
+  try {
+    const client = await createMiddlewareGraphQLClient(headers);
+    const data = await client.request(query) as { redirectToInit: boolean };
+    return data.redirectToInit;
+  } catch (error) {
+    console.error("Error checking init status:", error);
+    return false;
   }
-  
-  return false;
 }
 
-// Get authenticated user from the request
+// Get authenticated user from the request (adapted for dashboard)
 export async function getAuthenticatedUser(request: NextRequest) {
   const query = `
     query authenticatedItem {
@@ -41,20 +73,29 @@ export async function getAuthenticatedUser(request: NextRequest) {
     }
   `;
 
-  // Pass cookie headers to keystoneClient
   const headers = {
     cookie: request.headers.get("cookie") || "",
   };
 
-  const result = await keystoneClient(query, {}, { headers });
-  
-  if (result.success) {
-    return {
-      user: result.data.authenticatedItem,
-      redirectToInit: result.data.redirectToInit
+  try {
+    const client = await createMiddlewareGraphQLClient(headers);
+    const data = await client.request(query) as { 
+      authenticatedItem: any; 
+      redirectToInit: boolean 
     };
-  } else {
-    console.error("Auth check failed:", result.error);
+    
+    return {
+      user: data.authenticatedItem,
+      redirectToInit: data.redirectToInit
+    };
+  } catch (error) {
+    console.error("Auth check failed:", error);
+    
+    if (error instanceof ClientError) {
+      const { message } = formatGraphQLErrors(error);
+      console.error("GraphQL error details:", message);
+    }
+    
     return { user: null, redirectToInit: false };
   }
 }
@@ -114,4 +155,4 @@ export async function handleDashboardRoutes(
   }
 
   return NextResponse.next();
-} 
+}

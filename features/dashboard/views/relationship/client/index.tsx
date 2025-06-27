@@ -1,7 +1,7 @@
 "use client";
 import { Fragment, useState } from "react";
 import useSWR from "swr";
-import { getRelationshipOptions } from "@/features/dashboard/actions";
+import { getRelationshipOptions } from "@/features/dashboard/actions/relationship";
 import { RelationshipSelect } from "./components/RelationshipSelect";
 import { ClientField } from "./Field";
 import Link from "next/link";
@@ -63,7 +63,19 @@ export const Cell = ({ field, item }: { field: any; item: any }) => {
   }
 
   const data = item[field.path];
+  if (!data) {
+    return <CellContainer>
+      <span className="text-muted-foreground">—</span>
+    </CellContainer>;
+  }
+
   const items = (Array.isArray(data) ? data : [data]).filter((item) => item);
+  if (items.length === 0) {
+    return <CellContainer>
+      <span className="text-muted-foreground">—</span>
+    </CellContainer>;
+  }
+
   const displayItems = items.length < 5 ? items : items.slice(0, 3);
   const overflow = items.length < 5 ? 0 : items.length - 3;
 
@@ -77,9 +89,11 @@ export const Cell = ({ field, item }: { field: any; item: any }) => {
           </Link>
         </Fragment>
       ))}
-      <span className="opacity-50 font-medium">
-        {overflow ? `, and ${overflow} more` : null}
-      </span>
+      {overflow > 0 && (
+        <span className="opacity-50 font-medium">
+          {`, and ${overflow} more`}
+        </span>
+      )}
     </CellContainer>
   );
 };
@@ -171,7 +185,7 @@ function useRelationshipFilterValues({
 
       if (result.success) {
         // Return the items array directly on success, default to empty array
-        return result.data?.items ?? [];
+        return result.success && 'data' in result ? (result.data?.items ?? []) : [];
       } else {
         console.error("Error fetching relationship filter values:", result.error);
         // Throw error for SWR to catch

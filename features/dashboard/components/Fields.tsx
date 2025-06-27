@@ -1,255 +1,106 @@
-"use client";
+/**
+ * Fields component - Following Keystone's exact pattern
+ * Creates controllers and renders fields dynamically using viewsIndex
+ */
 
-import { useId, ReactNode } from "react";
-import { buttonVariants } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { Badge } from "@/components/ui/badge";
-import { ChevronRight } from "lucide-react";
-import { cn } from "@/lib/utils";
-import type { FieldMeta as AdminFieldMeta } from '@/features/dashboard/types'; // Import FieldMeta as AdminFieldMeta
+'use client'
 
-// Field description component
-const FieldDescription = ({ 
-  children, 
-  id, 
-  className 
-}: { 
-  children: React.ReactNode; 
-  id: string; 
-  className?: string 
-}) => {
-  return (
-    <p id={id} className={className}>
-      {children}
-    </p>
-  );
-};
+import React, { useMemo } from 'react'
 
-// Remove local FieldMeta definition, use AdminFieldMeta from types/admin-meta instead
-
-export interface FieldGroupMeta {
-  label: string;
-  description?: string | null;
-  fields: { path: string }[];
-  collapsed?: boolean;
+// Exact copy from Keystone - testFilter function
+function applyFilter<T>(
+  filter: {
+    equals?: T
+    in?: T[]
+  },
+  val: T
+): boolean {
+  if (filter.equals !== undefined && val !== filter.equals) return false
+  if (filter.in !== undefined && !filter.in.includes(val)) return false
+  return true
 }
 
-interface FieldValue {
-  kind: 'error' | 'value';
-  errors?: Array<{ message: string }>;
-  value?: unknown;
+export function testFilter(
+  filter: any | undefined,
+  serialized: Record<string, unknown>
+): boolean {
+  if (filter === undefined) return false
+  if (typeof filter === 'boolean') return filter
+  for (const [key, filterOnField] of Object.entries(filter)) {
+    const serializedValue = serialized[key]
+    if (!applyFilter(filterOnField as any, serializedValue)) return false
+    if ((filterOnField as any).not !== undefined && applyFilter((filterOnField as any).not, serializedValue)) {
+      return false
+    }
+  }
+  return true
 }
 
-export function Fields({
-  fields,
-  value,
-  fieldModes = null,
-  fieldPositions = null,
-  forceValidation,
-  invalidFields,
-  position = "form",
-  groups = [],
-  onChange,
-}: {
-  fields: Record<string, AdminFieldMeta>; // Use imported AdminFieldMeta
-  value: Record<string, FieldValue>;
-  fieldModes?: Record<string, "edit" | "read" | "hidden"> | null;
-  fieldPositions?: Record<string, "form" | "sidebar"> | null;
-  forceValidation: boolean;
-  invalidFields?: ReadonlySet<string>;
-  position?: "form" | "sidebar";
-  groups?: FieldGroupMeta[];
-  onChange?: (value: Record<string, FieldValue>) => void;
-}) {
-  const renderedFields = Object.fromEntries(
-    Object.keys(fields).map((fieldKey) => {
-      const field = fields[fieldKey];
-      const val = value?.[fieldKey];
-      const fieldMode = fieldModes === null ? "edit" : fieldModes[fieldKey];
-      const fieldPosition =
-        fieldPositions === null ? "form" : fieldPositions[fieldKey];
+interface FieldsProps {
+  list: any
+  fields: Record<string, any>
+  value: Record<string, unknown>
+  onChange?: (values: Record<string, unknown>) => void
+  forceValidation?: boolean
+  invalidFields?: ReadonlySet<string>
+  isRequireds?: Record<string, any>
+  view?: 'createView' | 'itemView'
+}
 
-      // Skip if field should be hidden or not in this position
-      if (fieldMode === "hidden") return [fieldKey, null];
-      if (fieldPosition !== position) return [fieldKey, null];
-
-      // Handle error state
-      if (val?.kind === "error" && val.errors?.[0]) {
-        return [
-          fieldKey,
-          <div key={fieldKey}>
-            {field.label}:{" "}
-            <span className="text-red-600 dark:text-red-700 text-sm">
-              {val.errors[0].message}
-            </span>
-          </div>,
-        ];
-      }
-
-      // Skip if no value is available
-      if (!val) return [fieldKey, null];
-
-      const FieldComponent = field.views?.Field;
-      if (!FieldComponent) return [fieldKey, null]; // Skip if Field component doesn't exist
-
-      const controller = field.controller;
-      if (!controller) return [fieldKey, null]; // Skip if no controller
-
-      return [
-        fieldKey,
-        <FieldComponent
-          key={fieldKey}
-          field={{
-            ...controller,
-            // Safely access hideButtons, checking if fieldMeta is an object and has the property
-            hideButtons: typeof field.fieldMeta === 'object' && field.fieldMeta !== null && 'hideButtons' in field.fieldMeta ? field.fieldMeta.hideButtons : undefined,
-          }}
-          onChange={fieldMode === "edit" && onChange !== undefined ?
-            (newFieldValue: unknown) => {
-              // Explicitly type prevVal and ensure the callback structure matches expectations
-              onChange((prevVal: Record<string, FieldValue>) => ({
-                ...prevVal,
-                [controller.path]: { kind: "value", value: newFieldValue },
-              }));
-            } : undefined
-          }
-          value={val.value}
-          forceValidation={forceValidation && invalidFields?.has(fieldKey)}
-          // Remove invalidFields prop as it's not expected by FieldComponent (FieldProps)
-        />
-      ];
-    })
-  );
-
-  const rendered: ReactNode[] = [];
-  const fieldGroups = new Map();
-  for (const group of groups) {
-    const state = { group, rendered: false };
-    for (const field of group.fields) {
-      fieldGroups.set(field.path, state);
+export function Fields({ fields, value, onChange, forceValidation, invalidFields, isRequireds, view = 'itemView' }: FieldsProps) {
+  // Create serialized data exactly like Keystone for testFilter
+  const serialized = useMemo(() => {
+    const result: Record<string, unknown> = {}
+    for (const [fieldKey, field] of Object.entries(fields)) {
+      Object.assign(result, field.controller.serialize(value[fieldKey]))
     }
-  }
-
-  for (const field of Object.values(fields)) {
-    const fieldKey = field.path;
-    if (fieldGroups.has(fieldKey)) {
-      const groupState = fieldGroups.get(field.path);
-      if (groupState.rendered) {
-        continue;
-      }
-      groupState.rendered = true;
-      const { group } = groupState;
-      const renderedFieldsInGroup = group.fields.map(
-        (field: { path: string }) => renderedFields[field.path]
-      );
-      if (renderedFieldsInGroup.every((field: ReactNode | null) => field === null)) {
-        continue;
-      }
-
-      rendered.push(
-        <FieldGroup
-          key={group.label}
-          count={group.fields.length}
-          label={group.label}
-          description={group.description}
-          collapsed={group.collapsed}
-        >
-          {renderedFieldsInGroup}
-        </FieldGroup>
-      );
-      continue;
-    }
-    if (renderedFields[fieldKey] === null) {
-      continue;
-    }
-    rendered.push(renderedFields[fieldKey]);
-  }
+    return result
+  }, [fields, value])
 
   return (
     <div className="grid w-full items-center gap-4">
-      {rendered.length === 0 && value && Object.keys(value).length === 0
-        ? "There are no fields that you can read or edit"
-        : rendered}
+      {Object.entries(fields).map(([fieldPath, field]) => {
+        const fieldValue = value[fieldPath]
+        
+        // Get field mode from the appropriate view - following Keystone pattern
+        const fieldModeFilter = field[view]?.fieldMode || 'edit'
+        let fieldMode: 'read' | 'edit' | 'hidden'
+        
+        if (typeof fieldModeFilter === 'string') {
+          fieldMode = fieldModeFilter as 'read' | 'edit' | 'hidden'
+        } else {
+          // Handle conditional field modes
+          if (testFilter(fieldModeFilter?.edit, serialized)) fieldMode = 'edit'
+          else if (view === 'itemView' && testFilter(fieldModeFilter?.read, serialized)) fieldMode = 'read'
+          else fieldMode = 'hidden'
+        }
+        
+        const isReadOnly = fieldMode === 'read' || fieldMode === 'hidden'
+        
+        if (fieldMode === 'hidden') {
+          return null
+        }
+
+        return (
+          <field.views.Field
+            key={fieldPath}
+            field={field.controller}
+            value={fieldValue}
+            forceValidation={forceValidation && invalidFields?.has(fieldPath)}
+            isRequired={testFilter(isRequireds?.[fieldPath] ?? false, serialized)}
+            onChange={
+              isReadOnly || !onChange
+                ? undefined
+                : (newFieldValue: unknown) => {
+                    onChange({
+                      ...value,
+                      [fieldPath]: newFieldValue,
+                    })
+                  }
+            }
+          />
+        )
+      })}
     </div>
-  );
-}
-
-function FieldGroup(props: {
-  label: string;
-  description?: string | null;
-  count: number;
-  collapsed?: boolean;
-  children: ReactNode;
-}) {
-  const descriptionId = useId();
-  const labelId = useId();
-
-  const divider = <Separator orientation="vertical" />;
-
-  // Count actual fields (excluding virtual fields in create view)
-  const actualFieldCount = props.children ? Array.isArray(props.children) ? props.children.filter(
-    (item) =>
-      item !== undefined &&
-      !(
-        item?.props?.value &&
-        typeof item?.props?.value === "symbol" &&
-        item?.props?.value.toString() ===
-          "Symbol(create view virtual field value)"
-      )
-  ).length : 1 : 0;
-
-  // Don't render the group if there are no actual fields
-  if (actualFieldCount === 0) {
-    return null;
-  }
-
-  return (
-    <div
-      role="group"
-      aria-labelledby={labelId}
-      aria-describedby={props.description === null || props.description === undefined ? undefined : descriptionId}
-    >
-      <details open={!props.collapsed} className="group">
-        <summary className="list-none outline-none [&::-webkit-details-marker]:hidden cursor-pointer">
-          <div className="flex gap-1.5">
-            <span>
-              <div
-                className={cn(
-                  buttonVariants({ variant: "outline", size: "icon" }),
-                  "border self-start transition-transform group-open:rotate-90 [&_svg]:size-3 h-6 w-6"
-                )}
-              >
-                <ChevronRight />
-              </div>
-            </span>
-            {divider}
-            <div className="flex flex-col gap-1">
-              <div className="flex items-center gap-2">
-                <div id={labelId} className="relative text-lg/5 font-medium">
-                  {props.label}
-                </div>
-                <Badge className="text-[.7rem] py-0.5 uppercase tracking-wide font-medium">
-                  {actualFieldCount} FIELD{actualFieldCount !== 1 && "S"}
-                </Badge>
-              </div>
-              {props.description !== null && props.description !== undefined && (
-                <FieldDescription
-                  className="opacity-50 text-sm"
-                  id={descriptionId}
-                >
-                  {props.description}
-                </FieldDescription>
-              )}
-            </div>
-          </div>
-        </summary>
-        <div className="flex ml-[2.25rem] mt-2">
-          {divider}
-          <div className="w-full">
-            <div className="space-y-4">{props.children}</div>
-          </div>
-        </div>
-      </details>
-    </div>
-  );
+  )
 }

@@ -303,7 +303,7 @@ export async function getAuthHeaders() {
   'use server';
   const cookieStore = await cookies();
   const keystoneCookie = cookieStore.get('keystonejs-session')?.value;
-  return {
+  return keystoneCookie ? {
     Cookie: `keystonejs-session=${keystoneCookie}`
-  };
+  } : {};
 }

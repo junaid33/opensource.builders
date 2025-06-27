@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { signUp } from "@/features/dashboard/actions";
-import { Logo } from "../../components/Logo";
+import { Logo } from "@/features/dashboard/components/Logo";
 
 type ActionState = {
   message: string | null;

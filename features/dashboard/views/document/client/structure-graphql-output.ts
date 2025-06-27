@@ -24,11 +24,11 @@ export function getOutputGraphQLField(
     cache.set(schema, type)
   }
   return graphql.field({
-    type: cache.get(schema)!,
-    resolve(source: Record<string, unknown>) {
+    type: cache.get(schema)! as any,
+    resolve(source: any) {
       return source
     },
-  })
+  }) as any
 }
 
 function getOutputGraphQLTypeInner(
@@ -41,12 +41,12 @@ function getOutputGraphQLTypeInner(
     if (!schema.graphql) {
       throw new Error(`Field at ${name} is missing a graphql field`)
     }
-    return schema.graphql.output
+    return schema.graphql.output as any
   }
   if (schema.kind === 'object') {
     const output = graphql.object<Record<string, unknown>>()({
       name: `${name}Output`,
-      fields: () =>
+      fields: (() =>
         Object.fromEntries(
           Object.entries(schema.fields).map(([key, val]): [string, OutputFieldType] => {
             const type = getOutputGraphQLTypeInner(
@@ -58,20 +58,20 @@ function getOutputGraphQLTypeInner(
             return [
               key,
               graphql.field({
-                type,
+                type: type as any,
                 resolve(rootVal: Record<string, unknown>) {
                   return rootVal[key]
                 },
-              }),
+              }) as any,
             ]
           })
-        ),
+        )) as any,
     })
-    return output
+    return output as any
   }
   if (schema.kind === 'array') {
     const innerType = getOutputGraphQLTypeInner(name, schema.element, cache, meta)
-    return graphql.list(innerType)
+    return graphql.list(innerType as any) as any
   }
   if (schema.kind === 'conditional') {
     const output = graphql.object<{ discriminant: string | boolean; value: unknown }>()({
@@ -84,17 +84,17 @@ function getOutputGraphQLTypeInner(
           },
         }),
         value: graphql.field({
-          type: getOutputGraphQLTypeInner(name, schema.values[Object.keys(schema.values)[0]], cache, meta),
-          resolve(rootVal) {
+          type: getOutputGraphQLTypeInner(name, schema.values[Object.keys(schema.values)[0]], cache, meta) as any,
+          resolve(rootVal: any) {
             return rootVal.value
           },
-        }),
+        }) as any,
       }),
     })
-    return output
+    return output as any
   }
   if (schema.kind === 'relationship') {
-    return meta.lists[schema.listKey].types.output
+    return meta.lists[schema.listKey].types.output as any
   }
   if (schema.kind === 'child') {
     throw new Error(`Child fields are not supported in the structure field, found one at ${name}`)

@@ -1,114 +1,20 @@
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { ListTable } from '@/features/dashboard/components/ListTable';
-import { FilterBarWrapper } from '@/features/dashboard/components/FilterBarWrapper';
-import { getListByPath, getListDataAction } from "@/features/dashboard/actions";
-import { PageBreadcrumbs } from "@/features/dashboard/components/PageBreadcrumbs";
-import { Circle, Square, Triangle } from "lucide-react";
-import { buildOrderByClause } from "@/features/dashboard/lib/buildOrderByClause";
-import { getSelectedFields } from "@/features/dashboard/lib/fields";
-import { notFound } from "next/navigation";
+/**
+ * ListPage - Server Component
+ * Based on Keystone's ListPage but adapted for server-side rendering
+ * Follows the same pattern as ItemPage
+ */
 
-interface ListDataResponse {
-  items: any[];
-  count: number;
-}
+import { getListItemsAction } from '../../actions/getListItemsAction'
+import { getListByPath } from '../../actions/getListByPath'
+import { getAdminMetaAction } from '../../actions'
+import { buildOrderByClause } from '../../lib/buildOrderByClause'
+import { buildWhereClause } from '../../lib/buildWhereClause'
+import { notFound } from 'next/navigation'
+import { ListPageClient } from './ListPageClient'
 
 interface PageProps {
   params: Promise<{ listKey: string }>;
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-}
-
-function ErrorDisplay({ title, message }: { title: string; message: string }) {
-  return (
-    <div className="px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="text-2xl font-bold tracking-tight text-red-600">
-        {title}
-      </h1>
-      <p className="mt-2 text-gray-600">{message}</p>
-    </div>
-  );
-}
-
-function ListPageContent({
-  list,
-  items,
-  count,
-  currentPage,
-  pageSize,
-  selectedFields,
-  sort,
-  cleanedSearchParams,
-}: {
-  list: any;
-  items: any[];
-  count: number;
-  currentPage: number;
-  pageSize: number;
-  selectedFields: string[];
-  sort: any;
-  cleanedSearchParams: Record<string, string>;
-}) {
-  return (
-    <div className="flex flex-col flex-1 min-h-0">
-      <div className="pb-4 pt-4 md:pt-6 px-4 md:px-6">
-        <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-50">
-          {list.label}
-        </h1>
-        <p className="text-muted-foreground">
-          {list.description ||
-            `Create and manage ${list.label.toLowerCase()}`}
-        </p>
-      </div>
-      <FilterBarWrapper
-        list={list}
-        selectedFields={selectedFields}
-        currentSort={sort}
-      />
-      <main>
-        {items.length > 0 ? (
-          <ListTable
-            data={{ items, meta: { count } }}
-            list={list}
-            selectedFields={selectedFields}
-            currentPage={currentPage}
-            pageSize={pageSize}
-          />
-        ) : (
-          <div className="border-t text-center flex flex-col items-center justify-center p-10 h-full">
-            <div className="relative h-11 w-11 mx-auto mb-2">
-              <Triangle className="absolute left-1 top-1 w-4 h-4 fill-indigo-200 stroke-indigo-400 dark:stroke-indigo-600 dark:fill-indigo-950 rotate-[90deg]" />
-              <Square className="absolute right-[.2rem] top-1 w-4 h-4 fill-orange-300 stroke-orange-500 dark:stroke-amber-600 dark:fill-amber-950 rotate-[30deg]" />
-              <Circle className="absolute bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 fill-emerald-200 stroke-emerald-400 dark:stroke-emerald-600 dark:fill-emerald-900" />
-            </div>
-            <p className="mt-2 text-sm font-medium">
-              No {list.label.toLowerCase()}
-            </p>
-            {cleanedSearchParams.search || 
-            Object.keys(cleanedSearchParams).some((key) => 
-              key.startsWith("!")
-            ) ? (
-              <>
-                <p className="text-sm text-muted-foreground">
-                  Found matching your{" "}
-                  {cleanedSearchParams.search ? "search" : "filters"}
-                </p>
-                <Link href={`/dashboard/${list.path}`}>
-                  <Button variant="outline" size="sm" className="h-7 mt-2">
-                    Clear filters & search
-                  </Button>
-                </Link>
-              </>
-            ) : (
-              <p className="text-sm text-muted-foreground">
-                Get started by creating a new one.
-              </p>
-            )}
-          </div>
-        )}
-      </main>
-    </div>
-  );
 }
 
 export async function ListPage({ params, searchParams }: PageProps) {
@@ -126,81 +32,111 @@ export async function ListPage({ params, searchParams }: PageProps) {
   const list = await getListByPath(listKeyParam);
 
   if (!list) {
-    notFound();
+    notFound()
   }
 
-  // Convert searchParamsObj to a format compatible with getListDataAction
-  const cleanedSearchParams: Record<string, string> = {};
-  Object.entries(searchParamsObj).forEach(([key, value]) => {
-    if (typeof value === "string") {
-      cleanedSearchParams[key] = value;
-    } else if (Array.isArray(value)) {
-      // Assuming we only care about the first value if it's an array for filters/sort etc.
-      // Adjust if multiple values are expected for certain params.
-      cleanedSearchParams[key] = value[0] || "";
-    }
-  });
+  // Parse search params
+  const currentPage = parseInt(searchParamsObj.page?.toString() || '1', 10) || 1
+  const pageSize = parseInt(searchParamsObj.pageSize?.toString() || list.pageSize?.toString() || '50', 10)
+  const searchString = searchParamsObj.search?.toString() || ''
 
-  // Fetch the list data using the new server action
-  const response = await getListDataAction(list, cleanedSearchParams);
+  // Build dynamic orderBy clause using Keystone's defaults
+  const orderBy = buildOrderByClause(list, searchParamsObj)
 
-  // Check if the action was successful
-  if (!response.success) {
-    return (
-      <ErrorDisplay
-        title="Error Fetching Data"
-        message={response.error || "An unknown error occurred."}
-      />
-    );
+  // Build filters from URL params using Keystone's approach
+  const filterWhere = buildWhereClause(list, searchParamsObj)
+
+  // Build search where clause using dashboard1's proper implementation
+  const searchParameters = searchString ? { search: searchString } : {}
+  const searchWhere = buildWhereClause(list, searchParameters)
+
+  // Combine search and filters - following Keystone's pattern
+  const whereConditions = []
+  if (Object.keys(searchWhere).length > 0) {
+    whereConditions.push(searchWhere)
+  }
+  if (Object.keys(filterWhere).length > 0) {
+    whereConditions.push(filterWhere)
   }
 
-  // Extract data from the response with proper type handling
-  const listData = response.data as ListDataResponse;
-  const items = listData.items || [];
-  const count = listData.count || 0;
+  const where = whereConditions.length > 0 ? { AND: whereConditions } : {}
 
-  // Re-calculate values needed by the UI using list meta and search params
-  const currentPage = Number.parseInt(cleanedSearchParams?.page || "1", 10);
-  const pageSize = Number.parseInt(
-    cleanedSearchParams?.pageSize || String(list.pageSize) || "50",
-    10
-  );
-  const selectedFields = getSelectedFields(list, cleanedSearchParams);
+  // Build GraphQL variables - following the same pattern as existing code
+  const variables = {
+    where,
+    take: pageSize,
+    skip: (currentPage - 1) * pageSize,
+    orderBy
+  }
+
+  // Build selected fields set from URL params or default to initial columns
+  let selectedFields = ['id'] // Always include ID
   
-  // Build sort directly from list
-  const sort = buildOrderByClause(list, cleanedSearchParams);
+  if (searchParamsObj.fields) {
+    // Use fields from URL params
+    const fieldsFromUrl = searchParamsObj.fields.toString().split(',').filter(field => {
+      return field in (list.fields || {})
+    })
+    selectedFields = [...selectedFields, ...fieldsFromUrl]
+  } else {
+    // Use initial columns or fallback to basic fields
+    if (list.initialColumns && list.initialColumns.length > 0) {
+      selectedFields = [...selectedFields, ...list.initialColumns]
+    } else if (list.fields) {
+      // Fallback for lists without initialColumns
+      Object.keys(list.fields).forEach(fieldKey => {
+        if (['name', 'title', 'label', 'createdAt', 'updatedAt'].includes(fieldKey)) {
+          selectedFields.push(fieldKey)
+        }
+      })
+    }
+  }
+  
+  // Remove duplicates
+  selectedFields = [...new Set(selectedFields)]
+
+  // Fetch list items data with cache options
+  const cacheOptions = {
+    next: {
+      tags: [`list-${list.key}`],
+      revalidate: 300, // 5 minutes
+    },
+  }
+
+  // Use the working dashboard action for list items data
+  const response = await getListItemsAction(listKeyParam, variables, selectedFields, cacheOptions)
+
+  let fetchedData: { items: any[], count: number } = { items: [], count: 0 }
+  let error: string | null = null
+
+  if (response.success) {
+    fetchedData = response.data
+  } else {
+    console.error('Error fetching list items:', response.error)
+    error = response.error
+  }
+
+  // Get adminMeta for the list structure
+  const adminMetaResponse = await getAdminMetaAction(list.key)
+  
+  // Extract the list with proper field metadata if successful
+  const adminMetaList = adminMetaResponse.success ? adminMetaResponse.data.list : null
+  
+  // Create enhanced list with validation data
+  const enhancedList = adminMetaList || list
 
   return (
-    <section
-      aria-label={`${list.label} overview`}
-      className="overflow-hidden flex flex-col"
-    >
-      <PageBreadcrumbs
-        items={[
-          {
-            type: "link",
-            label: "Dashboard",
-            href: "/",
-          },
-          {
-            type: "page",
-            label: list.label,
-            showModelSwitcher: true,
-          },
-        ]}
-      />
-      <ListPageContent 
-        list={list}
-        items={items}
-        count={count}
-        currentPage={currentPage}
-        pageSize={pageSize}
-        selectedFields={selectedFields}
-        sort={sort}
-        cleanedSearchParams={cleanedSearchParams}
-      />
-    </section>
-  );
+    <ListPageClient
+      list={enhancedList}
+      initialData={fetchedData}
+      initialError={error}
+      initialSearchParams={{
+        page: currentPage,
+        pageSize,
+        search: searchString
+      }}
+    />
+  )
 }
 
-export default ListPage;
+export default ListPage

@@ -12,7 +12,7 @@ import {
   isRelationshipData,
   validateDocumentStructure,
 } from './structure-validation'
-import { type DocumentFeatures } from './index'
+import { type DocumentFeatures } from '../index'
 
 export class PropValidationError extends Error {
   path: ReadonlyPropPath

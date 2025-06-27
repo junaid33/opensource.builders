@@ -101,7 +101,7 @@ export function BlockPopover(props: BlockPopoverProps) {
 
   return (
     <PopoverContent
-      side={props.placement} // Map placement to 'side' prop
+      side={props.placement === 'start' ? 'left' : props.placement === 'end' ? 'right' : props.placement as any}
       // sideOffset might be needed for margin similar to tokenSchema.size.space.regular
       sideOffset={8} // Example offset, adjust as needed
       className={cn(

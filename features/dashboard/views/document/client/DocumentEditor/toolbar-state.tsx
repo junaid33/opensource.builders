@@ -1,6 +1,6 @@
 import React, { type ReactNode, useContext } from 'react'
 import { useSlate } from 'slate-react'
-import { type DocumentFeatures } from '../views'
+import { type DocumentFeatures } from '../views-shared'
 import { ComponentBlockContext } from './component-blocks'
 import { type ComponentBlock } from './component-blocks/api'
 import { LayoutOptionsProvider } from './layouts'

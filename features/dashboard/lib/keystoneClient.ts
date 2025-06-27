@@ -2,9 +2,9 @@
  * GraphQL utilities for data fetching with SWR
  */
 
-import { getAuthHeaders } from './cookies';
+import { getAuthHeaders } from '@/features/dashboard/lib/cookies';
 import { GraphQLClient, ClientError } from 'graphql-request';
-import { getGraphQLEndpoint } from './getBaseUrl';
+import { getGraphQLEndpoint } from '@/features/dashboard/lib/getBaseUrl';
 
 // Define response type for keystoneClient
 export type KeystoneResponse<T = any> =
@@ -19,7 +19,7 @@ async function createGraphQLClient(): Promise<GraphQLClient> {
   const authHeaders = await getAuthHeaders();
   return new GraphQLClient(endpoint, {
     credentials: 'include',
-    headers: authHeaders ? authHeaders : undefined,
+    headers: authHeaders || {},
   });
 }
 
@@ -43,7 +43,7 @@ function formatGraphQLErrors(error: ClientError): { message: string; errors?: an
     const code = extensions.code || '';
     
     // Get original error if available
-    const originalError = extensions.originalError?.message || extensions.exception?.message || '';
+    const originalError = (extensions.originalError as any)?.message || (extensions.exception as any)?.message || '';
     
     // Include validation errors if present
     const validation = extensions.validation || {};

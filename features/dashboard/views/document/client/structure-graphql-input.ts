@@ -4,9 +4,6 @@ import type {
   FieldData,
   GraphQLTypesForList,
   KeystoneContext,
-  InputType,
-  NonNullType,
-  InferValueFromArg,
 } from '@keystone-6/core/types'
 import type { Arg as GArg, InputType as GInputType, NonNullType as GNonNull, InferValueFromArg } from '@graphql-ts/schema'
 import type { GraphQLResolveInfo } from 'graphql'
@@ -19,7 +16,7 @@ export function getGraphQLInputType(
   name: string,
   schema: ComponentSchema,
   operation: 'create' | 'update',
-  cache: Map<ComponentSchema, InputType>,
+  cache: Map<ComponentSchema, GInputType>,
   meta: FieldData
 ) {
   if (!cache.has(schema)) {

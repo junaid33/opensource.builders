@@ -82,7 +82,7 @@ export function MultiSelect({
   className,
   isClearable = true,
   autoFocus,
-  id,
+
   onInputChange,
   controlShouldRenderValue = true,
   components,

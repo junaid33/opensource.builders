@@ -1,23 +1,38 @@
-import { AdminMetaProvider } from "@/features/dashboard/components/AdminMetaProvider";
-import { getAdminMeta } from "@/features/dashboard/actions";
-import { getAuthenticatedUser } from "@/features/dashboard/actions/auth";
+/**
+ * dashboardLayout - Client component that receives server-side data
+ * Follows Dashboard1's pattern: server layout fetches data, client layout provides it
+ */
+
+'use client'
+
+import React from 'react'
+import { AdminMetaProvider } from '../hooks/useAdminMeta'
+import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar'
+import { Sidebar } from './Sidebar'
+import { ErrorBoundary } from './ErrorBoundary'
+import { DashboardProvider } from '../context/DashboardProvider'
 
 interface DashboardLayoutProps {
-  children: React.ReactNode;
+  children: React.ReactNode
+  adminMeta?: any
+  authenticatedItem?: any
 }
 
-export async function DashboardLayout({ children }: DashboardLayoutProps) {
-  // Fetch admin metadata and user data concurrently
-  const [adminMeta, userResponse] = await Promise.all([
-    getAdminMeta(),
-    getAuthenticatedUser()
-  ]);
-
-  const user = userResponse.success ? userResponse.data?.authenticatedItem : null;
-
+export function DashboardLayout({ children, adminMeta, authenticatedItem }: DashboardLayoutProps) {
   return (
-    <AdminMetaProvider adminMeta={adminMeta} user={user}>
-      {children}
-    </AdminMetaProvider>
-  );
+    <ErrorBoundary>
+      <DashboardProvider>
+        <AdminMetaProvider>
+          <SidebarProvider>
+            <Sidebar adminMeta={adminMeta} user={authenticatedItem} />
+            <SidebarInset className="min-w-0">
+              {children}
+            </SidebarInset>
+          </SidebarProvider>
+        </AdminMetaProvider>
+      </DashboardProvider>
+    </ErrorBoundary>
+  )
 }
+
+export default DashboardLayout

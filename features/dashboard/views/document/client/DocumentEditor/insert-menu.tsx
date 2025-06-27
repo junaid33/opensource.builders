@@ -13,7 +13,7 @@ import { insertNodesButReplaceIfSelectionIsAtEmptyParagraphOrHeading } from './u
 import { insertLayout } from './layouts-shared'
 
 import { useOverlayTrigger } from '@react-aria/overlays'
-import { useListState } from '@react-stately/list'
+// import { useListState } from '@react-stately/list'
 import { useOverlayTriggerState } from '@react-stately/overlays'
 import { Popover as ShadPopover, PopoverTrigger, PopoverContent } from '@/components/ui/popover'
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command'
@@ -163,31 +163,33 @@ export function InsertMenu({ children, text }: { children: ReactNode; text: Text
         case 'ArrowDown': {
           if (stateRef.current.options.length) {
             event.preventDefault()
-            state.selectionManager.setFocused(true)
-            state.selectionManager.setFocusedKey(
-              (Number(state.selectionManager.focusedKey) === stateRef.current.options.length - 1
-                ? 0
-                : Number(state.selectionManager.focusedKey) + 1
-              ).toString()
-            )
+            // TODO: Fix state management
+            // state.selectionManager.setFocused(true)
+            // state.selectionManager.setFocusedKey(
+            //   (Number(state.selectionManager.focusedKey) === stateRef.current.options.length - 1
+            //     ? 0
+            //     : Number(state.selectionManager.focusedKey) + 1
+            //   ).toString()
+            // )
           }
           return
         }
         case 'ArrowUp': {
           if (stateRef.current.options.length) {
             event.preventDefault()
-            state.selectionManager.setFocused(true)
-            state.selectionManager.setFocusedKey(
-              (state.selectionManager.focusedKey === '0'
-                ? stateRef.current.options.length - 1
-                : Number(state.selectionManager.focusedKey) - 1
-              ).toString()
-            )
+            // TODO: Fix state management
+            // state.selectionManager.setFocused(true)
+            // state.selectionManager.setFocusedKey(
+            //   (state.selectionManager.focusedKey === '0'
+            //     ? stateRef.current.options.length - 1
+            //     : Number(state.selectionManager.focusedKey) - 1
+            //   ).toString()
+            // )
           }
           return
         }
         case 'Enter': {
-          const option = stateRef.current.options[Number(state.selectionManager.focusedKey)]
+          const option = stateRef.current.options[0] // TODO: Fix state management
           if (option) {
             insertOption(editor, stateRef.current.text, option)
             event.preventDefault()
@@ -220,17 +222,18 @@ export function InsertMenu({ children, text }: { children: ReactNode; text: Text
   } = useOverlayTrigger({ type: 'listbox' }, overlayState, triggerRef)
   // useListState and ListBoxBase are replaced by Command components
 
-  useEffect(() => {
-    if (!state.selectionManager.isFocused && state.collection.size) {
-      state.selectionManager.setFocused(true)
-      state.selectionManager.setFocusedKey('0')
-    }
-  }, [state])
+  // TODO: Fix state management
+  // useEffect(() => {
+  //   if (!state.selectionManager.isFocused && state.collection.size) {
+  //     state.selectionManager.setFocused(true)
+  //     state.selectionManager.setFocusedKey('0')
+  //   }
+  // }, [state])
   const scrollableRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const element = scrollableRef.current?.querySelector('[role="listbox"] [role="presentation"]')
-      ?.children[state.selectionManager.focusedKey as number]
+      ?.children[0] // TODO: Fix state management
     if (element) {
       scrollIntoView(element, {
         scrollMode: 'if-needed',
@@ -238,7 +241,7 @@ export function InsertMenu({ children, text }: { children: ReactNode; text: Text
         block: 'nearest',
       })
     }
-  }, [state.selectionManager.focusedKey])
+  }, []) // TODO: Fix state management
   const listboxRef = useRef(null) // May not be needed with Command
   // let layout = useListBoxLayout() // Not needed with Command
 
@@ -259,7 +262,7 @@ export function InsertMenu({ children, text }: { children: ReactNode; text: Text
         side="bottom"
         align="start"
         onOpenAutoFocus={(e) => e.preventDefault()} // To prevent focus stealing from editor
-        ref={overlayProps.ref} // Pass ref from useOverlayTrigger
+        // ref={overlayProps.ref} // TODO: Fix ref type
         {...overlayProps} // Spread other overlayProps
       >
         <Command ref={listboxRef}>
@@ -277,7 +280,7 @@ export function InsertMenu({ children, text }: { children: ReactNode; text: Text
                     overlayState.close() // Close popover on select
                   }}
                   className={cn(
-                    Number(state.selectionManager.focusedKey) === option.index && "bg-accent text-accent-foreground"
+                    false && "bg-accent text-accent-foreground" // TODO: Fix state management
                   )}
                 >
                   {option.label}

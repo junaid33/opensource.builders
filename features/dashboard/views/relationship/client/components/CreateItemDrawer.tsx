@@ -1,151 +1,121 @@
-import { useCallback, useMemo } from "react";
-import { Loader2 } from "lucide-react";
+import { useMemo } from "react";
+import useSWR from "swr";
 import { Button } from "@/components/ui/button";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerBody,
-  DrawerFooter,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
-import { useList } from "@/features/dashboard/hooks/useAdminMeta"; // Assuming useAdminMeta is the correct path
-import { useCreateItem } from "@/features/dashboard/hooks/useCreateItem";
-import { GraphQLErrorNotice } from "@/features/dashboard/components/GraphQLErrorNotice";
-import type { List } from '@/features/dashboard/types'; // Import the List type
-import type { FieldMeta } from '@/features/dashboard/types'; // Assuming path
+import { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
 import { Fields } from "@/features/dashboard/components/Fields";
+import { getList } from "@/features/dashboard/actions/getList";
+import { enhanceFields } from "@/features/dashboard/utils/enhanceFields";
+import { useCreateItem } from "@/features/dashboard/utils/useCreateItem";
 
 interface CreateItemDrawerProps {
   listKey: string;
-  isDrawerOpen: boolean;
-  setIsDrawerOpen: (isOpen: boolean) => void;
-  trigger: React.ReactNode;
+  isOpen: boolean;
   onClose: () => void;
-  onCreate: (item: { id: string; label: string }) => void;
+  onCreate: (data: Record<string, unknown>) => void;
 }
 
-interface CreateItemDrawerInnerProps {
-  enhancedList: List; // Use the imported List type
-  isDrawerOpen: boolean;
-  setIsDrawerOpen: (isOpen: boolean) => void;
-  onClose: () => void;
-  onCreate: (item: { id: string; label: string }) => void;
-}
-
-// Inner component that calls the hook unconditionally
-function CreateItemDrawerInner({
-  enhancedList,
-  isDrawerOpen,
-  setIsDrawerOpen,
-  onClose,
-  onCreate,
-}: CreateItemDrawerInnerProps) {
-  // Hook is now called unconditionally within this component's lifecycle
-  const createItemState = useCreateItem(enhancedList);
-
-  const handleSubmit = useCallback(async () => {
-    try {
-      const item = await createItemState.create();
-      if (item) {
-        onCreate({
-          id: item.id,
-          label: item[enhancedList.labelField] || item.id,
-        });
-        // Optionally close drawer on success
-        // setIsDrawerOpen(false);
-        // onClose();
-      }
-    } catch (err) {
-      // Error state is managed by useCreateItem and displayed by GraphQLErrorNotice
-      console.error("Failed to create item:", err); // Keep for debugging if needed
+export function CreateItemDrawer({ listKey, isOpen, onClose, onCreate }: CreateItemDrawerProps) {
+  // Use SWR to fetch list data (same pattern as relationship field)
+  const { data: list, error, isLoading } = useSWR(
+    `list-${listKey}`,
+    async () => await getList(listKey),
+    {
+      revalidateOnFocus: false,
+      dedupingInterval: 60000, // Cache for 1 minute
     }
-  }, [enhancedList, createItemState, onCreate /*, setIsDrawerOpen, onClose */]);
-
-  const handleClose = useCallback(() => {
-    // Removed createItemState.reset() as it doesn't exist on the hook
-    onClose();
-    setIsDrawerOpen(false);
-  }, [onClose, setIsDrawerOpen]);
-
-  return (
-    // DrawerContent is rendered by the outer component now
-    <>
-      <DrawerHeader>
-        <DrawerTitle>Create {enhancedList.singular}</DrawerTitle>
-      </DrawerHeader>
-
-      <DrawerBody className="py-2">
-        {createItemState.error && (
-          <GraphQLErrorNotice
-            networkError={createItemState.error.networkError}
-            errors={createItemState.error.graphQLErrors}
-          />
-        )}
-        {/* Pass the props returned by the hook to Fields, asserting the correct type for fields */}
-        <Fields {...createItemState.props as { fields: Record<string, FieldMeta> } & Omit<typeof createItemState.props, 'fields'>} />
-      </DrawerBody>
-
-      <DrawerFooter>
-        <Button variant="outline" onClick={handleClose}>
-          Cancel
-        </Button>
-        <Button
-          onClick={handleSubmit}
-          disabled={
-            createItemState.state === "loading" ||
-            // Safely check invalidFields before accessing size
-            (createItemState.invalidFields && createItemState.invalidFields.size > 0)
-          }
-        >
-          {createItemState.state === "loading" ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
-          ) : (
-            "Create"
-          )}
-        </Button>
-      </DrawerFooter>
-    </>
   );
-}
 
-// Outer component handles loading and conditionally renders the Inner component
-export function CreateItemDrawer({
-  listKey,
-  isDrawerOpen,
-  setIsDrawerOpen,
-  trigger,
-  onClose,
-  onCreate,
-}: CreateItemDrawerProps) {
-  const { list, isLoading } = useList(listKey);
+  // Create enhanced fields like the create page does
+  const enhancedFields = useMemo(() => {
+    if (!list) return {};
+    return enhanceFields(list.fields || {}, list.key);
+  }, [list]);
+
+  // Use the create item hook with enhanced fields (same as create page)
+  const createItem = useCreateItem(list, enhancedFields);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!createItem) return;
+    
+    // Use the createItem hook's create method (same as create page)
+    const item = await createItem.create();
+    if (item?.id) {
+      onCreate(item);
+      onClose();
+    }
+  };
+
+  const handleCancel = () => {
+    onClose();
+  };
+
+  // Show loading state
+  if (isLoading) {
+    return (
+      <Drawer open={isOpen} onOpenChange={(open) => !open && handleCancel()}>
+        <DrawerContent>
+          <DrawerHeader>
+            <DrawerTitle>Loading...</DrawerTitle>
+          </DrawerHeader>
+          <div className="px-4 py-8 text-center">
+            Loading form...
+          </div>
+        </DrawerContent>
+      </Drawer>
+    );
+  }
+
+  // Show error state if no list
+  if (error || !list || !createItem) {
+    return (
+      <Drawer open={isOpen} onOpenChange={(open) => !open && handleCancel()}>
+        <DrawerContent>
+          <DrawerHeader>
+            <DrawerTitle>Error</DrawerTitle>
+          </DrawerHeader>
+          <div className="px-4 py-8 text-center text-red-600">
+            {error ? `Error loading ${listKey}: ${error.message}` : `Could not load form for ${listKey}`}
+          </div>
+          <DrawerFooter>
+            <Button onClick={handleCancel}>Close</Button>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
+    );
+  }
 
   return (
-    <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
-      <DrawerTrigger asChild>
-        {/* Wrap trigger in a div to ensure it's a single child */}
-        <div>{trigger}</div>
-      </DrawerTrigger>
-      <DrawerContent>
-        {isLoading || !list ? (
-          // Display loading indicator inside the drawer content area
-          <div className="flex items-center justify-center h-64"> {/* Added fixed height */}
-            <Loader2 className="h-6 w-6 animate-spin" />
+    <Drawer open={isOpen} onOpenChange={(open) => !open && handleCancel()}>
+      <DrawerContent className="flex flex-col">
+        <DrawerHeader className="flex-shrink-0">
+          <DrawerTitle>Add {list.singular}</DrawerTitle>
+          <DrawerDescription>
+            Create a new {list.singular.toLowerCase()}
+          </DrawerDescription>
+        </DrawerHeader>
+        
+        <form onSubmit={handleSubmit} className="flex flex-col flex-1 min-h-0">
+          <div className="flex-1 overflow-y-auto px-4">
+            <Fields
+              {...createItem.props}
+              fields={enhancedFields}
+              view="createView"
+            />
           </div>
-        ) : (
-          // Render the inner component when data is ready
-          <CreateItemDrawerInner
-            enhancedList={list}
-            isDrawerOpen={isDrawerOpen}
-            setIsDrawerOpen={setIsDrawerOpen}
-            onClose={onClose}
-            onCreate={onCreate}
-          />
-          // <>
-          // {JSON.stringify({list})}
-          // </>
-        )}
+
+          <DrawerFooter className="flex-shrink-0">
+            <div className="flex gap-2 justify-end">
+              <Button type="button" variant="outline" onClick={handleCancel}>
+                Cancel
+              </Button>
+              <Button type="submit" disabled={createItem.state === 'loading'}>
+                {createItem.state === 'loading' ? 'Creating...' : `Add ${list.singular}`}
+              </Button>
+            </div>
+          </DrawerFooter>
+        </form>
       </DrawerContent>
     </Drawer>
   );

@@ -76,7 +76,7 @@ export const renderElement = (props: RenderElementProps) => {
     default:
       return (
         <p 
-          className={(props.element as any).textAlign ? alignmentClassMap[(props.element as any).textAlign] : ''} 
+          className={(props.element as any).textAlign ? alignmentClassMap[(props.element as any).textAlign as keyof typeof alignmentClassMap] || '' : ''}
           {...props.attributes}
         >
           {props.children}

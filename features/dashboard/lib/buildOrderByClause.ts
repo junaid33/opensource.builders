@@ -1,22 +1,10 @@
-import { getSort } from "@/features/dashboard/lib/sort";
-import { ListMeta } from "@/features/dashboard/types/admin-meta";
+import { getSortFromSearchParams } from './sort';
 
-/**
- * Builds a GraphQL orderBy clause from search parameters
- * 
- * @param list The list metadata
- * @param searchParams Search parameters containing sort information
- * @returns An array of orderBy objects for GraphQL query
- */
-export function buildOrderByClause(
-  list: ListMeta,
-  searchParams: Record<string, string | string[] | undefined>
-): Array<Record<string, 'asc' | 'desc'>> | undefined {
-  const sort = getSort(list, searchParams);
+export function buildOrderByClause(list: any, searchParams: Record<string, any>) {
+  const sort = getSortFromSearchParams(list, searchParams);
   
-  if (!sort) {
-    return undefined;
-  }
-  
-  return [{ [sort.field]: sort.direction.toLowerCase() as 'asc' | 'desc' }];
+  // getSortFromSearchParams now always returns a value
+  return [{
+    [sort.field]: sort.direction
+  }];
 }

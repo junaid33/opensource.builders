@@ -240,28 +240,33 @@ export const fields = {
     const valuesToOption = new Map(options.map(x => [x.value, x]))
     return {
       kind: 'form' as const,
-      Input({ value, onChange, autoFocus }: InputArgs<string[]>) {
+      Input({ value, onChange, autoFocus }: InputArgs<readonly Option['value'][]>) {
         return (
           <FormItem>
             <FormLabel>{label}</FormLabel>
-            <Select
-              multiple
-              value={value}
-              onValueChange={onChange}
-            >
-              <FormControl>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select options" />
-                </SelectTrigger>
-              </FormControl>
-              <SelectContent>
-                {options.map(option => (
-                  <SelectItem key={option.value} value={option.value}>
+            <div className="space-y-2">
+              {options.map(option => (
+                <div key={option.value} className="flex items-center space-x-2">
+                  <UiCheckbox
+                    id={option.value}
+                    checked={value.includes(option.value)}
+                    onCheckedChange={(checked) => {
+                      if (checked) {
+                        onChange([...value, option.value])
+                      } else {
+                        onChange(value.filter(v => v !== option.value))
+                      }
+                    }}
+                  />
+                  <label
+                    htmlFor={option.value}
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
                     {option.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+                  </label>
+                </div>
+              ))}
+            </div>
           </FormItem>
         )
       },

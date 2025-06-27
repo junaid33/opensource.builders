@@ -1,10 +1,10 @@
-"use client";
+'use client'
 
-import { useState, ReactNode } from "react";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { ChevronDown, ChevronUp, ArrowUpDown } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { useState, ReactNode } from 'react'
+import { useRouter, usePathname, useSearchParams } from 'next/navigation'
+import { Button } from '@/components/ui/button'
+import { ChevronDown, ChevronUp, ArrowUpDown } from 'lucide-react'
+import { Badge } from '@/components/ui/badge'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,68 +12,78 @@ import {
   DropdownMenuSeparator,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { ListMeta, SortOption } from '@/features/dashboard/components/FilterBar';
-import { cn } from "@/lib/utils";
+} from '@/components/ui/dropdown-menu'
+import type { ListMeta } from '../types'
+import { cn } from '@/lib/utils'
 
 interface SortSelectionProps {
-  listMeta: ListMeta;
-  currentSort: SortOption | null;
-  children: ReactNode;
+  listMeta: ListMeta
+  children?: ReactNode
 }
 
 export function SortSelection({ listMeta, children }: SortSelectionProps) {
-  const [isOpen, setIsOpen] = useState(false);
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const [isOpen, setIsOpen] = useState(false)
+  const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
 
-  const query: Record<string, string> = {};
+  const query: Record<string, string> = {}
   if (searchParams) {
     for (const [key, value] of searchParams.entries()) {
-      query[key] = value;
+      query[key] = value
     }
   }
 
   const resetSort = () => {
-    const newQueryParams = new URLSearchParams(query);
-    newQueryParams.delete("sortBy");
-    router.push(`${pathname}?${newQueryParams.toString()}`);
-    setIsOpen(false);
-  };
+    const newQueryParams = new URLSearchParams(query)
+    newQueryParams.delete('sortBy')
+    router.push(`${pathname}?${newQueryParams.toString()}`)
+    setIsOpen(false)
+  }
 
   const handleSortChange = (fieldPath: string) => {
-    const currentSortBy = searchParams?.get("sortBy");
-    let newSortQuery = "";
+    const currentSortBy = searchParams?.get('sortBy')
+    let newSortQuery = ''
 
     if (currentSortBy === fieldPath) {
       // Toggle direction if same field (ASC -> DESC)
-      newSortQuery = `-${fieldPath}`;
+      newSortQuery = `-${fieldPath}`
     } else if (currentSortBy === `-${fieldPath}`) {
       // Toggle direction if same field (DESC -> ASC)
-      newSortQuery = fieldPath;
+      newSortQuery = fieldPath
     } else {
       // Default to ASC for new field
-      newSortQuery = fieldPath;
+      newSortQuery = fieldPath
     }
 
-    const newQueryParams = new URLSearchParams(query);
-    newQueryParams.set("sortBy", newSortQuery);
-    router.push(`${pathname}?${newQueryParams.toString()}`);
-    setIsOpen(false);
-  };
+    const newQueryParams = new URLSearchParams(query)
+    newQueryParams.set('sortBy', newSortQuery)
+    router.push(`${pathname}?${newQueryParams.toString()}`)
+    setIsOpen(false)
+  }
+
+  const DefaultTrigger = () => (
+    <Button
+      variant="outline"
+      size="sm"
+      className="flex gap-1.5 px-3 text-xs font-medium"
+    >
+      <ArrowUpDown className="h-3 w-3" />
+      SORT
+    </Button>
+  )
 
   // If no sort is active, render the default button
-  if (!searchParams?.get("sortBy")) {
+  if (!searchParams?.get('sortBy')) {
     return (
       <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
         <DropdownMenuTrigger asChild>
-          {children}
+          {children || <DefaultTrigger />}
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[200px]">
           <DropdownMenuLabel className="py-1.5">Sort by</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <div className="max-h-72 overflow-y-auto scrollbar-thin scrollbar-thumb-zinc-200 dark:scrollbar-thumb-zinc-700 scrollbar-track-transparent">
+          <div className="max-h-72 overflow-y-auto">
             {Object.entries(listMeta.fields)
               .filter(([, field]) => field.isOrderable)
               .map(([fieldPath, field]) => (
@@ -89,12 +99,12 @@ export function SortSelection({ listMeta, children }: SortSelectionProps) {
           </div>
         </DropdownMenuContent>
       </DropdownMenu>
-    );
+    )
   }
 
-  const sortBy = searchParams.get("sortBy") || "";
-  const field = sortBy.startsWith("-") ? sortBy.slice(1) : sortBy;
-  const direction = sortBy.startsWith("-") ? "DESC" : "ASC";
+  const sortBy = searchParams.get('sortBy') || ''
+  const field = sortBy.startsWith('-') ? sortBy.slice(1) : sortBy
+  const direction = sortBy.startsWith('-') ? 'DESC' : 'ASC'
 
   return (
     <div className="inline-flex divide-x rounded-lg border">
@@ -104,7 +114,7 @@ export function SortSelection({ listMeta, children }: SortSelectionProps) {
             variant="ghost"
             className="rounded-r-none border-0 px-3 hover:bg-accent"
           >
-            <ArrowUpDown className="stroke-muted-foreground" />
+            <ArrowUpDown className="h-3 w-3 stroke-muted-foreground" />
             {listMeta.fields[field]?.label}
           </Button>
         </DropdownMenuTrigger>
@@ -120,7 +130,7 @@ export function SortSelection({ listMeta, children }: SortSelectionProps) {
             </Badge>
           </div>
           <DropdownMenuSeparator />
-          <div className="max-h-72 overflow-y-auto scrollbar-thin scrollbar-thumb-zinc-200 dark:scrollbar-thumb-zinc-700 scrollbar-track-transparent">
+          <div className="max-h-72 overflow-y-auto">
             {Object.entries(listMeta.fields)
               .filter(([, field]) => field.isOrderable)
               .map(([fieldPath, fieldMeta]) => (
@@ -152,18 +162,18 @@ export function SortSelection({ listMeta, children }: SortSelectionProps) {
         <div className="-space-y-2">
           <ChevronUp
             className={cn(
-              "size-3.5",
-              direction === "ASC" ? "text-blue-500" : "opacity-30"
+              'size-3.5',
+              direction === 'ASC' ? 'text-blue-500' : 'opacity-30'
             )}
           />
           <ChevronDown
             className={cn(
-              "size-3.5",
-              direction === "DESC" ? "text-blue-500" : "opacity-30"
+              'size-3.5',
+              direction === 'DESC' ? 'text-blue-500' : 'opacity-30'
             )}
           />
         </div>
       </Button>
     </div>
-  );
+  )
 }

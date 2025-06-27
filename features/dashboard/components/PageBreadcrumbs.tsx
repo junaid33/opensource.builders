@@ -10,14 +10,11 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { ModelSwitcherDropdown } from "./ModelSwitcherDropdown";
-import { basePath } from "@/features/dashboard/lib/config";
 
 interface BreadcrumbItem {
   type: "link" | "model" | "page";
   label: string;
   href?: string;
-  showModelSwitcher?: boolean;
 }
 
 interface PageBreadcrumbsProps {
@@ -40,32 +37,16 @@ export function PageBreadcrumbs({ items, actions }: PageBreadcrumbsProps) {
                   <BreadcrumbItem>
                     {item.type === "link" && (
                       <BreadcrumbLink asChild>
-                        <Link className="text-foreground" href={`${basePath}${item.href}`}>{item.label}</Link>
+                        <Link className="text-foreground" href={item.href || "#"}>{item.label}</Link>
                       </BreadcrumbLink>
                     )}
                     {item.type === "model" && (
-                      <div className="flex items-center gap-3">
-                        <BreadcrumbLink asChild>
-                          <Link className="text-foreground" href={`${basePath}${item.href}`}>{item.label}</Link>
-                        </BreadcrumbLink>
-                        {item.showModelSwitcher && (
-                          <ModelSwitcherDropdown 
-                            basePath={basePath}
-                          />
-                        )}
-                      </div>
+                      <BreadcrumbLink asChild>
+                        <Link className="text-foreground" href={item.href || "#"}>{item.label}</Link>
+                      </BreadcrumbLink>
                     )}
                     {item.type === "page" && (
-                      <div className="flex items-center gap-3">
-                        {item.showModelSwitcher ? (
-                          <ModelSwitcherDropdown
-                            title={item.label}
-                            basePath={basePath}
-                          />
-                        ) : (
-                          <BreadcrumbPage>{item.label}</BreadcrumbPage>
-                        )}
-                      </div>
+                      <BreadcrumbPage>{item.label}</BreadcrumbPage>
                     )}
                   </BreadcrumbItem>
                 </React.Fragment>

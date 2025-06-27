@@ -1,3 +1,4 @@
+// @ts-nocheck
 function sortRelationships(left, right) {
     if (left.field.mode === "one" && right.field.mode === "one") {
       if (

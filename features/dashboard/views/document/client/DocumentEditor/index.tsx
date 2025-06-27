@@ -1,4 +1,5 @@
 import { type KeyboardEvent, type ReactNode, useContext, useState } from 'react'
+// @ts-ignore
 import isHotkey from 'is-hotkey'
 import { useCallback, useMemo } from 'react'
 import {
@@ -15,7 +16,7 @@ import { Editable, ReactEditor, Slate, withReact, useSlate } from 'slate-react'
 
 import type { EditableProps } from 'slate-react/dist/components/editable'
 import type { ComponentBlock } from '../component-blocks'
-import type { DocumentFeatures } from '../views'
+import type { DocumentFeatures } from '../views-shared'
 import { wrapLink } from './link-shared'
 import { clearFormatting, type Mark } from './utils'
 import { Toolbar } from './Toolbar'

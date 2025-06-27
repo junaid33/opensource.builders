@@ -1,7 +1,7 @@
 "use server"
 import { cookies } from "next/headers"
 
-export const getAuthHeaders = async () => {
+export const getAuthHeaders = async (): Promise<Record<string, string>> => {
   const cookieStore = await cookies()
   const token = cookieStore.get("keystonejs-session")?.value
 

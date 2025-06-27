@@ -114,10 +114,10 @@ interface ServerImplementation {
 }
 
 export interface FieldImplementation {
-  client?: any
-  server?: any
-  graphql?: any
-  filterTypes?: any
+  Field: (props: any) => React.ReactElement | null
+  Cell: (props: any) => React.ReactElement | null
+  controller: (args: any) => any
+  allowedExportsOnCustomViews?: string[]
 }
 
 // Define the field types registry structure
@@ -142,6 +142,34 @@ export const fieldTypes: FieldTypesRegistry = {
   document,
   checkbox,
   decimal
+}
+
+// Type definition matching Keystone exactly
+export type FieldViews = Record<
+  number,
+  {
+    Field: React.ComponentType<any>
+    Cell: React.ComponentType<any>
+    CardValue: React.ComponentType<any>
+    controller: (config: any) => any
+  }
+>
+
+// Import the dynamically generated field type mapping
+import { getFieldTypeFromViewsIndex } from './getFieldTypeFromViewsIndex'
+
+/**
+ * Get field implementation by viewsIndex - using the generated mapping
+ */
+export function getFieldViews(viewsIndex: number) {
+  const fieldType = getFieldTypeFromViewsIndex(viewsIndex)
+  const implementation = fieldTypes[fieldType]
+  
+  if (!implementation) {
+    throw new Error(`Field type "${fieldType}" not found in registry`)
+  }
+  
+  return implementation
 }
 
 /**

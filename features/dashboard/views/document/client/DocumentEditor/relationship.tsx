@@ -81,12 +81,11 @@ export function RelationshipElement({
             portalMenu
             state={{
               kind: 'one',
-              value:
-                element.data === null
+              value: element.data === null
                   ? null
                   : {
-                      id: element.data.id,
-                      label: element.data.label || element.data.id,
+                      id: String(element.data.id),
+                      label: String(element.data.label || element.data.id),
                       data: element.data.data,
                     },
               onChange(value) {

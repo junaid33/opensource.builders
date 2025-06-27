@@ -255,8 +255,8 @@ export function Toolbar({ documentFeatures, viewState }: {
 
 /* UI Components */
 
-interface MarkButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  type: string
+interface MarkButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'type'> {
+  markType: string
   children: ReactNode
 }
 
@@ -265,11 +265,11 @@ const MarkButton = forwardRef<HTMLButtonElement, MarkButtonProps>(function MarkB
     editor,
     marks
   } = useToolbarState()
-  const mark = marks[props.type as keyof typeof marks]
+  const mark = marks[props.markType as keyof typeof marks]
   if (!mark) return null
-  
+
   return useMemo(() => {
-    const { type, ...restProps } = props
+    const { markType, ...restProps } = props
     return (
       <ToolbarButton
         ref={ref}
@@ -278,9 +278,9 @@ const MarkButton = forwardRef<HTMLButtonElement, MarkButtonProps>(function MarkB
         onMouseDown={(event) => {
           event.preventDefault()
           if (mark.isSelected) {
-            Editor.removeMark(editor, props.type)
+            Editor.removeMark(editor, props.markType)
           } else {
-            Editor.addMark(editor, props.type, true)
+            Editor.addMark(editor, props.markType, true)
           }
         }}
         {...restProps}
@@ -458,7 +458,7 @@ function InlineMarks({ marks }: { marks: DocumentFeatures['formatting']['inlineM
       {marks.bold && (
         <Tooltip>
           <TooltipTrigger asChild>
-            <MarkButton type="bold">
+            <MarkButton markType="bold">
               <Bold className="stroke-[3]" size={16} />
             </MarkButton>
           </TooltipTrigger>
@@ -470,7 +470,7 @@ function InlineMarks({ marks }: { marks: DocumentFeatures['formatting']['inlineM
       {marks.italic && (
         <Tooltip>
           <TooltipTrigger asChild>
-            <MarkButton type="italic">
+            <MarkButton markType="italic">
               <Italic size={16} />
             </MarkButton>
           </TooltipTrigger>
@@ -492,7 +492,7 @@ function InlineMarks({ marks }: { marks: DocumentFeatures['formatting']['inlineM
         <PopoverContent align="start" className="p-1">
           <ToolbarGroup direction="column">
             {marks.underline && (
-              <MarkButton type="underline">
+              <MarkButton markType="underline">
                 <ContentInButtonWithShortcut
                   content="Underline"
                   shortcut="Ctrl+U"
@@ -500,27 +500,27 @@ function InlineMarks({ marks }: { marks: DocumentFeatures['formatting']['inlineM
               </MarkButton>
             )}
             {marks.strikethrough && (
-              <MarkButton type="strikethrough">
+              <MarkButton markType="strikethrough">
                 <ContentInButtonWithShortcut content="Strikethrough" />
               </MarkButton>
             )}
             {marks.code && (
-              <MarkButton type="code">
+              <MarkButton markType="code">
                 <ContentInButtonWithShortcut content="Code" />
               </MarkButton>
             )}
             {marks.keyboard && (
-              <MarkButton type="keyboard">
+              <MarkButton markType="keyboard">
                 <ContentInButtonWithShortcut content="Keyboard" />
               </MarkButton>
             )}
             {marks.subscript && (
-              <MarkButton type="subscript">
+              <MarkButton markType="subscript">
                 <ContentInButtonWithShortcut content="Subscript" />
               </MarkButton>
             )}
             {marks.superscript && (
-              <MarkButton type="superscript">
+              <MarkButton markType="superscript">
                 <ContentInButtonWithShortcut content="Superscript" />
               </MarkButton>
             )}

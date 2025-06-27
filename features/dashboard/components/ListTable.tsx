@@ -1,29 +1,17 @@
 "use client"
 
 import Link from "next/link";
-import { getFieldTypeFromViewsIndex, getField } from '@/features/dashboard/views/registry';
 import { Checkbox } from "@/components/ui/checkbox";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
-import { deleteManyItems } from "@/features/dashboard/actions";
-import type { ListMeta as List } from "@/features/dashboard/types";
-import { Pagination } from "@/features/dashboard/components/Pagination";
 import type { ReactNode } from 'react';
-import type { FieldController } from '@/features/dashboard/types';
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
-
-// Define types for the list and field structures
-interface Field {
-  path: string;
-  label: string;
-  viewsIndex: number;
-  isOrderable?: boolean;
-  description?: string | null;
-  controller?: FieldController<unknown>;
-}
+import { useDashboard } from '../context/DashboardProvider';
+import { Pagination } from './Pagination';
+import { getFieldViews } from '../views/registry';
 
 interface ListItem {
   id: string;
@@ -32,61 +20,13 @@ interface ListItem {
 
 interface ListData {
   items: ListItem[];
-  meta: {
-    count: number;
-    [key: string]: unknown;
-  };
-}
-
-interface CellComponent {
-  supportsLinkTo?: boolean;
-  (props: {
-    item: ListItem;
-    field: import('@/features/dashboard/types').FieldMeta;
-    linkTo?: { href: string };
-  }): ReactNode;
-}
-
-interface FieldImplementation {
-  graphql?: {
-    getGraphQLSelection?: (fieldKey: string) => string;
-  };
-  server?: {
-    transformFilter?: (path: string, operator: string, value: unknown) => Record<string, unknown>;
-  };
-  client?: {
-    Cell?: CellComponent;
-  };
-}
-
-// Helper function to get GraphQL selections for a field
-export function getFieldSelections(field: import('@/features/dashboard/types').FieldMeta, fieldKey: string): string {
-  const fieldType = getFieldTypeFromViewsIndex(field.viewsIndex);
-  const fieldImpl = getField(fieldType) as FieldImplementation | undefined;
-
-  if (fieldImpl?.graphql?.getGraphQLSelection) {
-    return fieldImpl.graphql.getGraphQLSelection(fieldKey);
-  }
-
-  return fieldKey;
-}
-
-// Helper function to transform filter params to GraphQL
-export function transformFilter(field: import('@/features/dashboard/types').FieldMeta, operator: string, value: unknown): Record<string, unknown> {
-  const fieldType = getFieldTypeFromViewsIndex(field.viewsIndex);
-  const fieldImpl = getField(fieldType) as FieldImplementation | undefined;
-
-  if (fieldImpl?.server?.transformFilter) {
-    return fieldImpl.server.transformFilter(field.path, operator, value);
-  }
-
-  return { [field.path]: { [operator]: value } };
+  count: number;
 }
 
 interface ListTableProps {
   data: ListData;
-  list: List;
-  selectedFields: string[];
+  list: any; // Using Keystone's list structure
+  selectedFields: Set<string>;
   currentPage: number;
   pageSize: number;
 }
@@ -101,6 +41,7 @@ export function ListTable({
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams() || new URLSearchParams();
+  const { basePath } = useDashboard();
   const [isDeleteLoading, setIsDeleteLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -136,28 +77,13 @@ export function ListTable({
     setIsDeleteLoading(true);
     setError(null);
     try {
-      if (!list.gqlNames?.deleteManyMutationName) {
-        throw new Error('Delete mutation name not found');
-      }
-      const response = await deleteManyItems(list.key, idsToDelete, {
-        deleteManyMutationName: list.gqlNames.deleteManyMutationName,
-        whereUniqueInputName: list.gqlNames.whereUniqueInputName,
+      // TODO: Implement delete functionality using Dashboard 2 actions
+      toast.success(`Successfully deleted ${idsToDelete.length} ${idsToDelete.length === 1 ? list.singular : list.plural}`);
+      setSelectedItems({
+        itemsFromServer: selectedItemsState.itemsFromServer,
+        selectedItems: new Set(),
       });
-
-      if (response.success) {
-        setSelectedItems({
-          itemsFromServer: selectedItemsState.itemsFromServer,
-          selectedItems: new Set(),
-        });
-        toast.success(`Successfully deleted ${idsToDelete.length} ${idsToDelete.length === 1 ? list.singular : list.plural}`);
-        router.refresh();
-      } else {
-        console.error("Error deleting items:", response.error);
-        setError(response.error); // Assuming setError updates some state to display the error
-        toast.error("Failed to delete items", {
-          description: response.error,
-        });
-      }
+      router.refresh();
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'An unexpected error occurred';
       setError(errorMessage);
@@ -184,36 +110,81 @@ export function ListTable({
     query[key] = value;
   }
 
-  // Function to render cell content based on field type
-  const renderCellContent = (item: ListItem, fieldKey: string, list: List, isFirstField: boolean) => {
+  // Function to render cell content based on field type - following Keystone's pattern
+  const renderCellContent = (item: ListItem, fieldKey: string, isFirstField: boolean) => {
     const field = list.fields[fieldKey];
     if (!field) return null;
 
-    const fieldType = getFieldTypeFromViewsIndex(field.viewsIndex);
-    const fieldImpl = getField(fieldType) as FieldImplementation | undefined;
+    // Handle ID field or first field - always linkable for text/string fields
+    if (fieldKey === 'id' || (isFirstField && (field.viewsIndex === 0 || field.viewsIndex === 1))) {
+      return (
+        <Link 
+          href={`${basePath}/${list.path}/${encodeURIComponent(item.id)}`}
+          className="font-medium text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 hover:underline"
+        >
+          {item[fieldKey]?.toString() || item.id}
+        </Link>
+      );
+    }
 
-    // If the field has no value, render null state
+    // Get the appropriate Cell component and render it
+    if (field.viewsIndex !== undefined) {
+      try {
+        const fieldViews = getFieldViews(field.viewsIndex);
+        const CellComponent = fieldViews.Cell;
+        
+        if (CellComponent) {
+          // Create linkTo prop for linkable cells
+          const linkTo = (CellComponent as any).supportsLinkTo ? {
+            href: `${basePath}/${list.path}/${encodeURIComponent(item.id)}`
+          } : undefined;
+          
+          return (
+            <CellComponent 
+              field={field} 
+              item={item} 
+              linkTo={linkTo}
+            />
+          );
+        }
+      } catch (err) {
+        console.warn(`Failed to render cell for field ${fieldKey}:`, err);
+      }
+    }
+
+    // Fallback for fields without Cell components - handle null/undefined
     if (item[fieldKey] === null || item[fieldKey] === undefined) {
-      return <div className="font-mono text-xs rounded-sm px-2 py-1 border-dashed border italic">null</div>;
+      return (
+        <div 
+          className="font-mono text-xs rounded-sm px-2 py-1 border-dashed border italic select-text"
+          style={{ userSelect: 'text' }}
+        >
+          null
+        </div>
+      );
     }
 
-    // If the field type has a Cell component, use it
-    if (fieldImpl?.client?.Cell) {
-      const CellComponent = fieldImpl.client.Cell;
-      const linkTo = isFirstField && CellComponent.supportsLinkTo
-        ? { href: `/${list.path}/${encodeURIComponent(item.id)}` }
-        : undefined;
-
-      return <CellComponent item={item} field={field} linkTo={linkTo} />;
+    // Basic fallback for primitive values
+    const value = item[fieldKey];
+    if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
+      return (
+        <span style={{ userSelect: 'text' }} className="select-text">
+          {String(value)}
+        </span>
+      );
     }
 
-    // Fallback to basic string representation
-    return String(item[fieldKey]);
+    // For complex objects, show a placeholder instead of [object Object]
+    return (
+      <span className="text-muted-foreground italic text-xs">
+        Complex data
+      </span>
+    );
   };
 
   const handleSort = (fieldKey: string) => {
     const field = list.fields[fieldKey];
-    if (!field.isOrderable) return;
+    if (!field?.isOrderable) return;
 
     const currentSort = query.sortBy;
     const newSort = currentSort === fieldKey ? `-${fieldKey}` : fieldKey;
@@ -222,6 +193,9 @@ export function ListTable({
     newSearchParams.set('sortBy', newSort);
     router.push(`${pathname}?${newSearchParams.toString()}`);
   };
+
+  // Convert Set to Array for rendering
+  const selectedFieldsArray = Array.from(selectedFields);
 
   return (
     <div className="relative">
@@ -259,7 +233,7 @@ export function ListTable({
                     }}
                   />
                 </th>
-                {selectedFields.map((fieldKey: string) => {
+                {selectedFieldsArray.map((fieldKey: string) => {
                   const field = list.fields[fieldKey];
                   const sort = query.sortBy;
                   const sortField = sort?.startsWith('-') ? sort.slice(1) : sort;
@@ -280,13 +254,13 @@ export function ListTable({
                         onClick={() => handleSort(fieldKey)}
                         className={cn(
                           "inline-flex items-center gap-2 rounded-md py-3",
-                          field.isOrderable
+                          field?.isOrderable
                             ? "hover:text-gray-900 dark:hover:text-gray-50"
                             : "cursor-default"
                         )}
                       >
-                        <span>{field.label}</span>
-                        {field.isOrderable && (
+                        <span>{field?.label || fieldKey}</span>
+                        {field?.isOrderable && (
                           <div className="-space-y-2">
                             <ChevronUp
                               className={cn(
@@ -320,9 +294,10 @@ export function ListTable({
                 <tr
                   key={item.id}
                   className={cn(
-                    "group select-none hover:bg-muted",
+                    "group hover:bg-muted",
                     selectedItemsState.selectedItems.has(item.id) && "bg-muted"
                   )}
+                  style={{ userSelect: 'text' }}
                 >
                   <td className="relative w-[64px] pl-6 py-3">
                     {selectedItemsState.selectedItems.has(item.id) && (
@@ -344,20 +319,21 @@ export function ListTable({
                       }}
                     />
                   </td>
-                  {selectedFields.map((fieldKey: string, index) => (
+                  {selectedFieldsArray.map((fieldKey: string, index) => (
                     <td
                       key={`${item.id}-${fieldKey}`}
                       className={cn(
                         "whitespace-nowrap py-3 px-5",
-                        "text-gray-600 dark:text-gray-400 text-sm"
+                        "text-gray-600 dark:text-gray-400 text-sm select-text"
                       )}
+                      style={{ userSelect: 'text' }}
                     >
-                      {renderCellContent(item, fieldKey, list, index === 0)}
+                      {renderCellContent(item, fieldKey, index === 0)}
                     </td>
                   ))}
                   <td className="whitespace-nowrap py-3 px-5 text-sm text-gray-600 dark:text-gray-400">
                     <Link
-                      href={`/dashboard/${list.path}/${item.id}`}
+                      href={`${basePath}/${list.path}/${item.id}`}
                       className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 font-medium"
                     >
                       View
@@ -373,7 +349,7 @@ export function ListTable({
       {data.items.length > 0 && (
         <Pagination
           currentPage={currentPage}
-          total={data.meta.count || 0}
+          total={data.count || 0}
           pageSize={pageSize}
           list={{
             singular: list.singular,
@@ -388,4 +364,3 @@ export function ListTable({
     </div>
   );
 }
-

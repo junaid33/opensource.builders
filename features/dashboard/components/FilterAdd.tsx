@@ -1,161 +1,82 @@
-'use client';
+'use client'
 
-import { Fragment, useMemo, useState, ReactNode } from "react";
-import { useRouter, usePathname, useSearchParams } from 'next/navigation';
-import { Button } from "@/components/ui/button";
-import { ChevronLeft } from "lucide-react";
+import { Fragment, useMemo, useState, ReactNode } from "react"
+import { useRouter, usePathname, useSearchParams } from 'next/navigation'
+import { Button } from "@/components/ui/button"
+import { ChevronLeft } from "lucide-react"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/components/ui/select"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
-import { Separator } from "@/components/ui/separator";
-import { getFieldTypeFromViewsIndex, getField } from '@/features/dashboard/views/registry';
-import type { BaseField } from '@/features/dashboard/types';
-// Removed unused JSONValue import
-import type { ListMeta } from '@/features/dashboard/types';
-import type { FieldImplementation as RegistryFieldImplementation } from '@/features/dashboard/views/registry';
-
-interface FilterType {
-  label: string;
-  initialValue: string | number | boolean;
-}
-
-interface FilterTypes {
-  [key: string]: FilterType;
-}
-
-// Removed unused LocalFilterProps interface
-
-interface FilterProps {
-  field: BaseField;
-  type: string;
-  value: string | number | boolean;
-  onChange: (value: string | number | boolean | null) => void;
-  operator: string;
-}
-
-interface FilterController {
-  filter: {
-    types: FilterTypes;
-    Filter: React.ComponentType<FilterProps>;
-  };
-}
-
-interface FilterableField extends Omit<BaseField, 'description'> {
-  description?: string | null;
-  isFilterable: boolean;
-  controller: FilterController;
-}
+} from "@/components/ui/popover"
+import { Separator } from "@/components/ui/separator"
+import { enhanceFields } from '../utils/enhanceFields'
 
 interface FilterState {
-  kind: "selecting-field" | "filter-value";
-  fieldPath: string | null;
-  filterType: string | null;
-  filterValue: string | number | boolean | null;
+  kind: "selecting-field" | "filter-value"
+  fieldPath: string | null
+  filterType: string | null
+  filterValue: string | number | boolean | null
 }
 
 interface FilterAddProps {
-  listMeta: ListMeta;
-  children: ReactNode;
+  list: any
+  children: ReactNode
 }
 
-interface FilterWrapperProps {
-  field: FilterableField;
-  fieldImpl: RegistryFieldImplementation;
-  type: string;
-  value: string | number | boolean | null;
-  onChange: (value: string | number | boolean | null) => void;
-}
+export function FilterAdd({ list, children }: FilterAddProps) {
+  const [isOpen, setIsOpen] = useState(false)
+  const searchParams = useSearchParams()
+  const pathname = usePathname()
+  const router = useRouter()
+  
+  // Get enhanced fields using dashboard's pattern
+  const enhancedFields = useMemo(() => {
+    return enhanceFields(list.fields, list.key)
+  }, [list.fields, list.key])
 
-function FilterWrapper({ field, fieldImpl, type, value, onChange }: FilterWrapperProps) {
-  const Filter = fieldImpl.client?.Filter;
-  if (!Filter) return null;
-  
-  const baseField: BaseField = {
-    path: field.path,
-    label: field.label,
-    description: field.description || undefined,
-    viewsIndex: field.viewsIndex,
-    fieldMeta: field.fieldMeta
-  };
-  
-  const filterProps: FilterProps = {
-    field: baseField,
-    type,
-    value: value || '',
-    onChange,
-    operator: type
-  };
-  
-  return <Filter {...filterProps} />;
-}
-
-export function FilterAdd({ listMeta, children }: FilterAddProps) {
-  const [isOpen, setIsOpen] = useState(false);
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const router = useRouter();
-  
   // Get filterable fields with their filter implementations
   const filterableFields = useMemo(() => {
-    const fields: Record<string, FilterableField> = {};
-    Object.entries(listMeta.fields).forEach(([fieldPath, field]) => {
-      if (field.isFilterable) {
-        const fieldType = getFieldTypeFromViewsIndex(field.viewsIndex);
-        const fieldImpl = getField(fieldType);
-        
-        if (fieldImpl?.client?.Filter && fieldImpl.filterTypes?.getFilterTypes) {
-          const filterTypes = fieldImpl.filterTypes.getFilterTypes();
-          const fieldData: FilterableField = {
-            path: field.path,
-            label: field.label,
-            description: field.description,
-            viewsIndex: field.viewsIndex,
-            fieldMeta: field.fieldMeta as FilterableField['fieldMeta'],
-            isFilterable: field.isFilterable,
-            controller: {
-              filter: {
-                types: filterTypes as unknown as FilterTypes,
-                Filter: fieldImpl.client.Filter as unknown as React.ComponentType<FilterProps>
-              }
-            }
-          };
-          fields[fieldPath] = fieldData;
-        }
+    const fields: Record<string, any> = {}
+    
+    Object.entries(enhancedFields).forEach(([fieldPath, field]: [string, any]) => {
+      // Check if field has filter capability via controller
+      if (field.controller?.filter && Object.keys(field.controller.filter.types || {}).length > 0) {
+        fields[fieldPath] = field
       }
-    });
-    return fields;
-  }, [listMeta.fields]);
+    })
+    
+    return fields
+  }, [enhancedFields])
 
   const [state, setState] = useState<FilterState>({
     kind: "selecting-field",
     fieldPath: null,
     filterType: null,
     filterValue: null
-  });
+  })
 
   const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
+    event.preventDefault()
     if (state.kind === "filter-value" && state.fieldPath && state.filterType && state.filterValue !== null && searchParams) {
-      const newSearchParams = new URLSearchParams(searchParams.toString());
+      const newSearchParams = new URLSearchParams(searchParams.toString())
       
       // Remove the page parameter and add the new filter
-      newSearchParams.delete('page');
-      const filterKey = `!${state.fieldPath}_${state.filterType}`;
-      newSearchParams.set(filterKey, JSON.stringify(state.filterValue));
+      newSearchParams.delete('page')
+      const filterKey = `!${state.fieldPath}_${state.filterType}`
+      newSearchParams.set(filterKey, JSON.stringify(state.filterValue))
       
-      router.push(`${pathname}?${newSearchParams.toString()}`);
-      setIsOpen(false);
+      router.push(`${pathname}?${newSearchParams.toString()}`)
+      setIsOpen(false)
     }
-  };
+  }
 
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
@@ -180,7 +101,7 @@ export function FilterAdd({ listMeta, children }: FilterAddProps) {
               <div className="text-sm font-medium">
                 {state.kind === "selecting-field"
                   ? "Filter"
-                  : state.fieldPath ? listMeta.fields[state.fieldPath].label : ""}
+                  : state.fieldPath ? enhancedFields[state.fieldPath]?.label : ""}
               </div>
             </div>
             <Separator />
@@ -191,14 +112,14 @@ export function FilterAdd({ listMeta, children }: FilterAddProps) {
                   value={state.fieldPath || undefined}
                   onValueChange={(fieldPath) => {
                     if (fieldPath) {
-                      const field = filterableFields[fieldPath];
-                      const firstFilterType = Object.keys(field.controller.filter.types)[0];
+                      const field = filterableFields[fieldPath]
+                      const firstFilterType = Object.keys(field.controller.filter.types)[0]
                       setState({
                         kind: "filter-value",
                         fieldPath,
                         filterType: firstFilterType,
                         filterValue: field.controller.filter.types[firstFilterType].initialValue
-                      });
+                      })
                     }
                   }}
                 >
@@ -206,9 +127,9 @@ export function FilterAdd({ listMeta, children }: FilterAddProps) {
                     <SelectValue className="text-sm" placeholder="Select a field" />
                   </SelectTrigger>
                   <SelectContent>
-                    {Object.entries(filterableFields).map(([fieldPath]) => (
+                    {Object.entries(filterableFields).map(([fieldPath, field]) => (
                       <SelectItem key={fieldPath} value={fieldPath}>
-                        {listMeta.fields[fieldPath].label}
+                        {field.label}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -220,12 +141,12 @@ export function FilterAdd({ listMeta, children }: FilterAddProps) {
                   <Select
                     value={state.filterType || ''}
                     onValueChange={(filterType) => {
-                      const field = filterableFields[state.fieldPath!];
+                      const field = filterableFields[state.fieldPath!]
                       setState({
                         ...state,
                         filterType,
                         filterValue: field.controller.filter.types[filterType].initialValue
-                      });
+                      })
                     }}
                   >
                     <SelectTrigger className="mb-2">
@@ -234,9 +155,9 @@ export function FilterAdd({ listMeta, children }: FilterAddProps) {
                       </SelectValue>
                     </SelectTrigger>
                     <SelectContent>
-                      {Object.entries(filterableFields[state.fieldPath].controller.filter.types).map(([filterType, { label }]) => (
+                      {Object.entries(filterableFields[state.fieldPath].controller.filter.types).map(([filterType, filterConfig]) => (
                         <SelectItem key={filterType} value={filterType}>
-                          {label}
+                          {(filterConfig as any).label}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -245,24 +166,21 @@ export function FilterAdd({ listMeta, children }: FilterAddProps) {
                   {state.filterType && (
                     <div className="pb-3">
                       {(() => {
-                        const field = filterableFields[state.fieldPath!];
-                        const fieldType = getFieldTypeFromViewsIndex(field.viewsIndex);
-                        const fieldImpl = getField(fieldType);
+                        const field = filterableFields[state.fieldPath!]
+                        const Filter = field.controller.filter.Filter
                         
                         return (
-                          <FilterWrapper
-                            field={field}
-                            fieldImpl={fieldImpl}
-                            type={state.filterType}
+                          <Filter
                             value={state.filterValue}
                             onChange={(value: string | number | boolean | null) => {
                               setState({
                                 ...state,
                                 filterValue: value
-                              });
+                              })
                             }}
+                            type={state.filterType}
                           />
-                        );
+                        )
                       })()}
                     </div>
                   )}
@@ -287,5 +205,5 @@ export function FilterAdd({ listMeta, children }: FilterAddProps) {
         </PopoverContent>
       )}
     </Popover>
-  );
-} 
+  )
+}

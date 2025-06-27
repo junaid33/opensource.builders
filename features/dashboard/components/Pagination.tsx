@@ -12,7 +12,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "../../../components/ui/alert-dialog";
+} from "@/components/ui/alert-dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,29 +20,25 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "../../../components/ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import {
   ChevronLeft,
   ChevronRight,
   ChevronDown,
-  // X, // Removed unused icon
   Plus,
   Minus,
-  RotateCcw,
-  // Trash2, // Removed unused icon
-  Trash,
   X,
 } from "lucide-react";
-import { ScrollArea } from "../../../components/ui/scroll-area";
-import { Button } from "../../../components/ui/button";
-import { Input } from "../../../components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 interface ListInfo {
   singular: string;
   plural: string;
 }
 
-interface FloatingUIProps {
+interface PaginationProps {
   currentPage?: number;
   total?: number;
   pageSize?: number;
@@ -54,7 +50,8 @@ interface FloatingUIProps {
 }
 
 /**
- * FloatingUI component that combines pagination and item deletion functionality
+ * Pagination component that combines pagination and item deletion functionality
+ * Adapted from Dashboard 1 for Dashboard 2
  */
 export function Pagination({
   currentPage = 1,
@@ -65,11 +62,11 @@ export function Pagination({
   onResetSelection,
   onDelete,
   isDeleteLoading = false,
-}: FloatingUIProps) {
+}: PaginationProps) {
   const [currentPageInput, setCurrentPageInput] = useState(
     currentPage.toString()
   );
-  const [, setIsOpen] = useState(false); // Removed unused isOpen variable
+  const [, setIsOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -189,9 +186,6 @@ export function Pagination({
     }
   };
 
-  // Check if in selection mode
-  // Removed unused isSelectionMode variable (logic directly uses selectedItems.size)
-
   // Selection mode UI
   if (selectedItems.size > 0) {
     return (
@@ -203,7 +197,6 @@ export function Pagination({
             className="font-semibold rounded-l-[20px] rounded-r-md"
           >
             <X className="size-2.5 sm:size-3.5 shrink-0" />
-
             <span className="uppercase tracking-wide">Cancel</span>
           </Button>
           <AlertDialog>
@@ -218,7 +211,6 @@ export function Pagination({
                   Delete {selectedItems.size}{" "}
                   {selectedItems.size === 1 ? list.singular : list.plural}
                 </span>
-                {/* <Trash className="-ml-1 size-2.5 sm:size-3.5 shrink-0" /> */}
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
@@ -235,7 +227,7 @@ export function Pagination({
                 </AlertDialogCancel>
                 <AlertDialogAction
                   onClick={() => {
-                    onDelete?.(); // Call onDelete only if it exists
+                    onDelete?.();
                     setIsOpen(false);
                   }}
                   disabled={isDeleteLoading}
@@ -256,14 +248,6 @@ export function Pagination({
         {/* Pagination UI */}
         <>
           {/* Previous Page Button */}
-          {/* <button
-            className="bg-gradient-to-b from-black to-zinc-800 text-zinc-200 rounded-l-[20px] rounded-r-md p-1.5 sm:p-2 font-semibold ring-1 ring-inset ring-white/20 hover:bg-gradient-to-b hover:from-black/80 hover:to-black/60 hover:shadow-md disabled:opacity-50 disabled:hover:bg-zinc-200 disabled:hover:shadow-none disabled:cursor-not-allowed text-xs sm:text-sm h-8 sm:h-9 flex items-center justify-center w-9 sm:w-auto"
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage <= 1}
-          >
-            <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
-          </button> */}
-
           <Button
             variant="outline"
             className="rounded-l-[20px] rounded-r-md p-1.5 sm:p-2 font-semibold text-xs sm:text-sm h-8 sm:h-9 w-9 sm:w-auto"
@@ -380,7 +364,6 @@ export function Pagination({
           </DropdownMenu>
 
           {/* Next Page Button */}
-
           <Button
             variant="outline"
             className="rounded-r-[20px] rounded-l-md p-1.5 sm:p-2 font-semibold text-xs sm:text-sm h-8 sm:h-9 w-9 sm:w-auto"

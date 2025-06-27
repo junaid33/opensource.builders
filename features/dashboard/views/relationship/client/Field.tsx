@@ -1,16 +1,15 @@
 "use client";
 
 import React, { Fragment } from "react";
-import { useList } from "@/features/dashboard/hooks/useAdminMeta";
 import useSWR from "swr";
-import { getAuthenticatedUser } from "@/features/dashboard/actions";
+import { getAuthenticatedUser } from "@/features/dashboard/actions/auth";
+import { getList } from "@/features/dashboard/actions/getList";
 import { RelationshipSelect } from "./components/RelationshipSelect";
-import Cards from "./components/Cards";
+import { Cards } from "./components/Cards";
 import { CreateItemDrawer } from "./components/CreateItemDrawer";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
-import { basePath } from "@/features/dashboard/lib/config";
 
 interface FieldProps {
   field: {
@@ -61,14 +60,14 @@ function LinkToRelatedItems({ itemId, value, list, refFieldKey }: any) {
     const query = constructQuery({ refFieldKey, value, itemId });
     return (
       <Button variant="ghost">
-        <Link href={`${basePath}/${list?.path ?? ''}?${query}`}>View related {list?.plural ?? 'items'}</Link>
+        <Link href={`/dashboard/${list?.path ?? ''}?${query}`}>View related {list?.plural ?? 'items'}</Link>
       </Button>
     );
   }
 
   return (
     <Button variant="ghost">
-      <Link href={`${basePath}/${list?.path ?? ''}/${value?.value?.id ?? ''}`}>
+      <Link href={`/dashboard/${list?.path ?? ''}/${value?.value?.id ?? ''}`}>
         View {list?.singular ?? 'item'} details
       </Link>
     </Button>
@@ -83,8 +82,23 @@ export function ClientField({
   isDisabled,
   forceValidation,
 }: FieldProps) {
-  const { list: foreignList } = useList(field.refListKey);
-  const { list: localList } = useList(field.listKey || field.refListKey);
+  // Get list data using getList for relationships
+  const { data: foreignListData } = useSWR(
+    `list-${field.refListKey}`,
+    async () => {
+      return await getList(field.refListKey);
+    }
+  );
+
+  const { data: localListData } = useSWR(
+    `list-${field.listKey || field.refListKey}`,
+    async () => {
+      return await getList(field.listKey || field.refListKey);
+    }
+  );
+
+  const foreignList = foreignListData;
+  const localList = localListData;
 
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
 
@@ -128,6 +142,7 @@ export function ClientField({
       <Fragment>
         {foreignList && localList && (
           <Cards
+            list={localList}
             field={{
               refListKey: field.refListKey,
               refLabelField: field.refLabelField || 'id',
@@ -136,11 +151,11 @@ export function ClientField({
               label: field.label,
               displayOptions: field.displayOptions
             }}
-            id={value?.id}
+
             value={value}
             onChange={onChange}
             foreignList={foreignList}
-            localList={localList}
+
             forceValidation={forceValidation}
           />
         )}
@@ -166,9 +181,7 @@ export function ClientField({
   return (
     <div className="space-y-3">
       <RelationshipSelect
-        list={{
-          key: field?.refListKey,
-        }}
+        list={foreignList}
         labelField={field?.refLabelField ?? 'id'}
         searchFields={field?.refSearchFields}
         state={
@@ -205,33 +218,35 @@ export function ClientField({
           {foreignList && (
             <Fragment>
               {!field?.hideCreate && onChange !== undefined && (
-                <CreateItemDrawer
-                  listKey={foreignList.key}
-                  isDrawerOpen={isDrawerOpen}
-                  setIsDrawerOpen={setIsDrawerOpen}
-                  trigger={
-                    <Button variant="outline">
-                      Create related {foreignList.singular}
-                    </Button>
-                  }
-                  onClose={() => {
-                    setIsDrawerOpen(false);
-                  }}
-                  onCreate={(val) => {
-                    setIsDrawerOpen(false);
-                    if (value?.kind === "many") {
-                      onChange({
-                        ...value,
-                        value: [...(value?.value ?? []), val],
-                      });
-                    } else if (value?.kind === "one") {
-                      onChange({
-                        ...value,
-                        value: val,
-                      });
-                    }
-                  }}
-                />
+                <>
+                  <Button 
+                    variant="outline"
+                    onClick={() => setIsDrawerOpen(true)}
+                  >
+                    Create related {foreignList.singular}
+                  </Button>
+                  <CreateItemDrawer
+                    listKey={foreignList.key}
+                    isOpen={isDrawerOpen}
+                    onClose={() => {
+                      setIsDrawerOpen(false);
+                    }}
+                    onCreate={(val) => {
+                      setIsDrawerOpen(false);
+                      if (value?.kind === "many") {
+                        onChange({
+                          ...value,
+                          value: [...(value?.value ?? []), val],
+                        });
+                      } else if (value?.kind === "one") {
+                        onChange({
+                          ...value,
+                          value: val,
+                        });
+                      }
+                    }}
+                  />
+                </>
               )}
 
               {onChange !== undefined &&

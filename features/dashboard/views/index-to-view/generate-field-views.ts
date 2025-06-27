@@ -1,3 +1,4 @@
+// @ts-nocheck
 import pluralize from "pluralize";
 import config from "../../../keystone";
 import { graphql } from "@keystone-6/core";
@@ -119,12 +120,12 @@ const viewMappings = {
   [`@keystone-6/core/fields/types/checkbox/views`]: `checkbox`,
   [`@keystone-6/core/fields/types/select/views`]: `select`,
   [`@keystone-6/core/fields/types/integer/views`]: `integer`,
+  [`@keystone-6/core/fields/types/bigInt/views`]: `bigInt`,
   [`@keystone-6/core/fields/types/float/views`]: `float`,
   [`@keystone-6/core/fields/types/decimal/views`]: `decimal`,
   [`@keystone-6/core/fields/types/image/views`]: `image`,
   [`@keystone-6/core/fields/types/virtual/views`]: `virtual`,
   [`@keystone-6/fields-document/views`]: `document`,
-  [`@keystone-6/core/fields/types/bigInt/views`]: `bigInt`
 };
 
 export function areArraysEqual(a: any[], b: any[]): boolean {
@@ -136,7 +137,7 @@ export function areArraysEqual(a: any[], b: any[]): boolean {
  */
 export function main() {
   // Access the default export properly
-  const keystoneConfig = config.default || config;
+  const keystoneConfig = (config as any).default || config;
   console.log("Config structure:", { config: typeof config, hasDefault: 'default' in config });
   console.log("Keystone config lists:", keystoneConfig.lists ? Object.keys(keystoneConfig.lists) : 'No lists found');
 
@@ -246,8 +247,8 @@ export function initialiseLists(config: any) {
       Object.entries(intermediateLists).map(([listKey, list]) => [
         listKey,
         {
-          ...list,
-          resolvedDbFields: resolvedDBFieldsForLists[listKey],
+          ...(list as any),
+          resolvedDbFields: (resolvedDBFieldsForLists as any)[listKey],
         },
       ])
     );
@@ -255,12 +256,12 @@ export function initialiseLists(config: any) {
 
   intermediateLists = Object.fromEntries(
     Object.entries(intermediateLists).map(([listKey, list]) => {
-      const fields = {};
+      const fields: any = {};
 
       for (const [fieldKey, field] of Object.entries(list.fields)) {
-        fields[fieldKey] = {
-          ...field,
-          dbField: list.resolvedDbFields[fieldKey],
+        (fields as any)[fieldKey] = {
+          ...(field as any),
+          dbField: (list as any).resolvedDbFields[fieldKey],
         };
       }
 
@@ -272,11 +273,11 @@ export function initialiseLists(config: any) {
     let hasAnEnabledCreateField = false;
     let hasAnEnabledUpdateField = false;
 
-    for (const field of Object.values(list.fields)) {
-      if (field.input?.create?.arg && field.graphql.isEnabled.create) {
+    for (const field of Object.values((list as any).fields)) {
+      if ((field as any).input?.create?.arg && (field as any).graphql.isEnabled.create) {
         hasAnEnabledCreateField = true;
       }
-      if (field.input?.update && field.graphql.isEnabled.update) {
+      if ((field as any).input?.update && (field as any).graphql.isEnabled.update) {
         hasAnEnabledUpdateField = true;
       }
     }
@@ -284,16 +285,16 @@ export function initialiseLists(config: any) {
     // you can't have empty GraphQL types
     //   if empty, omit the type completely
     if (!hasAnEnabledCreateField) {
-      list.graphql.isEnabled.create = false;
+      (list as any).graphql.isEnabled.create = false;
     }
     if (!hasAnEnabledUpdateField) {
-      list.graphql.isEnabled.update = false;
+      (list as any).graphql.isEnabled.update = false;
     }
   }
 
   // fixup the GraphQL refs
   for (const [listKey, intermediateList] of Object.entries(intermediateLists)) {
-    listsRef[listKey] = {
+    (listsRef as any)[listKey] = {
       ...intermediateList,
       lists: listsRef,
     };
@@ -319,7 +320,7 @@ function extractUniqueViews(jsonData: any) {
           if (fields.hasOwnProperty(fieldKey)) {
             const field = fields[fieldKey];
             console.log(`    Field ${fieldKey} views:`, field.views);
-            const viewMap = viewMappings[field.views] || field.views;
+            const viewMap = (viewMappings as any)[field.views] || field.views;
             if (viewMap && !viewsArray.includes(viewMap)) {
               console.log(`      Adding unique view: ${viewMap}`);
               viewsArray.push(viewMap);
@@ -336,13 +337,13 @@ function extractUniqueViews(jsonData: any) {
   return viewsArray;
 }
 
-function getIsEnabled(listsConfig) {
-  const isEnabled = {};
+function getIsEnabled(listsConfig: any) {
+  const isEnabled: any = {};
   console.log(listsConfig);
 
   for (const [listKey, listConfig] of Object.entries(listsConfig)) {
-    const omit = listConfig.graphql?.omit;
-    const { defaultIsFilterable, defaultIsOrderable } = listConfig;
+    const omit = (listConfig as any).graphql?.omit;
+    const { defaultIsFilterable, defaultIsOrderable } = (listConfig as any);
     if (!omit) {
       // We explicity check for boolean/function values here to ensure the dev hasn't made a mistake
       // when defining these values. We avoid duck-typing here as this is security related
@@ -351,7 +352,7 @@ function getIsEnabled(listsConfig) {
       throwIfNotAFilter(defaultIsOrderable, listKey, "defaultIsOrderable");
     }
     if (omit === true) {
-      isEnabled[listKey] = {
+      (isEnabled as any)[listKey] = {
         type: false,
         query: false,
         create: false,
@@ -361,7 +362,7 @@ function getIsEnabled(listsConfig) {
         orderBy: false,
       };
     } else {
-      isEnabled[listKey] = {
+      (isEnabled as any)[listKey] = {
         type: true,
         query: !omit?.query,
         create: !omit?.create,
@@ -376,7 +377,7 @@ function getIsEnabled(listsConfig) {
   return isEnabled;
 }
 
-function throwIfNotAFilter(x, listKey, fieldKey) {
+function throwIfNotAFilter(x: any, listKey: any, fieldKey: any) {
   if (["boolean", "undefined", "function"].includes(typeof x)) return;
 
   throw new Error(
@@ -384,8 +385,8 @@ function throwIfNotAFilter(x, listKey, fieldKey) {
   );
 }
 
-function getListGraphqlTypes(listsConfig, lists, intermediateLists) {
-  const graphQLTypes = {};
+function getListGraphqlTypes(listsConfig: any, lists: any, intermediateLists: any) {
+  const graphQLTypes: any = {};
 
   for (const [listKey, listConfig] of Object.entries(listsConfig)) {
     const {
@@ -395,32 +396,32 @@ function getListGraphqlTypes(listsConfig, lists, intermediateLists) {
     const output = graphql.object()({
       name: names.outputTypeName,
       fields: () => {
-        const { fields } = lists[listKey];
+        const { fields } = (lists as any)[listKey];
         return {
           ...Object.fromEntries(
             Object.entries(fields).flatMap(([fieldPath, field]) => {
               if (
-                !field.output ||
-                !field.graphql.isEnabled.read ||
-                (field.dbField.kind === "relation" &&
-                  !intermediateLists[field.dbField.list].graphql.isEnabled
+                !(field as any).output ||
+                !(field as any).graphql.isEnabled.read ||
+                ((field as any).dbField.kind === "relation" &&
+                  !(intermediateLists as any)[(field as any).dbField.list].graphql.isEnabled
                     .query)
               ) {
                 return [];
               }
 
-              const outputFieldRoot = graphqlForOutputField(field);
+              const outputFieldRoot = graphqlForOutputField(field as any);
               return [
                 [fieldPath, outputFieldRoot],
-                ...Object.entries(field.extraOutputFields || {}),
+                ...Object.entries((field as any).extraOutputFields || {}),
               ].map(([outputTypeFieldName, outputField]) => {
                 return [
                   outputTypeFieldName,
                   outputTypeField(
                     outputField,
-                    field.dbField,
-                    field.graphql?.cacheHint,
-                    field.access.read,
+                    (field as any).dbField,
+                    (field as any).graphql?.cacheHint,
+                    (field as any).access.read,
                     listKey,
                     fieldPath,
                     lists
@@ -436,18 +437,18 @@ function getListGraphqlTypes(listsConfig, lists, intermediateLists) {
     const uniqueWhere = graphql.inputObject({
       name: names.whereUniqueInputName,
       fields: () => {
-        const { fields } = lists[listKey];
+        const { fields } = (lists as any)[listKey];
         return {
           ...Object.fromEntries(
             Object.entries(fields).flatMap(([key, field]) => {
               if (
-                !field.input?.uniqueWhere?.arg ||
-                !field.graphql.isEnabled.read ||
-                !field.graphql.isEnabled.filter
+                !(field as any).input?.uniqueWhere?.arg ||
+                !(field as any).graphql.isEnabled.read ||
+                !(field as any).graphql.isEnabled.filter
               ) {
                 return [];
               }
-              return [[key, field.input.uniqueWhere.arg]];
+              return [[key, (field as any).input.uniqueWhere.arg]];
             })
           ),
           // this is exactly what the id field will add
@@ -457,10 +458,10 @@ function getListGraphqlTypes(listsConfig, lists, intermediateLists) {
       },
     });
 
-    const where = graphql.inputObject({
+    const where: any = graphql.inputObject({
       name: names.whereInputName,
-      fields: () => {
-        const { fields } = lists[listKey];
+      fields: (): any => {
+        const { fields } = (lists as any)[listKey];
         return Object.assign(
           {
             AND: graphql.arg({ type: graphql.list(graphql.nonNull(where)) }),
@@ -469,10 +470,10 @@ function getListGraphqlTypes(listsConfig, lists, intermediateLists) {
           },
           ...Object.entries(fields).map(
             ([fieldKey, field]) =>
-              field.input?.where?.arg &&
-              field.graphql.isEnabled.read &&
-              field.graphql.isEnabled.filter && {
-                [fieldKey]: field.input?.where?.arg,
+              (field as any).input?.where?.arg &&
+              (field as any).graphql.isEnabled.read &&
+              (field as any).graphql.isEnabled.filter && {
+                [fieldKey]: (field as any).input?.where?.arg,
               }
           )
         );
@@ -482,13 +483,13 @@ function getListGraphqlTypes(listsConfig, lists, intermediateLists) {
     const create = graphql.inputObject({
       name: names.createInputName,
       fields: () => {
-        const { fields } = lists[listKey];
-        const ret = {};
+        const { fields } = (lists as any)[listKey];
+        const ret: any = {};
 
         for (const key in fields) {
           const arg = graphqlArgForInputField(fields[key], "create");
           if (!arg) continue;
-          ret[key] = arg;
+          (ret as any)[key] = arg;
         }
 
         return ret;
@@ -498,13 +499,13 @@ function getListGraphqlTypes(listsConfig, lists, intermediateLists) {
     const update = graphql.inputObject({
       name: names.updateInputName,
       fields: () => {
-        const { fields } = lists[listKey];
-        const ret = {};
+        const { fields } = (lists as any)[listKey];
+        const ret: any = {};
 
         for (const key in fields) {
           const arg = graphqlArgForInputField(fields[key], "update");
           if (!arg) continue;
-          ret[key] = arg;
+          (ret as any)[key] = arg;
         }
 
         return ret;
@@ -514,35 +515,35 @@ function getListGraphqlTypes(listsConfig, lists, intermediateLists) {
     const orderBy = graphql.inputObject({
       name: names.listOrderName,
       fields: () => {
-        const { fields } = lists[listKey];
+        const { fields } = (lists as any)[listKey];
         return Object.fromEntries(
           Object.entries(fields).flatMap(([key, field]) => {
             if (
-              !field.input?.orderBy?.arg ||
-              !field.graphql.isEnabled.read ||
-              !field.graphql.isEnabled.orderBy
+              !(field as any).input?.orderBy?.arg ||
+              !(field as any).graphql.isEnabled.read ||
+              !(field as any).graphql.isEnabled.orderBy
             ) {
               return [];
             }
-            return [[key, field.input.orderBy.arg]];
+            return [[key, (field as any).input.orderBy.arg]];
           })
         );
       },
     });
 
     let take = graphql.arg({ type: graphql.Int });
-    if (listConfig.graphql?.maxTake !== undefined) {
+    if ((listConfig as any).graphql?.maxTake !== undefined) {
       take = graphql.arg({
-        type: graphql.nonNull(graphql.Int),
+        type: graphql.nonNull(graphql.Int) as any,
         // warning: this is used by queries/resolvers.ts to enforce the limit
-        defaultValue: listConfig.graphql.maxTake,
+        defaultValue: (listConfig as any).graphql.maxTake,
       });
     }
 
     const findManyArgs = {
       where: graphql.arg({
-        type: graphql.nonNull(where),
-        defaultValue: listConfig.isSingleton
+        type: graphql.nonNull(where) as any,
+        defaultValue: (listConfig as any).isSingleton
           ? {
               id: { equals: "1" },
             }

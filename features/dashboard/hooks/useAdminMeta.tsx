@@ -54,7 +54,13 @@ const AdminMetaContext = createContext<{
 } | null>(null)
 
 // Context Provider
-export function AdminMetaProvider({ children }: { children: ReactNode }) {
+export function AdminMetaProvider({ 
+  children, 
+  initialData 
+}: { 
+  children: ReactNode
+  initialData?: AdminMeta
+}) {
   const { data: response, error, isLoading, mutate } = useSWR(
     'admin-meta',
     async () => {
@@ -67,6 +73,7 @@ export function AdminMetaProvider({ children }: { children: ReactNode }) {
       return result.data
     },
     {
+      fallbackData: initialData,
       revalidateOnFocus: false,
       revalidateOnReconnect: true,
     }
@@ -171,12 +178,10 @@ export function useAuth() {
   return {
     user: null,
     isAuthenticated: false,
-    signIn: async (credentials: any) => {
-      console.log('Sign in:', credentials)
+    signIn: async (_credentials: any) => {
       // Implement actual sign in
     },
     signOut: async () => {
-      console.log('Sign out')
       // Implement actual sign out
     }
   }

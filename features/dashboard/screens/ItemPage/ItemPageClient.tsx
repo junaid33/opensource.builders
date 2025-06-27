@@ -291,7 +291,6 @@ export function ItemPageClient({ list, item, itemId }: ItemPageClientProps) {
     const newForceValidation = invalidFields.size !== 0
     setForceValidation(newForceValidation)
     if (newForceValidation) {
-      console.log('Validation failed, invalid fields:', Array.from(invalidFields))
       return
     }
     
@@ -302,11 +301,6 @@ export function ItemPageClient({ list, item, itemId }: ItemPageClientProps) {
       // Serialize only changed fields - exact Keystone pattern
       const changedData = serializeValueToOperationItem('update', enhancedFields, value, initialValue)
       
-      console.log('Saving item with data:', {
-        id: initialValue.id,
-        data: changedData,
-        hasChanges: Object.keys(changedData).length > 0
-      })
       
       // Call server action - following Keystone's Apollo useMutation pattern
       const { errors } = await updateItemAction(list.key, initialValue.id as string, changedData)

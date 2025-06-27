@@ -211,12 +211,21 @@ export function DocumentEditorProvider({
   documentFeatures: DocumentFeatures
 }) {
   const identity = useMemo(() => Math.random().toString(36), [editor])
+
+  // Ensure value is valid before passing to Slate
+  const safeValue = useMemo(() => {
+    if (!Array.isArray(value) || value.length === 0) {
+      return [{ type: 'paragraph', children: [{ text: '' }] }] as Descendant[]
+    }
+    return value
+  }, [value])
+
   return (
     <Slate
       // this fixes issues with Slate crashing when a fast refresh occcurs
       key={identity}
       editor={editor}
-      initialValue={value}
+      initialValue={safeValue}
       onChange={value => {
         onChange(value)
         // this fixes a strange issue in Safari where the selection stays inside of the editor
@@ -292,7 +301,16 @@ export function DocumentEditorEditable(props: EditableProps) {
         )}
         onKeyDown={onKeyDown}
         renderElement={renderElement}
-        renderLeaf={renderLeaf}
+        renderLeaf={(props) => {
+          // Add safety wrapper around renderLeaf
+          try {
+            return renderLeaf(props)
+          } catch (error) {
+            console.error('Error in renderLeaf:', error, props)
+            // Return safe fallback
+            return <span {...props.attributes}>{props.text?.text || ''}</span>
+          }
+        }}
         {...props}
       />
     </ActiveBlockPopoverProvider>

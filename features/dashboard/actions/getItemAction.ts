@@ -73,10 +73,7 @@ export async function getItemAction(
         return field.itemView?.fieldMode !== 'hidden'
       })
       .map((field: any) => {
-        const fieldType = typeof field.viewsIndex === 'number' ? getFieldTypeFromViewsIndex(field.viewsIndex) : 'unknown'
-        const selection = getFieldGraphQLSelection(field)
-        console.log(`Field ${field.path} (viewsIndex: ${field.viewsIndex}, type: ${fieldType}): graphqlSelection = "${selection}"`)
-        return selection
+        return getFieldGraphQLSelection(field)
       })
       .join('\n')
 
@@ -101,12 +98,6 @@ export async function getItemAction(
         }
       }
     `
-
-    console.log('=== DASHBOARD 2 getItemAction DEBUG ===')
-    console.log('Selected fields:', selectedFields)
-    console.log('Full GraphQL query:', query)
-    console.log('Query variables:', { id: itemId, listKey: list.key })
-    console.log('==========================================')
 
     const response = await keystoneClient(query, {
       id: itemId,

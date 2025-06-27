@@ -76,8 +76,6 @@ export async function getListItemsAction(
   selectedFields: string[] = ['id'],
   cacheOptions?: CacheOptions
 ): Promise<{ success: true; data: ListItemsResponse } | { success: false; error: string }> {
-  console.log(`🔍 Fetching list items for ${listKey}:`, { variables, selectedFields })
-  
   try {
     // Get list metadata
     const list = await getListByPath(listKey)
@@ -85,8 +83,6 @@ export async function getListItemsAction(
       console.error(`❌ List not found: ${listKey}`)
       return { success: false, error: `List not found: ${listKey}` }
     }
-    
-    console.log(`✅ Found list ${listKey}:`, { graphqlNames: list.graphql.names })
     
     // Build GraphQL selection for list fields - using the same pattern as getItemAction
     const selectedGqlFields = selectedFields
@@ -99,14 +95,9 @@ export async function getListItemsAction(
           return fieldPath // fallback
         }
         
-        const fieldType = typeof field.viewsIndex === 'number' ? getFieldTypeFromViewsIndex(field.viewsIndex) : 'unknown'
-        const selection = getFieldGraphQLSelection(field)
-        console.log(`Field ${field.path} (viewsIndex: ${field.viewsIndex}, type: ${fieldType}): graphqlSelection = "${selection}"`)
-        return selection
+        return getFieldGraphQLSelection(field)
       })
       .join('\n')
-    
-    console.log(`📝 GraphQL fields selection:`, selectedGqlFields)
     
     // Build the GraphQL query following Keystone's exact pattern
     const query = `
@@ -129,10 +120,6 @@ export async function getListItemsAction(
       }
     `
     
-    console.log(`🚀 Executing GraphQL query:`)
-    console.log(query)
-    console.log(`📊 Query variables:`, variables)
-    
     // Execute the query
     const response = await keystoneClient(query, variables, cacheOptions)
     
@@ -140,11 +127,6 @@ export async function getListItemsAction(
       console.error(`❌ GraphQL query failed:`, response.error)
       return { success: false, error: response.error }
     }
-    
-    console.log(`✅ GraphQL query successful:`, { 
-      itemCount: response.data.items?.length || 0, 
-      totalCount: response.data.count 
-    })
     
     return {
       success: true,

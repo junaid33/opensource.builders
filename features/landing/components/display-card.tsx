@@ -8,7 +8,6 @@ import { Card } from '@/components/ui/card';
 import { StatusBadge } from '@/components/ui/status-badge';
 import { MiniDonutChart } from '@/components/ui/mini-donut-chart';
 import { cn } from '@/lib/utils';
-import FeatureBadge from './FeatureBadge';
 import { resolveToolLogo, generateLetterAvatarSvg } from '@/features/keystone/utils/logo-resolver';
 
 interface Feature {
@@ -39,6 +38,48 @@ interface OpenSourceAlternativeProps {
   compatibilityScore?: number;
   alternatives?: Alternative[];
   toolSlug?: string;
+}
+
+// Mini Feature Donut Component
+function FeatureDonut({ feature }: { feature: Feature }) {
+  const isCompatible = feature.compatible !== false;
+  
+  if (!isCompatible) {
+    // For inactive features, show a fully red donut with opacity
+    return (
+      <div className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full border bg-background text-xs">
+        <div className="relative w-3 h-3">
+          <svg width="12" height="12" viewBox="0 0 12 12" className="transform -rotate-90">
+            <circle
+              cx="6"
+              cy="6"
+              r="4"
+              fill="none"
+              stroke="rgb(239 68 68 / 0.3)"
+              strokeWidth="2"
+            />
+          </svg>
+        </div>
+        <span className="font-medium text-muted-foreground">
+          {feature.name}
+        </span>
+      </div>
+    );
+  }
+  
+  return (
+    <div className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full border bg-background text-xs">
+      <MiniDonutChart
+        value={1}
+        total={1}
+        size={12}
+        strokeWidth={2}
+      />
+      <span className="font-medium text-foreground">
+        {feature.name}
+      </span>
+    </div>
+  );
 }
 
 export function DisplayCard({
@@ -157,7 +198,7 @@ export function DisplayCard({
       onClick={handleCardClick}
     >
       {/* Header Section */}
-      <div className="flex items-start justify-between mb-3">
+      <div className="flex items-start justify-between">
         <div className="flex items-center gap-3">
           {logoSvg && (
             <div 
@@ -200,30 +241,19 @@ export function DisplayCard({
         </div>
       </div>
 
-      {/* Badges Section with Middle Intersect */}
-      <div className="flex items-center gap-2 mb-4">
-        <Badge variant="outline" className="gap-1.5">
-          <span
-            className={cn(
-              "size-1.5 rounded-full",
-              isOpenSource ? "bg-emerald-500" : "bg-gray-500"
-            )}
-            aria-hidden="true"
-          />
-          {isOpenSource ? "Open Source" : "Proprietary"}
-        </Badge>
+      {/* License and Open Source Info with Intersect */}
+      <div className="flex items-center gap-2 mb-4 text-sm text-muted-foreground">
+        <div className="flex items-center gap-1.5">
+        
+          <span>{isOpenSource ? "Open Source" : "Proprietary"}</span>
+        </div>
         
         {/* Middle Intersect */}
-        <div className="h-4 w-px bg-border" />
-        
+        ∙ 
         {license && (
-          <Badge variant="outline" className="gap-1.5">
-            <span
-              className="size-1.5 rounded-full bg-blue-500"
-              aria-hidden="true"
-            />
-            {license}
-          </Badge>
+          <div className="flex items-center gap-1.5">
+            <span>{license}</span>
+          </div>
         )}
       </div>
 
@@ -273,12 +303,12 @@ export function DisplayCard({
             className="cursor-pointer list-none"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="inline-flex items-center gap-x-2.5 rounded-tremor-full bg-background px-2.5 py-1.5 text-tremor-label border hover:bg-muted/50 transition-colors">
+            <div className="inline-flex items-center gap-x-2.5 rounded-full bg-background px-3 py-2 text-sm border hover:bg-muted/50 transition-colors">
               <span className="inline-flex items-center gap-1.5 font-medium text-foreground">
                 <MiniDonutChart
                   value={displayFeatures.filter(f => f.compatible !== false).length}
                   total={totalFeatures}
-                  size={14}
+                  size={16}
                   strokeWidth={2}
                 />
                 {`${displayFeatures.filter(f => f.compatible !== false).length}/${totalFeatures}`}
@@ -290,23 +320,28 @@ export function DisplayCard({
               <span className="h-4 w-px bg-border" />
               <span className="inline-flex items-center">
                 {isDetailsOpen ? (
-                  <ChevronDown className="w-3 h-3 text-muted-foreground" />
+                  <ChevronDown className="w-4 h-4 text-muted-foreground" />
                 ) : (
-                  <ChevronRight className="w-3 h-3 text-muted-foreground" />
+                  <ChevronRight className="w-4 h-4 text-muted-foreground" />
                 )}
               </span>
             </div>
           </summary>
           <div className="mt-4 space-y-3">
             <div className="flex flex-wrap gap-2">
-              {displayFeatures.slice(0, 8).map((feature, index) => (
-                <FeatureBadge
-                  key={index}
-                  name={feature.name}
-                  compatible={feature.compatible !== false}
-                  featureType={feature.featureType}
-                />
-              ))}
+              {displayFeatures
+                .slice(0, 8)
+                .sort((a, b) => {
+                  // Sort compatible features first
+                  const aCompatible = a.compatible !== false;
+                  const bCompatible = b.compatible !== false;
+                  if (aCompatible && !bCompatible) return -1;
+                  if (!aCompatible && bCompatible) return 1;
+                  return 0;
+                })
+                .map((feature, index) => (
+                  <FeatureDonut key={index} feature={feature} />
+                ))}
             </div>
             {displayFeatures.length > 8 && (
               <p className="text-xs text-muted-foreground">

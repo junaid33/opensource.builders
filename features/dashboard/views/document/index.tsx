@@ -82,6 +82,58 @@ export type DocumentFeatures = {
 }
 
 /**
+ * Validates and fixes document structure to ensure all text nodes have a text property
+ */
+function validateAndFixDocument(document: any): any {
+  if (!Array.isArray(document)) {
+    return [{ type: 'paragraph', children: [{ text: '' }] }]
+  }
+
+  function fixNode(node: any): any {
+    // Handle null or undefined nodes
+    if (!node) {
+      return { text: '' }
+    }
+
+    // Handle text nodes
+    if (Text.isText(node) || (node && typeof node.text === 'string')) {
+      return {
+        ...node,
+        text: typeof node.text === 'string' ? node.text : ''
+      }
+    }
+
+    // Handle element nodes
+    if (node && typeof node === 'object' && node.type) {
+      return {
+        type: node.type || 'paragraph',
+        ...node,
+        children: Array.isArray(node.children)
+          ? node.children.map(fixNode).filter((child: any) => child !== null)
+          : [{ text: '' }]
+      }
+    }
+
+    // Handle arrays (shouldn't happen but just in case)
+    if (Array.isArray(node)) {
+      return node.map(fixNode).filter(child => child !== null)
+    }
+
+    // Invalid node, replace with empty text
+    return { text: '' }
+  }
+
+  const fixedDocument = document.map(fixNode)
+
+  // Ensure document is not empty
+  if (fixedDocument.length === 0) {
+    return [{ type: 'paragraph', children: [{ text: '' }] }]
+  }
+
+  return fixedDocument
+}
+
+/**
  * Main field component for document editor
  */
 export function Field({
@@ -192,13 +244,17 @@ export function controller(
       if (!documentFromServer) {
         return [{ type: 'paragraph', children: [{ text: '' }] }]
       }
+
+      // Validate and fix document structure before processing
+      const validatedDocument = validateAndFixDocument(documentFromServer)
+
       // make a temporary editor to normalize the document
       const editor = createDocumentEditor(
         config.fieldMeta.documentFeatures,
         componentBlocks,
         config.fieldMeta.relationships
       )
-      editor.children = documentFromServer
+      editor.children = validatedDocument
       Editor.normalize(editor, { force: true })
       return editor.children
     },

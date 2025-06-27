@@ -99,7 +99,7 @@ export const ToolbarGroup = forwardRef<HTMLDivElement, { children: ReactNode; di
             direction === 'row'
               ? 'flex-row items-center'
               : 'flex-col items-start',
-            'h-full overflow-x-auto',
+            'h-full overflow-hidden',
             className
           )}
           {...props}

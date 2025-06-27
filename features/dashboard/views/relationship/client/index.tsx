@@ -330,8 +330,6 @@ export const controller = (config: {
           }
         : { id: null, kind: "one", value: null, initialValue: null },
     deserialize: (data: any) => {
-      console.log("Relationship deserealize input:", data);
-
       if (config.fieldMeta.displayMode === "count") {
         return {
           id: data.id,
@@ -391,8 +389,6 @@ export const controller = (config: {
       );
     },
     serialize: (state: any) => {
-      console.log("Relationship serialize input:", state);
-
       if (state.kind === "many") {
         const newAllIds = new Set(state.value.map((x: any) => x.id));
         const initialIds = new Set(state.initialValue.map((x: any) => x.id));

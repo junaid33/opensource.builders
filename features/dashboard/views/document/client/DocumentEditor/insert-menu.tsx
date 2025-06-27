@@ -125,17 +125,39 @@ function getOptions(
 }
 
 function insertOption(editor: Editor, text: Text, option: Option) {
-  const path = ReactEditor.findPath(editor, text)
-  Transforms.delete(editor, {
-    at: {
-      focus: Editor.start(editor, path),
-      anchor: Editor.end(editor, path),
-    },
-  })
-  option.insert(editor)
+  try {
+    // Safety check for text node
+    if (!text || typeof text.text !== 'string') {
+      console.warn('Invalid text node in insertOption:', text)
+      return
+    }
+
+    const path = ReactEditor.findPath(editor, text)
+    Transforms.delete(editor, {
+      at: {
+        focus: Editor.start(editor, path),
+        anchor: Editor.end(editor, path),
+      },
+    })
+    option.insert(editor)
+  } catch (error) {
+    console.error('Error in insertOption:', error, { text, option })
+  }
 }
 
 export function InsertMenu({ children, text }: { children: ReactNode; text: Text }) {
+  // Safety check for text node
+  if (!text || typeof text.text !== 'string') {
+    console.warn('InsertMenu received invalid text node:', text)
+    return <>{children}</>
+  }
+
+  // Safety check for children
+  if (children === undefined || children === null) {
+    console.warn('InsertMenu received invalid children:', children)
+    return <span>{text.text}</span>
+  }
+
   const toolbarState = useToolbarState()
   const { editor } = toolbarState
   const componentBlocks = useContext(ComponentBlockContext)

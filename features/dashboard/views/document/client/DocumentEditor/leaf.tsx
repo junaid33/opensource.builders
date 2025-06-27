@@ -29,6 +29,20 @@ function Placeholder({ placeholder, children }: { placeholder: string; children:
 }
 
 const Leaf = ({ leaf, text, children, attributes }: RenderLeafProps) => {
+  // Safety check: ensure we have valid text content
+  if (!text || typeof text.text !== 'string') {
+    console.warn('Invalid text node in Leaf component:', { leaf, text })
+    // Return a safe fallback with empty string
+    return <span {...attributes}></span>
+  }
+
+  // Safety check: ensure children is valid
+  if (children === undefined || children === null) {
+    console.warn('Invalid children in Leaf component:', { children, text })
+    // Return with text content directly
+    return <span {...attributes}>{text.text}</span>
+  }
+
   const {
     underline,
     strikethrough,
@@ -84,5 +98,31 @@ const Leaf = ({ leaf, text, children, attributes }: RenderLeafProps) => {
 }
 
 export const renderLeaf = (props: RenderLeafProps) => {
+  // Check if we have the double-wrapped leaf issue
+  const hasDoubleWrappedLeaf = props.leaf && (props.leaf as any).leaf
+
+  if (hasDoubleWrappedLeaf) {
+    // Create completely new props with fixed structure
+    const fixedProps: RenderLeafProps = {
+      ...props,
+      leaf: (props.leaf as any).leaf,
+      // Force children to be the text content to bypass Slate's broken String component
+      children: props.text?.text || ''
+    }
+
+    return <Leaf {...fixedProps} />
+  }
+
+  // Ensure text node is valid for normal cases
+  if (!props.text || typeof props.text.text !== 'string') {
+    console.warn('Invalid text in renderLeaf:', props.text)
+    const fixedProps = {
+      ...props,
+      text: { text: '' } as any,
+      children: ''
+    }
+    return <Leaf {...fixedProps} />
+  }
+
   return <Leaf {...props} />
 }

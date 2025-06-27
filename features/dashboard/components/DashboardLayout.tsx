@@ -22,7 +22,7 @@ export function DashboardLayout({ children, adminMeta, authenticatedItem }: Dash
   return (
     <ErrorBoundary>
       <DashboardProvider>
-        <AdminMetaProvider>
+        <AdminMetaProvider initialData={adminMeta}>
           <SidebarProvider>
             <Sidebar adminMeta={adminMeta} user={authenticatedItem} />
             <SidebarInset className="min-w-0">

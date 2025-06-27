@@ -106,12 +106,19 @@ export async function getAdminMetaAction(listKey?: string) {
         fields[field.path] = field
       })
 
+      // Enhance with gqlNames (same as all-lists path)
+      const gqlNames = getGraphQLNames(list.key, { plural: list.plural })
+
       return {
         success: true,
         data: {
           list: {
             ...list,
-            fields // Return fields as a record
+            fields, // Return fields as a record
+            gqlNames,
+            graphql: {
+              names: gqlNames
+            }
           }
         }
       }

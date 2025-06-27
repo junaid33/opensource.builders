@@ -212,6 +212,12 @@ export function isBlock(node: Descendant): node is Block {
 function withBlocksSchema(editor: Editor): Editor {
   const { normalizeNode } = editor
   editor.normalizeNode = ([node, path]) => {
+    // Ensure all text nodes have a text property
+    if (Text.isText(node) && typeof node.text !== 'string') {
+      Transforms.setNodes(editor, { text: '' }, { at: path })
+      return
+    }
+
     if (!Text.isText(node) && node.type !== 'link' && node.type !== 'relationship') {
       const nodeType = Editor.isEditor(node) ? 'editor' : node.type
       if (typeof nodeType !== 'string' || editorSchema[nodeType] === undefined) {

@@ -65,7 +65,7 @@ export function withPasting(editor: Editor): Editor {
           }
         }
       } catch (err) {
-        console.log(err)
+        // Ignore parsing errors for clipboard content
       }
     }
 

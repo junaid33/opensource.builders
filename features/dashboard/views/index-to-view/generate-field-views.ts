@@ -138,17 +138,9 @@ export function areArraysEqual(a: any[], b: any[]): boolean {
 export function main() {
   // Access the default export properly
   const keystoneConfig = (config as any).default || config;
-  console.log("Config structure:", { config: typeof config, hasDefault: 'default' in config });
-  console.log("Keystone config lists:", keystoneConfig.lists ? Object.keys(keystoneConfig.lists) : 'No lists found');
 
   const lists = initialiseLists(keystoneConfig);
-
-  console.log("=== Initialized Lists ===");
-  console.log("Lists:", Object.keys(lists));
-
   const uniqueViews = extractUniqueViews(lists);
-  console.log("=== Extracted Unique Views ===");
-  console.log("Unique views found:", uniqueViews);
 
   const allViews = uniqueViews.map((viewRelativeToProject) => {
     const isRelativeToFile =
@@ -164,9 +156,6 @@ export function main() {
     return JSON.stringify(viewRelativeToAppFile);
   });
 
-  console.log("=== All Views (processed) ===");
-  console.log("All views with imports:", allViews);
-
   // Create the mapping object for field types in order
   const fieldTypes = ['id', ...uniqueViews];
 
@@ -174,9 +163,6 @@ export function main() {
   fieldTypes.forEach((fieldType, index) => {
     viewsIndexToType[index] = fieldType;
   });
-
-  console.log("=== Generated views index mapping ===");
-  console.log(JSON.stringify(viewsIndexToType, null, 2));
 
   // Generate the getFieldTypeFromViewsIndex.ts file
   const outputPath = join(dirname(fileURLToPath(import.meta.url)), '../getFieldTypeFromViewsIndex.ts');
@@ -205,11 +191,9 @@ ${Object.entries(viewsIndexToType).map(([key, value]) => `    ${key}: "${value}"
 }`;
 
   writeFileSync(outputPath, fileContent);
-  console.log(`✅ Generated ${outputPath}`);
 }
 
 export function initialiseLists(config: any) {
-  console.log({config})
   const listsConfig = config.lists;
 
   let intermediateLists;
@@ -307,39 +291,29 @@ export function initialiseLists(config: any) {
 
 function extractUniqueViews(jsonData: any) {
   let viewsArray: string[] = [];
-
-  console.log("=== Extracting Views Debug ===");
   
   for (const key in jsonData) {
     if (jsonData.hasOwnProperty(key)) {
-      console.log(`Processing list: ${key}`);
       const fields = jsonData[key].fields;
       if (fields) {
-        console.log(`  Fields in ${key}:`, Object.keys(fields));
         for (const fieldKey in fields) {
           if (fields.hasOwnProperty(fieldKey)) {
             const field = fields[fieldKey];
-            console.log(`    Field ${fieldKey} views:`, field.views);
             const viewMap = (viewMappings as any)[field.views] || field.views;
             if (viewMap && !viewsArray.includes(viewMap)) {
-              console.log(`      Adding unique view: ${viewMap}`);
               viewsArray.push(viewMap);
             }
           }
         }
-      } else {
-        console.log(`  No fields found in ${key}`);
       }
     }
   }
 
-  console.log("Final viewsArray:", viewsArray);
   return viewsArray;
 }
 
 function getIsEnabled(listsConfig: any) {
   const isEnabled: any = {};
-  console.log(listsConfig);
 
   for (const [listKey, listConfig] of Object.entries(listsConfig)) {
     const omit = (listConfig as any).graphql?.omit;

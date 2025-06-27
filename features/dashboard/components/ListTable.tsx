@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import { useDashboard } from '../context/DashboardProvider';
 import { Pagination } from './Pagination';
 import { getFieldViews } from '../views/registry';
+import { deleteManyItemsAction } from '../actions/item-actions';
 
 interface ListItem {
   id: string;
@@ -72,18 +73,34 @@ export function ListTable({
 
   const handleDelete = async () => {
     const idsToDelete = Array.from(selectedItemsState.selectedItems);
+    console.log('Deleting items with IDs:', list);
     if (idsToDelete.length === 0) return;
+
+    if (!list.gqlNames?.deleteManyMutationName) {
+      toast.error('Delete functionality not available for this list');
+      return;
+    }
 
     setIsDeleteLoading(true);
     setError(null);
     try {
-      // TODO: Implement delete functionality using Dashboard 2 actions
-      toast.success(`Successfully deleted ${idsToDelete.length} ${idsToDelete.length === 1 ? list.singular : list.plural}`);
-      setSelectedItems({
-        itemsFromServer: selectedItemsState.itemsFromServer,
-        selectedItems: new Set(),
+      const response = await deleteManyItemsAction(list.key, idsToDelete, {
+        deleteManyMutationName: list.gqlNames.deleteManyMutationName,
+        whereUniqueInputName: list.gqlNames.whereUniqueInputName,
       });
-      router.refresh();
+
+      if (response.errors.length > 0) {
+        const errorMessage = response.errors[0].message;
+        setError(errorMessage);
+        toast.error(errorMessage);
+      } else {
+        toast.success(`Successfully deleted ${idsToDelete.length} ${idsToDelete.length === 1 ? list.singular : list.plural}`);
+        setSelectedItems({
+          itemsFromServer: selectedItemsState.itemsFromServer,
+          selectedItems: new Set(),
+        });
+        router.refresh();
+      }
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'An unexpected error occurred';
       setError(errorMessage);

@@ -12,6 +12,12 @@ export function normalizeTextBasedOnInlineMarksAndSoftBreaks(
   inlineMarks: DocumentFeatures['formatting']['inlineMarks'],
   softBreaks: boolean
 ): boolean {
+  // Ensure text node has a text property
+  if (typeof node.text !== 'string') {
+    Transforms.setNodes(editor, { text: '' }, { at: path })
+    return true
+  }
+
   const marksToRemove = Object.keys(node).filter(
     x => x !== 'text' && x !== 'insertMenu' && (inlineMarks as any)[x] !== true
   )

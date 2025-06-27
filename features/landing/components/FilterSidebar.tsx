@@ -17,6 +17,7 @@ export interface FilterState {
 interface FilterSidebarProps {
   availableCategories?: Array<{ name: string; count: number }>
   selectedSoftware?: string
+  proprietaryTools?: string[]
   onFiltersChange?: (filters: FilterState) => void
 }
 
@@ -30,47 +31,14 @@ const LICENSE_OPTIONS = [
 ]
 
 const GITHUB_STAR_RANGES = [
+  { label: '< 1K', value: '0-1000' },
   { label: '1K - 5K', value: '1000-5000' },
   { label: '5K - 10K', value: '5000-10000' },
   { label: '> 10K', value: '10000+' }
 ]
 
-const PROPRIETARY_SOFTWARE = [
-  'Shopify',
-  'Notion',
-  'Airtable',
-  'TeamViewer',
-  'Slack',
-  'Heroku',
-  'Google Analytics',
-  'GitHub',
-  '1Password',
-  'Google Docs',
-  'Amazon S3',
-  'Salesforce',
-  'Zendesk',
-  'Google Drive',
-  'Trello',
-  'Intercom',
-  'Facebook',
-  'Zapier',
-  'YouTube',
-  'Algolia',
-  'Typeform',
-  'Zoom',
-  'Instagram',
-  'NPM',
-  'Auth0',
-  'Jira',
-  'HubSpot',
-  'Vercel',
-  'Medium',
-  'Figma',
-  'Firebase',
-  'Twilio'
-]
 
-export default function FilterSidebar({ availableCategories = [], selectedSoftware, onFiltersChange }: FilterSidebarProps) {
+export default function FilterSidebar({ availableCategories = [], selectedSoftware, proprietaryTools = [], onFiltersChange }: FilterSidebarProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
   
@@ -294,7 +262,7 @@ export default function FilterSidebar({ availableCategories = [], selectedSoftwa
             <div>
               <div className="text-sm text-gray-800 font-semibold mb-3">Alternatives to</div>
               <div className="space-y-2 max-h-48 overflow-y-auto">
-                {PROPRIETARY_SOFTWARE.map((software) => (
+                {proprietaryTools.map((software) => (
                   <div key={software} className="flex items-center space-x-2">
                     <Checkbox
                       id={`alternative-${software}`}

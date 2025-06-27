@@ -60,7 +60,6 @@ export function CreatePageClient({ listKey, list }: CreatePageClientProps) {
     if (!createItem) return
     
     const item = await createItem.create()
-    console.log('CREATE RESULT:', item) // Debug the actual response
     if (item?.id) {
       router.push(`${basePath}/${list.path}/${item.id}`)
     } else {

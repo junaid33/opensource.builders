@@ -3,6 +3,7 @@ import { LandingPageClient } from './LandingPageClient'
 import AlternativesServerQuery from '../components/AlternativesServerQuery'
 import FilterSidebar from '../components/FilterSidebar'
 import { fetchCategoriesServer, type FilterOptions } from '../actions/getAlternatives'
+import { getProprietaryTools } from '../actions/getProprietaryTools'
 
 interface LandingPageProps {
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
@@ -44,9 +45,10 @@ export async function LandingPage({ searchParams }: LandingPageProps) {
     githubStars: resolvedSearchParams.stars?.toString().split(',').filter(Boolean) || []
   }
 
-  // Fetch categories for the sidebar
+  // Fetch categories and proprietary tools for the sidebar
   const categoriesResponse = await fetchCategoriesServer()
   const availableCategories = categoriesResponse.success ? categoriesResponse.data : []
+  const proprietaryTools = await getProprietaryTools()
 
   // Create a unique key for Suspense to trigger re-renders
   const suspenseKey = `${selectedSoftware}-${JSON.stringify(filters)}`
@@ -58,6 +60,7 @@ export async function LandingPage({ searchParams }: LandingPageProps) {
         <FilterSidebar 
           availableCategories={availableCategories} 
           selectedSoftware={selectedSoftware}
+          proprietaryTools={proprietaryTools}
         />
       }
       alternativesSlot={

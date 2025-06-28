@@ -234,15 +234,28 @@ export default function ProprietarySoftware({ onSoftwareSelect, proprietaryTools
                   onClick={() => handleSoftwareClick(tool.id, tool.name)}
                   className="flex flex-col items-center justify-center gap-2 px-4 py-3 transition-opacity hover:opacity-80 cursor-pointer"
                 >
-                  <div className="w-10 h-10 flex items-center justify-center">
-                    <ToolIcon
-                      name={tool.name}
-                      simpleIconSlug={tool.simpleIconSlug}
-                      simpleIconColor={tool.simpleIconColor}
-                      size={32}
-                    />
+                  <div className="w-12 h-12 flex items-center justify-center">
+                    {tool.simpleIconSlug ? (
+                      <div 
+                        className="w-8 h-8"
+                        style={{ 
+                          backgroundColor: tool.simpleIconColor || '#6B7280',
+                          mask: `url(https://cdn.jsdelivr.net/npm/simple-icons@v15/icons/${tool.simpleIconSlug}.svg) no-repeat center`,
+                          WebkitMask: `url(https://cdn.jsdelivr.net/npm/simple-icons@v15/icons/${tool.simpleIconSlug}.svg) no-repeat center`,
+                          maskSize: 'contain',
+                          WebkitMaskSize: 'contain'
+                        }}
+                      />
+                    ) : (
+                      <div 
+                        className="w-8 h-8 rounded-md flex items-center justify-center text-white font-silkscreen text-sm"
+                        style={{ backgroundColor: tool.simpleIconColor || '#6B7280' }}
+                      >
+                        {tool.name.charAt(0).toUpperCase()}
+                      </div>
+                    )}
                   </div>
-                  <span className="font-medium text-xs text-gray-600 whitespace-nowrap">
+                  <span className="font-medium text-sm text-gray-600 whitespace-nowrap">
                     {tool.name}
                   </span>
                 </div>

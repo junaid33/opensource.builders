@@ -34,11 +34,11 @@ export default async function AlternativesServerQuery({ searchParams = {} }: Alt
     if (!alt) return null
 
     // Map proprietary features to check compatibility
-    const proprietaryFeatureIds = new Set(proprietaryFeatures.map((f: any) => f.feature.id))
-    const alternativeFeatureIds = new Set(alt.features?.map((f: any) => f.feature.id) || [])
+    const proprietaryFeatureIds = new Set(proprietaryFeatures.map((f: any) => f.feature?.id).filter(Boolean))
+    const alternativeFeatureIds = new Set(alt.features?.map((f: any) => f.feature?.id).filter(Boolean) || [])
     
     // Create features array with compatibility information
-    const featuresWithCompatibility = proprietaryFeatures.map((propFeature: any) => ({
+    const featuresWithCompatibility = proprietaryFeatures.filter((propFeature: any) => propFeature.feature).map((propFeature: any) => ({
       name: propFeature.feature.name,
       compatible: alternativeFeatureIds.has(propFeature.feature.id),
       featureType: propFeature.feature.featureType

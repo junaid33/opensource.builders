@@ -220,23 +220,98 @@ export function DisplayCard({
       {/* Header Section */}
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-3">
-          {simpleIconSlug && (
-            <div className="w-10 h-10 rounded-lg border border-gray-200 flex items-center justify-center">
+          {simpleIconSlug ? (
+            <div 
+              className="flex aspect-square items-center justify-center rounded-md overflow-hidden relative after:rounded-[inherit] after:absolute after:inset-0 after:shadow-[0_1px_2px_0_rgb(0_0_0/.05),inset_0_1px_0_0_rgb(255_255_255/.12)] after:pointer-events-none"
+              style={{ 
+                width: 56, 
+                height: 56,
+                background: simpleIconColor || '#6B7280'
+              }}
+            >
+              {/* Noise texture overlay */}
+              <div
+                className="absolute inset-0 opacity-20"
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+                  backgroundSize: "256px 256px",
+                }}
+              />
+              
               <img
                 src={`https://cdn.jsdelivr.net/npm/simple-icons@v15/icons/${simpleIconSlug}.svg`}
                 alt={`${name} icon`}
-                className="w-6 h-6"
+                className="relative z-10"
                 style={{ 
-                  filter: simpleIconColor ? `brightness(0) saturate(100%)` : undefined,
-                  color: simpleIconColor || undefined
+                  width: 32, 
+                  height: 32,
+                  filter: 'brightness(0) invert(1)',
+                  opacity: 0.9
                 }}
               />
+              
+              {/* Subtle highlight */}
+              <div className="absolute top-0 left-0 right-0 h-1/4 bg-gradient-to-b from-white/10 to-transparent rounded-t-md" />
+            </div>
+          ) : (
+            <div 
+              className={`flex aspect-square items-center justify-center rounded-md overflow-hidden ${simpleIconColor ? '' : 'bg-gradient-to-br from-slate-800 to-slate-900'} relative after:rounded-[inherit] after:absolute after:inset-0 after:shadow-[0_1px_2px_0_rgb(0_0_0/.05),inset_0_1px_0_0_rgb(255_255_255/.12)] after:pointer-events-none`}
+              style={{ 
+                width: 56, 
+                height: 56,
+                ...(simpleIconColor && { background: simpleIconColor })
+              }}
+            >
+              {/* Noise texture overlay */}
+              <div
+                className="absolute inset-0 opacity-30"
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+                  backgroundSize: "256px 256px",
+                }}
+              />
+
+              {/* Additional inner shadow for depth */}
+              <div
+                className="absolute inset-0 rounded-md"
+                style={{ boxShadow: "inset 0 1px 2px rgba(0,0,0,0.3), inset 0 -1px 2px rgba(255,255,255,0.1)" }}
+              />
+
+              {/* Letter */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span
+                  className="font-silkscreen text-gray-100 select-none"
+                  style={{
+                    fontSize: 24,
+                    // textShadow: "0 1px 4px rgba(255,255,255,0.3), 0 0 8px rgba(255,255,255,0.2)",
+                  }}
+                >
+                  {name.charAt(0).toUpperCase()}
+                </span>
+              </div>
+
+              {/* Subtle highlight on top */}
+              <div className="absolute top-0 left-0 right-0 h-1/4 bg-gradient-to-b from-white/10 to-transparent rounded-t-md" />
             </div>
           )}
           <div className="flex-1">
             <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors">
               {displayName}
             </h3>
+            {/* License and Open Source Info below title */}
+            <div className="flex items-center gap-2 mt-1 text-sm text-muted-foreground">
+              <div className="flex items-center gap-1.5">
+                <span>{isOpenSource ? "Open Source" : "Proprietary"}</span>
+              </div>
+              
+              {/* Middle Intersect */}
+              ∙ 
+              {license && (
+                <div className="flex items-center gap-1.5">
+                  <span>{license}</span>
+                </div>
+              )}
+            </div>
           </div>
         </div>
         
@@ -281,24 +356,9 @@ export function DisplayCard({
         </div>
       </div>
 
-      {/* License and Open Source Info with Intersect */}
-      <div className="flex items-center gap-2 mb-4 text-sm text-muted-foreground">
-        <div className="flex items-center gap-1.5">
-        
-          <span>{isOpenSource ? "Open Source" : "Proprietary"}</span>
-        </div>
-        
-        {/* Middle Intersect */}
-        ∙ 
-        {license && (
-          <div className="flex items-center gap-1.5">
-            <span>{license}</span>
-          </div>
-        )}
-      </div>
 
       {/* Description */}
-      <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+      <p className="text-muted-foreground text-sm leading-relaxed mb-4 mt-4">
         {description}
       </p>
 

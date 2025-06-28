@@ -58,21 +58,30 @@ export default function ToolIcon({
   // Enhanced fallback with grainy background effect
   const firstLetter = name.charAt(0).toUpperCase()
   
-  // Generate a color based on the first letter for variety
-  const colors = [
-    'from-slate-600 to-slate-700',
-    'from-gray-600 to-gray-700', 
-    'from-zinc-600 to-zinc-700',
-    'from-stone-600 to-stone-700',
-    'from-neutral-600 to-neutral-700'
-  ]
-  const colorIndex = firstLetter.charCodeAt(0) % colors.length
-  const gradientColor = colors[colorIndex]
+  // Use simpleIconColor if available, otherwise generate based on first letter
+  let backgroundColor = simpleIconColor
+  
+  if (!backgroundColor) {
+    // Generate a color based on the first letter for variety
+    const colors = [
+      'from-slate-600 to-slate-700',
+      'from-gray-600 to-gray-700', 
+      'from-zinc-600 to-zinc-700',
+      'from-stone-600 to-stone-700',
+      'from-neutral-600 to-neutral-700'
+    ]
+    const colorIndex = firstLetter.charCodeAt(0) % colors.length
+    backgroundColor = "#000000"
+  }
   
   return (
     <div 
-      className={`flex aspect-square items-center justify-center rounded-md overflow-hidden bg-gradient-to-br ${gradientColor} relative after:rounded-[inherit] after:absolute after:inset-0 after:shadow-[0_1px_2px_0_rgb(0_0_0/.05),inset_0_1px_0_0_rgb(255_255_255/.12)] after:pointer-events-none ${className}`}
-      style={{ width: size, height: size }}
+      className={`flex aspect-square items-center justify-center rounded-md overflow-hidden ${simpleIconColor ? '' : `bg-gradient-to-br ${backgroundColor}`} relative after:rounded-[inherit] after:absolute after:inset-0 after:shadow-[0_1px_2px_0_rgb(0_0_0/.05),inset_0_1px_0_0_rgb(255_255_255/.12)] after:pointer-events-none ${className}`}
+      style={{ 
+        width: size, 
+        height: size,
+        ...(simpleIconColor && { background: simpleIconColor })
+      }}
     >
       {/* Noise texture overlay */}
       <div
@@ -92,10 +101,9 @@ export default function ToolIcon({
       {/* Letter */}
       <div className="absolute inset-0 flex items-center justify-center">
         <span
-          className="font-medium text-gray-200 select-none"
+          className="font-silkscreen text-gray-200 select-none"
           style={{
             fontSize: size * 0.45,
-            fontFamily: "system-ui, -apple-system, sans-serif",
             textShadow: "0 1px 4px rgba(255,255,255,0.3), 0 0 8px rgba(255,255,255,0.2)",
           }}
         >

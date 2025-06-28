@@ -12,6 +12,9 @@ const query = `
         simpleIconSlug
         simpleIconColor
       }
+      openSourceTool {
+        id
+      }
     }
   }
 `
@@ -21,22 +24,22 @@ export async function getProprietaryTools(): Promise<Array<{id: string, name: st
     const response = await keystoneClient(query)
     
     if (response.success && response.data.alternatives) {
-      // Get unique proprietary tools with ID, name, and Simple Icons data
+      // Get unique proprietary tools that have open source alternatives
       const toolsMap = new Map()
       response.data.alternatives.forEach((alt: any) => {
-        const tool = alt.proprietaryTool
-        toolsMap.set(tool.id, { 
-          id: tool.id, 
-          name: tool.name,
-          simpleIconSlug: tool.simpleIconSlug,
-          simpleIconColor: tool.simpleIconColor
-        })
+        if (alt.openSourceTool) { // Only include tools that have alternatives
+          const tool = alt.proprietaryTool
+          toolsMap.set(tool.id, { 
+            id: tool.id, 
+            name: tool.name,
+            simpleIconSlug: tool.simpleIconSlug,
+            simpleIconColor: tool.simpleIconColor
+          })
+        }
       })
       
-      // Convert to array, filter to target tools, and sort by name
-      const targetTools = ['Shopify', 'Notion', 'Tailwind Plus', 'Cursor']
+      // Convert to array and sort by name - show all tools that have alternatives
       return Array.from(toolsMap.values())
-        .filter(tool => targetTools.includes(tool.name))
         .sort((a, b) => a.name.localeCompare(b.name))
     }
     

@@ -18,6 +18,7 @@ const navigationLinks = [
   { href: "/", label: "Home", active: true },
   { href: "#features", label: "Features" },
   { href: "#alternatives", label: "Alternatives" },
+  { href: "/build", label: "Build" },
   { href: "/tools", label: "Tools" },
 ]
 
@@ -104,10 +105,10 @@ export default function Navbar({ className }: NavbarProps) {
           {/* Right side */}
           <nav className="flex items-center gap-4">
             <Button variant="ghost" size="sm" asChild>
-              <a href="/dashboard/signin">About</a>
+              <a href="/dashboard/signin">Sign In</a>
             </Button>
             <Button size="sm" asChild>
-              <a href="/dashboard/signup">Build</a>
+              <a href="/build">Build</a>
             </Button>
           </nav>
         </div>

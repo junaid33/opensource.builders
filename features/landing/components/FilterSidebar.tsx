@@ -19,11 +19,8 @@ export interface FilterState {
 interface FilterSidebarProps {
   availableCategories?: Array<{ name: string; count: number }>
   selectedSoftware?: string
-  proprietaryTools?: string[]
+  proprietaryTools?: Array<{id: string, name: string}>
   availableFeatures?: Array<{ name: string; count: number }>
-  onFiltersChange?: (filters: FilterState) => void
-  onSoftwareChange?: (software: string) => void
-  onFeatureClick?: (feature: string) => void
 }
 
 const LICENSE_OPTIONS = [
@@ -43,7 +40,7 @@ const GITHUB_STAR_RANGES = [
 ]
 
 
-export default function FilterSidebar({ availableCategories = [], selectedSoftware, proprietaryTools = [], availableFeatures = [], onFiltersChange, onSoftwareChange, onFeatureClick }: FilterSidebarProps) {
+export default function FilterSidebar({ availableCategories = [], selectedSoftware, proprietaryTools = [], availableFeatures = [] }: FilterSidebarProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
   
@@ -95,10 +92,7 @@ export default function FilterSidebar({ availableCategories = [], selectedSoftwa
     
     const newUrl = params.toString() ? `?${params.toString()}` : '/'
     router.push(newUrl, { scroll: false })
-    
-    // Notify parent component
-    onFiltersChange?.(filters)
-  }, [filters, router, searchParams, onFiltersChange])
+  }, [filters, router, searchParams])
 
   const updateFilter = (key: keyof FilterState, value: any) => {
     setFilters(prev => ({ ...prev, [key]: value }))
@@ -125,10 +119,24 @@ export default function FilterSidebar({ availableCategories = [], selectedSoftwa
 
   const handleSoftwareChange = (software: string) => {
     const params = new URLSearchParams(searchParams.toString())
-    params.set('software', software)
+    
+    // Find the tool ID for the selected software
+    const selectedTool = proprietaryTools?.find(tool => tool.name === software)
+    
+    if (selectedTool) {
+      // Remove any existing proprietaryTool filters
+      Array.from(params.keys()).forEach(key => {
+        if (key.startsWith('!proprietaryTool_')) {
+          params.delete(key)
+        }
+      })
+      
+      // Add the new proprietaryTool filter
+      params.set('!proprietaryTool_is', JSON.stringify(selectedTool.id))
+    }
+    
     const newUrl = `?${params.toString()}`
     router.push(newUrl, { scroll: false })
-    onSoftwareChange?.(software)
   }
 
   const hasActiveFilters = filters.categories.length > 0 || 
@@ -220,9 +228,9 @@ export default function FilterSidebar({ availableCategories = [], selectedSoftwa
                   <SelectValue placeholder="Select software..." />
                 </SelectTrigger>
                 <SelectContent>
-                  {proprietaryTools.map((software) => (
-                    <SelectItem key={software} value={software}>
-                      {software}
+                  {proprietaryTools?.map((tool) => (
+                    <SelectItem key={tool.id} value={tool.name}>
+                      {tool.name}
                     </SelectItem>
                   ))}
                 </SelectContent>

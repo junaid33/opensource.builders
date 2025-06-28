@@ -1,5 +1,5 @@
 import { DisplayCard } from '@/features/landing/components/display-card'
-import { osbClient } from '../lib/osbClient'
+import { keystoneClient } from '@/features/dashboard/lib/keystoneClient'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { Badge } from '@/components/ui/badge'
 
@@ -63,7 +63,7 @@ async function fetchAlternatives(proprietaryTool: string) {
     }
   `;
 
-  const response = await osbClient(query, { proprietaryTool });
+  const response = await keystoneClient(query, { proprietaryTool });
   
   if (!response.success) {
     console.error('Failed to fetch alternatives:', response.error);

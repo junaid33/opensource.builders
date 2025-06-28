@@ -1,5 +1,7 @@
 'use server'
 
+import { keystoneClient } from '@/features/dashboard/lib/keystoneClient'
+
 const query = `
   query GetProprietaryTools {
     alternatives {
@@ -12,23 +14,20 @@ const query = `
   }
 `
 
-export async function getProprietaryTools(): Promise<string[]> {
+export async function getProprietaryTools(): Promise<Array<{id: string, name: string}>> {
   try {
-    const response = await fetch('http://localhost:3003/api/graphql', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ query }),
-      cache: 'no-store'
-    })
+    const response = await keystoneClient(query)
     
-    const data = await response.json()
-    
-    if (data.data && data.data.alternatives) {
-      // Get unique proprietary tool names and sort them
-      const proprietaryTools = [...new Set(data.data.alternatives.map((alt: any) => alt.proprietaryTool.name))].sort()
-      return proprietaryTools
+    if (response.success && response.data.alternatives) {
+      // Get unique proprietary tools with ID and name
+      const toolsMap = new Map()
+      response.data.alternatives.forEach((alt: any) => {
+        const tool = alt.proprietaryTool
+        toolsMap.set(tool.id, { id: tool.id, name: tool.name })
+      })
+      
+      // Convert to array and sort by name
+      return Array.from(toolsMap.values()).sort((a, b) => a.name.localeCompare(b.name))
     }
     
     return []

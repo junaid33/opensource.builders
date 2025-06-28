@@ -2,7 +2,7 @@ import { Suspense } from 'react'
 import { LandingPageClient } from './LandingPageClient'
 import AlternativesServerQuery from '../components/AlternativesServerQuery'
 import FilterSidebar from '../components/FilterSidebar'
-import { fetchCategoriesServer, fetchFeaturesServer, type FilterOptions } from '../actions/getAlternatives'
+import { fetchCategoriesServer, fetchFeaturesServer } from '../actions/getAlternatives'
 import { getProprietaryTools } from '../actions/getProprietaryTools'
 
 interface LandingPageProps {
@@ -37,14 +37,6 @@ function AlternativesLoading() {
 export async function LandingPage({ searchParams }: LandingPageProps) {
   const resolvedSearchParams = await searchParams || {}
   const selectedSoftware = resolvedSearchParams.software?.toString() || 'Shopify'
-  
-  // Parse filters from URL params (following dashboard pattern)
-  const filters: FilterOptions = {
-    categories: resolvedSearchParams.categories?.toString().split(',').filter(Boolean) || [],
-    licenses: resolvedSearchParams.licenses?.toString().split(',').filter(Boolean) || [],
-    githubStars: resolvedSearchParams.stars?.toString().split(',').filter(Boolean) || [],
-    features: resolvedSearchParams.features?.toString().split(',').filter(Boolean) || []
-  }
 
   // Fetch categories, features, and proprietary tools for the sidebar
   const categoriesResponse = await fetchCategoriesServer()
@@ -53,12 +45,13 @@ export async function LandingPage({ searchParams }: LandingPageProps) {
   const availableFeatures = featuresResponse.success ? featuresResponse.data : []
   const proprietaryTools = await getProprietaryTools()
 
-  // Create a unique key for Suspense to trigger re-renders
-  const suspenseKey = `${selectedSoftware}-${JSON.stringify(filters)}`
+  // Create a unique key for Suspense to trigger re-renders based on all search params
+  const suspenseKey = `${selectedSoftware}-${JSON.stringify(resolvedSearchParams)}`
 
   return (
     <LandingPageClient 
       initialSelectedSoftware={selectedSoftware}
+      proprietaryTools={proprietaryTools}
       sidebarSlot={
         <FilterSidebar 
           availableCategories={availableCategories}
@@ -70,7 +63,7 @@ export async function LandingPage({ searchParams }: LandingPageProps) {
       alternativesSlot={
         <div className="pb-8 md:pb-16" id="alternatives">
           <Suspense fallback={<AlternativesLoading />} key={suspenseKey}>
-            <AlternativesServerQuery selectedSoftware={selectedSoftware} filters={filters} />
+            <AlternativesServerQuery searchParams={resolvedSearchParams} />
           </Suspense>
         </div>
       }

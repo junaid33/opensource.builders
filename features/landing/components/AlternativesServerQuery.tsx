@@ -8,12 +8,11 @@ import FeatureBadge from './FeatureBadge'
 import { fetchAlternativesServer, type FilterOptions } from '../actions/getAlternatives'
 
 interface AlternativesServerQueryProps {
-  selectedSoftware: string
-  filters?: FilterOptions
+  searchParams?: Record<string, any>
 }
 
-export default async function AlternativesServerQuery({ selectedSoftware, filters = {} }: AlternativesServerQueryProps) {
-  const response = await fetchAlternativesServer(selectedSoftware, filters)
+export default async function AlternativesServerQuery({ searchParams = {} }: AlternativesServerQueryProps) {
+  const response = await fetchAlternativesServer(searchParams)
   
   if (!response.success) {
     return (
@@ -24,8 +23,10 @@ export default async function AlternativesServerQuery({ selectedSoftware, filter
   }
 
   const data = response.data
-  const proprietaryFeatures = data.proprietaryTool?.[0]?.features || []
+  const proprietaryTool = data.proprietaryTool?.[0]
+  const proprietaryFeatures = proprietaryTool?.features || []
   const alternatives = data.alternatives || []
+  const selectedSoftware = proprietaryTool?.name || 'Selected Software'
 
   // Create resolved logo and feature compatibility for each alternative
   const alternativesWithLogos = alternatives.map((altRelation: any) => {

@@ -42,7 +42,7 @@ const proprietarySoftware = [
   { name: 'Twilio', domain: 'twilio.com', svg: null },
 ]
 
-// InfiniteSlider component implementation
+// InfiniteSlider component implementation with user control
 function InfiniteSlider({
   children,
   gap = 16,
@@ -65,6 +65,8 @@ function InfiniteSlider({
   const translation = useMotionValue(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [key, setKey] = useState(0);
+  const [isUserControlled, setIsUserControlled] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {
     let controls;
@@ -75,6 +77,11 @@ function InfiniteSlider({
     
     // Calculate duration based on speed (higher speed = lower duration)
     const duration = contentSize / currentSpeed;
+
+    // Don't animate if user is controlling the slider
+    if (isUserControlled || isDragging) {
+      return;
+    }
 
     if (isTransitioning) {
       controls = animate(translation, [translation.get(), to], {
@@ -109,23 +116,70 @@ function InfiniteSlider({
     isTransitioning,
     direction,
     reverse,
+    isUserControlled,
+    isDragging,
   ]);
 
   const hoverProps = speedOnHover
     ? {
         onHoverStart: () => {
-          setIsTransitioning(true);
-          setCurrentSpeed(speedOnHover);
+          if (!isUserControlled && !isDragging) {
+            setIsTransitioning(true);
+            setCurrentSpeed(speedOnHover);
+          }
         },
         onHoverEnd: () => {
-          setIsTransitioning(true);
-          setCurrentSpeed(speed);
+          if (!isUserControlled && !isDragging) {
+            setIsTransitioning(true);
+            setCurrentSpeed(speed);
+          }
         },
       }
     : {};
 
+  const handleDragStart = () => {
+    setIsDragging(true);
+    setIsUserControlled(true);
+  };
+
+  const handleDragEnd = () => {
+    setIsDragging(false);
+    // Resume auto-scroll after 3 seconds of no interaction
+    setTimeout(() => {
+      setIsUserControlled(false);
+      setKey((prevKey) => prevKey + 1);
+    }, 3000);
+  };
+
+  const handleWheel = (e: React.WheelEvent) => {
+    e.preventDefault();
+    setIsUserControlled(true);
+    
+    const delta = direction === 'horizontal' ? e.deltaX || e.deltaY : e.deltaY;
+    const currentPos = translation.get();
+    const newPos = currentPos - delta;
+    
+    // Constrain movement to content bounds
+    const size = direction === 'horizontal' ? width : height;
+    const contentSize = size + gap;
+    const minPos = -contentSize / 2;
+    const maxPos = 0;
+    
+    const constrainedPos = Math.max(minPos, Math.min(maxPos, newPos));
+    translation.set(constrainedPos);
+    
+    // Resume auto-scroll after 3 seconds of no wheel activity
+    setTimeout(() => {
+      setIsUserControlled(false);
+      setKey((prevKey) => prevKey + 1);
+    }, 3000);
+  };
+
   return (
-    <div className={cn('overflow-hidden', className)}>
+    <div 
+      className={cn('overflow-hidden cursor-grab active:cursor-grabbing', className)}
+      onWheel={handleWheel}
+    >
       <motion.div
         className="flex w-max"
         style={{
@@ -136,6 +190,16 @@ function InfiniteSlider({
           flexDirection: direction === 'horizontal' ? 'row' : 'column',
         }}
         ref={ref}
+        drag={direction === 'horizontal' ? 'x' : 'y'}
+        dragConstraints={{
+          left: direction === 'horizontal' ? -(width + gap) / 2 : 0,
+          right: 0,
+          top: direction === 'vertical' ? -(height + gap) / 2 : 0,
+          bottom: 0,
+        }}
+        dragElastic={0.1}
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
         {...hoverProps}
       >
         {children}
@@ -205,13 +269,17 @@ function SoftwareLogo({ software, onClick }: {
 }
 
 interface ProprietarySoftwareProps {
-  onSoftwareSelect?: (software: string) => void
+  onSoftwareSelect?: (toolId: string, toolName: string) => void
+  proprietaryTools?: Array<{id: string, name: string}>
 }
 
-export default function ProprietarySoftware({ onSoftwareSelect }: ProprietarySoftwareProps) {
-  const handleSoftwareClick = (software: string) => {
-    onSoftwareSelect?.(software)
+export default function ProprietarySoftware({ onSoftwareSelect, proprietaryTools = [] }: ProprietarySoftwareProps) {
+  const handleSoftwareClick = (toolId: string, toolName: string) => {
+    onSoftwareSelect?.(toolId, toolName)
   }
+  
+  // Use real data if available, fallback to hardcoded carousel items for display
+  const displayTools = proprietaryTools.length > 0 ? proprietaryTools : proprietarySoftware.map(s => ({ id: s.name, name: s.name }))
 
   return (
     <section className="bg-slate-50 overflow-hidden py-12">
@@ -228,13 +296,17 @@ export default function ProprietarySoftware({ onSoftwareSelect }: ProprietarySof
               gap={8}
               className="py-2"
             >
-              {proprietarySoftware.map((software, index) => (
-                <SoftwareLogo
-                  key={`${software.name}-${index}`}
-                  software={software}
-                  onClick={() => handleSoftwareClick(software.name)}
-                />
-              ))}
+              {displayTools.map((tool, index) => {
+                // Find corresponding hardcoded software for logo info
+                const softwareData = proprietarySoftware.find(s => s.name === tool.name) || { name: tool.name, domain: '', svg: null }
+                return (
+                  <SoftwareLogo
+                    key={`${tool.name}-${index}`}
+                    software={softwareData}
+                    onClick={() => handleSoftwareClick(tool.id, tool.name)}
+                  />
+                )
+              })}
             </InfiniteSlider>
 
             <ProgressiveBlur

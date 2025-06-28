@@ -1,10 +1,13 @@
 /**
  * Server action to fetch alternatives for a given proprietary tool
+ * Now integrated with buildWhereClause for URL-based filtering
  */
 
 'use server'
 
 import { keystoneClient } from '@/features/dashboard/lib/keystoneClient'
+import { buildWhereClause } from '@/features/dashboard/lib/buildWhereClause'
+import { TOOLS_LIST_DEFINITION } from '../lib/hardcodedToolsList'
 
 interface FilterOptions {
   categories?: string[]
@@ -13,12 +16,65 @@ interface FilterOptions {
   features?: string[]
 }
 
-async function fetchAlternativesServer(proprietaryTool: string, filters: FilterOptions = {}) {
+async function fetchAlternativesServer(searchParams: Record<string, any> = {}) {
+  // Extract proprietary tool filter to determine which alternatives to fetch
+  let proprietaryToolWhere: any = {}
+  let openSourceToolWhere: any = {}
+  
+  // Check if we have a proprietaryTool filter in the searchParams
+  const proprietaryToolFilter = Object.keys(searchParams).find(key => key.startsWith('!proprietaryTool_'))
+  
+  if (proprietaryToolFilter) {
+    // Parse the filter to get the proprietary tool criteria
+    const filterType = proprietaryToolFilter.replace('!proprietaryTool_', '')
+    const filterValue = searchParams[proprietaryToolFilter]
+    
+    try {
+      const value = JSON.parse(filterValue)
+      
+      if (filterType === 'is') {
+        proprietaryToolWhere = { id: { equals: value } }
+      } else if (filterType === 'is_i') {
+        proprietaryToolWhere = { name: { equals: value, mode: 'insensitive' } }
+      }
+      // Add more filter types as needed
+    } catch (err) {
+      console.error('Failed to parse proprietaryTool filter:', err)
+      return { success: false, error: 'Invalid proprietaryTool filter', data: { proprietaryTool: [], alternatives: [] } }
+    }
+  } else {
+    // Default to Shopify if no proprietary tool specified
+    const proprietaryToolName = searchParams.proprietaryTool || 'Shopify'
+    proprietaryToolWhere = { name: { equals: proprietaryToolName, mode: 'insensitive' } }
+  }
+  
+  // For openSourceTool filtering, use the remaining filters
+  const openSourceFilters = { ...searchParams }
+  // Remove proprietaryTool filters from openSource filtering
+  Object.keys(openSourceFilters).forEach(key => {
+    if (key.startsWith('!proprietaryTool_') || key === 'proprietaryTool') {
+      delete openSourceFilters[key]
+    }
+  })
+  
+  if (Object.keys(openSourceFilters).length > 0) {
+    openSourceToolWhere = buildWhereClause(TOOLS_LIST_DEFINITION, openSourceFilters)
+  }
+  
+  // Combine filters for alternatives query
+  const alternativesWhere: any = {
+    proprietaryTool: proprietaryToolWhere
+  }
+  
+  // Add openSourceTool filtering if any filters are specified
+  if (Object.keys(openSourceToolWhere).length > 0) {
+    alternativesWhere.openSourceTool = openSourceToolWhere
+  }
 
   const query = `
-    query GetAlternatives($proprietaryTool: String!) {
+    query GetAlternatives($proprietaryToolWhere: ToolWhereInput!, $alternativesWhere: AlternativeWhereInput!) {
       # Get the proprietary tool and its features
-      proprietaryTool: tools(where: { name: { equals: $proprietaryTool } }) {
+      proprietaryTool: tools(where: $proprietaryToolWhere) {
         id
         name
         features {
@@ -32,8 +88,8 @@ async function fetchAlternativesServer(proprietaryTool: string, filters: FilterO
         }
       }
       
-      # Get all alternatives - we'll filter client-side for now
-      alternatives(where: { proprietaryTool: { name: { equals: $proprietaryTool } } }) {
+      # Get filtered alternatives using buildWhereClause
+      alternatives(where: $alternativesWhere) {
         id
         similarityScore
         openSourceTool {
@@ -67,7 +123,8 @@ async function fetchAlternativesServer(proprietaryTool: string, filters: FilterO
   `;
 
   const response = await keystoneClient(query, { 
-    proprietaryTool
+    proprietaryToolWhere,
+    alternativesWhere
   })
   
   if (!response.success) {
@@ -79,63 +136,15 @@ async function fetchAlternativesServer(proprietaryTool: string, filters: FilterO
     }
   }
 
-  // Apply client-side filtering if filters are provided
-  let filteredAlternatives = response.data.alternatives || []
-  
-  if (filters.features && filters.features.length > 0) {
-    filteredAlternatives = filteredAlternatives.filter((altRelation: any) => {
-      const alt = altRelation.openSourceTool
-      if (!alt?.features) return false
-      
-      const toolFeatureNames = new Set(alt.features.map((f: any) => f.feature.name))
-      
-      // Check if tool has ALL selected features (AND logic)
-      return filters.features!.every(featureName => toolFeatureNames.has(featureName))
-    })
-  }
-  
-  if (filters.categories && filters.categories.length > 0) {
-    filteredAlternatives = filteredAlternatives.filter((altRelation: any) => {
-      const alt = altRelation.openSourceTool
-      return alt?.category && filters.categories!.includes(alt.category.name)
-    })
-  }
-  
-  if (filters.licenses && filters.licenses.length > 0) {
-    filteredAlternatives = filteredAlternatives.filter((altRelation: any) => {
-      const alt = altRelation.openSourceTool
-      return alt?.license && filters.licenses!.includes(alt.license)
-    })
-  }
-  
-  if (filters.githubStars && filters.githubStars.length > 0) {
-    filteredAlternatives = filteredAlternatives.filter((altRelation: any) => {
-      const alt = altRelation.openSourceTool
-      const stars = alt?.githubStars || 0
-      
-      return filters.githubStars!.some(range => {
-        switch (range) {
-          case '1000-5000':
-            return stars >= 1000 && stars < 5000
-          case '5000-10000':
-            return stars >= 5000 && stars < 10000
-          case '10000+':
-            return stars >= 10000
-          default:
-            return false
-        }
-      })
-    })
-  }
-
   return {
     success: true,
     data: {
       proprietaryTool: response.data.proprietaryTool,
-      alternatives: filteredAlternatives
+      alternatives: response.data.alternatives || []
     }
   }
 }
+
 
 // Also fetch categories for the sidebar
 async function fetchCategoriesServer() {

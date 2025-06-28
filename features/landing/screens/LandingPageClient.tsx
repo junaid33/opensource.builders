@@ -10,32 +10,38 @@ interface LandingPageClientProps {
   initialSelectedSoftware: string
   sidebarSlot: ReactNode
   alternativesSlot: ReactNode
+  proprietaryTools: Array<{id: string, name: string}>
 }
 
-export function LandingPageClient({ initialSelectedSoftware, sidebarSlot, alternativesSlot }: LandingPageClientProps) {
+export function LandingPageClient({ initialSelectedSoftware, sidebarSlot, alternativesSlot, proprietaryTools }: LandingPageClientProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [selectedSoftware, setSelectedSoftware] = useState<string>(initialSelectedSoftware)
 
-  const handleSoftwareSelect = (software: string) => {
-    setSelectedSoftware(software)
+  const handleSoftwareSelect = (toolId: string, toolName: string) => {
+    setSelectedSoftware(toolName)
     
-    // Update URL with selected software
+    // Update URL with proprietary tool filter
     const params = new URLSearchParams(searchParams?.toString() || '')
-    if (software !== 'Shopify') {
-      params.set('software', software)
-    } else {
-      params.delete('software')
-    }
     
-    const newUrl = params.toString() ? `?${params.toString()}` : '/'
+    // Remove any existing proprietaryTool filters
+    Array.from(params.keys()).forEach(key => {
+      if (key.startsWith('!proprietaryTool_')) {
+        params.delete(key)
+      }
+    })
+    
+    // Add the new proprietaryTool filter
+    params.set('!proprietaryTool_is', JSON.stringify(toolId))
+    
+    const newUrl = `?${params.toString()}`
     router.push(newUrl, { scroll: false })
   }
 
   return (
     <>
       <Hero />
-      <ProprietarySoftware onSoftwareSelect={handleSoftwareSelect} />
+      <ProprietarySoftware onSoftwareSelect={handleSoftwareSelect} proprietaryTools={proprietaryTools} />
 
       {/* Page content */}
       <section>

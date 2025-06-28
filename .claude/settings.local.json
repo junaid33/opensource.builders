@@ -36,7 +36,11 @@
       "WebFetch(domain:localhost)",
       "Bash(-H \"Content-Type: application/json\" )",
       "Bash(-d @test-graphql.json)",
-      "Bash(mv:*)"
+      "Bash(mv:*)",
+      "WebFetch(domain:simpleicons.org)",
+      "WebFetch(domain:cdn.jsdelivr.net)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:github.com)"
     ],
     "deny": []
   }

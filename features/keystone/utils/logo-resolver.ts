@@ -8,7 +8,7 @@ const GLOBE_ICON_HASHES = [
 ]
 
 interface LogoResult {
-  type: 'svg' | 'url' | 'favicon' | 'letter'
+  type: 'svg' | 'url' | 'favicon' | 'letter' | 'simpleicon'
   data: string
   domain?: string
   verified?: boolean
@@ -38,28 +38,7 @@ export async function resolveToolLogo(tool: {
     }
   }
 
-  // 3. Try favicon service with globe detection
-  if (tool.websiteUrl) {
-    try {
-      const domain = new URL(tool.websiteUrl).hostname
-      const faviconUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`
-      
-      // Check if the favicon is the dreaded globe
-      const isValidFavicon = await checkFaviconQuality(faviconUrl)
-      
-      if (isValidFavicon) {
-        return {
-          type: 'favicon',
-          data: faviconUrl,
-          domain: domain,
-          verified: true
-        }
-      }
-    } catch (error) {
-      console.warn(`Failed to resolve favicon for ${tool.name}:`, error)
-    }
-  }
-
+  // 3. Use SimpleIcons (hardcoded to shopify for now) as fallback
   // 4. Fallback to letter avatar
   const firstLetter = tool.name ? tool.name.charAt(0).toUpperCase() : '?'
   return {

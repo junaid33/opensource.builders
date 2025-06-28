@@ -1,10 +1,8 @@
 import { list } from '@keystone-6/core'
 import { allOperations } from '@keystone-6/core/access'
-import { checkbox, integer, relationship, select, text, timestamp, virtual } from '@keystone-6/core/fields'
-import { graphql } from '@keystone-6/core'
+import { checkbox, integer, relationship, select, text, timestamp } from '@keystone-6/core/fields'
 
-import { isSignedIn, permissions } from '../access'
-import { resolveToolLogo, generateLetterAvatarSvg } from '../utils/logo-resolver'
+import { permissions } from '../access'
 
 export const Tool = list({
   access: {
@@ -56,19 +54,16 @@ export const Tool = list({
         length: { max: 500 },
       },
     }),
-    logoUrl: text({
-      label: 'Logo URL',
+    simpleIconSlug: text({
+      label: 'Simple Icon Slug',
       validation: {
-        length: { max: 500 },
+        length: { max: 100 },
       },
     }),
-    logoSvg: text({
-      label: 'Logo SVG',
-      ui: {
-        displayMode: 'textarea',
-      },
+    simpleIconColor: text({
+      label: 'Simple Icon Color',
       validation: {
-        length: { max: 10000 },
+        length: { max: 7 }, // For hex colors like #7AB55C
       },
     }),
     isOpenSource: checkbox({
@@ -133,47 +128,6 @@ export const Tool = list({
     deploymentOptions: relationship({
       ref: 'DeploymentOption.tool',
       many: true,
-    }),
-    // Virtual field that provides intelligent logo resolution
-    resolvedLogo: virtual({
-      field: graphql.field({
-        type: graphql.JSON,
-        async resolve(item: any) {
-          try {
-            const result = await resolveToolLogo({
-              name: item.name,
-              logoSvg: item.logoSvg,
-              logoUrl: item.logoUrl,
-              websiteUrl: item.websiteUrl,
-            })
-
-            // If it's a letter type, generate the SVG
-            if (result.type === 'letter') {
-              return {
-                ...result,
-                svg: generateLetterAvatarSvg(result.data),
-              }
-            }
-
-            return result
-          } catch (error) {
-            console.error(`Error resolving logo for ${item.name}:`, error)
-            // Fallback to letter avatar
-            const firstLetter = item.name ? item.name.charAt(0).toUpperCase() : '?'
-            return {
-              type: 'letter',
-              data: firstLetter,
-              svg: generateLetterAvatarSvg(firstLetter),
-              verified: false
-            }
-          }
-        },
-      }),
-      ui: {
-        createView: { fieldMode: 'hidden' },
-        itemView: { fieldMode: 'read' },
-        listView: { fieldMode: 'hidden' },
-      },
     }),
   },
 });

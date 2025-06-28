@@ -1,7 +1,7 @@
 'use client'
 
 interface ResolvedLogo {
-  type: 'svg' | 'url' | 'favicon' | 'letter'
+  type: 'svg' | 'url' | 'favicon' | 'letter' | 'simpleicon'
   data: string
   domain?: string
   verified?: boolean
@@ -67,6 +67,32 @@ export default function ToolLogo({
           loading="lazy"
           onError={(e) => {
             // If favicon fails to load, replace with letter avatar
+            const target = e.target as HTMLImageElement
+            const letter = name.charAt(0).toUpperCase()
+            target.style.display = 'none'
+            
+            // Create letter avatar as fallback
+            const letterDiv = document.createElement('div')
+            letterDiv.className = `flex items-center justify-center rounded-full bg-indigo-500 text-white font-semibold ${className}`
+            letterDiv.style.width = `${size}px`
+            letterDiv.style.height = `${size}px`
+            letterDiv.style.fontSize = `${size * 0.4}px`
+            letterDiv.textContent = letter
+            
+            target.parentNode?.insertBefore(letterDiv, target)
+          }}
+        />
+      )
+
+    case 'simpleicon':
+      return (
+        <img
+          {...commonProps}
+          src={resolvedLogo.data}
+          alt={`${name} logo`}
+          loading="lazy"
+          onError={(e) => {
+            // If SimpleIcon fails to load, replace with letter avatar
             const target = e.target as HTMLImageElement
             const letter = name.charAt(0).toUpperCase()
             target.style.display = 'none'

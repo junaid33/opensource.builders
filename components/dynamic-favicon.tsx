@@ -15,15 +15,10 @@ export function DynamicFavicon({
   className,
   fallbackToInitials = false 
 }: DynamicFaviconProps) {
-  // Extract domain from URL for favicon
-  const getFaviconUrl = (url?: string) => {
-    if (!url) return null;
-    try {
-      const domain = new URL(url).hostname;
-      return `https://www.google.com/s2/favicons?domain=${domain}&sz=32`;
-    } catch {
-      return null;
-    }
+  // Use SimpleIcons instead of Google favicon
+  const getSimpleIconUrl = (toolName: string) => {
+    // For now, hardcode to shopify as requested
+    return `https://cdn.jsdelivr.net/npm/simple-icons@v15/icons/shopify.svg`;
   };
 
   // Generate initials fallback
@@ -36,14 +31,14 @@ export function DynamicFavicon({
       .toUpperCase();
   };
 
-  const faviconUrl = getFaviconUrl(websiteUrl);
+  const iconUrl = getSimpleIconUrl(toolName);
   const initials = getInitials(toolName);
 
-  if (faviconUrl) {
+  if (iconUrl) {
     return (
       <img
-        src={faviconUrl}
-        alt={`${toolName} favicon`}
+        src={iconUrl}
+        alt={`${toolName} icon`}
         className={cn("object-cover", className)}
         onError={(e) => {
           if (fallbackToInitials) {

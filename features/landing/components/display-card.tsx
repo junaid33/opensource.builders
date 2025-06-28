@@ -33,7 +33,8 @@ interface OpenSourceAlternativeProps {
   repositoryUrl?: string;
   websiteUrl?: string;
   className?: string;
-  logoSvg?: string;
+  simpleIconSlug?: string;
+  simpleIconColor?: string;
   totalFeatures?: number;
   compatibilityScore?: number;
   alternatives?: Alternative[];
@@ -121,7 +122,8 @@ export function DisplayCard({
   repositoryUrl = "https://github.com/LibreOffice/core",
   websiteUrl = "https://www.libreoffice.org",
   className,
-  logoSvg,
+  simpleIconSlug,
+  simpleIconColor,
   totalFeatures,
   compatibilityScore,
   alternatives = [],
@@ -218,11 +220,18 @@ export function DisplayCard({
       {/* Header Section */}
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-3">
-          {logoSvg && (
-            <div 
-              className="w-10 h-10 rounded-lg border border-gray-200 flex items-center justify-center"
-              dangerouslySetInnerHTML={{ __html: logoSvg }}
-            />
+          {simpleIconSlug && (
+            <div className="w-10 h-10 rounded-lg border border-gray-200 flex items-center justify-center">
+              <img
+                src={`https://cdn.jsdelivr.net/npm/simple-icons@v15/icons/${simpleIconSlug}.svg`}
+                alt={`${name} icon`}
+                className="w-6 h-6"
+                style={{ 
+                  filter: simpleIconColor ? `brightness(0) saturate(100%)` : undefined,
+                  color: simpleIconColor || undefined
+                }}
+              />
+            </div>
           )}
           <div className="flex-1">
             <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors">

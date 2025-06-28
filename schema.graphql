@@ -356,8 +356,8 @@ type Tool {
   description: String
   websiteUrl: String
   repositoryUrl: String
-  logoUrl: String
-  logoSvg: String
+  simpleIconSlug: String
+  simpleIconColor: String
   isOpenSource: Boolean
   category: Category
   license: String
@@ -374,7 +374,6 @@ type Tool {
   openSourceAlternativesCount(where: AlternativeWhereInput! = {}): Int
   deploymentOptions(where: DeploymentOptionWhereInput! = {}, orderBy: [DeploymentOptionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DeploymentOptionWhereUniqueInput): [DeploymentOption!]
   deploymentOptionsCount(where: DeploymentOptionWhereInput! = {}): Int
-  resolvedLogo: JSON
 }
 
 input ToolWhereUniqueInput {
@@ -392,8 +391,8 @@ input ToolWhereInput {
   description: StringFilter
   websiteUrl: StringFilter
   repositoryUrl: StringFilter
-  logoUrl: StringFilter
-  logoSvg: StringFilter
+  simpleIconSlug: StringFilter
+  simpleIconColor: StringFilter
   isOpenSource: BooleanFilter
   category: CategoryWhereInput
   license: StringFilter
@@ -459,8 +458,8 @@ input ToolOrderByInput {
   description: OrderDirection
   websiteUrl: OrderDirection
   repositoryUrl: OrderDirection
-  logoUrl: OrderDirection
-  logoSvg: OrderDirection
+  simpleIconSlug: OrderDirection
+  simpleIconColor: OrderDirection
   isOpenSource: OrderDirection
   license: OrderDirection
   githubStars: OrderDirection
@@ -476,8 +475,8 @@ input ToolUpdateInput {
   description: String
   websiteUrl: String
   repositoryUrl: String
-  logoUrl: String
-  logoSvg: String
+  simpleIconSlug: String
+  simpleIconColor: String
   isOpenSource: Boolean
   category: CategoryRelateToOneForUpdateInput
   license: String
@@ -530,8 +529,8 @@ input ToolCreateInput {
   description: String
   websiteUrl: String
   repositoryUrl: String
-  logoUrl: String
-  logoSvg: String
+  simpleIconSlug: String
+  simpleIconColor: String
   isOpenSource: Boolean
   category: CategoryRelateToOneForCreateInput
   license: String

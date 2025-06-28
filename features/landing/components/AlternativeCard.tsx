@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { Star, ExternalLink } from 'lucide-react'
-import ToolLogo from './ToolLogo'
+import ToolIcon from '@/components/ToolIcon'
 import { DonutChart } from '@/components/ui/donut-chart'
 
 interface ResolvedLogo {
@@ -25,8 +25,8 @@ interface AlternativeCardProps {
   description: string
   websiteUrl?: string
   repositoryUrl?: string
-  logoUrl?: string
-  resolvedLogo?: ResolvedLogo
+  simpleIconSlug?: string
+  simpleIconColor?: string
   license?: string
   githubStars?: number
   category?: {
@@ -51,8 +51,8 @@ export default function AlternativeCard({
   description,
   websiteUrl,
   repositoryUrl,
-  logoUrl,
-  resolvedLogo,
+  simpleIconSlug,
+  simpleIconColor,
   license,
   githubStars,
   category,
@@ -68,9 +68,10 @@ export default function AlternativeCard({
       <div className="flex items-start space-x-4">
         {/* Logo */}
         <div className="shrink-0">
-          <ToolLogo 
+          <ToolIcon 
             name={name}
-            resolvedLogo={resolvedLogo}
+            simpleIconSlug={simpleIconSlug}
+            simpleIconColor={simpleIconColor}
             size={56}
             className="rounded-lg border border-gray-200"
           />

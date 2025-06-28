@@ -1,9 +1,7 @@
 "use strict";
-var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
-var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __export = (target, all) => {
   for (var name in all)
@@ -17,14 +15,6 @@ var __copyProps = (to, from, except, desc) => {
   }
   return to;
 };
-var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
-  // If the importer is in node compatibility mode or this is not an ESM
-  // file that has been converted to a CommonJS file using a Babel-
-  // compatible transform (i.e. "__esModule" has not been set), then set
-  // "default" to the CommonJS "module.exports" for node compatibility.
-  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
-  mod
-));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
 // keystone.ts
@@ -36,7 +26,7 @@ module.exports = __toCommonJS(keystone_exports);
 
 // features/keystone/index.ts
 var import_auth = require("@keystone-6/auth");
-var import_core10 = require("@keystone-6/core");
+var import_core9 = require("@keystone-6/core");
 var import_config = require("dotenv/config");
 
 // features/keystone/models/User.ts
@@ -247,121 +237,6 @@ var Category = (0, import_core3.list)({
 // features/keystone/models/Tool.ts
 var import_core4 = require("@keystone-6/core");
 var import_fields4 = require("@keystone-6/core/fields");
-var import_core5 = require("@keystone-6/core");
-
-// features/keystone/utils/logo-resolver.ts
-var import_crypto = __toESM(require("crypto"));
-var GLOBE_ICON_HASHES = [
-  "99fd8ddc4311471625e5756986002b6b",
-  // Common globe hash
-  "b8a0bf372c762e966cc99ede8682bc71",
-  // Blank/default image hash
-  "7c4e3eea2cd5a57b08b3e8d8f6e8b9c1"
-  // Another common globe variant
-];
-async function resolveToolLogo(tool) {
-  if (tool.logoSvg) {
-    return {
-      type: "svg",
-      data: tool.logoSvg,
-      verified: true
-    };
-  }
-  if (tool.logoUrl) {
-    return {
-      type: "url",
-      data: tool.logoUrl,
-      verified: true
-    };
-  }
-  if (tool.websiteUrl) {
-    try {
-      const domain = new URL(tool.websiteUrl).hostname;
-      const faviconUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
-      const isValidFavicon = await checkFaviconQuality(faviconUrl);
-      if (isValidFavicon) {
-        return {
-          type: "favicon",
-          data: faviconUrl,
-          domain,
-          verified: true
-        };
-      }
-    } catch (error) {
-      console.warn(`Failed to resolve favicon for ${tool.name}:`, error);
-    }
-  }
-  const firstLetter = tool.name ? tool.name.charAt(0).toUpperCase() : "?";
-  return {
-    type: "letter",
-    data: firstLetter,
-    verified: true
-  };
-}
-async function checkFaviconQuality(faviconUrl) {
-  try {
-    const response = await fetch(faviconUrl, {
-      method: "HEAD",
-      timeout: 5e3
-      // 5 second timeout
-    });
-    if (!response.ok) {
-      return false;
-    }
-    const imageResponse = await fetch(faviconUrl, {
-      timeout: 5e3
-    });
-    if (!imageResponse.ok) {
-      return false;
-    }
-    const buffer = await imageResponse.arrayBuffer();
-    const uint8Array = new Uint8Array(buffer);
-    if (buffer.byteLength < 200) {
-      return false;
-    }
-    const hash = import_crypto.default.createHash("md5").update(uint8Array).digest("hex");
-    if (GLOBE_ICON_HASHES.includes(hash)) {
-      return false;
-    }
-    return true;
-  } catch (error) {
-    return false;
-  }
-}
-function generateLetterAvatarSvg(letter, size = 32) {
-  const colors = [
-    "#3B82F6",
-    // blue
-    "#EF4444",
-    // red
-    "#10B981",
-    // green
-    "#F59E0B",
-    // yellow
-    "#8B5CF6",
-    // purple
-    "#06B6D4",
-    // cyan
-    "#F97316",
-    // orange
-    "#84CC16"
-    // lime
-  ];
-  const colorIndex = letter.charCodeAt(0) % colors.length;
-  const color = colors[colorIndex];
-  return `
-    <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="${size / 2}" cy="${size / 2}" r="${size / 2}" fill="${color}"/>
-      <text x="${size / 2}" y="${size / 2}" dy="0.35em" text-anchor="middle" 
-            fill="white" font-family="system-ui, sans-serif" 
-            font-size="${size * 0.5}" font-weight="600">
-        ${letter}
-      </text>
-    </svg>
-  `.trim();
-}
-
-// features/keystone/models/Tool.ts
 var Tool = (0, import_core4.list)({
   access: {
     operation: {
@@ -413,19 +288,17 @@ var Tool = (0, import_core4.list)({
         length: { max: 500 }
       }
     }),
-    logoUrl: (0, import_fields4.text)({
-      label: "Logo URL",
+    simpleIconSlug: (0, import_fields4.text)({
+      label: "Simple Icon Slug",
       validation: {
-        length: { max: 500 }
+        length: { max: 100 }
       }
     }),
-    logoSvg: (0, import_fields4.text)({
-      label: "Logo SVG",
-      ui: {
-        displayMode: "textarea"
-      },
+    simpleIconColor: (0, import_fields4.text)({
+      label: "Simple Icon Color",
       validation: {
-        length: { max: 1e4 }
+        length: { max: 7 }
+        // For hex colors like #7AB55C
       }
     }),
     isOpenSource: (0, import_fields4.checkbox)({
@@ -490,51 +363,14 @@ var Tool = (0, import_core4.list)({
     deploymentOptions: (0, import_fields4.relationship)({
       ref: "DeploymentOption.tool",
       many: true
-    }),
-    // Virtual field that provides intelligent logo resolution
-    resolvedLogo: (0, import_fields4.virtual)({
-      field: import_core5.graphql.field({
-        type: import_core5.graphql.JSON,
-        async resolve(item) {
-          try {
-            const result = await resolveToolLogo({
-              name: item.name,
-              logoSvg: item.logoSvg,
-              logoUrl: item.logoUrl,
-              websiteUrl: item.websiteUrl
-            });
-            if (result.type === "letter") {
-              return {
-                ...result,
-                svg: generateLetterAvatarSvg(result.data)
-              };
-            }
-            return result;
-          } catch (error) {
-            console.error(`Error resolving logo for ${item.name}:`, error);
-            const firstLetter = item.name ? item.name.charAt(0).toUpperCase() : "?";
-            return {
-              type: "letter",
-              data: firstLetter,
-              svg: generateLetterAvatarSvg(firstLetter),
-              verified: false
-            };
-          }
-        }
-      }),
-      ui: {
-        createView: { fieldMode: "hidden" },
-        itemView: { fieldMode: "read" },
-        listView: { fieldMode: "hidden" }
-      }
     })
   }
 });
 
 // features/keystone/models/Feature.ts
-var import_core6 = require("@keystone-6/core");
+var import_core5 = require("@keystone-6/core");
 var import_fields5 = require("@keystone-6/core/fields");
-var Feature = (0, import_core6.list)({
+var Feature = (0, import_core5.list)({
   access: {
     operation: {
       query: () => true,
@@ -605,9 +441,9 @@ var Feature = (0, import_core6.list)({
 });
 
 // features/keystone/models/ToolFeature.ts
-var import_core7 = require("@keystone-6/core");
+var import_core6 = require("@keystone-6/core");
 var import_fields6 = require("@keystone-6/core/fields");
-var ToolFeature = (0, import_core7.list)({
+var ToolFeature = (0, import_core6.list)({
   access: {
     operation: {
       query: () => true,
@@ -663,9 +499,9 @@ var ToolFeature = (0, import_core7.list)({
 });
 
 // features/keystone/models/Alternative.ts
-var import_core8 = require("@keystone-6/core");
+var import_core7 = require("@keystone-6/core");
 var import_fields7 = require("@keystone-6/core/fields");
-var Alternative = (0, import_core8.list)({
+var Alternative = (0, import_core7.list)({
   access: {
     operation: {
       query: () => true,
@@ -731,9 +567,9 @@ var Alternative = (0, import_core8.list)({
 });
 
 // features/keystone/models/DeploymentOption.ts
-var import_core9 = require("@keystone-6/core");
+var import_core8 = require("@keystone-6/core");
 var import_fields8 = require("@keystone-6/core/fields");
-var DeploymentOption = (0, import_core9.list)({
+var DeploymentOption = (0, import_core8.list)({
   access: {
     operation: {
       query: () => true,
@@ -813,10 +649,10 @@ async function redirectToInit(root, { ids }, context) {
 var redirectToInit_default = redirectToInit;
 
 // features/keystone/mutations/index.ts
-var graphql2 = String.raw;
+var graphql = String.raw;
 var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
   schemas: [schema],
-  typeDefs: graphql2`
+  typeDefs: graphql`
       type Query {
         redirectToInit: Boolean
       }
@@ -881,7 +717,7 @@ var { withAuth } = (0, import_auth.createAuth)({
   `
 });
 var keystone_default = withAuth(
-  (0, import_core10.config)({
+  (0, import_core9.config)({
     db: {
       provider: "postgresql",
       url: databaseURL

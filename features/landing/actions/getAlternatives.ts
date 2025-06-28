@@ -99,8 +99,8 @@ async function fetchAlternativesServer(searchParams: Record<string, any> = {}) {
           description
           websiteUrl
           repositoryUrl
-          logoUrl
-          logoSvg
+          simpleIconSlug
+          simpleIconColor
           license
           githubStars
           isOpenSource

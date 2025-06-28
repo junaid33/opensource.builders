@@ -28,8 +28,8 @@ export default async function AlternativesServerQuery({ searchParams = {} }: Alt
   const alternatives = data.alternatives || []
   const selectedSoftware = proprietaryTool?.name || 'Selected Software'
 
-  // Create resolved logo and feature compatibility for each alternative
-  const alternativesWithLogos = alternatives.map((altRelation: any) => {
+  // Create feature compatibility for each alternative
+  const alternativesWithFeatures = alternatives.map((altRelation: any) => {
     const alt = altRelation.openSourceTool
     if (!alt) return null
 
@@ -78,7 +78,7 @@ export default async function AlternativesServerQuery({ searchParams = {} }: Alt
       </div>
       
       <div className="grid gap-6">
-        {alternativesWithLogos.map((alternative: any) => (
+        {alternativesWithFeatures.map((alternative: any) => (
           <DisplayCard 
             key={alternative.id}
             name={alternative.name}
@@ -89,7 +89,8 @@ export default async function AlternativesServerQuery({ searchParams = {} }: Alt
             features={alternative.featuresWithCompatibility}
             repositoryUrl={alternative.repositoryUrl}
             websiteUrl={alternative.websiteUrl}
-            logoSvg={alternative.logoSvg}
+            simpleIconSlug={alternative.simpleIconSlug}
+            simpleIconColor={alternative.simpleIconColor}
             totalFeatures={alternative.totalProprietaryFeatures}
             compatibilityScore={alternative.compatibilityScore}
             alternatives={[{ name: selectedSoftware }]}

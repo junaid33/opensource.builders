@@ -19,8 +19,7 @@ export function getFieldTypeFromViewsIndex(viewsIndex: number): string {
     5: "timestamp",
     6: "integer",
     7: "select",
-    8: "virtual",
-    9: "decimal"
+    8: "decimal"
   };
 
   const fieldType = viewsIndexToType[viewsIndex];

@@ -84,6 +84,7 @@
     "@types/graphql-upload": "^17.0.0",
     "@types/node": "^20.14.10",
     "@types/node-fetch": "^2.6.12",
+    "@types/pluralize": "^0.0.33",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",

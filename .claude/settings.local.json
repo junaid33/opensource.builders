@@ -40,7 +40,8 @@
       "WebFetch(domain:simpleicons.org)",
       "WebFetch(domain:cdn.jsdelivr.net)",
       "WebFetch(domain:raw.githubusercontent.com)",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "Bash(sed:*)"
     ],
     "deny": []
   }

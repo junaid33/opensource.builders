@@ -15,33 +15,96 @@ export default function ToolIcon({
   size = 32, 
   className = '' 
 }: ToolIconProps) {
-  // If we have a SimpleIcon slug, use it
+  // If we have a SimpleIcon slug, use it with enhanced styling
   if (simpleIconSlug) {
     const iconUrl = `https://cdn.jsdelivr.net/npm/simple-icons@v15/icons/${simpleIconSlug}.svg`
     
     return (
-      <img
-        src={iconUrl}
-        alt={`${name} icon`}
-        className={className}
+      <div 
+        className={`flex aspect-square items-center justify-center rounded-md overflow-hidden relative after:rounded-[inherit] after:absolute after:inset-0 after:shadow-[0_1px_2px_0_rgb(0_0_0/.05),inset_0_1px_0_0_rgb(255_255_255/.12)] after:pointer-events-none ${className}`}
         style={{ 
           width: size, 
           height: size,
-          filter: simpleIconColor ? `brightness(0) saturate(100%)` : undefined,
-          color: simpleIconColor || undefined
+          background: simpleIconColor || '#6B7280'
         }}
-      />
+      >
+        {/* Noise texture overlay for SimpleIcons too */}
+        <div
+          className="absolute inset-0 opacity-20"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+            backgroundSize: "256px 256px",
+          }}
+        />
+        
+        <img
+          src={iconUrl}
+          alt={`${name} icon`}
+          className="relative z-10"
+          style={{ 
+            width: size * 0.55, 
+            height: size * 0.55,
+            filter: 'brightness(0) invert(1)',
+            opacity: 0.9
+          }}
+        />
+        
+        {/* Subtle highlight */}
+        <div className="absolute top-0 left-0 right-0 h-1/4 bg-gradient-to-b from-white/10 to-transparent rounded-t-md" />
+      </div>
     )
   }
 
-  // Fallback to letter avatar
+  // Enhanced fallback with grainy background effect
   const firstLetter = name.charAt(0).toUpperCase()
+  
+  // Generate a color based on the first letter for variety
+  const colors = [
+    'from-slate-600 to-slate-700',
+    'from-gray-600 to-gray-700', 
+    'from-zinc-600 to-zinc-700',
+    'from-stone-600 to-stone-700',
+    'from-neutral-600 to-neutral-700'
+  ]
+  const colorIndex = firstLetter.charCodeAt(0) % colors.length
+  const gradientColor = colors[colorIndex]
+  
   return (
     <div 
-      className={`flex items-center justify-center rounded-full bg-indigo-500 text-white font-semibold ${className}`}
-      style={{ width: size, height: size, fontSize: size * 0.4 }}
+      className={`flex aspect-square items-center justify-center rounded-md overflow-hidden bg-gradient-to-br ${gradientColor} relative after:rounded-[inherit] after:absolute after:inset-0 after:shadow-[0_1px_2px_0_rgb(0_0_0/.05),inset_0_1px_0_0_rgb(255_255_255/.12)] after:pointer-events-none ${className}`}
+      style={{ width: size, height: size }}
     >
-      {firstLetter}
+      {/* Noise texture overlay */}
+      <div
+        className="absolute inset-0 opacity-30"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+          backgroundSize: "256px 256px",
+        }}
+      />
+
+      {/* Additional inner shadow for depth */}
+      <div
+        className="absolute inset-0 rounded-md"
+        style={{ boxShadow: "inset 0 1px 2px rgba(0,0,0,0.3), inset 0 -1px 2px rgba(255,255,255,0.1)" }}
+      />
+
+      {/* Letter */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        <span
+          className="font-medium text-gray-200 select-none"
+          style={{
+            fontSize: size * 0.45,
+            fontFamily: "system-ui, -apple-system, sans-serif",
+            textShadow: "0 1px 4px rgba(255,255,255,0.3), 0 0 8px rgba(255,255,255,0.2)",
+          }}
+        >
+          {firstLetter}
+        </span>
+      </div>
+
+      {/* Subtle highlight on top */}
+      <div className="absolute top-0 left-0 right-0 h-1/4 bg-gradient-to-b from-white/10 to-transparent rounded-t-md" />
     </div>
   )
 }

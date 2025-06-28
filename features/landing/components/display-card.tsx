@@ -243,10 +243,23 @@ export function DisplayCard({
         {/* Top Right Stats and Website Link */}
         <div className="flex items-center gap-2">
           {displayStars > 0 && (
-            <div className="flex items-center gap-1 text-sm text-muted-foreground">
-              <Star className="w-4 h-4" />
-              <span className="font-medium">{formatStars(displayStars)}</span>
-            </div>
+            repositoryUrl ? (
+              <a
+                href={repositoryUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <Star className="w-4 h-4" />
+                <span className="font-medium">{formatStars(displayStars)}</span>
+              </a>
+            ) : (
+              <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                <Star className="w-4 h-4" />
+                <span className="font-medium">{formatStars(displayStars)}</span>
+              </div>
+            )
           )}
           {websiteUrl && (
             <Button 

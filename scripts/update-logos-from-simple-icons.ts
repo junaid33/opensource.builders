@@ -4,7 +4,7 @@ import { GraphQLClient } from 'graphql-request';
 
 const KEYSTONE_SESSION = 'Fe26.2**f01b43b5a809c74981b635dc8690e89b725b1dafc82b9001b4cd2986d18b446a*jR97gvVwTXthvz8BKLVUwg*11ecm4NkfrXx7ke9ttZ97Vb_jkdq6ILQD_sf0J_Mh1EUZ_Jfvp4Ntx15ONkHn2qFRgZ2u9v8v91H1zpjxdJJSg*1781930136593*1ac5010e49cc94bea22c3e2c01bd4b0c79ab48e39dad7b0f3819b2153a4823aa*R1uGMlKaUxHp8cLTsMSuKS5URMauAhe-cKr9KEq3-Aw';
 
-const client = new GraphQLClient('http://localhost:3000/api/graphql', {
+const client = new GraphQLClient('http://localhost:3003/api/graphql', {
   headers: {
     'authorization': `Bearer ${KEYSTONE_SESSION}`,
     'cookie': `keystonejs-session=${KEYSTONE_SESSION}`

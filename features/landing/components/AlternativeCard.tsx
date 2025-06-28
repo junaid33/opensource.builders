@@ -150,10 +150,22 @@ export default function AlternativeCard({
                   </span>
                 )}
                 {githubStars && (
-                  <span className="inline-flex items-center">
-                    <Star className="w-4 h-4 mr-1" />
-                    {githubStars.toLocaleString()}
-                  </span>
+                  repositoryUrl ? (
+                    <a
+                      href={repositoryUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center hover:text-gray-700 transition-colors"
+                    >
+                      <Star className="w-4 h-4 mr-1" />
+                      {githubStars.toLocaleString()}
+                    </a>
+                  ) : (
+                    <span className="inline-flex items-center">
+                      <Star className="w-4 h-4 mr-1" />
+                      {githubStars.toLocaleString()}
+                    </span>
+                  )
                 )}
               </div>
             </div>

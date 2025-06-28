@@ -1,170 +1,518 @@
-# CLAUDE.md
+# CLAUDE.md - Open Source Builders GraphQL API Guide
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides comprehensive guidance for working with the Open Source Builders GraphQL API, schema structure, and data management operations.
 
-## Critical Development Issue ⚠️
+## API Configuration
 
-**IMPORTANT**: The GraphQL API running on localhost:3000 is currently serving a Medusa e-commerce schema instead of the expected open source directory schema. This causes all frontend queries to fail.
+**Base URL**: `http://localhost:3003/api/graphql`
+**Authentication**: Cookie-based session authentication using `keystonejs-session` cookie
 
-**Expected Schema**: Tool, Category, Feature, Alternative, DeploymentOption models
-**Actual Running**: Medusa e-commerce schema (Product, Order, Payment, etc.)
+### Authentication Cookie Format
+```
+keystonejs-session=Fe26.2**[session-data]
+```
 
-**Solution**: The API should be running on localhost:3003 (as mentioned by user). Check that:
-1. Correct Keystone application is running on port 3003
-2. Frontend queries point to the correct port
-3. Database migrations are deployed to correct database
+## Core Schema Models
 
-## Development Commands
+### Tool Model
+The primary entity representing software tools in the directory.
 
-- `npm run dev` - Build Keystone + migrate + start Next.js dev server
-- `npm run build` - Build Keystone + migrate + build Next.js for production  
-- `npm run start` - Start production Next.js server
-- `npm run lint` - Run ESLint code quality checks
-- `npm run migrate:gen` - Generate and apply new database migrations
-- `npm run migrate` - Deploy existing migrations to database
+**Key Fields**:
+- `id`: String (auto-generated)
+- `name`: String (display name)
+- `slug`: String (URL-friendly identifier)
+- `description`: String (tool description)
+- `isOpenSource`: Boolean (true for open source, false for proprietary)
+- `websiteUrl`: String (official website)
+- `repositoryUrl`: String (source code repository)
+- `simpleIconSlug`: String (Simple Icons identifier)
+- `simpleIconColor`: String (brand color hex)
+- `license`: String (software license)
+- `githubStars`: Int (GitHub star count)
+- `status`: String (development status)
+- `pricingModel`: String (pricing information)
+- `category`: Relationship to Category
+- `features`: Many-to-many relationship via ToolFeature
+- `proprietaryAlternatives`: Many-to-many via Alternative model
+- `openSourceAlternatives`: Many-to-many via Alternative model
+- `deploymentOptions`: Many-to-many relationship
 
-## Architecture Overview
+### Category Model
+Hierarchical categorization system for tools.
 
-This is an **open source software directory** built with **Next.js 15 + KeystoneJS 6**, featuring a **dual dashboard architecture**:
+**Key Fields**:
+- `id`: String
+- `name`: String (category name)
+- `description`: String
+- `tools`: One-to-many relationship with Tool
 
-- **Backend**: KeystoneJS 6 provides GraphQL API, authentication, and database operations
-- **Frontend**: Two parallel admin interfaces sharing the same backend
-  - `dashboard/` - Original KeystoneJS implementation (feature-complete)
-  - `dashboard2/` - Refactored implementation (work in progress)
-- **Public Site**: Landing page with tool directory (`features/landing/`)
+### Alternative Model
+Junction table connecting proprietary and open source tools as alternatives.
 
-**Current Issue**: Landing page shows "only Shopify alternatives" because API queries are failing due to schema mismatch.
+**Key Fields**:
+- `id`: String
+- `proprietaryTool`: Relationship to Tool (where isOpenSource=false)
+- `openSourceTool`: Relationship to Tool (where isOpenSource=true)
+- `similarityScore`: Int (relevance rating)
+- `notes`: String (comparison details)
 
-## Key Directories
+### Feature Model
+Represents software capabilities and features.
 
-- `features/keystone/` - Backend configuration
-  - `models/` - Keystone list definitions (Tool, Category, Feature, Alternative, DeploymentOption)
-  - `access.ts` - Role-based permission logic
-  - `mutations/` - Custom GraphQL mutations
-  - `utils/logo-resolver.ts` - Logo resolution and utility functions
+**Key Fields**:
+- `id`: String
+- `name`: String
+- `description`: String
+- `featureType`: String (categorization)
 
-- `features/dashboard/` - Original admin interface (feature-complete)
-  - `actions/` - Server actions for data operations
-  - `components/` - Reusable UI components
-  - `screens/` - Page-level components
-  - `views/` - Field type implementations (extensive KeystoneJS field system)
+### ToolFeature Model
+Junction table connecting tools to features with quality ratings.
 
-- `features/dashboard2/` - Refactored admin interface (work in progress)
-  - More modular architecture with improved TypeScript
-  - `keystone-source-study/` - Analysis of KeystoneJS internals
+**Key Fields**:
+- `id`: String
+- `tool`: Relationship to Tool
+- `feature`: Relationship to Feature
+- `implementationNotes`: String
+- `qualityScore`: Int (implementation quality 1-10)
 
-- `features/landing/` - Public-facing directory
-  - `components/` - Tool cards, alternatives lists, hero sections
-  - `screens/` - Landing page implementation
-  - **Issue**: `AlternativesQuery.tsx` and `ProprietarySoftware.tsx` have hardcoded fallbacks due to API schema mismatch
+## Common Query Patterns
 
-- `app/` - Next.js App Router with parallel routes for both dashboards
-- `components/` - Shared UI components (Radix primitives, shadcn/ui)
-
-## Data Models & Relationships
-
-**Core Models**:
-- `Tool` - Open source software entries with metadata, logos, relationships
-- `Category` - Tool categorization system  
-- `Feature` - Software features/capabilities
-- `Alternative` - Proprietary ↔ open source alternative relationships
-- `DeploymentOption` - Hosting and deployment methods
-
-**Junction Models**: 
-- `ToolFeature` - Many-to-many tools ↔ features with implementation notes and quality scores
-
-**Auth Models**: 
-- `User`, `Role` with sophisticated permission system
-
-**Permission System**: Role-based access control with granular permissions:
-- `canAccessDashboard`, `canManagePeople`, `canManageRoles`  
-- `canManageTools`, `canManageCategories`, `canManageFeatures`
-- `canManageAlternatives`, `canManageDeploymentOptions`
-
-## GraphQL API & Client Integration
-
-**API Endpoint**: `/api/graphql` (should be on port 3003, currently wrong schema on 3000)
-
-**Key Query Patterns**:
+### Get All Tools with Basic Info
 ```graphql
-# Get tools with relationships
-tools {
-  id name slug description isOpenSource
-  category { name }
-  features { feature { name featureType } }
-  proprietaryAlternatives { proprietaryTool { name } }
-  openSourceAlternatives { openSourceTool { name } }
-}
-
-# Get alternatives for specific proprietary tool
-alternatives(where: { 
-  proprietaryTool: { name: { equals: $softwareName } } 
-}) {
-  openSourceTool { name slug description }
-  similarityScore
+query {
+  tools {
+    id
+    name
+    slug
+    description
+    isOpenSource
+    websiteUrl
+    category {
+      id
+      name
+    }
+  }
 }
 ```
 
-**Client Library**: `features/landing/lib/osbClient.ts` handles GraphQL requests with error handling
+### Get Tools by Category
+```graphql
+query GetToolsByCategory($categoryId: ID!) {
+  tools(where: { category: { id: { equals: $categoryId } } }) {
+    id
+    name
+    slug
+    description
+    isOpenSource
+  }
+}
+```
 
-## Architecture Patterns
+### Get Specific Tools by Slugs
+```graphql
+query GetSpecificTools($slugs: [String!]!) {
+  tools(where: { slug: { in: $slugs } }) {
+    id
+    name
+    slug
+    description
+    isOpenSource
+    websiteUrl
+  }
+}
+```
 
-**Field Controller Pattern**: KeystoneJS uses field controllers for data serialization, validation, GraphQL selection building, and React rendering.
+### Get Proprietary Tools for Carousel
+```graphql
+query GetProprietaryTools {
+  tools(where: { 
+    isOpenSource: { equals: false }
+    slug: { in: ["shopify", "notion", "tailwind-plus", "cursor"] }
+  }) {
+    id
+    name
+    slug
+    description
+    websiteUrl
+    simpleIconSlug
+    simpleIconColor
+  }
+}
+```
 
-**Conditional Field Modes**: Fields change behavior based on user permissions, other field values, and create/update context.
+### Get Open Source Alternatives
+```graphql
+query GetAlternatives($proprietarySlug: String!) {
+  alternatives(where: { 
+    proprietaryTool: { slug: { equals: $proprietarySlug } } 
+  }) {
+    id
+    openSourceTool {
+      id
+      name
+      slug
+      description
+      repositoryUrl
+      githubStars
+    }
+    similarityScore
+    notes
+  }
+}
+```
 
-**Logo Resolution System**: Intelligent logo handling with fallback to generated letter avatars (`features/keystone/utils/logo-resolver.ts`).
+### Get Available Categories
+```graphql
+query GetCategories {
+  categories {
+    id
+    name
+    description
+    _count {
+      tools
+    }
+  }
+}
+```
 
-**Dual Dashboard Pattern**: Two parallel admin interfaces allow for incremental refactoring while maintaining functionality.
+## Data Creation Patterns
 
-## Tech Stack
+### Create a New Tool
+```graphql
+mutation CreateTool($data: ToolCreateInput!) {
+  createTool(data: $data) {
+    id
+    name
+    slug
+  }
+}
+```
 
-- **Frontend**: Next.js 15 (App Router), React 19, TypeScript
-- **Backend**: KeystoneJS 6, Prisma ORM, PostgreSQL  
-- **UI**: Radix UI primitives, Tailwind CSS 4, Lucide React icons, shadcn/ui components
-- **Data**: GraphQL (GraphQL Yoga), SWR for client state
-- **Tools**: ESLint, Framer Motion for animations
+**Example Variables**:
+```json
+{
+  "data": {
+    "name": "Tool Name",
+    "slug": "tool-slug",
+    "description": "Tool description",
+    "isOpenSource": true,
+    "websiteUrl": "https://example.com",
+    "repositoryUrl": "https://github.com/org/repo",
+    "category": {
+      "connect": { "id": "category-id" }
+    }
+  }
+}
+```
 
-## Current Project Status
+### Create Alternative Relationship
+```graphql
+mutation CreateAlternative($data: AlternativeCreateInput!) {
+  createAlternative(data: $data) {
+    id
+    proprietaryTool { name }
+    openSourceTool { name }
+  }
+}
+```
 
-**Database Schema State**:
-- **167 tools** loaded with full metadata and relationships (per existing CLAUDE.md)
-- **Alternative relationships** established (NocoDB↔Airtable, RustDesk↔TeamViewer, etc.)
-- **Logo SVGs** integrated from mock data where available
-- **Features**: 90+ features across categories
-- **Schema**: Defined in `schema.prisma` with proper Tool/Category/Feature models
+**Example Variables**:
+```json
+{
+  "data": {
+    "proprietaryTool": { "connect": { "id": "proprietary-tool-id" } },
+    "openSourceTool": { "connect": { "id": "open-source-tool-id" } },
+    "similarityScore": 85,
+    "notes": "Both provide similar functionality for X"
+  }
+}
+```
 
-**Critical Issue - Schema Mismatch**:
-- Prisma schema defines correct open source directory models
-- Running API serves different (Medusa e-commerce) schema
-- Frontend queries fail, causing "only Shopify alternatives" display
-- Scripts in `/scripts` directory expect correct schema but fail with current API
+## Permission System
 
-**Next Phase - Fix API Schema**:
-1. Ensure correct Keystone application runs on port 3003
-2. Update frontend to query correct endpoint
-3. Deploy database migrations if needed
-4. Test that `AlternativesQuery.tsx` can fetch real data
+### User Authentication Check
+```graphql
+query {
+  authenticatedItem {
+    __typename
+    ... on User {
+      id
+      name
+      email
+      role {
+        id
+        name
+        canManageTools
+        canManageCategories
+        canManageFeatures
+        canManageAlternatives
+      }
+    }
+  }
+}
+```
 
-## Development Scripts
+### Required Permissions for Operations
+- **Tool Management**: `canManageTools: true`
+- **Category Management**: `canManageCategories: true`
+- **Feature Management**: `canManageFeatures: true`
+- **Alternative Management**: `canManageAlternatives: true`
 
-The `/scripts` directory contains data analysis and management tools:
-- `analyze-tool-data.ts` - Analyze tool data structure (currently fails due to schema mismatch)
-- `check-actual-data.ts` - Diagnose schema mismatch issues
-- `introspect-schema.ts` - GraphQL schema introspection
-- Various e-commerce data scripts (may be outdated)
+## Schema Introspection
 
-## Debugging Schema Issues
+### Get Input Type Fields
+```graphql
+query {
+  __type(name: "ToolCreateInput") {
+    inputFields {
+      name
+      type {
+        name
+        kind
+      }
+    }
+  }
+}
+```
 
-1. **Check running services**: Ensure correct Keystone app on port 3003
-2. **Verify database**: Run `npm run migrate` to deploy schema
-3. **Test API**: Use `npx tsx check-actual-data.ts` to diagnose schema
-4. **Update endpoints**: Frontend may need to point to :3003 instead of :3000
+### Get Available Categories for Reference
+```graphql
+query {
+  categories {
+    id
+    name
+  }
+}
+```
 
-## Key Files for Schema Resolution
+## Data Management Best Practices
 
-- `keystone.ts` - Main Keystone entry point
-- `features/keystone/index.ts` - Keystone configuration
-- `features/keystone/models/` - All data model definitions
-- `schema.prisma` - Generated Prisma schema (correct models)
-- `features/landing/lib/osbClient.ts` - GraphQL client (may need endpoint update)
+### Tool Creation Workflow
+1. Check if category exists or create new category
+2. Verify tool slug is unique
+3. Create tool with proper category relationship
+4. Add features via ToolFeature junction if applicable
+5. Create alternative relationships if applicable
+
+### Alternative Relationship Workflow
+1. Ensure both proprietary and open source tools exist
+2. Create Alternative record linking them
+3. Set appropriate similarity score (1-100)
+4. Add descriptive notes about the relationship
+
+### Bulk Operations Strategy
+Create TypeScript scripts for bulk operations rather than manual GraphQL calls:
+- **Tool Import Script**: For adding multiple tools from JSON/CSV
+- **Alternative Mapping Script**: For creating multiple alternative relationships
+- **Category Management Script**: For organizing tool categories
+- **Feature Assignment Script**: For bulk feature assignments
+
+## GitHub Data Collection & Repository Analytics
+
+### GitHub Integration Fields
+The Tool model includes comprehensive GitHub repository analytics:
+
+**Core Repository Data**:
+- `repositoryUrl`: Full GitHub repository URL
+- `githubStars`: Current star count
+- `githubForks`: Number of repository forks
+- `githubIssues`: Count of open issues
+- `githubLastCommit`: Timestamp of last commit to main branch
+
+### GitHub API Data Collection
+
+**GitHub API Endpoints for Tool Data**:
+```bash
+# Get repository info
+GET https://api.github.com/repos/{owner}/{repo}
+
+# Response includes:
+{
+  "stargazers_count": 1234,
+  "forks_count": 567,
+  "open_issues_count": 89,
+  "pushed_at": "2023-12-01T10:30:00Z",
+  "description": "Tool description",
+  "homepage": "https://tool-website.com",
+  "license": { "name": "MIT" }
+}
+```
+
+**Rate Limiting & Authentication**:
+- GitHub API allows 60 requests/hour unauthenticated
+- 5000 requests/hour with personal access token
+- Use `Authorization: token YOUR_TOKEN` header
+
+### Automated GitHub Data Scripts
+
+**Repository Data Sync Script** (`scripts/sync-github-data.ts`):
+```typescript
+interface GitHubRepoData {
+  stars: number;
+  forks: number;
+  openIssues: number;
+  lastCommit: string;
+  description?: string;
+  license?: string;
+}
+
+async function fetchGitHubData(repoUrl: string): Promise<GitHubRepoData | null> {
+  const match = repoUrl.match(/github\.com\/([^\/]+)\/([^\/]+)/);
+  if (!match) return null;
+  
+  const [, owner, repo] = match;
+  const cleanRepo = repo.replace(/\.git$/, '');
+  
+  const response = await fetch(`https://api.github.com/repos/${owner}/${cleanRepo}`, {
+    headers: {
+      'Authorization': `token ${process.env.GITHUB_TOKEN}`,
+      'User-Agent': 'OpenSourceBuilders-DataSync'
+    }
+  });
+  
+  if (!response.ok) return null;
+  const data = await response.json();
+  
+  return {
+    stars: data.stargazers_count,
+    forks: data.forks_count,
+    openIssues: data.open_issues_count,
+    lastCommit: data.pushed_at,
+    description: data.description,
+    license: data.license?.name
+  };
+}
+```
+
+### Missing GitHub Data Detection
+
+**Query to Find Tools Missing GitHub Data**:
+```graphql
+query ToolsMissingGitHubData {
+  tools(where: { 
+    AND: [
+      { isOpenSource: { equals: true } }
+      { repositoryUrl: { not: { equals: null } } }
+      { OR: [
+        { githubStars: { equals: null } }
+        { githubForks: { equals: null } }
+        { githubLastCommit: { equals: null } }
+      ]}
+    ]
+  }) {
+    id
+    name
+    slug
+    repositoryUrl
+    githubStars
+    githubForks
+    githubLastCommit
+  }
+}
+```
+
+**Data Quality Analysis**:
+```typescript
+// Check completion rates
+const tools = await query(`
+  query {
+    tools(where: { isOpenSource: { equals: true } }) {
+      totalCount
+    }
+    toolsWithStars: tools(where: { 
+      isOpenSource: { equals: true }
+      githubStars: { not: { equals: null } }
+    }) {
+      totalCount
+    }
+    toolsWithRepos: tools(where: { 
+      isOpenSource: { equals: true }
+      repositoryUrl: { not: { equals: null } }
+    }) {
+      totalCount
+    }
+  }
+`);
+
+const completionRate = {
+  stars: (toolsWithStars.totalCount / tools.totalCount) * 100,
+  repositories: (toolsWithRepos.totalCount / tools.totalCount) * 100
+};
+```
+
+## Script Development Guidelines
+
+When creating data management scripts:
+1. Use TypeScript for type safety
+2. Include proper error handling and validation
+3. Support dry-run mode for testing
+4. Log operations for audit trail
+5. Handle authentication via environment variables
+6. Implement batch processing for large datasets
+7. **Include GitHub API integration for repository data**
+8. **Implement rate limiting and retry logic for API calls**
+9. **Cache GitHub responses to avoid redundant API calls**
+
+### Example Script Structure
+```typescript
+// scripts/add-tools.ts
+import { GraphQLClient } from 'graphql-request';
+
+const client = new GraphQLClient('http://localhost:3003/api/graphql', {
+  headers: {
+    Cookie: `keystonejs-session=${process.env.KEYSTONE_SESSION}`
+  }
+});
+
+interface ToolInput {
+  name: string;
+  slug: string;
+  description: string;
+  isOpenSource: boolean;
+  // ... other fields
+}
+
+async function createTool(toolData: ToolInput) {
+  const mutation = `
+    mutation CreateTool($data: ToolCreateInput!) {
+      createTool(data: $data) { id name slug }
+    }
+  `;
+  
+  return await client.request(mutation, { data: toolData });
+}
+```
+
+## Current Database State
+
+**Existing Categories**:
+- Development Tools (ID: cmbjbh3jp0019e6qfgvz44zgn)
+- API Development
+- Mobile Development
+- Gaming & Game Development
+- Additional Development Tools
+
+**Key Proprietary Tools for Carousel**:
+- Shopify (slug: "shopify")
+- Notion (slug: "notion") 
+- Tailwind Plus (slug: "tailwind-plus")
+- Cursor (slug: "cursor") - Recently added
+
+**Authentication**: Admin user "Junaid" with full tool management permissions
+
+## Common Issues & Solutions
+
+### Access Denied Errors
+- Verify authentication cookie is valid and not expired
+- Check user has required permissions for the operation
+- Ensure proper role assignment in the system
+
+### Schema Field Errors
+- Use introspection queries to verify available fields
+- Check field naming (e.g., `websiteUrl` not `website`)
+- Validate relationship field syntax (`connect`, `create`, etc.)
+
+### Relationship Creation
+- Always verify related entities exist before creating relationships
+- Use proper GraphQL relationship syntax for connections
+- Handle many-to-many relationships via junction tables

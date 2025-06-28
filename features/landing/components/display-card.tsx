@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Star, ExternalLink, Check, X, Globe, ChevronRight, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -8,7 +8,6 @@ import { Card } from '@/components/ui/card';
 import { StatusBadge } from '@/components/ui/status-badge';
 import { MiniDonutChart } from '@/components/ui/mini-donut-chart';
 import { cn } from '@/lib/utils';
-import { resolveToolLogo, generateLetterAvatarSvg } from '@/features/keystone/utils/logo-resolver';
 
 interface Feature {
   name: string;
@@ -21,6 +20,8 @@ interface Alternative {
   icon?: string;
   websiteUrl?: string;
   logoSvg?: string;
+  simpleIconSlug?: string;
+  simpleIconColor?: string;
 }
 
 interface OpenSourceAlternativeProps {
@@ -147,8 +148,6 @@ export function DisplayCard({
   const [isHovered, setIsHovered] = useState(false);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [showAllFeatures, setShowAllFeatures] = useState(false);
-  const [resolvedAlternatives, setResolvedAlternatives] = useState<Array<Alternative & { resolvedLogo?: string }>>([]);
-
   // Use legacy props if new ones aren't provided
   const displayName = name || title || "Unknown Tool";
   const displayStars = githubStars || starCount || 0;
@@ -158,46 +157,6 @@ export function DisplayCard({
       compatible: true,
       featureType: undefined
     })) : []);
-
-  // Resolve logos for alternatives
-  useEffect(() => {
-    const resolveAlternativeLogos = async () => {
-      const resolved = await Promise.all(
-        alternatives.map(async (alt) => {
-          try {
-            const logoResult = await resolveToolLogo({
-              name: alt.name,
-              logoSvg: alt.logoSvg,
-              websiteUrl: alt.websiteUrl
-            });
-            
-            let resolvedLogo = '';
-            if (logoResult.type === 'svg') {
-              resolvedLogo = logoResult.data;
-            } else if (logoResult.type === 'favicon' || logoResult.type === 'url') {
-              resolvedLogo = `<img src="${logoResult.data}" alt="${alt.name}" width="12" height="12" />`;
-            } else if (logoResult.type === 'letter') {
-              resolvedLogo = generateLetterAvatarSvg(logoResult.data, 12);
-            }
-            
-            return { ...alt, resolvedLogo };
-          } catch (error) {
-            // Fallback to letter avatar
-            const letter = alt.name.charAt(0).toUpperCase();
-            return { 
-              ...alt, 
-              resolvedLogo: generateLetterAvatarSvg(letter, 12)
-            };
-          }
-        })
-      );
-      setResolvedAlternatives(resolved);
-    };
-
-    if (alternatives.length > 0) {
-      resolveAlternativeLogos();
-    }
-  }, [alternatives]);
 
   const formatStars = (stars: number) => {
     if (stars >= 1000) {
@@ -362,31 +321,43 @@ export function DisplayCard({
         {description}
       </p>
 
-      {/* Alternatives Section with Resolved Logos */}
-      {resolvedAlternatives.length > 0 && (
+      {/* Alternatives Section */}
+      {alternatives && alternatives.length > 0 && (
         <div className="mb-6">
           <p className="text-xs text-muted-foreground mb-2 uppercase tracking-wider font-medium">Alternative to</p>
           <div className="flex flex-wrap gap-1">
-            {resolvedAlternatives.slice(0, 3).map((alt, index) => (
-              <div key={index} className="flex items-center gap-1 px-2 py-0.5 text-xs text-muted-foreground">
-                <div className="w-3 h-3 rounded-sm bg-gray-100 flex items-center justify-center overflow-hidden">
-                  {alt.resolvedLogo ? (
+            {alternatives.slice(0, 3).map((alt, index) => (
+              <div key={index} className="flex items-center gap-1 py-0.5 text-xs text-muted-foreground">
+                <div className="w-4 h-4 rounded-sm flex items-center justify-center overflow-hidden">
+                  {alt.simpleIconSlug ? (
                     <div 
-                      className="w-full h-full flex items-center justify-center"
-                      dangerouslySetInnerHTML={{ __html: alt.resolvedLogo }}
+                      className="w-full h-full"
+                      style={{ 
+                        backgroundColor: alt.simpleIconColor || '#6B7280',
+                        mask: `url(https://cdn.jsdelivr.net/npm/simple-icons@v15/icons/${alt.simpleIconSlug}.svg) no-repeat center`,
+                        WebkitMask: `url(https://cdn.jsdelivr.net/npm/simple-icons@v15/icons/${alt.simpleIconSlug}.svg) no-repeat center`,
+                        maskSize: 'contain',
+                        WebkitMaskSize: 'contain'
+                      }}
                     />
                   ) : (
-                    <span className="text-gray-600 text-[8px] font-medium">
-                      {alt.name.charAt(0)}
-                    </span>
+                    <div 
+                      className="w-full h-full rounded-sm flex items-center justify-center text-white font-silkscreen"
+                      style={{ 
+                        backgroundColor: alt.simpleIconColor || '#6B7280',
+                        fontSize: '8px'
+                      }}
+                    >
+                      {alt.name.charAt(0).toUpperCase()}
+                    </div>
                   )}
                 </div>
                 <span className="truncate max-w-20">{alt.name}</span>
               </div>
             ))}
-            {resolvedAlternatives.length > 3 && (
+            {alternatives.length > 3 && (
               <div className="px-2 py-0.5 text-xs text-muted-foreground">
-                +{resolvedAlternatives.length - 3} more
+                +{alternatives.length - 3} more
               </div>
             )}
           </div>

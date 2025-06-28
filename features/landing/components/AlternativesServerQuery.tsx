@@ -93,7 +93,11 @@ export default async function AlternativesServerQuery({ searchParams = {} }: Alt
             simpleIconColor={alternative.simpleIconColor}
             totalFeatures={alternative.totalProprietaryFeatures}
             compatibilityScore={alternative.compatibilityScore}
-            alternatives={[{ name: selectedSoftware }]}
+            alternatives={[{ 
+              name: selectedSoftware,
+              simpleIconSlug: proprietaryTool?.simpleIconSlug,
+              simpleIconColor: proprietaryTool?.simpleIconColor
+            }]}
           />
         ))}
       </div>

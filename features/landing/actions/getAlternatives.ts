@@ -77,6 +77,8 @@ async function fetchAlternativesServer(searchParams: Record<string, any> = {}) {
       proprietaryTool: tools(where: $proprietaryToolWhere) {
         id
         name
+        simpleIconSlug
+        simpleIconColor
         features {
           feature {
             id

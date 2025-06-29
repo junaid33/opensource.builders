@@ -131,38 +131,6 @@ export function BuildPage({ initialTools = [], initialCategories = [] }: BuildPa
         />
       </div>
 
-      {/* Hero Section */}
-      <div className="relative z-10 border-b border-border/40 bg-background/60 backdrop-blur-sm">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isLoaded ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-muted/80 border border-border mb-4"
-          >
-            <span className="flex h-2 w-2 rounded-full bg-primary"></span>
-            <span className="text-sm font-medium">Build with proven open source</span>
-          </motion.div>
-          
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={isLoaded ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-            className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight"
-          >
-            Build your <span className="text-primary">project</span> faster
-          </motion.h1>
-          
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={isLoaded ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" }}
-            className="mt-4 text-lg text-muted-foreground max-w-2xl"
-          >
-            Select features from proven MIT open source tools and get AI-powered implementation guidance
-          </motion.p>
-        </div>
-      </div>
 
 
       {/* Main Content */}
@@ -175,19 +143,6 @@ export function BuildPage({ initialTools = [], initialCategories = [] }: BuildPa
             className="space-y-8"
           >
             <PromptBuilder onPromptChange={handlePromptChange} />
-            
-            {generatedPrompt && (
-              <div className="flex justify-center">
-                <Button 
-                  onClick={handleGenerateProject}
-                  size="lg"
-                  className="group"
-                >
-                  Generate AI Implementation Guide
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Button>
-              </div>
-            )}
           </motion.div>
         ) : (
           <motion.div

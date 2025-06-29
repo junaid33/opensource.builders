@@ -2,7 +2,6 @@
 
 import { useState, useId, useEffect, useRef, useCallback } from 'react'
 import { Search, Package, ExternalLink, X } from 'lucide-react'
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { Label } from '@/components/ui/label'
 import {
   Select,
@@ -173,11 +172,6 @@ interface SearchResult {
   }[]
 }
 
-interface BuildQuestion {
-  id: string
-  question: string
-  answer: string
-}
 
 interface SelectedFeature {
   id: string
@@ -197,13 +191,6 @@ const starterTemplates = [
   }
 ]
 
-const buildQuestions: BuildQuestion[] = [
-  {
-    id: 'item-1',
-    question: 'Which features would you like to include?',
-    answer: 'Select specific features from proven MIT-licensed open source tools. Popular options include Cal.com\'s scheduling system, Supabase\'s authentication, Stripe\'s payment processing, and many more. Each feature comes with implementation notes and quality scores.',
-  },
-]
 
 interface PromptBuilderProps {
   onPromptChange?: (prompt: string) => void
@@ -211,7 +198,6 @@ interface PromptBuilderProps {
 }
 
 export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps) {
-  const [selectedAnswers, setSelectedAnswers] = useState<string[]>([])
   const [selectedTemplate, setSelectedTemplate] = useState<string>('1')
   const [selectedFeatures, setSelectedFeatures] = useState<SelectedFeature[]>([])
   const [showFeatureTooltip, setShowFeatureTooltip] = useState(false)
@@ -314,30 +300,15 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
     const templateInfo = selectedTemplate ? `Using ${starterTemplates.find(t => t.id === selectedTemplate)?.name || 'starter template'}. ` : ''
     const featuresInfo = selectedFeatures.length > 0 ? `Selected features: ${selectedFeatures.map(f => `${f.name} (from ${f.toolName})`).join(', ')}. ` : ''
     
-    if (selectedAnswers.length === 0 && !selectedTemplate && selectedFeatures.length === 0) return ''
+    if (!selectedTemplate && selectedFeatures.length === 0) return ''
     
-    const prompt = `${templateInfo}${featuresInfo}Build a modern web application with the following specifications: ${selectedAnswers.join(' ')} Please provide a comprehensive implementation plan with step-by-step instructions.`
+    const prompt = `${templateInfo}${featuresInfo}Build a modern web application with the following specifications. Please provide a comprehensive implementation plan with step-by-step instructions.`
     return prompt
   }
 
-  const handleAccordionChange = (value: string) => {
-    const question = buildQuestions.find(q => q.id === value)
-    if (!question) return
-
-    const newAnswers = selectedAnswers.includes(question.answer)
-      ? selectedAnswers.filter(answer => answer !== question.answer)
-      : [...selectedAnswers, question.answer]
-    
-    setSelectedAnswers(newAnswers)
-    
-    const newPrompt = generatePrompt()
-    onPromptChange?.(newPrompt)
-  }
 
   const handleTemplateChange = (value: string) => {
     setSelectedTemplate(value)
-    const newPrompt = generatePrompt()
-    onPromptChange?.(newPrompt)
   }
 
   // Update prompt when features change
@@ -369,6 +340,10 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
     <section className={cn("py-8", className)}>
       <div className="mx-auto max-w-5xl">
         <div className="mx-auto max-w-xl text-center">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-muted/80 border border-border mb-6">
+            <span className="flex h-2 w-2 rounded-full bg-primary"></span>
+            <span className="text-sm font-medium">Build with proven open source</span>
+          </div>
           <h2 className="text-balance text-3xl font-bold md:text-4xl lg:text-5xl">Interactive Prompt Builder</h2>
           <p className="text-muted-foreground mt-4 text-balance">
             Customize your project by selecting the features and configurations that match your needs.
@@ -429,14 +404,14 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
                       <div>
                         <div className="block font-medium">
                           {selectedFeatures.length === 1 
-                            ? selectedFeatures[0].name
-                            : `${selectedFeatures.length} features selected`
+                            ? selectedFeatures[0].toolName
+                            : Object.values(groupedSelectedFeatures)[0]?.toolName || 'Multiple Tools'
                           }
                         </div>
                         <div className="text-muted-foreground mt-0.5 block text-xs">
                           {selectedFeatures.length === 1 
-                            ? `From ${selectedFeatures[0].toolName}`
-                            : `From ${new Set(selectedFeatures.map(f => f.toolName)).size} tools`
+                            ? selectedFeatures[0].name
+                            : `${selectedFeatures.length} features selected`
                           }
                         </div>
                       </div>
@@ -657,60 +632,9 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
                 )}
               </div>
 
-              {/* Original Accordion for additional questions */}
-              <Accordion
-                type="multiple"
-                className="space-y-0"
-              >
-                {buildQuestions.map((item) => (
-                  <AccordionItem
-                    key={item.id}
-                    value={item.id}
-                    className="border-dashed"
-                  >
-                    <AccordionTrigger 
-                      className="cursor-pointer text-base hover:no-underline"
-                      onClick={() => handleAccordionChange(item.id)}
-                    >
-                      {item.question}
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <p className="text-base">{item.answer}</p>
-                    </AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
             </div>
           </div>
 
-          {/* Selected Features Display using DisplayCard format */}
-          {Object.values(groupedSelectedFeatures).length > 0 && (
-            <div className="mt-8 space-y-4">
-              <h3 className="text-lg font-semibold">Selected Features</h3>
-              <div className="grid gap-4">
-                {Object.values(groupedSelectedFeatures).map((group) => (
-                  <DisplayCard
-                    key={group.toolName}
-                    name={group.toolName}
-                    description={`Selected ${group.features.length} feature${group.features.length !== 1 ? 's' : ''} from ${group.toolName}`}
-                    simpleIconSlug={group.toolIcon}
-                    simpleIconColor={group.toolColor}
-                    features={group.features.map(f => ({ name: f.name, compatible: true, featureType: f.featureType }))}
-                    totalFeatures={group.features.length}
-                    compatibilityScore={100}
-                    isOpenSource={true}
-                    onFeatureClick={(featureName) => {
-                      const feature = group.features.find(f => f.name === featureName)
-                      if (feature) {
-                        handleFeatureRemove(feature.id)
-                      }
-                    }}
-                    selectedFeatures={group.features.map(f => f.name)}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
 
         </div>
       </div>

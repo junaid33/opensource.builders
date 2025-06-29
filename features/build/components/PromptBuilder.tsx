@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useId } from 'react'
+import { useState, useId, useEffect, useRef, useCallback } from 'react'
+import { Search, Package, ExternalLink, X } from 'lucide-react'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { Label } from '@/components/ui/label'
 import {
@@ -10,13 +11,182 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { Input } from '@/components/ui/input'
+import { Card } from '@/components/ui/card'
 import { LogoIcon } from '@/features/dashboard/components/Logo'
+import { DisplayCard } from '@/features/landing/components/display-card'
+import { MiniDonutChart } from '@/components/ui/mini-donut-chart'
+import { request } from 'graphql-request'
+import ToolIcon from '@/components/ToolIcon'
+import debounce from 'lodash.debounce'
 import { cn } from '@/lib/utils'
+
+// Enhanced search query to get tools with their features
+const MULTI_MODEL_SEARCH = `
+  query MultiModelSearch($search: String!) {
+    tools(
+      where: {
+        OR: [
+          { name: { contains: $search, mode: insensitive } }
+          { slug: { contains: $search, mode: insensitive } }
+          { description: { contains: $search, mode: insensitive } }
+        ]
+      }
+      take: 8
+      orderBy: { name: asc }
+    ) {
+      id
+      name
+      slug
+      description
+      isOpenSource
+      simpleIconSlug
+      simpleIconColor
+      features {
+        feature {
+          id
+          name
+          slug
+          description
+          featureType
+        }
+        qualityScore
+        implementationNotes
+        verified
+      }
+    }
+    
+    alternatives(
+      where: {
+        OR: [
+          { comparisonNotes: { contains: $search, mode: insensitive } }
+          { proprietaryTool: { 
+            OR: [
+              { name: { contains: $search, mode: insensitive } }
+              { slug: { contains: $search, mode: insensitive } }
+            ]
+          }}
+          { openSourceTool: { 
+            OR: [
+              { name: { contains: $search, mode: insensitive } }
+              { slug: { contains: $search, mode: insensitive } }
+            ]
+          }}
+        ]
+      }
+      take: 5
+      orderBy: { similarityScore: desc }
+    ) {
+      id
+      comparisonNotes
+      similarityScore
+      proprietaryTool {
+        id
+        name
+        slug
+        simpleIconSlug
+        simpleIconColor
+        websiteUrl
+      }
+      openSourceTool {
+        id
+        name
+        slug
+        description
+        simpleIconSlug
+        simpleIconColor
+        websiteUrl
+        repositoryUrl
+        features {
+          feature {
+            id
+            name
+            slug
+            description
+            featureType
+          }
+          qualityScore
+          implementationNotes
+          verified
+        }
+      }
+    }
+  }
+`
+
+interface SearchResult {
+  tools: {
+    id: string
+    name: string
+    slug: string
+    description?: string
+    isOpenSource: boolean
+    simpleIconSlug?: string
+    simpleIconColor?: string
+    features: {
+      feature: {
+        id: string
+        name: string
+        slug: string
+        description?: string
+        featureType?: string
+      }
+      qualityScore?: number
+      implementationNotes?: string
+      verified?: boolean
+    }[]
+  }[]
+  alternatives: {
+    id: string
+    comparisonNotes?: string
+    similarityScore?: number
+    proprietaryTool: {
+      id: string
+      name: string
+      slug: string
+      simpleIconSlug?: string
+      simpleIconColor?: string
+      websiteUrl?: string
+    } | null
+    openSourceTool: {
+      id: string
+      name: string
+      slug: string
+      description?: string
+      simpleIconSlug?: string
+      simpleIconColor?: string
+      websiteUrl?: string
+      repositoryUrl?: string
+      features: {
+        feature: {
+          id: string
+          name: string
+          slug: string
+          description?: string
+          featureType?: string
+        }
+        qualityScore?: number
+        implementationNotes?: string
+        verified?: boolean
+      }[]
+    } | null
+  }[]
+}
 
 interface BuildQuestion {
   id: string
   question: string
   answer: string
+}
+
+interface SelectedFeature {
+  id: string
+  name: string
+  description?: string
+  featureType?: string
+  toolName: string
+  toolIcon?: string
+  toolColor?: string
 }
 
 const starterTemplates = [
@@ -42,14 +212,109 @@ interface PromptBuilderProps {
 
 export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps) {
   const [selectedAnswers, setSelectedAnswers] = useState<string[]>([])
-  const [selectedTemplate, setSelectedTemplate] = useState<string>('')
+  const [selectedTemplate, setSelectedTemplate] = useState<string>('1')
+  const [selectedFeatures, setSelectedFeatures] = useState<SelectedFeature[]>([])
   const selectId = useId()
+
+  // Search state (copied from NavbarSearch)
+  const [isOpen, setIsOpen] = useState(false)
+  const [search, setSearch] = useState('')
+  const [results, setResults] = useState<SearchResult | null>(null)
+  const [loading, setLoading] = useState(false)
+  const searchRef = useRef<HTMLDivElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  // Close on click outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+        setIsOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  // Close on escape key
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsOpen(false)
+      }
+    }
+    document.addEventListener('keydown', handleEscape)
+    return () => document.removeEventListener('keydown', handleEscape)
+  }, [])
+
+  // Debounced search function
+  const performSearch = useCallback(
+    debounce(async (searchTerm: string) => {
+      if (!searchTerm.trim()) {
+        setResults(null)
+        return
+      }
+
+      setLoading(true)
+      try {
+        const data = await request<SearchResult>(
+          '/api/graphql',
+          MULTI_MODEL_SEARCH,
+          { search: searchTerm }
+        )
+        setResults(data)
+      } catch (error) {
+        console.error('Search error:', error)
+        setResults(null)
+      } finally {
+        setLoading(false)
+      }
+    }, 300),
+    []
+  )
+
+  useEffect(() => {
+    performSearch(search)
+  }, [search, performSearch])
+
+  const handleInputFocus = () => {
+    setIsOpen(true)
+  }
+
+  const handleFeatureSelect = (feature: any, toolName: string, toolIcon?: string, toolColor?: string) => {
+    const selectedFeature: SelectedFeature = {
+      id: feature.id,
+      name: feature.name,
+      description: feature.description,
+      featureType: feature.featureType,
+      toolName,
+      toolIcon,
+      toolColor
+    }
+
+    setSelectedFeatures(prev => {
+      const isAlreadySelected = prev.some(f => f.id === feature.id)
+      if (isAlreadySelected) {
+        return prev.filter(f => f.id !== feature.id)
+      } else {
+        return [...prev, selectedFeature]
+      }
+    })
+    
+    setIsOpen(false)
+    setSearch('')
+  }
+
+  const handleFeatureRemove = (featureId: string) => {
+    setSelectedFeatures(prev => prev.filter(f => f.id !== featureId))
+  }
 
   const generatePrompt = () => {
     const templateInfo = selectedTemplate ? `Using ${starterTemplates.find(t => t.id === selectedTemplate)?.name || 'starter template'}. ` : ''
-    if (selectedAnswers.length === 0 && !selectedTemplate) return ''
+    const featuresInfo = selectedFeatures.length > 0 ? `Selected features: ${selectedFeatures.map(f => `${f.name} (from ${f.toolName})`).join(', ')}. ` : ''
     
-    const prompt = `${templateInfo}Build a modern web application with the following specifications: ${selectedAnswers.join(' ')} Please provide a comprehensive implementation plan with step-by-step instructions.`
+    if (selectedAnswers.length === 0 && !selectedTemplate && selectedFeatures.length === 0) return ''
+    
+    const prompt = `${templateInfo}${featuresInfo}Build a modern web application with the following specifications: ${selectedAnswers.join(' ')} Please provide a comprehensive implementation plan with step-by-step instructions.`
     return prompt
   }
 
@@ -63,24 +328,40 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
     
     setSelectedAnswers(newAnswers)
     
-    const templateInfo = selectedTemplate ? `Using ${starterTemplates.find(t => t.id === selectedTemplate)?.name || 'starter template'}. ` : ''
-    const newPrompt = newAnswers.length > 0 || selectedTemplate
-      ? `${templateInfo}Build a modern web application with the following specifications: ${newAnswers.join(' ')} Please provide a comprehensive implementation plan with step-by-step instructions.`
-      : ''
-    
+    const newPrompt = generatePrompt()
     onPromptChange?.(newPrompt)
   }
 
   const handleTemplateChange = (value: string) => {
     setSelectedTemplate(value)
-    
-    const templateInfo = value ? `Using ${starterTemplates.find(t => t.id === value)?.name || 'starter template'}. ` : ''
-    const newPrompt = selectedAnswers.length > 0 || value
-      ? `${templateInfo}Build a modern web application with the following specifications: ${selectedAnswers.join(' ')} Please provide a comprehensive implementation plan with step-by-step instructions.`
-      : ''
-    
+    const newPrompt = generatePrompt()
     onPromptChange?.(newPrompt)
   }
+
+  // Update prompt when features change
+  useEffect(() => {
+    const newPrompt = generatePrompt()
+    onPromptChange?.(newPrompt)
+  }, [selectedFeatures])
+
+  const hasResults = results && (
+    results.tools.length > 0 || 
+    results.alternatives.length > 0
+  )
+
+  // Group features by tool for display
+  const groupedSelectedFeatures = selectedFeatures.reduce((acc, feature) => {
+    if (!acc[feature.toolName]) {
+      acc[feature.toolName] = {
+        toolName: feature.toolName,
+        toolIcon: feature.toolIcon,
+        toolColor: feature.toolColor,
+        features: []
+      }
+    }
+    acc[feature.toolName].features.push(feature)
+    return acc
+  }, {} as Record<string, { toolName: string, toolIcon?: string, toolColor?: string, features: SelectedFeature[] }>)
 
   return (
     <section className={cn("py-8", className)}>
@@ -127,9 +408,216 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
             {/* Dash Separator */}
             <div className="border-t border-dashed border-border my-6"></div>
 
-            {/* Features Accordion */}
+            {/* Features Search */}
             <div className="space-y-4">
               <p className="text-xs text-muted-foreground uppercase tracking-wide">Choose Features</p>
+              
+              {/* Selected Features Summary (like starter template) */}
+              {selectedFeatures.length > 0 && (
+                <div className="border-0 shadow-none">
+                  <div className="h-auto ps-2 text-left flex items-center gap-2">
+                    <div className="flex items-center gap-3">
+                      {/* Show icon from first selected feature's tool */}
+                      <ToolIcon
+                        name={selectedFeatures[0].toolName}
+                        simpleIconSlug={selectedFeatures[0].toolIcon}
+                        simpleIconColor={selectedFeatures[0].toolColor}
+                        size={24}
+                      />
+                      <div>
+                        <div className="block font-medium">
+                          {selectedFeatures.length === 1 
+                            ? selectedFeatures[0].name
+                            : `${selectedFeatures.length} features selected`
+                          }
+                        </div>
+                        <div className="text-muted-foreground mt-0.5 block text-xs">
+                          {selectedFeatures.length === 1 
+                            ? `From ${selectedFeatures[0].toolName}`
+                            : `From ${new Set(selectedFeatures.map(f => f.toolName)).size} tools`
+                          }
+                        </div>
+                      </div>
+                    </div>
+                    <div className="ml-auto flex items-center gap-2">
+                      <MiniDonutChart
+                        value={selectedFeatures.length}
+                        total={Math.max(selectedFeatures.length, 5)}
+                        size={20}
+                        strokeWidth={3}
+                        className="text-primary"
+                      />
+                      <span className="text-xs text-muted-foreground">
+                        {selectedFeatures.length}/{Math.max(selectedFeatures.length, 5)}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              )}
+              
+              {/* Search Component (copied from NavbarSearch) */}
+              <div ref={searchRef} className="relative w-full">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                  <Input
+                    ref={inputRef}
+                    type="search"
+                    placeholder="Search features from open source tools..."
+                    className={cn(
+                      "h-9 w-full pl-9 pr-3 text-sm",
+                      isOpen && hasResults && "rounded-b-none"
+                    )}
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    onFocus={handleInputFocus}
+                  />
+                </div>
+
+                {/* Search Results Dropdown */}
+                {isOpen && search.trim() && (
+                  <div className="absolute top-full left-0 right-0 z-50 mt-px max-h-96 overflow-y-auto rounded-b-md border border-t-0 bg-background shadow-lg">
+                    {loading ? (
+                      <div className="p-4 text-center text-sm text-muted-foreground">
+                        Searching...
+                      </div>
+                    ) : hasResults ? (
+                      <div className="p-2">
+                        {/* Tools with their Features */}
+                        {results.tools.map((tool) => (
+                          <div key={tool.id} className="mb-4">
+                            {/* Tool Header (non-clickable) */}
+                            <div className="mb-2 px-2 py-2 rounded-md bg-muted/20">
+                              <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+                                <ToolIcon
+                                  name={tool.name}
+                                  simpleIconSlug={tool.simpleIconSlug}
+                                  simpleIconColor={tool.simpleIconColor}
+                                  size={20}
+                                />
+                                {tool.name}
+                              </div>
+                              {tool.description && (
+                                <div className="text-xs text-muted-foreground mt-1 ml-7">
+                                  {tool.description}
+                                </div>
+                              )}
+                            </div>
+                            
+                            {/* Features from this tool */}
+                            {tool.features && tool.features.length > 0 && (
+                              <div className="ml-4 space-y-1">
+                                {tool.features
+                                  .filter(toolFeature => toolFeature.feature !== null)
+                                  .map((toolFeature) => (
+                                  <button
+                                    key={`${tool.id}-${toolFeature.feature.id}`}
+                                    onClick={() => handleFeatureSelect(toolFeature.feature, tool.name, tool.simpleIconSlug, tool.simpleIconColor)}
+                                    className="flex w-full items-center gap-3 rounded-md px-2 py-2 text-left text-sm hover:bg-accent"
+                                  >
+                                    <div className="flex h-6 w-6 items-center justify-center">
+                                      <Package className="h-4 w-4 text-muted-foreground" />
+                                    </div>
+                                    <div className="flex-1 overflow-hidden">
+                                      <div className="font-medium">{toolFeature.feature.name}</div>
+                                      {toolFeature.feature.description && (
+                                        <div className="truncate text-xs text-muted-foreground">
+                                          {toolFeature.feature.description}
+                                        </div>
+                                      )}
+                                    </div>
+                                    {toolFeature.feature.featureType && (
+                                      <div className="text-xs text-muted-foreground">
+                                        {toolFeature.feature.featureType.replace('_', ' ')}
+                                      </div>
+                                    )}
+                                    {selectedFeatures.some(f => f.id === toolFeature.feature.id) && (
+                                      <div className="text-green-500 text-sm">✓</div>
+                                    )}
+                                  </button>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        ))}
+
+                        {/* Open Source Alternatives with Features */}
+                        {results.alternatives
+                          .filter(alt => alt.openSourceTool && alt.proprietaryTool)
+                          .map((alternative) => (
+                            <div key={alternative.id} className="mb-4">
+                              {/* Alternative Tool Header */}
+                              <div className="mb-2 px-2 py-2 rounded-md bg-muted/20">
+                                <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+                                  <ToolIcon
+                                    name={alternative.openSourceTool!.name}
+                                    simpleIconSlug={alternative.openSourceTool!.simpleIconSlug}
+                                    simpleIconColor={alternative.openSourceTool!.simpleIconColor}
+                                    size={20}
+                                  />
+                                  <span>{alternative.openSourceTool!.name}</span>
+                                  <span className="text-xs text-muted-foreground">
+                                    alternative to {alternative.proprietaryTool!.name}
+                                  </span>
+                                </div>
+                                {alternative.openSourceTool!.description && (
+                                  <div className="text-xs text-muted-foreground mt-1 ml-7">
+                                    {alternative.openSourceTool!.description}
+                                  </div>
+                                )}
+                              </div>
+
+                              {/* Features from this alternative tool */}
+                              {alternative.openSourceTool!.features && alternative.openSourceTool!.features.length > 0 && (
+                                <div className="ml-4 space-y-1">
+                                  {alternative.openSourceTool!.features
+                                    .filter(toolFeature => toolFeature.feature !== null)
+                                    .map((toolFeature) => (
+                                    <button
+                                      key={`${alternative.openSourceTool!.id}-${toolFeature.feature.id}`}
+                                      onClick={() => handleFeatureSelect(
+                                        toolFeature.feature, 
+                                        alternative.openSourceTool!.name, 
+                                        alternative.openSourceTool!.simpleIconSlug, 
+                                        alternative.openSourceTool!.simpleIconColor
+                                      )}
+                                      className="flex w-full items-center gap-3 rounded-md px-2 py-2 text-left text-sm hover:bg-accent"
+                                    >
+                                      <div className="flex h-6 w-6 items-center justify-center">
+                                        <Package className="h-4 w-4 text-muted-foreground" />
+                                      </div>
+                                      <div className="flex-1 overflow-hidden">
+                                        <div className="font-medium">{toolFeature.feature.name}</div>
+                                        {toolFeature.feature.description && (
+                                          <div className="truncate text-xs text-muted-foreground">
+                                            {toolFeature.feature.description}
+                                          </div>
+                                        )}
+                                      </div>
+                                      {toolFeature.feature.featureType && (
+                                        <div className="text-xs text-muted-foreground">
+                                          {toolFeature.feature.featureType.replace('_', ' ')}
+                                        </div>
+                                      )}
+                                      {selectedFeatures.some(f => f.id === toolFeature.feature.id) && (
+                                        <div className="text-green-500 text-sm">✓</div>
+                                      )}
+                                    </button>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          ))}
+                      </div>
+                    ) : (
+                      <div className="p-4 text-center text-sm text-muted-foreground">
+                        No results found for "{search}"
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {/* Original Accordion for additional questions */}
               <Accordion
                 type="multiple"
                 className="space-y-0"
@@ -155,11 +643,42 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
             </div>
           </div>
 
-          {(selectedAnswers.length > 0 || selectedTemplate) && (
+          {/* Selected Features Display using DisplayCard format */}
+          {Object.values(groupedSelectedFeatures).length > 0 && (
+            <div className="mt-8 space-y-4">
+              <h3 className="text-lg font-semibold">Selected Features</h3>
+              <div className="grid gap-4">
+                {Object.values(groupedSelectedFeatures).map((group) => (
+                  <DisplayCard
+                    key={group.toolName}
+                    name={group.toolName}
+                    description={`Selected ${group.features.length} feature${group.features.length !== 1 ? 's' : ''} from ${group.toolName}`}
+                    simpleIconSlug={group.toolIcon}
+                    simpleIconColor={group.toolColor}
+                    features={group.features.map(f => ({ name: f.name, compatible: true, featureType: f.featureType }))}
+                    totalFeatures={group.features.length}
+                    compatibilityScore={100}
+                    isOpenSource={true}
+                    onFeatureClick={(featureName) => {
+                      const feature = group.features.find(f => f.name === featureName)
+                      if (feature) {
+                        handleFeatureRemove(feature.id)
+                      }
+                    }}
+                    selectedFeatures={group.features.map(f => f.name)}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {(selectedAnswers.length > 0 || selectedTemplate || selectedFeatures.length > 0) && (
             <div className="mt-6 px-8">
               <p className="text-muted-foreground text-sm">
                 {selectedTemplate && `Template: ${starterTemplates.find(t => t.id === selectedTemplate)?.name}`}
-                {selectedTemplate && selectedAnswers.length > 0 && ' • '}
+                {selectedTemplate && (selectedAnswers.length > 0 || selectedFeatures.length > 0) && ' • '}
+                {selectedFeatures.length > 0 && `${selectedFeatures.length} feature${selectedFeatures.length !== 1 ? 's' : ''} selected`}
+                {selectedFeatures.length > 0 && selectedAnswers.length > 0 && ' • '}
                 {selectedAnswers.length > 0 && `${selectedAnswers.length} configuration${selectedAnswers.length !== 1 ? 's' : ''} selected`}
               </p>
             </div>

@@ -12,6 +12,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
+import { NavbarSearch } from "@/features/search/components/NavbarSearch"
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
@@ -39,8 +40,13 @@ export default function Navbar({ className }: NavbarProps) {
         
         </div>
 
+        {/* Center search bar (desktop only) */}
+        <div className="flex-1 hidden md:flex justify-center">
+          <NavbarSearch />
+        </div>
+
         {/* Mobile menu */}
-        <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
+        <div className="flex flex-1 md:flex-none items-center justify-between space-x-2 md:justify-end">
           <div className="w-full flex-1 md:w-auto md:flex-none">
             <div className="md:hidden">
               <a className="flex items-center space-x-2" href="/">

@@ -1,16 +1,15 @@
 'use client'
 
 import { useState, useEffect, useMemo } from 'react'
-import { Search, Star, ExternalLink, Github, Filter, Loader2 } from 'lucide-react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
+import { Search, Star, ExternalLink, Github, Filter, Loader2, SlidersHorizontal, ArrowUpDown, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Skeleton } from '@/components/ui/skeleton'
-import { ToolIcon } from '@/components/ToolIcon'
-// Note: Using server-side data passed as props instead of client-side fetching
+import { Card } from '@/components/ui/card'
+import { DisplayCard } from '@/features/landing/components/display-card'
 import { cn } from '@/lib/utils'
 import type { Tool, FilterOptions } from '../types/build'
 
@@ -116,6 +115,10 @@ export function ToolSelector({ selectedTools, onToolsSelect, initialTools, initi
     })
   }
 
+  const hasActiveFilters = filters.search || 
+                          (filters.categories && filters.categories.length > 0) || 
+                          (filters.minStars && filters.minStars > 0)
+
   if (error) {
     return (
       <div className="text-center py-12">
@@ -131,23 +134,33 @@ export function ToolSelector({ selectedTools, onToolsSelect, initialTools, initi
 
   return (
     <div className={cn("space-y-6", className)}>
-      {/* Search and Filters */}
-      <div className="space-y-4">
-        {/* Search */}
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-          <Input
-            placeholder="Search MIT open source tools..."
-            value={filters.search || ''}
-            onChange={(e) => handleFilterChange({ search: e.target.value })}
-            className="pl-10"
-          />
-        </div>
+      {/* Header */}
+      <div className="space-y-2">
+        <h2 className="text-2xl font-bold text-foreground">Select MIT Open Source Tools</h2>
+        <p className="text-muted-foreground">
+          Choose from {tools.length} curated MIT-licensed tools to build your project.
+        </p>
+      </div>
 
-        {/* Filter Row */}
-        <div className="flex flex-wrap gap-4 items-center">
-          {/* Category Filter */}
-          <div className="flex-1 min-w-48">
+      {/* Filter Bar - Inspired by dashboard FilterBar */}
+      <div className="space-y-4">
+        {/* Controls Row */}
+        <div className="flex flex-wrap items-center gap-2">
+          {/* Search */}
+          <div className="relative flex-1 min-w-56">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              type="search"
+              className="pl-9 w-full h-10 rounded-lg placeholder:text-muted-foreground/80 text-sm"
+              value={filters.search || ''}
+              onChange={(e) => handleFilterChange({ search: e.target.value })}
+              placeholder="Search tools by name or description..."
+            />
+          </div>
+
+          {/* Right Side Controls */}
+          <div className="flex items-center gap-2">
+            {/* Category Filter */}
             <Select
               value={filters.categories?.join(',') || 'all'}
               onValueChange={(value) => 
@@ -156,8 +169,9 @@ export function ToolSelector({ selectedTools, onToolsSelect, initialTools, initi
                 })
               }
             >
-              <SelectTrigger>
-                <SelectValue placeholder="All Categories" />
+              <SelectTrigger className="lg:px-4 lg:py-2 lg:w-auto rounded-lg min-w-32">
+                <SlidersHorizontal className="stroke-muted-foreground mr-2 h-4 w-4" />
+                <span className="hidden lg:inline">Category</span>
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Categories</SelectItem>
@@ -168,18 +182,17 @@ export function ToolSelector({ selectedTools, onToolsSelect, initialTools, initi
                 ))}
               </SelectContent>
             </Select>
-          </div>
 
-          {/* Minimum Stars Filter */}
-          <div className="min-w-32">
+            {/* Stars Filter */}
             <Select
               value={filters.minStars?.toString() || '0'}
               onValueChange={(value) => 
                 handleFilterChange({ minStars: parseInt(value) })
               }
             >
-              <SelectTrigger>
-                <SelectValue placeholder="Min Stars" />
+              <SelectTrigger className="lg:px-4 lg:py-2 lg:w-auto rounded-lg min-w-32">
+                <Star className="stroke-muted-foreground mr-2 h-4 w-4" />
+                <span className="hidden lg:inline">Stars</span>
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="0">Any Stars</SelectItem>
@@ -190,10 +203,8 @@ export function ToolSelector({ selectedTools, onToolsSelect, initialTools, initi
                 <SelectItem value="10000">10K+ Stars</SelectItem>
               </SelectContent>
             </Select>
-          </div>
 
-          {/* Sort */}
-          <div className="min-w-32">
+            {/* Sort */}
             <Select
               value={`${filters.sortBy}-${filters.sortOrder}`}
               onValueChange={(value) => {
@@ -201,29 +212,79 @@ export function ToolSelector({ selectedTools, onToolsSelect, initialTools, initi
                 handleFilterChange({ sortBy, sortOrder })
               }}
             >
-              <SelectTrigger>
-                <SelectValue />
+              <SelectTrigger className="lg:px-4 lg:py-2 lg:w-auto rounded-lg min-w-32">
+                <ArrowUpDown className="stroke-muted-foreground mr-2 h-4 w-4" />
+                <span className="hidden lg:inline">Sort</span>
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="stars-desc">Most Stars</SelectItem>
                 <SelectItem value="stars-asc">Least Stars</SelectItem>
                 <SelectItem value="name-asc">Name A-Z</SelectItem>
                 <SelectItem value="name-desc">Name Z-A</SelectItem>
-                <SelectItem value="updated-desc">Recently Updated</SelectItem>
               </SelectContent>
             </Select>
-          </div>
 
-          {/* Clear Filters */}
-          <Button variant="outline" size="sm" onClick={clearFilters}>
-            Clear
-          </Button>
+            {/* Clear Filters */}
+            {hasActiveFilters && (
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={clearFilters}
+                className="rounded-lg"
+              >
+                Clear
+              </Button>
+            )}
+          </div>
         </div>
+
+        {/* Active Filters Display */}
+        {hasActiveFilters && (
+          <div className="flex gap-1.5 border-t bg-muted/40 py-2 -mx-4 md:-mx-6 px-4 md:px-6 items-center">
+            <div className="flex items-center gap-1.5 border-r border-muted-foreground/30 pr-2 mr-1.5">
+              <Filter className="stroke-muted-foreground/50 size-4" strokeWidth={1.5} />
+            </div>
+            <div className="flex flex-wrap gap-1.5">
+              {filters.search && (
+                <div className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-md">
+                  Search: "{filters.search}"
+                  <X 
+                    className="w-3 h-3 cursor-pointer hover:text-blue-900" 
+                    onClick={() => handleFilterChange({ search: '' })}
+                  />
+                </div>
+              )}
+              {filters.categories && filters.categories.map(categorySlug => {
+                const category = categories.find(c => c.slug === categorySlug)
+                return category ? (
+                  <div key={categorySlug} className="inline-flex items-center gap-1 px-2 py-1 bg-green-100 text-green-700 text-xs rounded-md">
+                    {category.name}
+                    <X 
+                      className="w-3 h-3 cursor-pointer hover:text-green-900" 
+                      onClick={() => handleFilterChange({ 
+                        categories: filters.categories!.filter(c => c !== categorySlug) 
+                      })}
+                    />
+                  </div>
+                ) : null
+              })}
+              {filters.minStars && filters.minStars > 0 && (
+                <div className="inline-flex items-center gap-1 px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded-md">
+                  {filters.minStars}+ Stars
+                  <X 
+                    className="w-3 h-3 cursor-pointer hover:text-yellow-900" 
+                    onClick={() => handleFilterChange({ minStars: 0 })}
+                  />
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Selected Tools Summary */}
       {selectedTools.length > 0 && (
-        <div className="bg-muted/50 rounded-lg p-4">
+        <Card className="bg-muted/50 p-4">
           <div className="flex items-center justify-between mb-2">
             <h3 className="text-sm font-medium">
               Selected Tools ({selectedTools.length})
@@ -232,6 +293,7 @@ export function ToolSelector({ selectedTools, onToolsSelect, initialTools, initi
               variant="ghost" 
               size="sm" 
               onClick={() => onToolsSelect([])}
+              className="text-muted-foreground hover:text-foreground"
             >
               Clear All
             </Button>
@@ -241,128 +303,94 @@ export function ToolSelector({ selectedTools, onToolsSelect, initialTools, initi
               <Badge 
                 key={tool.id} 
                 variant="secondary"
-                className="cursor-pointer hover:bg-destructive hover:text-destructive-foreground"
+                className="cursor-pointer hover:bg-destructive hover:text-destructive-foreground transition-colors"
                 onClick={() => handleToolToggle(tool)}
               >
                 {tool.name} ×
               </Badge>
             ))}
           </div>
-        </div>
+        </Card>
       )}
 
-      {/* Tools Grid */}
+      {/* Tools Grid using DisplayCard */}
       {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid gap-6">
           {Array.from({ length: 6 }).map((_, i) => (
-            <Card key={i}>
-              <CardHeader>
-                <Skeleton className="h-6 w-3/4" />
-                <Skeleton className="h-4 w-full" />
-              </CardHeader>
-              <CardContent>
-                <Skeleton className="h-20 w-full" />
-              </CardContent>
+            <Card key={i} className="p-6">
+              <div className="flex items-start gap-3">
+                <Skeleton className="h-14 w-14 rounded-md" />
+                <div className="flex-1 space-y-2">
+                  <Skeleton className="h-6 w-3/4" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-2/3" />
+                </div>
+              </div>
             </Card>
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="space-y-6">
           {filteredTools.map(tool => {
             const isSelected = selectedTools.some(t => t.id === tool.id)
             
             return (
-              <Card 
+              <div 
                 key={tool.id}
                 className={cn(
-                  "cursor-pointer transition-all hover:shadow-md",
-                  isSelected && "ring-2 ring-primary bg-primary/5"
+                  "relative cursor-pointer transition-all",
+                  isSelected && "ring-2 ring-primary ring-offset-2"
                 )}
                 onClick={() => handleToolToggle(tool)}
               >
-                <CardHeader className="pb-3">
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-center space-x-3 flex-1">
-                      <ToolIcon
-                        tool={{ 
-                          simpleIconSlug: tool.simpleIconSlug,
-                          simpleIconColor: tool.simpleIconColor,
-                          name: tool.name
-                        }}
-                        size="md"
-                      />
-                      <div className="flex-1">
-                        <CardTitle className="text-lg leading-tight">
-                          {tool.name}
-                        </CardTitle>
-                        <div className="flex items-center space-x-2 mt-1">
-                          {tool.githubStars && tool.githubStars > 0 && (
-                            <div className="flex items-center text-xs text-muted-foreground">
-                              <Star className="w-3 h-3 mr-1" />
-                              {tool.githubStars.toLocaleString()}
-                            </div>
-                          )}
-                          {tool.category && (
-                            <Badge variant="outline" className="text-xs">
-                              {tool.category.name}
-                            </Badge>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                    <Checkbox 
-                      checked={isSelected}
-                      onChange={() => {}} // Handled by card click
-                    />
-                  </div>
-                </CardHeader>
+                <DisplayCard
+                  name={tool.name}
+                  description={tool.description}
+                  license={tool.license}
+                  isOpenSource={tool.isOpenSource}
+                  githubStars={tool.githubStars}
+                  features={tool.features.map(f => ({ 
+                    name: f.feature.name, 
+                    compatible: true,
+                    featureType: f.feature.featureType 
+                  }))}
+                  repositoryUrl={tool.repositoryUrl}
+                  websiteUrl={tool.websiteUrl}
+                  simpleIconSlug={tool.simpleIconSlug}
+                  simpleIconColor={tool.simpleIconColor}
+                  totalFeatures={tool.features.length}
+                  compatibilityScore={100} // All features are compatible for MIT tools
+                  className={cn(
+                    "transition-all hover:shadow-lg",
+                    isSelected && "bg-primary/5 border-primary/20"
+                  )}
+                />
                 
-                <CardContent className="pt-0">
-                  <CardDescription className="text-sm mb-3 line-clamp-3">
-                    {tool.description}
-                  </CardDescription>
-                  
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                      <Badge variant="secondary" className="text-xs">
-                        MIT License
-                      </Badge>
-                      <Badge variant="outline" className="text-xs">
-                        {tool.features.length} features
-                      </Badge>
-                    </div>
-                    
-                    <div className="flex items-center space-x-1">
-                      {tool.websiteUrl && (
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-8 w-8 p-0"
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            window.open(tool.websiteUrl, '_blank')
-                          }}
-                        >
-                          <ExternalLink className="w-4 h-4" />
-                        </Button>
-                      )}
-                      {tool.repositoryUrl && (
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-8 w-8 p-0"
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            window.open(tool.repositoryUrl, '_blank')
-                          }}
-                        >
-                          <Github className="w-4 h-4" />
-                        </Button>
-                      )}
-                    </div>
+                {/* Selection Indicator */}
+                <div className="absolute top-4 right-4">
+                  <Checkbox 
+                    checked={isSelected}
+                    onChange={() => {}} // Handled by card click
+                    className="data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+                  />
+                </div>
+                
+                {/* Category Badge */}
+                {tool.category && (
+                  <div className="absolute top-4 left-4">
+                    <Badge 
+                      variant="outline" 
+                      className="text-xs bg-background/80 backdrop-blur"
+                      style={{ 
+                        borderColor: tool.category.color,
+                        color: tool.category.color
+                      }}
+                    >
+                      {tool.category.name}
+                    </Badge>
                   </div>
-                </CardContent>
-              </Card>
+                )}
+              </div>
             )
           })}
         </div>
@@ -384,12 +412,12 @@ export function ToolSelector({ selectedTools, onToolsSelect, initialTools, initi
 
       {/* Continue Button */}
       {selectedTools.length > 0 && (
-        <div className="sticky bottom-0 bg-background/95 backdrop-blur border-t p-4 -mx-4">
+        <div className="sticky bottom-0 bg-background/95 backdrop-blur border-t p-4 -mx-4 rounded-t-lg">
           <div className="flex items-center justify-between">
             <div className="text-sm text-muted-foreground">
               {selectedTools.length} tool{selectedTools.length === 1 ? '' : 's'} selected
             </div>
-            <Button>
+            <Button className="rounded-lg">
               Continue to Features →
             </Button>
           </div>

@@ -11,7 +11,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { ToolIcon } from '@/components/ToolIcon'
+import ToolIcon from '@/components/ToolIcon'
 import { getToolFeaturesGrouped } from '../actions/getToolFeatures'
 import { cn } from '@/lib/utils'
 import type { Tool, SelectedFeature, FeatureConflict, FeatureType, ToolFeature } from '../types/build'
@@ -354,12 +354,8 @@ function ToolFeatureView({
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
                       <ToolIcon
-                        tool={{ 
-                          simpleIconSlug: undefined, // Will need to get this from the tool data
-                          simpleIconColor: undefined,
-                          name: tool.name
-                        }}
-                        size="sm"
+                        name={tool.name}
+                        size={24}
                       />
                       <div>
                         <CardTitle className="text-lg">{tool.name}</CardTitle>

@@ -214,6 +214,7 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
   const [selectedAnswers, setSelectedAnswers] = useState<string[]>([])
   const [selectedTemplate, setSelectedTemplate] = useState<string>('1')
   const [selectedFeatures, setSelectedFeatures] = useState<SelectedFeature[]>([])
+  const [showFeatureTooltip, setShowFeatureTooltip] = useState(false)
   const selectId = useId()
 
   // Search state (copied from NavbarSearch)
@@ -300,8 +301,9 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
       }
     })
     
-    setIsOpen(false)
-    setSearch('')
+    // Keep dropdown open and search term for multi-selection
+    // setIsOpen(false)
+    // setSearch('')
   }
 
   const handleFeatureRemove = (featureId: string) => {
@@ -439,17 +441,39 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
                         </div>
                       </div>
                     </div>
-                    <div className="ml-auto flex items-center gap-2">
-                      <MiniDonutChart
-                        value={selectedFeatures.length}
-                        total={Math.max(selectedFeatures.length, 5)}
-                        size={20}
-                        strokeWidth={3}
-                        className="text-primary"
-                      />
-                      <span className="text-xs text-muted-foreground">
-                        {selectedFeatures.length}/{Math.max(selectedFeatures.length, 5)}
-                      </span>
+                    <div className="ml-auto relative">
+                      <div 
+                        className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity"
+                        onMouseEnter={() => setShowFeatureTooltip(true)}
+                        onMouseLeave={() => setShowFeatureTooltip(false)}
+                      >
+                        <MiniDonutChart
+                          value={selectedFeatures.length}
+                          total={Math.max(selectedFeatures.length, 5)}
+                          size={20}
+                          strokeWidth={3}
+                          className="text-primary"
+                        />
+                        <span className="text-xs text-muted-foreground">
+                          {selectedFeatures.length}/{Math.max(selectedFeatures.length, 5)}
+                        </span>
+                      </div>
+                      
+                      {/* Feature Tooltip */}
+                      {showFeatureTooltip && selectedFeatures.length > 0 && (
+                        <div className="absolute right-0 top-full mt-2 z-50 w-64 rounded-md border bg-popover p-3 shadow-lg">
+                          <div className="text-sm font-medium mb-2">Selected Features:</div>
+                          <div className="space-y-1 max-h-48 overflow-y-auto">
+                            {selectedFeatures.map((feature) => (
+                              <div key={feature.id} className="flex items-center gap-2 text-xs text-muted-foreground">
+                                <div className="text-green-500">✓</div>
+                                <span className="truncate">{feature.name}</span>
+                                <span className="text-muted-foreground/60">({feature.toolName})</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -481,8 +505,21 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
                         Searching...
                       </div>
                     ) : hasResults ? (
-                      <div className="p-2">
-                        {/* Tools with their Features */}
+                      <div>
+                        {/* Header with multi-selection hint and close button */}
+                        <div className="flex items-center justify-between px-4 py-2 border-b bg-muted/10">
+                          <div className="text-xs text-muted-foreground">
+                            Click features to select • Click again to deselect
+                          </div>
+                          <button
+                            onClick={() => setIsOpen(false)}
+                            className="text-muted-foreground hover:text-foreground"
+                          >
+                            <X className="h-4 w-4" />
+                          </button>
+                        </div>
+                        <div className="p-2">
+                          {/* Tools with their Features */}
                         {results.tools.map((tool) => (
                           <div key={tool.id} className="mb-4">
                             {/* Tool Header (non-clickable) */}
@@ -508,14 +545,18 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
                               <div className="ml-4 space-y-1">
                                 {tool.features
                                   .filter(toolFeature => toolFeature.feature !== null)
-                                  .map((toolFeature) => (
+                                  .map((toolFeature, index) => (
                                   <button
-                                    key={`${tool.id}-${toolFeature.feature.id}`}
+                                    key={`tool-${tool.id}-feature-${toolFeature.feature.id}-${index}`}
                                     onClick={() => handleFeatureSelect(toolFeature.feature, tool.name, tool.simpleIconSlug, tool.simpleIconColor)}
                                     className="flex w-full items-center gap-3 rounded-md px-2 py-2 text-left text-sm hover:bg-accent"
                                   >
                                     <div className="flex h-6 w-6 items-center justify-center">
-                                      <Package className="h-4 w-4 text-muted-foreground" />
+                                      {selectedFeatures.some(f => f.id === toolFeature.feature.id) ? (
+                                        <div className="text-green-500 text-sm">✓</div>
+                                      ) : (
+                                        <Package className="h-4 w-4 text-muted-foreground" />
+                                      )}
                                     </div>
                                     <div className="flex-1 overflow-hidden">
                                       <div className="font-medium">{toolFeature.feature.name}</div>
@@ -529,9 +570,6 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
                                       <div className="text-xs text-muted-foreground">
                                         {toolFeature.feature.featureType.replace('_', ' ')}
                                       </div>
-                                    )}
-                                    {selectedFeatures.some(f => f.id === toolFeature.feature.id) && (
-                                      <div className="text-green-500 text-sm">✓</div>
                                     )}
                                   </button>
                                 ))}
@@ -571,9 +609,9 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
                                 <div className="ml-4 space-y-1">
                                   {alternative.openSourceTool!.features
                                     .filter(toolFeature => toolFeature.feature !== null)
-                                    .map((toolFeature) => (
+                                    .map((toolFeature, index) => (
                                     <button
-                                      key={`${alternative.openSourceTool!.id}-${toolFeature.feature.id}`}
+                                      key={`alt-${alternative.id}-tool-${alternative.openSourceTool!.id}-feature-${toolFeature.feature.id}-${index}`}
                                       onClick={() => handleFeatureSelect(
                                         toolFeature.feature, 
                                         alternative.openSourceTool!.name, 
@@ -583,7 +621,11 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
                                       className="flex w-full items-center gap-3 rounded-md px-2 py-2 text-left text-sm hover:bg-accent"
                                     >
                                       <div className="flex h-6 w-6 items-center justify-center">
-                                        <Package className="h-4 w-4 text-muted-foreground" />
+                                        {selectedFeatures.some(f => f.id === toolFeature.feature.id) ? (
+                                          <div className="text-green-500 text-sm">✓</div>
+                                        ) : (
+                                          <Package className="h-4 w-4 text-muted-foreground" />
+                                        )}
                                       </div>
                                       <div className="flex-1 overflow-hidden">
                                         <div className="font-medium">{toolFeature.feature.name}</div>
@@ -598,15 +640,13 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
                                           {toolFeature.feature.featureType.replace('_', ' ')}
                                         </div>
                                       )}
-                                      {selectedFeatures.some(f => f.id === toolFeature.feature.id) && (
-                                        <div className="text-green-500 text-sm">✓</div>
-                                      )}
                                     </button>
                                   ))}
                                 </div>
                               )}
                             </div>
                           ))}
+                        </div>
                       </div>
                     ) : (
                       <div className="p-4 text-center text-sm text-muted-foreground">
@@ -672,17 +712,6 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
             </div>
           )}
 
-          {(selectedAnswers.length > 0 || selectedTemplate || selectedFeatures.length > 0) && (
-            <div className="mt-6 px-8">
-              <p className="text-muted-foreground text-sm">
-                {selectedTemplate && `Template: ${starterTemplates.find(t => t.id === selectedTemplate)?.name}`}
-                {selectedTemplate && (selectedAnswers.length > 0 || selectedFeatures.length > 0) && ' • '}
-                {selectedFeatures.length > 0 && `${selectedFeatures.length} feature${selectedFeatures.length !== 1 ? 's' : ''} selected`}
-                {selectedFeatures.length > 0 && selectedAnswers.length > 0 && ' • '}
-                {selectedAnswers.length > 0 && `${selectedAnswers.length} configuration${selectedAnswers.length !== 1 ? 's' : ''} selected`}
-              </p>
-            </div>
-          )}
         </div>
       </div>
     </section>

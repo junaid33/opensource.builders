@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useId, useEffect, useRef, useCallback } from 'react'
-import { Search, Package, ExternalLink, X } from 'lucide-react'
+import { Search, Package, ExternalLink, X, Check } from 'lucide-react'
 import { Label } from '@/components/ui/label'
 import {
   Select,
@@ -19,6 +19,11 @@ import { request } from 'graphql-request'
 import ToolIcon from '@/components/ToolIcon'
 import debounce from 'lodash.debounce'
 import { cn } from '@/lib/utils'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
 
 // Enhanced search query to get tools with their features
 const MULTI_MODEL_SEARCH = `
@@ -202,7 +207,6 @@ interface PromptBuilderProps {
 export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps) {
   const [selectedTemplate, setSelectedTemplate] = useState<string>('1')
   const [selectedFeatures, setSelectedFeatures] = useState<SelectedFeature[]>([])
-  const [showFeatureTooltip, setShowFeatureTooltip] = useState(false)
   const selectId = useId()
 
   // Search state (copied from NavbarSearch)
@@ -418,38 +422,62 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
                           </div>
                         </div>
                       </div>
-                      <div className="ml-auto relative">
-                        <div 
-                          className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity"
-                          onMouseEnter={() => setShowFeatureTooltip(true)}
-                          onMouseLeave={() => setShowFeatureTooltip(false)}
-                        >
-                          <MiniDonutChart
-                            value={toolGroup.features.length}
-                            total={Math.max(toolGroup.features.length, 5)}
-                            size={20}
-                            strokeWidth={3}
-                            className="text-primary"
-                          />
-                          <span className="text-xs text-muted-foreground">
-                            {toolGroup.features.length}/{Math.max(toolGroup.features.length, 5)}
-                          </span>
-                        </div>
-                        
-                        {/* Feature Tooltip for this tool */}
-                        {showFeatureTooltip && (
-                          <div className="absolute right-0 top-full mt-2 z-50 w-64 rounded-md border bg-popover p-3 shadow-lg">
-                            <div className="text-sm font-medium mb-2">{toolGroup.toolName} Features:</div>
-                            <div className="space-y-1 max-h-48 overflow-y-auto">
-                              {toolGroup.features.map((feature) => (
-                                <div key={feature.id} className="flex items-center gap-2 text-xs text-muted-foreground">
-                                  <div className="text-green-500">✓</div>
-                                  <span className="truncate">{feature.name}</span>
-                                </div>
-                              ))}
+                      <div className="ml-auto">
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <button
+                              className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity"
+                            >
+                              <MiniDonutChart
+                                value={toolGroup.features.length}
+                                total={Math.max(toolGroup.features.length, 5)}
+                                size={20}
+                                strokeWidth={3}
+                                className="text-primary"
+                              />
+                              <span className="text-xs text-muted-foreground">
+                                {toolGroup.features.length}/{Math.max(toolGroup.features.length, 5)}
+                              </span>
+                            </button>
+                          </PopoverTrigger>
+                          <PopoverContent align="end" className="w-80">
+                            <div className="space-y-3">
+                              <div className="flex items-center gap-2 pb-2 border-b">
+                                <ToolIcon
+                                  name={toolGroup.toolName}
+                                  simpleIconSlug={toolGroup.toolIcon}
+                                  simpleIconColor={toolGroup.toolColor}
+                                  size={20}
+                                />
+                                <h4 className="font-medium">{toolGroup.toolName} Features</h4>
+                              </div>
+                              <div className="space-y-1 max-h-64 overflow-y-auto">
+                                {toolGroup.features.map((feature) => (
+                                  <button
+                                    key={feature.id}
+                                    onClick={() => handleFeatureRemove(feature.id)}
+                                    className="w-full flex items-center gap-3 rounded-md px-2 py-2 text-left text-sm hover:bg-accent transition-colors"
+                                  >
+                                    <div className="flex h-5 w-5 items-center justify-center rounded border border-primary bg-primary text-primary-foreground">
+                                      <Check className="h-3 w-3" />
+                                    </div>
+                                    <div className="flex-1">
+                                      <div className="font-medium">{feature.name}</div>
+                                      {feature.description && (
+                                        <div className="text-xs text-muted-foreground line-clamp-1">
+                                          {feature.description}
+                                        </div>
+                                      )}
+                                    </div>
+                                  </button>
+                                ))}
+                              </div>
+                              <div className="pt-2 border-t text-xs text-muted-foreground">
+                                Click any feature to remove it
+                              </div>
                             </div>
-                          </div>
-                        )}
+                          </PopoverContent>
+                        </Popover>
                       </div>
                     </div>
                   ))}

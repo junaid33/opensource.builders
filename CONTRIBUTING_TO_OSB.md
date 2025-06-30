@@ -4,7 +4,7 @@ This guide provides comprehensive instructions for adding new tools, features, a
 
 ## Prerequisites
 
-1. **API Access**: Ensure the GraphQL API is running at `http://localhost:3003/api/graphql`
+1. **API Access**: Ensure the GraphQL API is running at `http://localhost:3000/api/graphql`
 2. **Authentication**: Set your Keystone session cookie as an environment variable:
    ```bash
    export KEYSTONE_SESSION="your-session-cookie-here"
@@ -247,7 +247,7 @@ Add open source tool: Plausible
 ## Need Help?
 
 If you encounter issues or need assistance:
-1. Check that the API is running: `curl http://localhost:3003/api/graphql`
+1. Check that the API is running: `curl http://localhost:3000/api/graphql`
 2. Verify your authentication is valid
 3. Review the error messages for specific guidance
 4. Ensure all required fields are provided

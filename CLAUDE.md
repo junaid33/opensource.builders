@@ -4,7 +4,7 @@ This file provides comprehensive guidance for working with the Open Source Build
 
 ## API Configuration
 
-**Base URL**: `http://localhost:3003/api/graphql`
+**Base URL**: `http://localhost:3000/api/graphql`
 **Authentication**: Cookie-based session authentication using `keystonejs-session` cookie
 
 ### Authentication Cookie Format
@@ -458,7 +458,7 @@ When creating data management scripts:
 // scripts/add-tools.ts
 import { GraphQLClient } from 'graphql-request';
 
-const client = new GraphQLClient('http://localhost:3003/api/graphql', {
+const client = new GraphQLClient('http://localhost:3000/api/graphql', {
   headers: {
     Cookie: `keystonejs-session=${process.env.KEYSTONE_SESSION}`
   }

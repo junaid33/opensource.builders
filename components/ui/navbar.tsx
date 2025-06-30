@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
 import { NavbarSearch } from "@/features/search/components/NavbarSearch"
+import { Sparkles } from "lucide-react"
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
@@ -110,11 +111,14 @@ export default function Navbar({ className }: NavbarProps) {
 
           {/* Right side */}
           <nav className="flex items-center gap-4">
-            <Button variant="ghost" size="sm" asChild>
+            {/* <Button variant="ghost" size="sm" asChild>
               <a href="/dashboard/signin">Sign In</a>
-            </Button>
+            </Button> */}
             <Button size="sm" asChild>
-              <a href="/build">Build</a>
+              <a href="/build" className="inline-flex items-center gap-2">
+                <Sparkles className="h-4 w-4" />
+                Build
+              </a>
             </Button>
           </nav>
         </div>

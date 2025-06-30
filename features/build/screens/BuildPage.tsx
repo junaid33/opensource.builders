@@ -113,28 +113,7 @@ export function BuildPage({ initialTools = [], initialCategories = [] }: BuildPa
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-muted/30 relative overflow-hidden">
-      {/* Background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 opacity-70" />
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8, x: -100 }}
-          animate={isLoaded ? { opacity: 0.3, scale: 1, x: 0 } : {}}
-          transition={{ duration: 1.5, ease: "easeOut" }}
-          className="absolute top-20 left-10 w-64 h-64 rounded-full bg-primary/10 blur-3xl"
-        />
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8, x: 100 }}
-          animate={isLoaded ? { opacity: 0.2, scale: 1, x: 0 } : {}}
-          transition={{ duration: 1.5, delay: 0.3, ease: "easeOut" }}
-          className="absolute bottom-20 right-10 w-80 h-80 rounded-full bg-secondary/10 blur-3xl"
-        />
-      </div>
-
-
-
-      {/* Main Content */}
-      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-12">
+    <div className="relative py-12">
         {!showOutput ? (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -200,7 +179,6 @@ export function BuildPage({ initialTools = [], initialCategories = [] }: BuildPa
             </div>
           </motion.div>
         )}
-      </div>
     </div>
   )
 }

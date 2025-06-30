@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useId, useEffect, useRef, useCallback } from 'react'
-import { Search, Package, ExternalLink, X, Check, ChevronDown, Lightbulb, Nut, HelpCircle, Github } from 'lucide-react'
+import { Search, Package, ExternalLink, X, Check, ChevronDown, Lightbulb, Nut, HelpCircle, Github, Copy, CheckCircle, Sparkles } from 'lucide-react'
 import { Label } from '@/components/ui/label'
 import {
   Select,
@@ -30,6 +30,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
+import { Button } from '@/components/ui/button'
 
 // Enhanced search query to get tools with their features
 const MULTI_MODEL_SEARCH = `
@@ -223,6 +224,7 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
   const [selectedTemplate, setSelectedTemplate] = useState<string>('1')
   const [selectedFeatures, setSelectedFeatures] = useState<SelectedFeature[]>([])
   const [expandedChips, setExpandedChips] = useState<Set<string>>(new Set())
+  const [copied, setCopied] = useState(false)
   const selectId = useId()
 
   // Search state (copied from NavbarSearch)
@@ -429,6 +431,19 @@ Use web search to research ${feature.toolName} and learn more about what flow th
 
   const handleTemplateChange = (value: string) => {
     setSelectedTemplate(value)
+  }
+
+  const handleCopyPrompt = async () => {
+    const prompt = generatePrompt()
+    if (!prompt) return
+    
+    try {
+      await navigator.clipboard.writeText(prompt)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    } catch (err) {
+      console.error('Failed to copy prompt:', err)
+    }
   }
 
   // Update prompt when features change
@@ -962,6 +977,39 @@ Use web search to research ${feature.toolName} and learn more about what flow th
                   })()}
                 </div>
               </div>
+              
+              {/* Copy Prompt Button */}
+              {generatePrompt() && (
+                <div className="flex flex-col gap-4 mt-6">
+                  <Button
+                    onClick={handleCopyPrompt}
+                    className="h-10"
+                    // className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors font-medium"
+                  >
+                    {copied ? (
+                      <>
+                        <CheckCircle className="h-4 w-4" />
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <Sparkles className="h-4 w-4" />
+                        Copy Prompt
+                      </>
+                    )}
+                  </Button>
+                  
+                  {/* Call to action for submissions */}
+                  {selectedTemplate !== 'byos' && (
+                    <div className="flex flex-col text-center p-4 rounded-lg bg-muted/30 border border-border/50 backdrop-blur-sm">
+                      <div className="font-medium text-foreground text-sm">Build something open source?</div>
+                      <p className="text-sm text-muted-foreground">
+                         Submit your project to us and let others benefit from your work!
+                      </p>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
 

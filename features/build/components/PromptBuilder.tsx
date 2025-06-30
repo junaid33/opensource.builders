@@ -174,7 +174,9 @@ interface SearchResult {
 
 
 interface SelectedFeature {
-  id: string
+  id: string // This will be toolId-featureId composite key
+  featureId: string // Original feature ID
+  toolId: string // Tool ID
   name: string
   description?: string
   featureType?: string
@@ -267,9 +269,12 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
     setIsOpen(true)
   }
 
-  const handleFeatureSelect = (feature: any, toolName: string, toolIcon?: string, toolColor?: string) => {
+  const handleFeatureSelect = (feature: any, toolId: string, toolName: string, toolIcon?: string, toolColor?: string) => {
+    const compositeId = `${toolId}-${feature.id}`
     const selectedFeature: SelectedFeature = {
-      id: feature.id,
+      id: compositeId,
+      featureId: feature.id,
+      toolId: toolId,
       name: feature.name,
       description: feature.description,
       featureType: feature.featureType,
@@ -279,9 +284,9 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
     }
 
     setSelectedFeatures(prev => {
-      const isAlreadySelected = prev.some(f => f.id === feature.id)
+      const isAlreadySelected = prev.some(f => f.id === compositeId)
       if (isAlreadySelected) {
-        return prev.filter(f => f.id !== feature.id)
+        return prev.filter(f => f.id !== compositeId)
       } else {
         return [...prev, selectedFeature]
       }
@@ -389,68 +394,65 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
             <div className="space-y-4">
               <p className="text-xs text-muted-foreground uppercase tracking-wide">Choose Features</p>
               
-              {/* Selected Features Summary (like starter template) */}
+              {/* Selected Features Summary - showing all tools */}
               {selectedFeatures.length > 0 && (
-                <div className="border-0 shadow-none">
-                  <div className="h-auto ps-2 text-left flex items-center gap-2">
-                    <div className="flex items-center gap-3">
-                      {/* Show icon from first selected feature's tool */}
-                      <ToolIcon
-                        name={selectedFeatures[0].toolName}
-                        simpleIconSlug={selectedFeatures[0].toolIcon}
-                        simpleIconColor={selectedFeatures[0].toolColor}
-                        size={24}
-                      />
-                      <div>
-                        <div className="block font-medium">
-                          {selectedFeatures.length === 1 
-                            ? selectedFeatures[0].toolName
-                            : Object.values(groupedSelectedFeatures)[0]?.toolName || 'Multiple Tools'
-                          }
-                        </div>
-                        <div className="text-muted-foreground mt-0.5 block text-xs">
-                          {selectedFeatures.length === 1 
-                            ? selectedFeatures[0].name
-                            : `${selectedFeatures.length} features selected`
-                          }
-                        </div>
-                      </div>
-                    </div>
-                    <div className="ml-auto relative">
-                      <div 
-                        className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity"
-                        onMouseEnter={() => setShowFeatureTooltip(true)}
-                        onMouseLeave={() => setShowFeatureTooltip(false)}
-                      >
-                        <MiniDonutChart
-                          value={selectedFeatures.length}
-                          total={Math.max(selectedFeatures.length, 5)}
-                          size={20}
-                          strokeWidth={3}
-                          className="text-primary"
+                <div className="border-0 shadow-none space-y-3">
+                  {Object.values(groupedSelectedFeatures).map((toolGroup) => (
+                    <div key={toolGroup.toolName} className="h-auto ps-2 text-left flex items-center gap-2">
+                      <div className="flex items-center gap-3">
+                        <ToolIcon
+                          name={toolGroup.toolName}
+                          simpleIconSlug={toolGroup.toolIcon}
+                          simpleIconColor={toolGroup.toolColor}
+                          size={24}
                         />
-                        <span className="text-xs text-muted-foreground">
-                          {selectedFeatures.length}/{Math.max(selectedFeatures.length, 5)}
-                        </span>
-                      </div>
-                      
-                      {/* Feature Tooltip */}
-                      {showFeatureTooltip && selectedFeatures.length > 0 && (
-                        <div className="absolute right-0 top-full mt-2 z-50 w-64 rounded-md border bg-popover p-3 shadow-lg">
-                          <div className="text-sm font-medium mb-2">Selected Features:</div>
-                          <div className="space-y-1 max-h-48 overflow-y-auto">
-                            {selectedFeatures.map((feature) => (
-                              <div key={feature.id} className="flex items-center gap-2 text-xs text-muted-foreground">
-                                <div className="text-green-500">✓</div>
-                                <span className="truncate">{feature.name}</span>
-                                <span className="text-muted-foreground/60">({feature.toolName})</span>
-                              </div>
-                            ))}
+                        <div>
+                          <div className="block font-medium">
+                            {toolGroup.toolName}
+                          </div>
+                          <div className="text-muted-foreground mt-0.5 block text-xs">
+                            {toolGroup.features.length === 1 
+                              ? toolGroup.features[0].name
+                              : `${toolGroup.features.length} features selected`
+                            }
                           </div>
                         </div>
-                      )}
+                      </div>
+                      <div className="ml-auto relative">
+                        <div 
+                          className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity"
+                          onMouseEnter={() => setShowFeatureTooltip(true)}
+                          onMouseLeave={() => setShowFeatureTooltip(false)}
+                        >
+                          <MiniDonutChart
+                            value={toolGroup.features.length}
+                            total={Math.max(toolGroup.features.length, 5)}
+                            size={20}
+                            strokeWidth={3}
+                            className="text-primary"
+                          />
+                          <span className="text-xs text-muted-foreground">
+                            {toolGroup.features.length}/{Math.max(toolGroup.features.length, 5)}
+                          </span>
+                        </div>
+                        
+                        {/* Feature Tooltip for this tool */}
+                        {showFeatureTooltip && (
+                          <div className="absolute right-0 top-full mt-2 z-50 w-64 rounded-md border bg-popover p-3 shadow-lg">
+                            <div className="text-sm font-medium mb-2">{toolGroup.toolName} Features:</div>
+                            <div className="space-y-1 max-h-48 overflow-y-auto">
+                              {toolGroup.features.map((feature) => (
+                                <div key={feature.id} className="flex items-center gap-2 text-xs text-muted-foreground">
+                                  <div className="text-green-500">✓</div>
+                                  <span className="truncate">{feature.name}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  </div>
+                  ))}
                 </div>
               )}
               
@@ -523,11 +525,11 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
                                   .map((toolFeature, index) => (
                                   <button
                                     key={`tool-${tool.id}-feature-${toolFeature.feature.id}-${index}`}
-                                    onClick={() => handleFeatureSelect(toolFeature.feature, tool.name, tool.simpleIconSlug, tool.simpleIconColor)}
+                                    onClick={() => handleFeatureSelect(toolFeature.feature, tool.id, tool.name, tool.simpleIconSlug, tool.simpleIconColor)}
                                     className="flex w-full items-center gap-3 rounded-md px-2 py-2 text-left text-sm hover:bg-accent"
                                   >
                                     <div className="flex h-6 w-6 items-center justify-center">
-                                      {selectedFeatures.some(f => f.id === toolFeature.feature.id) ? (
+                                      {selectedFeatures.some(f => f.id === `${tool.id}-${toolFeature.feature.id}`) ? (
                                         <div className="text-green-500 text-sm">✓</div>
                                       ) : (
                                         <Package className="h-4 w-4 text-muted-foreground" />
@@ -589,6 +591,7 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
                                       key={`alt-${alternative.id}-tool-${alternative.openSourceTool!.id}-feature-${toolFeature.feature.id}-${index}`}
                                       onClick={() => handleFeatureSelect(
                                         toolFeature.feature, 
+                                        alternative.openSourceTool!.id,
                                         alternative.openSourceTool!.name, 
                                         alternative.openSourceTool!.simpleIconSlug, 
                                         alternative.openSourceTool!.simpleIconColor
@@ -596,7 +599,7 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
                                       className="flex w-full items-center gap-3 rounded-md px-2 py-2 text-left text-sm hover:bg-accent"
                                     >
                                       <div className="flex h-6 w-6 items-center justify-center">
-                                        {selectedFeatures.some(f => f.id === toolFeature.feature.id) ? (
+                                        {selectedFeatures.some(f => f.id === `${alternative.openSourceTool!.id}-${toolFeature.feature.id}`) ? (
                                           <div className="text-green-500 text-sm">✓</div>
                                         ) : (
                                           <Package className="h-4 w-4 text-muted-foreground" />
@@ -632,6 +635,63 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
                 )}
               </div>
 
+            </div>
+
+            {/* Dash Separator */}
+            <div className="border-t border-dashed border-border my-6"></div>
+
+            {/* Prompt Section */}
+            <div className="space-y-4">
+              <p className="text-xs text-muted-foreground uppercase tracking-wide">Prompt</p>
+              
+              {/* Gray container with chips */}
+              <div className="bg-muted/30 rounded-lg p-4 min-h-[120px] border border-border/50 shadow-inner">
+                <div className="flex flex-wrap gap-2">
+                  {/* Generate chips based on selections */}
+                  {(() => {
+                    const chips = []
+                    
+                    // Add starter template chip
+                    if (selectedTemplate && selectedTemplate !== 'none') {
+                      const template = starterTemplates.find(t => t.id === selectedTemplate)
+                      if (template) {
+                        chips.push(
+                          <div
+                            key="starter"
+                            className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-card/50 backdrop-blur-sm border border-border/50 shadow-sm text-sm font-medium"
+                          >
+                            Use {template.name} template
+                          </div>
+                        )
+                      }
+                    }
+
+                    // Add feature chips
+                    selectedFeatures.forEach((feature) => {
+                      chips.push(
+                        <div
+                          key={feature.id}
+                          className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-card/50 backdrop-blur-sm border border-border/50 shadow-sm text-sm"
+                        >
+                          <ToolIcon
+                            name={feature.toolName}
+                            simpleIconSlug={feature.toolIcon}
+                            simpleIconColor={feature.toolColor}
+                            size={16}
+                          />
+                          Add {feature.name} from {feature.toolName}
+                        </div>
+                      )
+                    })
+
+                    return chips.length > 0 ? chips : (
+                      <div className="text-muted-foreground text-sm italic">
+                        Select a starter template and features to see your AI prompt...
+                      </div>
+                    )
+                  })()}
+                </div>
+              </div>
             </div>
           </div>
 

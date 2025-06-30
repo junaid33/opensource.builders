@@ -10,6 +10,7 @@
   --font-mono: var(--font-geist-mono);
   --font-handwriting: var(--font-handwriting);
   --font-silkscreen: var(--font-silkscreen);
+  --font-geist-sans: var(--font-geist-sans);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);

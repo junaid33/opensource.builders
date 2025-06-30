@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Inter, Audiowide, Silkscreen } from "next/font/google";
-import Navbar from "@/components/ui/navbar";
 import "./globals.css";
 
 const inter = Inter({
@@ -43,9 +42,6 @@ export default function RootLayout({
         className={`${inter.variable} ${handwriting.variable} ${silkscreen.variable} font-inter antialiased`}
       >
         <div className="min-h-screen bg-gradient-to-b from-zinc-100 to-white">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6">
-            <Navbar />
-          </div>
           {children}
         </div>
       </body>

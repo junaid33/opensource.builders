@@ -321,7 +321,17 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
   const getTemplatePromptText = (templateId: string) => {
     // In a real app, this would come from a database or config
     const templatePrompts: Record<string, string> = {
-      '1': 'Please git clone https://github.com/keystonejs/keystone/tree/main/examples/nextjs-keystone and set up the project. Configure the database connection, authentication, and initial schema based on the requirements below:'
+      '1': `Create a new repository using the Next.js + Keystone.js starter template:
+
+1. Go to https://github.com/your-org/next-keystone-starter and click "Use this template" → "Create a new repository"
+2. Clone your new repository and run: npm install && npm run dev
+3. READ these documentation files to understand the architecture:
+   - docs/ARCHITECTURE.md (overall system design)
+   - docs/KEYSTONE-INTEGRATION.md (how Keystone.js integrates with Next.js)
+   - docs/DASHBOARD-SYSTEM.md (custom admin dashboard architecture)
+4. Reference https://keystonejs.com/docs for Keystone-specific implementation details
+
+This starter combines Next.js 14 (App Router) with Keystone.js as a headless CMS, featuring a custom admin dashboard built with Tailwind CSS and shadcn/ui. Before implementing any features, read the relevant documentation files to understand existing patterns and architecture.`
     }
     return templatePrompts[templateId] || 'Use the selected starter template'
   }
@@ -331,19 +341,73 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
     const featureName = feature.name.toLowerCase()
     
     if (featureName.includes('payment')) {
-      return `Research ${feature.toolName}'s ${feature.name} implementation. Use web search to find their official documentation, API references, and integration guides. Implement a secure payment flow that handles multiple payment methods, error states, and webhook callbacks.`
+      return `IMPLEMENT ${feature.toolName}'s ${feature.name}:
+
+1. READ: docs/ADDING-FEATURES.md and docs/DATABASE.md for schema patterns
+2. RESEARCH: ${feature.toolName}'s payment documentation and API references via web search
+3. CREATE: Keystone schema fields for payment data (reference: https://keystonejs.com/docs/fields/overview)
+4. IMPLEMENT: Secure payment flow with webhooks, error handling, and GraphQL mutations
+5. UPDATE: Dashboard views in /features/dashboard/views/ for payment management
+6. TEST: Payment flows and webhook handling
+
+Follow the existing field and API patterns. Reference Keystone.js documentation for schema design.`
     } else if (featureName.includes('currency')) {
-      return `Study ${feature.toolName}'s ${feature.name} system through their documentation. Implement currency detection, conversion rates, and localized pricing display. Ensure proper formatting and real-time updates.`
+      return `IMPLEMENT ${feature.toolName}'s ${feature.name}:
+
+1. READ: docs/DATABASE.md for schema patterns and docs/DASHBOARD-SYSTEM.md for UI patterns
+2. RESEARCH: ${feature.toolName}'s currency system via web search  
+3. CREATE: Currency fields in Keystone schema (reference: https://keystonejs.com/docs/fields/select)
+4. IMPLEMENT: Currency detection, conversion rates, and localized formatting
+5. UPDATE: Dashboard for currency management and product pricing
+6. ADD: GraphQL queries/mutations for currency operations
+
+Use Keystone's field types and follow the existing dashboard patterns.`
     } else if (featureName.includes('inventory')) {
-      return `Analyze ${feature.toolName}'s ${feature.name} architecture. Implement stock tracking, low inventory alerts, and synchronization across multiple channels. Include proper database schema and API endpoints.`
+      return `IMPLEMENT ${feature.toolName}'s ${feature.name}:
+
+1. READ: docs/DATABASE.md and docs/KEYSTONE-INTEGRATION.md for data modeling
+2. RESEARCH: ${feature.toolName}'s inventory architecture via web search
+3. CREATE: Inventory schema with relationships (reference: https://keystonejs.com/docs/fields/relationship)
+4. IMPLEMENT: Stock tracking, alerts, and synchronization
+5. BUILD: Dashboard views for inventory management
+6. ADD: GraphQL subscriptions for real-time updates
+
+Follow Keystone's relationship patterns and existing dashboard architecture.`
     } else if (featureName.includes('api') || featureName.includes('headless')) {
-      return `Examine ${feature.toolName}'s ${feature.name} design patterns. Create a RESTful or GraphQL API with proper authentication, rate limiting, and documentation. Follow their architectural principles.`
+      return `IMPLEMENT ${feature.toolName}'s ${feature.name}:
+
+1. READ: docs/KEYSTONE-INTEGRATION.md for API patterns
+2. RESEARCH: ${feature.toolName}'s API design principles via web search
+3. EXTEND: GraphQL schema with custom types and resolvers (reference: https://keystonejs.com/docs/graphql/overview)
+4. IMPLEMENT: Authentication, rate limiting, and API documentation
+5. CREATE: Custom API routes if needed beyond GraphQL
+6. TEST: API endpoints and integration patterns
+
+Use Keystone's GraphQL schema extension capabilities and follow REST/GraphQL best practices.`
     } else if (featureName.includes('modular') || featureName.includes('architecture')) {
-      return `Study ${feature.toolName}'s ${feature.name} approach. Refactor the codebase to support plugin-based architecture, dependency injection, and loose coupling between modules.`
+      return `IMPLEMENT ${feature.toolName}'s ${feature.name}:
+
+1. READ: docs/ARCHITECTURE.md for current system design
+2. RESEARCH: ${feature.toolName}'s modular approach via web search
+3. REFACTOR: Create plugin-based architecture with dependency injection
+4. IMPLEMENT: Module loading and configuration system
+5. UPDATE: Keystone config to support modular schema (reference: https://keystonejs.com/docs/config/config)
+6. DOCUMENT: New architecture patterns in docs/
+
+Follow the existing feature-based structure and Keystone's configuration patterns.`
     }
     
     // Default prompt for other features
-    return `Use web search to understand ${feature.toolName}'s documentation and implement their ${feature.name} functionality. Research best practices, examine code examples, and ensure proper integration with the existing codebase.`
+    return `IMPLEMENT ${feature.toolName}'s ${feature.name}:
+
+1. READ: docs/ADDING-FEATURES.md for implementation patterns
+2. RESEARCH: ${feature.toolName}'s ${feature.name} via web search and official documentation
+3. PLAN: Integration with Keystone schema and Next.js dashboard
+4. IMPLEMENT: Following existing patterns in /features/ directory
+5. REFERENCE: https://keystonejs.com/docs for Keystone-specific implementation
+6. TEST: Functionality within the existing architecture
+
+Ensure proper integration with the Keystone.js data layer and custom dashboard system.`
   }
 
   const generatePrompt = () => {

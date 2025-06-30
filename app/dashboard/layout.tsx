@@ -3,8 +3,8 @@ import { ThemeProvider } from "next-themes";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Keystone Dashboard",
-  description: "Admin interface for Keystone data",
+  title: "Opensource Builders Dashboard",
+  description: "Admin interface",
 };
 
 export default function DashboardLayout({

@@ -46,6 +46,7 @@ const MULTI_MODEL_SEARCH = `
       isOpenSource
       simpleIconSlug
       simpleIconColor
+      repositoryUrl
       features {
         feature {
           id
@@ -127,6 +128,7 @@ interface SearchResult {
     isOpenSource: boolean
     simpleIconSlug?: string
     simpleIconColor?: string
+    repositoryUrl?: string
     features: {
       feature: {
         id: string
@@ -188,6 +190,7 @@ interface SelectedFeature {
   toolName: string
   toolIcon?: string
   toolColor?: string
+  toolRepo?: string // Repository URL
 }
 
 const starterTemplates = [
@@ -274,7 +277,7 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
     setIsOpen(true)
   }
 
-  const handleFeatureSelect = (feature: any, toolId: string, toolName: string, toolIcon?: string, toolColor?: string) => {
+  const handleFeatureSelect = (feature: any, toolId: string, toolName: string, toolIcon?: string, toolColor?: string, toolRepo?: string) => {
     const compositeId = `${toolId}-${feature.id}`
     const selectedFeature: SelectedFeature = {
       id: compositeId,
@@ -285,7 +288,8 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
       featureType: feature.featureType,
       toolName,
       toolIcon,
-      toolColor
+      toolColor,
+      toolRepo
     }
 
     setSelectedFeatures(prev => {
@@ -323,91 +327,38 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
     const templatePrompts: Record<string, string> = {
       '1': `Create a new repository using the Next.js + Keystone.js starter template:
 
-1. Go to https://github.com/your-org/next-keystone-starter and click "Use this template" → "Create a new repository"
-2. Clone your new repository and run: npm install && npm run dev
+1. Run: gh repo create my-project --template your-org/next-keystone-starter --clone
+2. Run: npm install && npm run dev
 3. READ these documentation files to understand the architecture:
    - docs/ARCHITECTURE.md (overall system design)
    - docs/KEYSTONE-INTEGRATION.md (how Keystone.js integrates with Next.js)
    - docs/DASHBOARD-SYSTEM.md (custom admin dashboard architecture)
 4. Reference https://keystonejs.com/docs for Keystone-specific implementation details
 
-This starter combines Next.js 14 (App Router) with Keystone.js as a headless CMS, featuring a custom admin dashboard built with Tailwind CSS and shadcn/ui. Before implementing any features, read the relevant documentation files to understand existing patterns and architecture.`
+This starter combines Next.js (App Router) with Keystone.js as a headless CMS, featuring a custom admin dashboard built with Tailwind CSS and shadcn/ui. Before implementing any features, read the relevant documentation files to understand existing patterns and architecture.`
     }
     return templatePrompts[templateId] || 'Use the selected starter template'
   }
 
   const getFeaturePromptText = (feature: SelectedFeature) => {
-    // Generate more specific prompts based on feature type
-    const featureName = feature.name.toLowerCase()
-    
-    if (featureName.includes('payment')) {
-      return `IMPLEMENT ${feature.toolName}'s ${feature.name}:
-
-1. READ: docs/ADDING-FEATURES.md and docs/DATABASE.md for schema patterns
-2. RESEARCH: ${feature.toolName}'s payment documentation and API references via web search
-3. CREATE: Keystone schema fields for payment data (reference: https://keystonejs.com/docs/fields/overview)
-4. IMPLEMENT: Secure payment flow with webhooks, error handling, and GraphQL mutations
-5. UPDATE: Dashboard views in /features/dashboard/views/ for payment management
-6. TEST: Payment flows and webhook handling
-
-Follow the existing field and API patterns. Reference Keystone.js documentation for schema design.`
-    } else if (featureName.includes('currency')) {
-      return `IMPLEMENT ${feature.toolName}'s ${feature.name}:
-
-1. READ: docs/DATABASE.md for schema patterns and docs/DASHBOARD-SYSTEM.md for UI patterns
-2. RESEARCH: ${feature.toolName}'s currency system via web search  
-3. CREATE: Currency fields in Keystone schema (reference: https://keystonejs.com/docs/fields/select)
-4. IMPLEMENT: Currency detection, conversion rates, and localized formatting
-5. UPDATE: Dashboard for currency management and product pricing
-6. ADD: GraphQL queries/mutations for currency operations
-
-Use Keystone's field types and follow the existing dashboard patterns.`
-    } else if (featureName.includes('inventory')) {
-      return `IMPLEMENT ${feature.toolName}'s ${feature.name}:
-
-1. READ: docs/DATABASE.md and docs/KEYSTONE-INTEGRATION.md for data modeling
-2. RESEARCH: ${feature.toolName}'s inventory architecture via web search
-3. CREATE: Inventory schema with relationships (reference: https://keystonejs.com/docs/fields/relationship)
-4. IMPLEMENT: Stock tracking, alerts, and synchronization
-5. BUILD: Dashboard views for inventory management
-6. ADD: GraphQL subscriptions for real-time updates
-
-Follow Keystone's relationship patterns and existing dashboard architecture.`
-    } else if (featureName.includes('api') || featureName.includes('headless')) {
-      return `IMPLEMENT ${feature.toolName}'s ${feature.name}:
-
-1. READ: docs/KEYSTONE-INTEGRATION.md for API patterns
-2. RESEARCH: ${feature.toolName}'s API design principles via web search
-3. EXTEND: GraphQL schema with custom types and resolvers (reference: https://keystonejs.com/docs/graphql/overview)
-4. IMPLEMENT: Authentication, rate limiting, and API documentation
-5. CREATE: Custom API routes if needed beyond GraphQL
-6. TEST: API endpoints and integration patterns
-
-Use Keystone's GraphQL schema extension capabilities and follow REST/GraphQL best practices.`
-    } else if (featureName.includes('modular') || featureName.includes('architecture')) {
-      return `IMPLEMENT ${feature.toolName}'s ${feature.name}:
-
-1. READ: docs/ARCHITECTURE.md for current system design
-2. RESEARCH: ${feature.toolName}'s modular approach via web search
-3. REFACTOR: Create plugin-based architecture with dependency injection
-4. IMPLEMENT: Module loading and configuration system
-5. UPDATE: Keystone config to support modular schema (reference: https://keystonejs.com/docs/config/config)
-6. DOCUMENT: New architecture patterns in docs/
-
-Follow the existing feature-based structure and Keystone's configuration patterns.`
+    // Use repository URL from feature data if available, otherwise fallback to common repos
+    const getToolRepo = (toolName: string) => {
+      const repos: Record<string, string> = {
+        'Shopify': 'https://github.com/Shopify/shopify-app-js',
+        'Medusa': 'https://github.com/medusajs/medusa',
+        'Supabase': 'https://github.com/supabase/supabase',
+        'Strapi': 'https://github.com/strapi/strapi'
+      }
+      return repos[toolName] || `https://github.com/search?q=${toolName.toLowerCase()}`
     }
+
+    const repoUrl = feature.toolRepo || getToolRepo(feature.toolName)
     
-    // Default prompt for other features
-    return `IMPLEMENT ${feature.toolName}'s ${feature.name}:
+    return `Implement ${feature.toolName}'s ${feature.name}. 
 
-1. READ: docs/ADDING-FEATURES.md for implementation patterns
-2. RESEARCH: ${feature.toolName}'s ${feature.name} via web search and official documentation
-3. PLAN: Integration with Keystone schema and Next.js dashboard
-4. IMPLEMENT: Following existing patterns in /features/ directory
-5. REFERENCE: https://keystonejs.com/docs for Keystone-specific implementation
-6. TEST: Functionality within the existing architecture
+${feature.toolName} repository: ${repoUrl}
 
-Ensure proper integration with the Keystone.js data layer and custom dashboard system.`
+Use GitHub MCP (if available) or GitHub to find the relevant code that implements ${feature.name} and adapt it to our Next.js + Keystone.js infrastructure. Follow our existing patterns in /features/ directory and integrate with the Keystone schema.`
   }
 
   const generatePrompt = () => {
@@ -672,7 +623,7 @@ Ensure proper integration with the Keystone.js data layer and custom dashboard s
                                   .map((toolFeature, index) => (
                                   <button
                                     key={`tool-${tool.id}-feature-${toolFeature.feature.id}-${index}`}
-                                    onClick={() => handleFeatureSelect(toolFeature.feature, tool.id, tool.name, tool.simpleIconSlug, tool.simpleIconColor)}
+                                    onClick={() => handleFeatureSelect(toolFeature.feature, tool.id, tool.name, tool.simpleIconSlug, tool.simpleIconColor, tool.repositoryUrl)}
                                     className="flex w-full items-center gap-3 rounded-md px-2 py-2 text-left text-sm hover:bg-accent"
                                   >
                                     <div className="flex h-6 w-6 items-center justify-center">
@@ -741,7 +692,8 @@ Ensure proper integration with the Keystone.js data layer and custom dashboard s
                                         alternative.openSourceTool!.id,
                                         alternative.openSourceTool!.name, 
                                         alternative.openSourceTool!.simpleIconSlug, 
-                                        alternative.openSourceTool!.simpleIconColor
+                                        alternative.openSourceTool!.simpleIconColor,
+                                        alternative.openSourceTool!.repositoryUrl
                                       )}
                                       className="flex w-full items-center gap-3 rounded-md px-2 py-2 text-left text-sm hover:bg-accent"
                                     >

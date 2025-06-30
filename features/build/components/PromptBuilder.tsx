@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useId, useEffect, useRef, useCallback } from 'react'
-import { Search, Package, ExternalLink, X, Check } from 'lucide-react'
+import { Search, Package, ExternalLink, X, Check, ChevronDown } from 'lucide-react'
 import { Label } from '@/components/ui/label'
 import {
   Select,
@@ -207,6 +207,7 @@ interface PromptBuilderProps {
 export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps) {
   const [selectedTemplate, setSelectedTemplate] = useState<string>('1')
   const [selectedFeatures, setSelectedFeatures] = useState<SelectedFeature[]>([])
+  const [expandedChips, setExpandedChips] = useState<Set<string>>(new Set())
   const selectId = useId()
 
   // Search state (copied from NavbarSearch)
@@ -305,14 +306,68 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
     setSelectedFeatures(prev => prev.filter(f => f.id !== featureId))
   }
 
-  const generatePrompt = () => {
-    const templateInfo = selectedTemplate ? `Using ${starterTemplates.find(t => t.id === selectedTemplate)?.name || 'starter template'}. ` : ''
-    const featuresInfo = selectedFeatures.length > 0 ? `Selected features: ${selectedFeatures.map(f => `${f.name} (from ${f.toolName})`).join(', ')}. ` : ''
+  const toggleChipExpansion = (chipId: string) => {
+    setExpandedChips(prev => {
+      const newSet = new Set(prev)
+      if (newSet.has(chipId)) {
+        newSet.delete(chipId)
+      } else {
+        newSet.add(chipId)
+      }
+      return newSet
+    })
+  }
+
+  const getTemplatePromptText = (templateId: string) => {
+    // In a real app, this would come from a database or config
+    const templatePrompts: Record<string, string> = {
+      '1': 'Please git clone https://github.com/keystonejs/keystone/tree/main/examples/nextjs-keystone and set up the project. Configure the database connection, authentication, and initial schema based on the requirements below:'
+    }
+    return templatePrompts[templateId] || 'Use the selected starter template'
+  }
+
+  const getFeaturePromptText = (feature: SelectedFeature) => {
+    // Generate more specific prompts based on feature type
+    const featureName = feature.name.toLowerCase()
     
+    if (featureName.includes('payment')) {
+      return `Research ${feature.toolName}'s ${feature.name} implementation. Use web search to find their official documentation, API references, and integration guides. Implement a secure payment flow that handles multiple payment methods, error states, and webhook callbacks.`
+    } else if (featureName.includes('currency')) {
+      return `Study ${feature.toolName}'s ${feature.name} system through their documentation. Implement currency detection, conversion rates, and localized pricing display. Ensure proper formatting and real-time updates.`
+    } else if (featureName.includes('inventory')) {
+      return `Analyze ${feature.toolName}'s ${feature.name} architecture. Implement stock tracking, low inventory alerts, and synchronization across multiple channels. Include proper database schema and API endpoints.`
+    } else if (featureName.includes('api') || featureName.includes('headless')) {
+      return `Examine ${feature.toolName}'s ${feature.name} design patterns. Create a RESTful or GraphQL API with proper authentication, rate limiting, and documentation. Follow their architectural principles.`
+    } else if (featureName.includes('modular') || featureName.includes('architecture')) {
+      return `Study ${feature.toolName}'s ${feature.name} approach. Refactor the codebase to support plugin-based architecture, dependency injection, and loose coupling between modules.`
+    }
+    
+    // Default prompt for other features
+    return `Use web search to understand ${feature.toolName}'s documentation and implement their ${feature.name} functionality. Research best practices, examine code examples, and ensure proper integration with the existing codebase.`
+  }
+
+  const generatePrompt = () => {
     if (!selectedTemplate && selectedFeatures.length === 0) return ''
     
-    const prompt = `${templateInfo}${featuresInfo}Build a modern web application with the following specifications. Please provide a comprehensive implementation plan with step-by-step instructions.`
-    return prompt
+    let prompt = ''
+    
+    // Add template prompt
+    if (selectedTemplate && selectedTemplate !== 'none') {
+      prompt += getTemplatePromptText(selectedTemplate) + '\n\n'
+    }
+    
+    // Add feature prompts
+    if (selectedFeatures.length > 0) {
+      prompt += 'Implement the following features:\n\n'
+      selectedFeatures.forEach((feature, index) => {
+        prompt += `${index + 1}. ${getFeaturePromptText(feature)}\n\n`
+      })
+    }
+    
+    // Add closing instructions
+    prompt += 'Ensure all implementations follow best practices, are properly tested, and integrate seamlessly with the existing codebase. Provide detailed step-by-step instructions for each feature implementation.'
+    
+    return prompt.trim()
   }
 
 
@@ -456,10 +511,10 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
                                   <button
                                     key={feature.id}
                                     onClick={() => handleFeatureRemove(feature.id)}
-                                    className="w-full flex items-center gap-3 rounded-md px-2 py-2 text-left text-sm hover:bg-accent transition-colors"
+                                    className="w-full flex items-start gap-3 rounded-md px-2 py-2 text-left text-sm hover:bg-accent transition-colors"
                                   >
-                                    <div className="flex h-5 w-5 items-center justify-center rounded border border-primary bg-primary text-primary-foreground">
-                                      <Check className="h-3 w-3" />
+                                    <div className="flex h-4 w-4 items-center justify-center rounded border border-primary bg-primary text-primary-foreground flex-shrink-0 mt-0.5">
+                                      <Check className="h-2.5 w-2.5" />
                                     </div>
                                     <div className="flex-1">
                                       <div className="font-medium">{feature.name}</div>
@@ -674,7 +729,7 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
               
               {/* Gray container with chips */}
               <div className="bg-muted/30 rounded-lg p-4 min-h-[120px] border border-border/50 shadow-inner">
-                <div className="flex flex-wrap gap-2">
+                <div className="space-y-2">
                   {/* Generate chips based on selections */}
                   {(() => {
                     const chips = []
@@ -683,12 +738,34 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
                     if (selectedTemplate && selectedTemplate !== 'none') {
                       const template = starterTemplates.find(t => t.id === selectedTemplate)
                       if (template) {
+                        const chipId = `template-${selectedTemplate}`
+                        const isExpanded = expandedChips.has(chipId)
                         chips.push(
-                          <div
-                            key="starter"
-                            className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-card/50 backdrop-blur-sm border border-border/50 shadow-sm text-sm font-medium"
-                          >
-                            Use {template.name} template
+                          <div key="starter" className="space-y-2">
+                            <div className="inline-flex items-center gap-2 px-2 py-2 rounded-lg bg-card/50 backdrop-blur-sm border border-border/50 shadow-sm text-sm font-medium">
+                              <button
+                                onClick={() => setSelectedTemplate('')}
+                                className="hover:bg-muted rounded p-0.5 transition-colors"
+                              >
+                                <X className="h-3 w-3 text-muted-foreground" />
+                              </button>
+                              <LogoIcon className="w-4 h-4" />
+                              <span>Use {template.name}</span>
+                              <button
+                                onClick={() => toggleChipExpansion(chipId)}
+                                className="ml-auto hover:bg-muted rounded p-1 transition-colors"
+                              >
+                                <ChevronDown className={cn(
+                                  "h-4 w-4 text-muted-foreground transition-transform",
+                                  isExpanded && "rotate-180"
+                                )} />
+                              </button>
+                            </div>
+                            {isExpanded && (
+                              <div className="ml-8 p-3 rounded-lg bg-background backdrop-blur-sm border border-border/50 shadow-sm text-xs text-muted-foreground">
+                                {getTemplatePromptText(selectedTemplate)}
+                              </div>
+                            )}
                           </div>
                         )
                       }
@@ -696,18 +773,39 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
 
                     // Add feature chips
                     selectedFeatures.forEach((feature) => {
+                      const chipId = `feature-${feature.id}`
+                      const isExpanded = expandedChips.has(chipId)
                       chips.push(
-                        <div
-                          key={feature.id}
-                          className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-card/50 backdrop-blur-sm border border-border/50 shadow-sm text-sm"
-                        >
-                          <ToolIcon
-                            name={feature.toolName}
-                            simpleIconSlug={feature.toolIcon}
-                            simpleIconColor={feature.toolColor}
-                            size={16}
-                          />
-                          Add {feature.name} from {feature.toolName}
+                        <div key={feature.id} className="space-y-2">
+                          <div className="inline-flex items-center gap-2 px-2 py-2 rounded-lg bg-card/50 backdrop-blur-sm border border-border/50 shadow-sm text-sm">
+                            <button
+                              onClick={() => handleFeatureRemove(feature.id)}
+                              className="hover:bg-muted rounded p-0.5 transition-colors"
+                            >
+                              <X className="h-3 w-3 text-muted-foreground" />
+                            </button>
+                            <ToolIcon
+                              name={feature.toolName}
+                              simpleIconSlug={feature.toolIcon}
+                              simpleIconColor={feature.toolColor}
+                              size={16}
+                            />
+                            <span>Add {feature.name} from {feature.toolName}</span>
+                            <button
+                              onClick={() => toggleChipExpansion(chipId)}
+                              className="ml-auto hover:bg-muted rounded p-1 transition-colors"
+                            >
+                              <ChevronDown className={cn(
+                                "h-4 w-4 text-muted-foreground transition-transform",
+                                isExpanded && "rotate-180"
+                              )} />
+                            </button>
+                          </div>
+                          {isExpanded && (
+                            <div className="ml-8 p-3 rounded-lg bg-background backdrop-blur-sm border border-border/50 shadow-sm text-xs text-muted-foreground">
+                              {getFeaturePromptText(feature)}
+                            </div>
+                          )}
                         </div>
                       )
                     })

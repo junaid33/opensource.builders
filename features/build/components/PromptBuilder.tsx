@@ -205,6 +205,11 @@ const starterTemplates = [
     id: '1',
     name: 'Next.js + Keystone Starter',
     description: 'Full-stack template with admin'
+  },
+  {
+    id: 'byos',
+    name: 'Bring Your Own Starter',
+    description: 'Start with what you have'
   }
 ]
 
@@ -343,7 +348,8 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
    - docs/DASHBOARD-SYSTEM.md (custom admin dashboard architecture)
 4. Reference https://keystonejs.com/docs for Keystone-specific implementation details
 
-This starter combines Next.js (App Router) with Keystone.js as a headless CMS, featuring a custom admin dashboard built with Tailwind CSS and shadcn/ui. Before implementing any features, read the relevant documentation files to understand existing patterns and architecture.`
+This starter combines Next.js (App Router) with Keystone.js as a headless CMS, featuring a custom admin dashboard built with Tailwind CSS and shadcn/ui. Before implementing any features, read the relevant documentation files to understand existing patterns and architecture.`,
+      'byos': '' // No template setup for "bring your own starter"
     }
     return templatePrompts[templateId] || 'Use the selected starter template'
   }
@@ -368,7 +374,8 @@ Use web search to research ${feature.toolName} and learn more about what flow th
 
   const getTemplateNutshell = (templateId: string) => {
     const nutshells: Record<string, string> = {
-      '1': 'Explains to the AI that the Next.js + Keystone starter is a Next.js app with GraphQL API from Keystone.js and custom admin dashboard.'
+      '1': 'Explains to the AI that the Next.js + Keystone starter is a Next.js app with GraphQL API from Keystone.js and custom admin dashboard.',
+      'byos': 'No starter template setup - you will work with your existing codebase and integrate the selected features into your current architecture.'
     }
     return nutshells[templateId] || 'Starter template setup instructions'
   }
@@ -382,6 +389,20 @@ Use web search to research ${feature.toolName} and learn more about what flow th
   }
 
   const generatePrompt = () => {
+    // For BYOS, only show features (no template)
+    if (selectedTemplate === 'byos') {
+      if (selectedFeatures.length === 0) return ''
+      
+      let prompt = 'Implement the following features in your existing codebase:\n\n'
+      selectedFeatures.forEach((feature, index) => {
+        prompt += `${index + 1}. ${getFeaturePromptText(feature)}\n\n`
+      })
+      prompt += 'Analyze your existing codebase architecture and integrate these features following your current patterns and conventions. Provide detailed step-by-step instructions that work with your specific tech stack.'
+      
+      return prompt.trim()
+    }
+    
+    // For regular templates
     if (!selectedTemplate && selectedFeatures.length === 0) return ''
     
     let prompt = ''
@@ -465,7 +486,12 @@ Use web search to research ${feature.toolName} and learn more about what flow th
                   {starterTemplates.map((template) => (
                     <SelectItem key={template.id} value={template.id}>
                       <span className="flex items-center gap-3">
-                        <LogoIcon className="w-6 h-6" />
+                        <LogoIcon 
+                          className={cn(
+                            "w-6 h-6",
+                            template.id === 'byos' ? "text-emerald-500" : ""
+                          )} 
+                        />
                         <span>
                           <span className="block font-medium">{template.name}</span>
                           <span className="text-muted-foreground mt-0.5 block text-xs">
@@ -484,15 +510,19 @@ Use web search to research ${feature.toolName} and learn more about what flow th
               {/* Source and Info links below the select */}
               {selectedTemplate && selectedTemplate !== 'none' && (
                 <div className="flex items-center gap-1 ml-2 mt-2">
-                  <a
-                    href="https://github.com/junaid33/next-keystone-starter"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    Source
-                  </a>
-                  <span className="text-muted-foreground text-xs">·</span>
+                  {selectedTemplate !== 'byos' && (
+                    <>
+                      <a
+                        href="https://github.com/junaid33/next-keystone-starter"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+                      >
+                        Source
+                      </a>
+                      <span className="text-muted-foreground text-xs">·</span>
+                    </>
+                  )}
                   <Popover>
                     <PopoverTrigger asChild>
                       <button
@@ -505,7 +535,10 @@ Use web search to research ${feature.toolName} and learn more about what flow th
                     <PopoverContent side="top" className="w-80">
                       <div className="space-y-2">
                         <p className="text-sm text-foreground">
-                          The ultimate starter comes with a dashboard, GraphQL API, authentication, all built into one Next.js application, powers Open Source Builders, Openfront, Openship, and many more.
+                          {selectedTemplate === 'byos' 
+                            ? 'Use your existing codebase as the foundation. Perfect for integrating powerful features from open source tools into your current project without starting from scratch.'
+                            : 'The ultimate starter comes with a dashboard, GraphQL API, authentication, all built into one Next.js application, powers Open Source Builders, Openfront, Openship, and many more.'
+                          }
                         </p>
                       </div>
                     </PopoverContent>
@@ -804,8 +837,8 @@ Use web search to research ${feature.toolName} and learn more about what flow th
                   {(() => {
                     const chips = []
                     
-                    // Add starter template chip
-                    if (selectedTemplate && selectedTemplate !== 'none') {
+                    // Add starter template chip (but not for "bring your own starter")
+                    if (selectedTemplate && selectedTemplate !== 'none' && selectedTemplate !== 'byos') {
                       const template = starterTemplates.find(t => t.id === selectedTemplate)
                       if (template) {
                         const chipId = `template-${selectedTemplate}`
@@ -819,7 +852,12 @@ Use web search to research ${feature.toolName} and learn more about what flow th
                               >
                                 <X className="h-3 w-3 text-muted-foreground" />
                               </button>
-                              <LogoIcon className="w-4 h-4" />
+                              <LogoIcon 
+                                className={cn(
+                                  "w-4 h-4",
+                                  selectedTemplate === 'byos' ? "text-emerald-500" : ""
+                                )} 
+                              />
                               <span>Use {template.name}</span>
                               <div className="ml-auto flex items-center gap-1">
                                 <Popover>

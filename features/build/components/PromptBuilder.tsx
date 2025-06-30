@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useId, useEffect, useRef, useCallback } from 'react'
-import { Search, Package, ExternalLink, X, Check, ChevronDown } from 'lucide-react'
+import { Search, Package, ExternalLink, X, Check, ChevronDown, Lightbulb, Nut, HelpCircle, Github } from 'lucide-react'
 import { Label } from '@/components/ui/label'
 import {
   Select,
@@ -24,6 +24,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
 
 // Enhanced search query to get tools with their features
 const MULTI_MODEL_SEARCH = `
@@ -329,7 +335,7 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
     const templatePrompts: Record<string, string> = {
       '1': `Create a new repository using the Next.js + Keystone.js starter template:
 
-1. Run: gh repo create my-project --template your-org/next-keystone-starter --clone
+1. Run: gh repo create my-project --template junaid33/next-keystone-starter --clone
 2. Run: npm install && npm run dev
 3. READ these documentation files to understand the architecture:
    - docs/ARCHITECTURE.md (overall system design)
@@ -357,6 +363,21 @@ Use GitHub MCP (if available) or GitHub to find the relevant code that implement
       return `Implement ${feature.toolName}'s ${feature.name}.
 
 Use web search to research ${feature.toolName} and learn more about what flow this feature allows and how to implement it in our starter. Study their documentation, API references, and best practices, then create a similar implementation that integrates with our Next.js + Keystone.js infrastructure.`
+    }
+  }
+
+  const getTemplateNutshell = (templateId: string) => {
+    const nutshells: Record<string, string> = {
+      '1': 'Explains to the AI that the Next.js + Keystone starter is a Next.js app with GraphQL API from Keystone.js and custom admin dashboard.'
+    }
+    return nutshells[templateId] || 'Starter template setup instructions'
+  }
+
+  const getFeatureNutshell = (feature: SelectedFeature) => {
+    if (feature.isOpenSource) {
+      return `Tells AI to examine ${feature.toolName}'s repository code for ${feature.name} and adapt it to our infrastructure.`
+    } else {
+      return `Tells AI to research ${feature.toolName}'s docs via web search and implement ${feature.name} in our starter.`
     }
   }
 
@@ -415,8 +436,9 @@ Use web search to research ${feature.toolName} and learn more about what flow th
   }, {} as Record<string, { toolName: string, toolIcon?: string, toolColor?: string, features: SelectedFeature[] }>)
 
   return (
-    <section className={cn("py-8", className)}>
-      <div className="mx-auto max-w-5xl">
+    <TooltipProvider>
+      <section className={cn("py-8", className)}>
+        <div className="mx-auto max-w-5xl">
         <div className="mx-auto max-w-xl text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-muted/80 border border-border mb-6">
             <span className="flex h-2 w-2 rounded-full bg-primary"></span>
@@ -458,6 +480,38 @@ Use web search to research ${feature.toolName} and learn more about what flow th
                   </SelectItem>
                 </SelectContent>
               </Select>
+              
+              {/* Source and Info links below the select */}
+              {selectedTemplate && selectedTemplate !== 'none' && (
+                <div className="flex items-center gap-1 ml-2 mt-2">
+                  <a
+                    href="https://github.com/junaid33/next-keystone-starter"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    Source
+                  </a>
+                  <span className="text-muted-foreground text-xs">·</span>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <button
+                        type="button"
+                        className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+                      >
+                        Info
+                      </button>
+                    </PopoverTrigger>
+                    <PopoverContent side="top" className="w-80">
+                      <div className="space-y-2">
+                        <p className="text-sm text-foreground">
+                          The ultimate starter comes with a dashboard, GraphQL API, authentication, all built into one Next.js application, powers Open Source Builders, Openfront, Openship, and many more.
+                        </p>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                </div>
+              )}
             </div>
 
             {/* Dash Separator */}
@@ -767,15 +821,33 @@ Use web search to research ${feature.toolName} and learn more about what flow th
                               </button>
                               <LogoIcon className="w-4 h-4" />
                               <span>Use {template.name}</span>
-                              <button
-                                onClick={() => toggleChipExpansion(chipId)}
-                                className="ml-auto hover:bg-muted rounded p-1 transition-colors"
-                              >
-                                <ChevronDown className={cn(
-                                  "h-4 w-4 text-muted-foreground transition-transform",
-                                  isExpanded && "rotate-180"
-                                )} />
-                              </button>
+                              <div className="ml-auto flex items-center gap-1">
+                                <Popover>
+                                  <PopoverTrigger asChild>
+                                    <button className="hover:bg-muted rounded p-1 transition-colors">
+                                      <Lightbulb className="h-4 w-4 text-muted-foreground" />
+                                    </button>
+                                  </PopoverTrigger>
+                                  <PopoverContent side="top" className="w-80">
+                                    <div className="space-y-2">
+                                      <div className="flex items-center gap-2">
+                                        <Nut className="h-3 w-3 text-muted-foreground" />
+                                        <span className="text-sm font-medium">In a nutshell</span>
+                                      </div>
+                                      <p className="text-sm text-muted-foreground">{getTemplateNutshell(selectedTemplate)}</p>
+                                    </div>
+                                  </PopoverContent>
+                                </Popover>
+                                <button
+                                  onClick={() => toggleChipExpansion(chipId)}
+                                  className="hover:bg-muted rounded p-1 transition-colors"
+                                >
+                                  <ChevronDown className={cn(
+                                    "h-4 w-4 text-muted-foreground transition-transform",
+                                    isExpanded && "rotate-180"
+                                  )} />
+                                </button>
+                              </div>
                             </div>
                             {isExpanded && (
                               <div className="ml-8 p-3 rounded-lg bg-background backdrop-blur-sm border border-border/50 shadow-sm text-xs text-muted-foreground">
@@ -807,15 +879,33 @@ Use web search to research ${feature.toolName} and learn more about what flow th
                               size={16}
                             />
                             <span>Add {feature.name} from {feature.toolName}</span>
-                            <button
-                              onClick={() => toggleChipExpansion(chipId)}
-                              className="ml-auto hover:bg-muted rounded p-1 transition-colors"
-                            >
-                              <ChevronDown className={cn(
-                                "h-4 w-4 text-muted-foreground transition-transform",
-                                isExpanded && "rotate-180"
-                              )} />
-                            </button>
+                            <div className="ml-auto flex items-center gap-1">
+                              <Popover>
+                                <PopoverTrigger asChild>
+                                  <button className="hover:bg-muted rounded p-1 transition-colors">
+                                    <Lightbulb className="h-4 w-4 text-muted-foreground" />
+                                  </button>
+                                </PopoverTrigger>
+                                <PopoverContent side="top" className="w-80">
+                                  <div className="space-y-2">
+                                    <div className="flex items-center gap-2">
+                                      <Nut className="h-3 w-3 text-muted-foreground" />
+                                      <span className="text-sm font-medium">In a nutshell</span>
+                                    </div>
+                                    <p className="text-sm text-muted-foreground">{getFeatureNutshell(feature)}</p>
+                                  </div>
+                                </PopoverContent>
+                              </Popover>
+                              <button
+                                onClick={() => toggleChipExpansion(chipId)}
+                                className="hover:bg-muted rounded p-1 transition-colors"
+                              >
+                                <ChevronDown className={cn(
+                                  "h-4 w-4 text-muted-foreground transition-transform",
+                                  isExpanded && "rotate-180"
+                                )} />
+                              </button>
+                            </div>
                           </div>
                           {isExpanded && (
                             <div className="ml-8 p-3 rounded-lg bg-background backdrop-blur-sm border border-border/50 shadow-sm text-xs text-muted-foreground">
@@ -841,5 +931,6 @@ Use web search to research ${feature.toolName} and learn more about what flow th
         </div>
       </div>
     </section>
+    </TooltipProvider>
   )
 }

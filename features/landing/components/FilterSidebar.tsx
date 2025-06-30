@@ -2,11 +2,13 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { X } from 'lucide-react'
+import { X, ChevronDown, Filter } from 'lucide-react'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { useIsMobile } from '@/components/ui/use-mobile'
+import { cn } from '@/lib/utils'
 
 export interface FilterState {
   categories: string[]
@@ -43,6 +45,7 @@ const GITHUB_STAR_RANGES = [
 export default function FilterSidebar({ availableCategories = [], selectedSoftware, proprietaryTools = [], availableFeatures = [] }: FilterSidebarProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
+  const isMobile = useIsMobile()
   
   // Initialize filters from URL params
   const [filters, setFilters] = useState<FilterState>(() => {
@@ -54,6 +57,9 @@ export default function FilterSidebar({ availableCategories = [], selectedSoftwa
     
     return { categories, licenses, githubStars, alternatives, features }
   })
+
+  // Mobile collapse state
+  const [isExpanded, setIsExpanded] = useState(false)
 
   // Update URL when filters change
   useEffect(() => {
@@ -151,7 +157,22 @@ export default function FilterSidebar({ availableCategories = [], selectedSoftwa
         <Card className="relative bg-gray-50 p-5">
           {/* Header with Clear Button */}
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-sm font-semibold text-gray-900">Filters</h3>
+            {isMobile ? (
+              <Button
+                variant="ghost"
+                onClick={() => setIsExpanded(!isExpanded)}
+                className="flex items-center gap-2 text-sm font-semibold text-gray-900 p-0 h-auto hover:bg-transparent"
+              >
+                <Filter className="h-4 w-4" />
+                Filters
+                <ChevronDown className={cn(
+                  "h-4 w-4 text-muted-foreground transition-transform",
+                  isExpanded && "rotate-180"
+                )} />
+              </Button>
+            ) : (
+              <h3 className="text-sm font-semibold text-gray-900">Filters</h3>
+            )}
             {hasActiveFilters && (
               <Button 
                 variant="ghost" 
@@ -164,61 +185,66 @@ export default function FilterSidebar({ availableCategories = [], selectedSoftwa
             )}
           </div>
 
-          {/* Active Filters Display - Moved to Top */}
-          {hasActiveFilters && (
-            <div className="mb-6 pb-4 border-b border-gray-200">
-              <div className="text-xs text-gray-500 mb-2">Active filters:</div>
-              <div className="flex flex-wrap gap-1">
-                {filters.alternatives.map(alternative => (
-                  <span key={alternative} className="inline-flex items-center gap-1 px-2 py-1 bg-purple-100 text-purple-700 text-xs rounded-md">
-                    {alternative}
-                    <X 
-                      className="w-3 h-3 cursor-pointer hover:text-purple-900" 
-                      onClick={() => toggleArrayFilter('alternatives', alternative)}
-                    />
-                  </span>
-                ))}
-                {filters.categories.map(category => (
-                  <span key={category} className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-md">
-                    {category}
-                    <X 
-                      className="w-3 h-3 cursor-pointer hover:text-blue-900" 
-                      onClick={() => toggleArrayFilter('categories', category)}
-                    />
-                  </span>
-                ))}
-                {filters.licenses.map(license => (
-                  <span key={license} className="inline-flex items-center gap-1 px-2 py-1 bg-green-100 text-green-700 text-xs rounded-md">
-                    {license}
-                    <X 
-                      className="w-3 h-3 cursor-pointer hover:text-green-900" 
-                      onClick={() => toggleArrayFilter('licenses', license)}
-                    />
-                  </span>
-                ))}
-                {filters.githubStars.map(stars => (
-                  <span key={stars} className="inline-flex items-center gap-1 px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded-md">
-                    {GITHUB_STAR_RANGES.find(r => r.value === stars)?.label || stars}
-                    <X 
-                      className="w-3 h-3 cursor-pointer hover:text-yellow-900" 
-                      onClick={() => toggleArrayFilter('githubStars', stars)}
-                    />
-                  </span>
-                ))}
-                {filters.features.map(feature => (
-                  <span key={feature} className="inline-flex items-center gap-1 px-2 py-1 bg-orange-100 text-orange-700 text-xs rounded-md">
-                    {feature}
-                    <X 
-                      className="w-3 h-3 cursor-pointer hover:text-orange-900" 
-                      onClick={() => toggleArrayFilter('features', feature)}
-                    />
-                  </span>
-                ))}
+          {/* Collapsible Content */}
+          <div className={cn(
+            "overflow-hidden transition-all duration-300 ease-in-out",
+            isMobile ? (isExpanded ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0") : "max-h-none opacity-100"
+          )}>
+            {/* Active Filters Display - Moved to Top */}
+            {hasActiveFilters && (
+              <div className="mb-6 pb-4 border-b border-gray-200">
+                <div className="text-xs text-gray-500 mb-2">Active filters:</div>
+                <div className="flex flex-wrap gap-1">
+                  {filters.alternatives.map(alternative => (
+                    <span key={alternative} className="inline-flex items-center gap-1 px-2 py-1 bg-purple-100 text-purple-700 text-xs rounded-md">
+                      {alternative}
+                      <X 
+                        className="w-3 h-3 cursor-pointer hover:text-purple-900" 
+                        onClick={() => toggleArrayFilter('alternatives', alternative)}
+                      />
+                    </span>
+                  ))}
+                  {filters.categories.map(category => (
+                    <span key={category} className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-md">
+                      {category}
+                      <X 
+                        className="w-3 h-3 cursor-pointer hover:text-blue-900" 
+                        onClick={() => toggleArrayFilter('categories', category)}
+                      />
+                    </span>
+                  ))}
+                  {filters.licenses.map(license => (
+                    <span key={license} className="inline-flex items-center gap-1 px-2 py-1 bg-green-100 text-green-700 text-xs rounded-md">
+                      {license}
+                      <X 
+                        className="w-3 h-3 cursor-pointer hover:text-green-900" 
+                        onClick={() => toggleArrayFilter('licenses', license)}
+                      />
+                    </span>
+                  ))}
+                  {filters.githubStars.map(stars => (
+                    <span key={stars} className="inline-flex items-center gap-1 px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded-md">
+                      {GITHUB_STAR_RANGES.find(r => r.value === stars)?.label || stars}
+                      <X 
+                        className="w-3 h-3 cursor-pointer hover:text-yellow-900" 
+                        onClick={() => toggleArrayFilter('githubStars', stars)}
+                      />
+                    </span>
+                  ))}
+                  {filters.features.map(feature => (
+                    <span key={feature} className="inline-flex items-center gap-1 px-2 py-1 bg-orange-100 text-orange-700 text-xs rounded-md">
+                      {feature}
+                      <X 
+                        className="w-3 h-3 cursor-pointer hover:text-orange-900" 
+                        onClick={() => toggleArrayFilter('features', feature)}
+                      />
+                    </span>
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
-          <div className="grid grid-cols-1 gap-6">
+            <div className="grid grid-cols-1 gap-6">
             {/* Proprietary Software Select - Moved to top */}
             <div>
               <div className="text-sm text-gray-800 font-semibold mb-3">Alternatives to</div>
@@ -337,6 +363,7 @@ export default function FilterSidebar({ availableCategories = [], selectedSoftwa
               </div>
             )}
 
+            </div>
           </div>
         </Card>
       </div>

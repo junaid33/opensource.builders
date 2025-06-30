@@ -65,16 +65,21 @@ export function FilterAdd({ list, children }: FilterAddProps) {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault()
-    if (state.kind === "filter-value" && state.fieldPath && state.filterType && state.filterValue !== null && searchParams) {
-      const newSearchParams = new URLSearchParams(searchParams.toString())
+    if (state.kind === "filter-value" && state.fieldPath && state.filterType && searchParams) {
+      // Allow null values for empty/not_empty filters
+      const allowNullValue = state.filterType === 'empty' || state.filterType === 'not_empty'
       
-      // Remove the page parameter and add the new filter
-      newSearchParams.delete('page')
-      const filterKey = `!${state.fieldPath}_${state.filterType}`
-      newSearchParams.set(filterKey, JSON.stringify(state.filterValue))
-      
-      router.push(`${pathname}?${newSearchParams.toString()}`)
-      setIsOpen(false)
+      if (state.filterValue !== null || allowNullValue) {
+        const newSearchParams = new URLSearchParams(searchParams.toString())
+        
+        // Remove the page parameter and add the new filter
+        newSearchParams.delete('page')
+        const filterKey = `!${state.fieldPath}_${state.filterType}`
+        newSearchParams.set(filterKey, JSON.stringify(state.filterValue))
+        
+        router.push(`${pathname}?${newSearchParams.toString()}`)
+        setIsOpen(false)
+      }
     }
   }
 

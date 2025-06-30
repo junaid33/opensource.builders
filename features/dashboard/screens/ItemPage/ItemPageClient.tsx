@@ -588,6 +588,7 @@ export function ItemPageClient({ list, item, itemId }: ItemPageClientProps) {
                 forceValidation={forceValidation}
                 invalidFields={invalidFields}
                 isRequireds={isRequireds}
+                groups={list.groups}
               />
             )}
           </div>

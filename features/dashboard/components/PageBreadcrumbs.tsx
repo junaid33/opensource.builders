@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { basePath } from "../lib/config";
 
 interface BreadcrumbItem {
   type: "link" | "model" | "page";
@@ -37,12 +38,12 @@ export function PageBreadcrumbs({ items, actions }: PageBreadcrumbsProps) {
                   <BreadcrumbItem>
                     {item.type === "link" && (
                       <BreadcrumbLink asChild>
-                        <Link className="text-foreground" href={item.href || "#"}>{item.label}</Link>
+                        <Link className="text-foreground" href={`${basePath}${item.href || "#"}`}>{item.label}</Link>
                       </BreadcrumbLink>
                     )}
                     {item.type === "model" && (
                       <BreadcrumbLink asChild>
-                        <Link className="text-foreground" href={item.href || "#"}>{item.label}</Link>
+                        <Link className="text-foreground" href={`${basePath}${item.href || "#"}`}>{item.label}</Link>
                       </BreadcrumbLink>
                     )}
                     {item.type === "page" && (

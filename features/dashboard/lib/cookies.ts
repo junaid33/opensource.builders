@@ -6,7 +6,7 @@ export const getAuthHeaders = async (): Promise<Record<string, string>> => {
   const token = cookieStore.get("keystonejs-session")?.value
 
   if (token) {
-    return { authorization: `Bearer ${token}` }
+    return { Cookie: `keystonejs-session=${token}` }
   }
 
   return {}

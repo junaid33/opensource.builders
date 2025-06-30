@@ -459,6 +459,7 @@ export const controller = (config: {
     },
     filter: {
       Filter: ({ value, onChange, type, autoFocus }: any) => {
+        // Empty/not_empty filters don't need a UI component - they work without user input
         if (type === 'empty' || type === 'not_empty') return null
         
         // Simple controlled component - no client-side data fetching
@@ -478,12 +479,12 @@ export const controller = (config: {
         const many = config.fieldMeta.many || false
         if (type === 'empty' && !many) return { [config.path]: { equals: null } }
         if (type === 'empty' && many) return { [config.path]: { none: {} } }
-        if (type === 'not_empty' && !many) return { [config.path]: { NOT: { equals: null } } }
+        if (type === 'not_empty' && !many) return { [config.path]: { not: { equals: null } } }
         if (type === 'not_empty' && many) return { [config.path]: { some: {} } }
         if (type === 'is') return { [config.path]: { id: { equals: value } } }
-        if (type === 'not_is') return { [config.path]: { NOT: { id: { equals: value } } } }
+        if (type === 'not_is') return { [config.path]: { not: { id: { equals: value } } } }
         if (type === 'some') return { [config.path]: { some: { id: { in: value } } } }
-        if (type === 'not_some') return { [config.path]: { NOT: { some: { id: { in: value } } } } }
+        if (type === 'not_some') return { [config.path]: { not: { some: { id: { in: value } } } } }
         return { [config.path]: { [type]: value } }
       },
       parseGraphQL: () => [],

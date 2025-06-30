@@ -159,9 +159,16 @@ export function Field({
             selected={dateValue}
             onSelect={(date) => {
               if (date && onChange) {
-                // Set time to current time if not set
-                const now = new Date()
-                date.setHours(now.getHours(), now.getMinutes(), now.getSeconds())
+                // Preserve existing time if date has one, otherwise use current time
+                const existingDate = dateValue
+                if (existingDate) {
+                  // Keep the existing time when changing date
+                  date.setHours(existingDate.getHours(), existingDate.getMinutes(), existingDate.getSeconds(), existingDate.getMilliseconds())
+                } else {
+                  // Set time to current time if not set
+                  const now = new Date()
+                  date.setHours(now.getHours(), now.getMinutes(), now.getSeconds(), 0)
+                }
                 onChange({ ...value, value: date.toISOString() })
               } else if (!date && onChange) {
                 onChange({ ...value, value: null })
@@ -179,11 +186,14 @@ export function Field({
                 value={dateValue ? format(dateValue, "HH:mm:ss") : ""}
                 onChange={(e) => {
                   if (onChange && dateValue) {
-                    const [hours, minutes, seconds] = e.target.value.split(':').map(Number)
-                    const newDate = new Date(dateValue)
-                    newDate.setHours(hours, minutes, seconds || 0)
-                    onChange({ ...value, value: newDate.toISOString() })
-                    setDirty(true)
+                    const timeValue = e.target.value
+                    if (timeValue) {
+                      const [hours, minutes, seconds] = timeValue.split(':').map(Number)
+                      const newDate = new Date(dateValue)
+                      newDate.setHours(hours, minutes || 0, seconds || 0, 0)
+                      onChange({ ...value, value: newDate.toISOString() })
+                      setDirty(true)
+                    }
                   }
                 }}
                 className="mt-1"
@@ -280,9 +290,16 @@ export function controller(config: FieldControllerConfig<TimestampFieldMeta>): F
                 selected={dateValue}
                 onSelect={(date) => {
                   if (date) {
-                    // Set time to current time if not set
-                    const now = new Date()
-                    date.setHours(now.getHours(), now.getMinutes(), now.getSeconds())
+                    // Preserve existing time if date has one, otherwise use current time
+                    const existingDate = dateValue
+                    if (existingDate) {
+                      // Keep the existing time when changing date
+                      date.setHours(existingDate.getHours(), existingDate.getMinutes(), existingDate.getSeconds(), existingDate.getMilliseconds())
+                    } else {
+                      // Set time to current time if not set
+                      const now = new Date()
+                      date.setHours(now.getHours(), now.getMinutes(), now.getSeconds(), 0)
+                    }
                     onChange(date.toISOString())
                   } else {
                     onChange(null)
@@ -300,11 +317,14 @@ export function controller(config: FieldControllerConfig<TimestampFieldMeta>): F
                     value={dateValue ? format(dateValue, "HH:mm:ss") : ""}
                     onChange={(e) => {
                       if (dateValue) {
-                        const [hours, minutes, seconds] = e.target.value.split(':').map(Number)
-                        const newDate = new Date(dateValue)
-                        newDate.setHours(hours, minutes, seconds || 0)
-                        onChange(newDate.toISOString())
-                        setDirty(true)
+                        const timeValue = e.target.value
+                        if (timeValue) {
+                          const [hours, minutes, seconds] = timeValue.split(':').map(Number)
+                          const newDate = new Date(dateValue)
+                          newDate.setHours(hours, minutes || 0, seconds || 0, 0)
+                          onChange(newDate.toISOString())
+                          setDirty(true)
+                        }
                       }
                     }}
                     className="mt-1"

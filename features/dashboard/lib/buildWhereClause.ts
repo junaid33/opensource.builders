@@ -212,13 +212,37 @@ const FIELD_FILTER_MAPPINGS: Record<string, {
       if (type === 'not_is') return { [fieldPath]: { not: { id: { equals: value } } } }
       if (type === 'some') return { [fieldPath]: { some: { id: { in: value } } } }
       if (type === 'not_some') return { [fieldPath]: { not: { some: { id: { in: value } } } } }
-      return { [fieldPath]: { [type]: value } } // uh
+      return { [fieldPath]: { [type]: value } }
     },
   },
 }
 
-function getFieldFilterMapping(fieldType: string) {
-  return FIELD_FILTER_MAPPINGS[fieldType] || null
+function getFieldFilterMapping(fieldType: string, fieldMeta?: any) {
+  const mapping = FIELD_FILTER_MAPPINGS[fieldType]
+  if (!mapping) return null
+  
+  // For relationship fields, conditionally include filter types based on 'many' - exactly like Keystone field controllers
+  if (fieldType === 'relationship') {
+    const many = fieldMeta?.many || false
+    return {
+      ...mapping,
+      types: {
+        empty: { label: 'Is empty', initialValue: null },
+        not_empty: { label: 'Is not empty', initialValue: null },
+        ...(many
+          ? {
+              some: { label: 'Is one of', initialValue: [] },
+              not_some: { label: 'Is not one of', initialValue: [] },
+            }
+          : {
+              is: { label: 'Is', initialValue: null },
+              not_is: { label: 'Is not', initialValue: null },
+            }),
+      },
+    }
+  }
+  
+  return mapping
 }
 
 export function buildWhereClause(
@@ -266,7 +290,7 @@ export function buildWhereClause(
     if (typeof typedField.viewsIndex === 'number') {
       try {
         const fieldType = getFieldTypeFromViewsIndex(typedField.viewsIndex)
-        const filterMapping = getFieldFilterMapping(fieldType)
+        const filterMapping = getFieldFilterMapping(fieldType, typedField.fieldMeta)
         
         if (filterMapping) {
           for (const filterType in filterMapping.types) {

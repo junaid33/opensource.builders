@@ -30,11 +30,6 @@ export async function getBaseUrl(): Promise<string> {
     }
   }
 
-  // Development fallback
-  if (process.env.NODE_ENV === 'development') {
-    return 'http://localhost:3000';
-  }
-
   // Production fallback - return empty string and let relative URLs work
   return '';
 }
@@ -43,7 +38,6 @@ export async function getBaseUrl(): Promise<string> {
  * Get the GraphQL endpoint URL
  */
 export async function getGraphQLEndpoint(): Promise<string> {
-  // In production, use the same origin
   const baseUrl = await getBaseUrl();
   return `${baseUrl}/api/graphql`;
 }

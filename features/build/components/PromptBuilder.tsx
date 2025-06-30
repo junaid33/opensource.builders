@@ -442,11 +442,11 @@ Use web search to research ${feature.toolName} and learn more about what flow th
         <div className="mx-auto max-w-xl text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-muted/80 border border-border mb-6">
             <span className="flex h-2 w-2 rounded-full bg-primary"></span>
-            <span className="text-sm font-medium">Build with proven open source</span>
+            <span className="text-sm font-medium">Extract proven features from open source</span>
           </div>
-          <h2 className="text-balance text-3xl font-bold md:text-4xl lg:text-5xl">Interactive Prompt Builder</h2>
-          <p className="text-muted-foreground mt-4 text-balance">
-            Customize your project by selecting the features and configurations that match your needs.
+          <h2 className="text-balance text-3xl font-bold md:text-4xl lg:text-5xl">AI-Powered Feature Builder</h2>
+          <p className="text-muted-foreground mt-4 text-balance max-w-lg mx-auto">
+            Cherry-pick powerful features from Cal.com, Supabase, Medusa and more. We'll generate the perfect AI prompt to implement them in your project.
           </p>
         </div>
 

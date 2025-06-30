@@ -191,6 +191,7 @@ interface SelectedFeature {
   toolIcon?: string
   toolColor?: string
   toolRepo?: string // Repository URL
+  isOpenSource?: boolean // Whether the tool is open source
 }
 
 const starterTemplates = [
@@ -277,7 +278,7 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
     setIsOpen(true)
   }
 
-  const handleFeatureSelect = (feature: any, toolId: string, toolName: string, toolIcon?: string, toolColor?: string, toolRepo?: string) => {
+  const handleFeatureSelect = (feature: any, toolId: string, toolName: string, toolIcon?: string, toolColor?: string, toolRepo?: string, isOpenSource?: boolean) => {
     const compositeId = `${toolId}-${feature.id}`
     const selectedFeature: SelectedFeature = {
       id: compositeId,
@@ -289,7 +290,8 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
       toolName,
       toolIcon,
       toolColor,
-      toolRepo
+      toolRepo,
+      isOpenSource
     }
 
     setSelectedFeatures(prev => {
@@ -341,24 +343,21 @@ This starter combines Next.js (App Router) with Keystone.js as a headless CMS, f
   }
 
   const getFeaturePromptText = (feature: SelectedFeature) => {
-    // Use repository URL from feature data if available, otherwise fallback to common repos
-    const getToolRepo = (toolName: string) => {
-      const repos: Record<string, string> = {
-        'Shopify': 'https://github.com/Shopify/shopify-app-js',
-        'Medusa': 'https://github.com/medusajs/medusa',
-        'Supabase': 'https://github.com/supabase/supabase',
-        'Strapi': 'https://github.com/strapi/strapi'
-      }
-      return repos[toolName] || `https://github.com/search?q=${toolName.toLowerCase()}`
-    }
-
-    const repoUrl = feature.toolRepo || getToolRepo(feature.toolName)
-    
-    return `Implement ${feature.toolName}'s ${feature.name}. 
+    if (feature.isOpenSource) {
+      // Open source tools - access their code directly
+      const repoUrl = feature.toolRepo || `https://github.com/search?q=${feature.toolName.toLowerCase()}`
+      
+      return `Implement ${feature.toolName}'s ${feature.name}. 
 
 ${feature.toolName} repository: ${repoUrl}
 
 Use GitHub MCP (if available) or GitHub to find the relevant code that implements ${feature.name} and adapt it to our Next.js + Keystone.js infrastructure. Follow our existing patterns in /features/ directory and integrate with the Keystone schema.`
+    } else {
+      // Proprietary tools - use web search to understand the feature
+      return `Implement ${feature.toolName}'s ${feature.name}.
+
+Use web search to research ${feature.toolName} and learn more about what flow this feature allows and how to implement it in our starter. Study their documentation, API references, and best practices, then create a similar implementation that integrates with our Next.js + Keystone.js infrastructure.`
+    }
   }
 
   const generatePrompt = () => {
@@ -623,7 +622,7 @@ Use GitHub MCP (if available) or GitHub to find the relevant code that implement
                                   .map((toolFeature, index) => (
                                   <button
                                     key={`tool-${tool.id}-feature-${toolFeature.feature.id}-${index}`}
-                                    onClick={() => handleFeatureSelect(toolFeature.feature, tool.id, tool.name, tool.simpleIconSlug, tool.simpleIconColor, tool.repositoryUrl)}
+                                    onClick={() => handleFeatureSelect(toolFeature.feature, tool.id, tool.name, tool.simpleIconSlug, tool.simpleIconColor, tool.repositoryUrl, tool.isOpenSource)}
                                     className="flex w-full items-center gap-3 rounded-md px-2 py-2 text-left text-sm hover:bg-accent"
                                   >
                                     <div className="flex h-6 w-6 items-center justify-center">
@@ -693,7 +692,8 @@ Use GitHub MCP (if available) or GitHub to find the relevant code that implement
                                         alternative.openSourceTool!.name, 
                                         alternative.openSourceTool!.simpleIconSlug, 
                                         alternative.openSourceTool!.simpleIconColor,
-                                        alternative.openSourceTool!.repositoryUrl
+                                        alternative.openSourceTool!.repositoryUrl,
+                                        alternative.openSourceTool!.isOpenSource
                                       )}
                                       className="flex w-full items-center gap-3 rounded-md px-2 py-2 text-left text-sm hover:bg-accent"
                                     >

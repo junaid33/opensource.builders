@@ -112,7 +112,7 @@ export function NavbarSearch() {
   )
 
   return (
-    <div ref={searchRef} className="relative hidden md:block w-96">
+    <div ref={searchRef} className="relative w-full md:w-96">
       <div className="relative">
         <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
         <Input

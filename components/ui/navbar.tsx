@@ -1,8 +1,9 @@
-import { Sparkles } from "lucide-react"
+import { Sparkles, Search } from "lucide-react"
 import { Logo } from "@/features/dashboard/components/Logo"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/ui/theme-toggle"
 import { NavbarSearch } from "@/features/search/components/NavbarSearch"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { cn } from "@/lib/utils"
 
 // Removed navigation links - no longer needed
@@ -14,7 +15,7 @@ interface NavbarProps {
 export default function Navbar({ className }: NavbarProps) {
 
   return (
-    <header className={cn("border-b px-4 md:px-6", className)}>
+    <header className={cn("px-4 md:px-6", className)}>
       <div className="flex h-16 items-center justify-between gap-4">
         {/* Left side */}
         <div className="flex flex-1 items-center gap-2">
@@ -26,8 +27,8 @@ export default function Navbar({ className }: NavbarProps) {
           </div>
         </div>
         
-        {/* Middle area - Search */}
-        <div className="grow">
+        {/* Middle area - Search - Desktop only */}
+        <div className="grow hidden md:flex">
           <div className="flex justify-center">
             <NavbarSearch />
           </div>
@@ -49,6 +50,21 @@ export default function Navbar({ className }: NavbarProps) {
             </a>
           </Button>
         </div>
+      </div>
+      
+      {/* Mobile search accordion */}
+      <div className="md:hidden">
+        <Accordion type="single" collapsible>
+          <AccordionItem value="search" className="border-none">
+            <AccordionTrigger className="flex items-center justify-center p-3 hover:bg-accent hover:no-underline">
+              <Search className="h-4 w-4" />
+              <span className="ml-2">Search</span>
+            </AccordionTrigger>
+            <AccordionContent className="p-4">
+              <NavbarSearch />
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </div>
     </header>
   )

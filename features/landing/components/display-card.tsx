@@ -374,27 +374,26 @@ export function DisplayCard({
             className="cursor-pointer list-none"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="inline-flex items-center justify-between gap-x-2.5 rounded-lg bg-card/50 backdrop-blur-sm border border-border/50 shadow-sm px-3 py-2 text-sm font-medium hover:bg-muted/50 transition-colors w-full">
-              <div className="inline-flex items-center gap-x-2.5">
-                <span className="inline-flex items-center gap-1.5 font-medium text-foreground">
-                  <MiniDonutChart
-                    value={displayFeatures.filter(f => f.compatible !== false).length}
-                    total={totalFeatures}
-                    size={16}
-                    strokeWidth={2}
-                  />
-                  {`${displayFeatures.filter(f => f.compatible !== false).length}/${totalFeatures}`}
-                </span>
-                <span className="h-4 w-px bg-border" />
-                <span className="inline-flex items-center gap-1.5 text-muted-foreground">
-                  {`${compatibilityScore || 0}%`}
-                </span>
-              </div>
+            <div className="inline-flex items-center gap-x-2.5 rounded-full bg-background px-3 py-2 text-sm border hover:bg-muted/50 transition-colors">
+              <span className="inline-flex items-center gap-1.5 font-medium text-foreground">
+                <MiniDonutChart
+                  value={displayFeatures.filter(f => f.compatible !== false).length}
+                  total={totalFeatures}
+                  size={16}
+                  strokeWidth={2}
+                />
+                {`${displayFeatures.filter(f => f.compatible !== false).length}/${totalFeatures}`}
+              </span>
+              <span className="h-4 w-px bg-border" />
+              <span className="inline-flex items-center gap-1.5 text-muted-foreground">
+                {`${compatibilityScore || 0}%`}
+              </span>
+              <span className="h-4 w-px bg-border" />
               <span className="inline-flex items-center">
                 {isDetailsOpen ? (
-                  <ChevronDown className="w-4 h-4 text-muted-foreground transition-transform" />
+                  <ChevronDown className="w-4 h-4 text-muted-foreground" />
                 ) : (
-                  <ChevronRight className="w-4 h-4 text-muted-foreground transition-transform" />
+                  <ChevronRight className="w-4 h-4 text-muted-foreground" />
                 )}
               </span>
             </div>

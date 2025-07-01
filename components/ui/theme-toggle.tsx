@@ -56,7 +56,7 @@ export function ThemeToggle() {
     <Button
       variant="outline"
       size="icon"
-      className="size-9"
+      className="size-8"
       onClick={handleClick}
       aria-label={getAriaLabel()}
     >

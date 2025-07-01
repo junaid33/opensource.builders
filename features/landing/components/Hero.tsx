@@ -1,7 +1,9 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { Sparkles } from 'lucide-react'
 import AnimatedText from './AnimatedText'
 import { GitHubStarsButton } from './GitHubStarsButton'
+import { Button } from '@/components/ui/button'
 
 interface HeroProps {
   proprietaryTools?: Array<{id: string, name: string}>
@@ -45,10 +47,13 @@ export default function Hero({ proprietaryTools = [], onSoftwareSelect }: HeroPr
                   // formatted={true}
                 />
               </div>
-              <div className="sm:flex sm:items-center sm:justify-center space-y-2 sm:space-y-0 sm:space-x-3">
-                <div className="text-sm text-muted-foreground font-medium">
-                  Trusted by <span className="text-primary">100K+</span> Developers
-                </div>
+              <div className="sm:flex sm:items-center sm:justify-center space-y-2 sm:space-y-0 sm:space-x-3 md:hidden">
+                <Button asChild variant="outline" className="text-sm">
+                  <Link href="/build" className="flex items-center gap-2">
+                    <Sparkles className="h-5 w-5 text-muted-foreground" />
+                    Build
+                  </Link>
+                </Button>
               </div>
             </div>
           </div>

@@ -120,7 +120,7 @@ export function NavbarSearch() {
           type="search"
           placeholder="Search tools, features, or alternatives..."
           className={cn(
-            "h-9 w-full pl-9 pr-3 text-sm",
+            "h-9 w-full pl-9 pr-3 text-sm bg-background",
             isOpen && hasResults && "rounded-b-none"
           )}
           value={search}

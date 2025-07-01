@@ -36,16 +36,15 @@ export default function Navbar({ className }: NavbarProps) {
         {/* Right side */}
         <div className="flex flex-1 items-center justify-end gap-2">
           <ThemeToggle />
-          {/* Build button - full text on desktop, icon only on mobile */}
-          <Button size="sm" asChild className="hidden md:inline-flex">
-            <a href="/build" className="inline-flex items-center gap-2">
+          {/* Build button - responsive: icon on mobile, text on desktop */}
+          <Button size="sm" asChild className="hidden sm:inline-flex">
+            <a href="/build">
               <Sparkles className="h-4 w-4" />
               Build
             </a>
           </Button>
-          {/* Build button - icon only on mobile */}
-          <Button size="icon" asChild className="md:hidden">
-            <a href="/build" className="inline-flex items-center justify-center">
+          <Button size="icon" asChild className="size-8"> 
+            <a href="/build" className="sm:hidden inline-flex items-center justify-center">
               <Sparkles className="h-4 w-4" />
             </a>
           </Button>

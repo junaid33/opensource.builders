@@ -8,6 +8,7 @@ interface AnimatedTextProps {
   erasingSpeed?: number;
   pauseDuration?: number;
   className?: string;
+  onWordClick?: (word: string) => void;
 }
 
 export default function AnimatedText({
@@ -24,14 +25,19 @@ export default function AnimatedText({
   typingSpeed = 100,
   erasingSpeed = 50,
   pauseDuration = 2000,
-  className = ''
+  className = '',
+  onWordClick
 }: AnimatedTextProps) {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentText, setCurrentText] = useState('');
   const [isTyping, setIsTyping] = useState(true);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
+    // Don't animate if paused
+    if (isPaused) return;
+    
     const currentWord = words[currentWordIndex];
     
     const timeout = setTimeout(() => {
@@ -60,12 +66,31 @@ export default function AnimatedText({
     }, isDeleting ? erasingSpeed : typingSpeed);
 
     return () => clearTimeout(timeout);
-  }, [currentText, currentWordIndex, isTyping, isDeleting, words, typingSpeed, erasingSpeed, pauseDuration]);
+  }, [currentText, currentWordIndex, isTyping, isDeleting, words, typingSpeed, erasingSpeed, pauseDuration, isPaused]);
+
+  const handleClick = () => {
+    if (onWordClick && currentText) {
+      onWordClick(currentText);
+    }
+  };
+
+  const handleMouseEnter = () => {
+    setIsPaused(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsPaused(false);
+  };
 
   return (
-    <span className={`inline-block text-slate-500 dark:text-slate-300  ${className}`}>
+    <span 
+      className={`inline-block text-muted-foreground cursor-pointer hover:text-foreground transition-colors ${className}`}
+      onClick={handleClick}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       {currentText}
-      <span className="animate-pulse text-gray-500">|</span>
+      <span className={`animate-pulse text-muted-foreground ${isPaused ? 'opacity-100' : ''}`}>|</span>
     </span>
   );
 }

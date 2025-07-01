@@ -40,7 +40,7 @@ export function LandingPageClient({ initialSelectedSoftware, sidebarSlot, altern
 
   return (
     <>
-      <Hero />
+      <Hero proprietaryTools={proprietaryTools} onSoftwareSelect={handleSoftwareSelect} />
       <ProprietarySoftware onSoftwareSelect={handleSoftwareSelect} proprietaryTools={proprietaryTools} />
 
       {/* Page content */}

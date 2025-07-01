@@ -5,76 +5,35 @@ import { Star } from 'lucide-react';
 import {
   motion,
   AnimatePresence,
-  useMotionValue,
-  useSpring,
-  useInView,
   type HTMLMotionProps,
-  type SpringOptions,
-  type UseInViewOptions,
 } from 'framer-motion';
  
 import { cn } from '@/lib/utils';
-import { SlidingNumber } from '@/components/animate-ui/text/sliding-number';
 import { buttonVariants } from '@/components/ui/button';
- 
-type FormatNumberResult = { number: string[]; unit: string };
- 
-function formatNumber(num: number, formatted: boolean): FormatNumberResult {
-  if (formatted) {
-    if (num < 1000) {
-      return { number: [num.toString()], unit: '' };
-    }
-    const units = ['k', 'M', 'B', 'T'];
-    let unitIndex = 0;
-    let n = num;
-    while (n >= 1000 && unitIndex < units.length) {
-      n /= 1000;
-      unitIndex++;
-    }
-    const finalNumber = Math.floor(n).toString();
-    return { number: [finalNumber], unit: units[unitIndex - 1] ?? '' };
-  } else {
-    return { number: num.toLocaleString('en-US').split(','), unit: '' };
-  }
-}
- 
+
 type GitHubStarsButtonProps = HTMLMotionProps<'a'> & {
   username: string;
   repo: string;
-  transition?: SpringOptions;
   formatted?: boolean;
-  inView?: boolean;
-  inViewMargin?: UseInViewOptions['margin'];
-  inViewOnce?: boolean;
 };
- 
+
 function GitHubStarsButton({
   ref,
   username,
   repo,
-  transition = { stiffness: 90, damping: 50 },
   formatted = false,
-  inView = false,
-  inViewOnce = true,
-  inViewMargin = '0px',
   className,
   ...props
 }: GitHubStarsButtonProps) {
-  const motionVal = useMotionValue(0);
-  const springVal = useSpring(motionVal, transition);
-  const motionNumberRef = React.useRef(0);
-  const isCompletedRef = React.useRef(false);
-  const [, forceRender] = React.useReducer((x) => x + 1, 0);
-  const [stars, setStars] = React.useState(0);
-  const [isCompleted, setIsCompleted] = React.useState(false);
+  const [stars, setStars] = React.useState(1255);
   const [displayParticles, setDisplayParticles] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
- 
+
   const repoUrl = React.useMemo(
     () => `https://github.com/${username}/${repo}`,
     [username, repo],
   );
- 
+
   React.useEffect(() => {
     fetch(`https://api.github.com/repos/${username}/${repo}`)
       .then((response) => response.json())
@@ -86,68 +45,24 @@ function GitHubStarsButton({
       .catch(console.error)
       .finally(() => setIsLoading(false));
   }, [username, repo]);
- 
+
   const handleDisplayParticles = React.useCallback(() => {
     setDisplayParticles(true);
     setTimeout(() => setDisplayParticles(false), 1500);
   }, []);
- 
+
   const localRef = React.useRef<HTMLAnchorElement>(null);
   React.useImperativeHandle(ref, () => localRef.current as HTMLAnchorElement);
- 
-  const inViewResult = useInView(localRef, {
-    once: inViewOnce,
-    margin: inViewMargin,
-  });
-  const isComponentInView = !inView || inViewResult;
- 
-  React.useEffect(() => {
-    const unsubscribe = springVal.on('change', (latest: number) => {
-      const newValue = Math.round(latest);
-      if (motionNumberRef.current !== newValue) {
-        motionNumberRef.current = newValue;
-        forceRender();
-      }
-      if (stars !== 0 && newValue >= stars && !isCompletedRef.current) {
-        isCompletedRef.current = true;
-        setIsCompleted(true);
-        handleDisplayParticles();
-      }
-    });
-    return () => unsubscribe();
-  }, [springVal, stars, handleDisplayParticles]);
- 
-  React.useEffect(() => {
-    if (stars > 0 && isComponentInView) motionVal.set(stars);
-  }, [motionVal, stars, isComponentInView]);
- 
-  const fillPercentage = Math.min(100, (motionNumberRef.current / stars) * 100);
-  const formattedResult = formatNumber(motionNumberRef.current, formatted);
-  const ghostFormattedNumber = formatNumber(stars, formatted);
- 
-  const renderNumberSegments = (
-    segments: string[],
-    unit: string,
-    isGhost: boolean,
-  ) => (
-    <span
-      className={cn(
-        'flex items-center gap-px',
-        isGhost ? 'invisible' : 'absolute top-0 left-0',
-      )}
-    >
-      {segments.map((segment, index) => (
-        <React.Fragment key={index}>
-          {Array.from(segment).map((digit, digitIndex) => (
-            <SlidingNumber key={`${index}-${digitIndex}`} number={+digit} />
-          ))}
-        </React.Fragment>
-      ))}
- 
-      {formatted && unit && <span className="leading-[1]">{unit}</span>}
-    </span>
-  );
- 
+
+  const formatStarCount = (count: number) => {
+    if (formatted) {
+      if (count < 1000) return count.toString();
+      if (count < 1000000) return `${Math.floor(count / 1000)}k`;
+      return `${Math.floor(count / 1000000)}M`;
+    }
+    return count.toLocaleString('en-US');
+  };
+  
   const handleClick = React.useCallback(
     (e: React.MouseEvent<HTMLAnchorElement>) => {
       e.preventDefault();
@@ -156,9 +71,9 @@ function GitHubStarsButton({
     },
     [handleDisplayParticles, repoUrl],
   );
- 
+
   if (isLoading) return null;
- 
+
   return (
     <motion.a
       ref={localRef}
@@ -184,13 +99,6 @@ function GitHubStarsButton({
           className="fill-zinc-300 text-zinc-300"
           size={18}
           aria-hidden="true"
-        />
-        <Star
-          className="absolute top-0 left-0 text-zinc-300 fill-zinc-300"
-          aria-hidden="true"
-          style={{
-            clipPath: `inset(${100 - (isCompleted ? fillPercentage : fillPercentage - 10)}% 0 0 0)`,
-          }}
         />
         <AnimatePresence>
           {displayParticles && (
@@ -235,16 +143,7 @@ function GitHubStarsButton({
         </AnimatePresence>
       </div>
       <span className="relative inline-flex">
-        {renderNumberSegments(
-          ghostFormattedNumber.number,
-          ghostFormattedNumber.unit,
-          true,
-        )}
-        {renderNumberSegments(
-          formattedResult.number,
-          formattedResult.unit,
-          false,
-        )}
+        {formatStarCount(stars)}
       </span>
     </motion.a>
   );

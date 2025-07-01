@@ -41,7 +41,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${handwriting.variable} ${silkscreen.variable} font-inter antialiased`}
       >
-        <div className="min-h-screen bg-gradient-to-b from-zinc-100 to-white">
+        <div className="min-h-screen">
           {children}
         </div>
       </body>

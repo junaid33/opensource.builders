@@ -8,8 +8,9 @@ interface PageProps {
 
 export default async function ToolPageRoute({ params }: PageProps) {
   const { slug } = await params
+  
   const result = await getToolBySlug(slug)
-
+  
   if (!result.success || !result.data) {
     notFound()
   }

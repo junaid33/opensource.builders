@@ -76,7 +76,7 @@ export function NavbarSearch() {
   }
 
   const handleToolClick = (slug: string) => {
-    router.push(`/tools/${slug}`)
+    router.push(`/tool/${slug}`)
     setIsOpen(false)
     setSearch('')
   }
@@ -98,7 +98,7 @@ export function NavbarSearch() {
       window.open(proprietaryTool.websiteUrl, '_blank')
     } else {
       // Fallback to internal tool page
-      router.push(`/tools/${proprietaryTool.slug}#alternatives`)
+      router.push(`/tool/${proprietaryTool.slug}#alternatives`)
     }
     
     setIsOpen(false)

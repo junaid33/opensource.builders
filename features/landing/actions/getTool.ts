@@ -16,12 +16,7 @@ export async function getToolBySlug(slug: string) {
         simpleIconColor
         license
         githubStars
-        githubForks
-        githubIssues
-        githubLastCommit
         isOpenSource
-        status
-        pricingModel
         category {
           id
           name
@@ -35,30 +30,6 @@ export async function getToolBySlug(slug: string) {
             description
             featureType
           }
-          implementationNotes
-          qualityScore
-        }
-        proprietaryAlternatives {
-          proprietaryTool {
-            id
-            name
-            slug
-            simpleIconSlug
-            simpleIconColor
-          }
-          similarityScore
-          notes
-        }
-        openSourceAlternatives {
-          openSourceTool {
-            id
-            name
-            slug
-            simpleIconSlug
-            simpleIconColor
-          }
-          similarityScore
-          notes
         }
       }
     }

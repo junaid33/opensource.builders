@@ -239,7 +239,7 @@ export function DisplayCard({
               {/* Letter */}
               <div className="absolute inset-0 flex items-center justify-center">
                 <span
-                  className="font-silkscreen text-gray-100 select-none"
+                  className="font-silkscreen text-primary-foreground select-none"
                   style={{
                     fontSize: 24,
                     // textShadow: "0 1px 4px rgba(255,255,255,0.3), 0 0 8px rgba(255,255,255,0.2)",

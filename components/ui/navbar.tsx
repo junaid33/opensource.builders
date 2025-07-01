@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { NavbarSearch } from "@/features/search/components/NavbarSearch"
 import { Sparkles } from "lucide-react"
+import { ThemeSwitcher } from "@/components/ui/theme-switcher"
 
 interface NavbarProps {
   className?: string
@@ -38,6 +39,7 @@ export default function Navbar({ className }: NavbarProps) {
 
           {/* Right side */}
           <nav className="flex items-center gap-4">
+            <ThemeSwitcher />
             <Button size="sm" asChild>
               <a href="/build" className="inline-flex items-center gap-2">
                 <Sparkles className="h-4 w-4" />

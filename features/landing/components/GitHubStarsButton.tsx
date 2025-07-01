@@ -96,7 +96,7 @@ function GitHubStarsButton({
       <span>GitHub Stars</span>
       <div className="relative inline-flex size-[18px] shrink-0">
         <Star
-          className="fill-zinc-300 text-zinc-300"
+          className="fill-muted-foreground text-muted-foreground"
           size={18}
           aria-hidden="true"
         />

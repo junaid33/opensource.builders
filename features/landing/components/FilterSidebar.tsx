@@ -154,14 +154,14 @@ export default function FilterSidebar({ availableCategories = [], selectedSoftwa
   return (
     <aside className="mb-8 md:mb-0 md:w-64 lg:w-72 md:ml-12 lg:ml-20 md:shrink-0 md:order-1">
       <div data-sticky="" data-margin-top="32" data-sticky-for="768" data-sticky-wrap="">
-        <Card className="relative bg-gray-50 p-5">
+        <Card className="relative bg-card p-5">
           {/* Header with Clear Button */}
           <div className="flex items-center justify-between mb-6">
             {isMobile ? (
               <Button
                 variant="ghost"
                 onClick={() => setIsExpanded(!isExpanded)}
-                className="flex items-center gap-2 text-sm font-semibold text-gray-900 p-0 h-auto hover:bg-transparent"
+                className="flex items-center gap-2 text-sm font-semibold text-foreground p-0 h-auto hover:bg-transparent"
               >
                 <Filter className="h-4 w-4" />
                 Filters
@@ -171,14 +171,14 @@ export default function FilterSidebar({ availableCategories = [], selectedSoftwa
                 )} />
               </Button>
             ) : (
-              <h3 className="text-sm font-semibold text-gray-900">Filters</h3>
+              <h3 className="text-sm font-semibold text-foreground">Filters</h3>
             )}
             {hasActiveFilters && (
               <Button 
                 variant="ghost" 
                 size="sm"
                 onClick={clearAllFilters}
-                className="text-blue-600 hover:text-blue-700 h-auto p-0 text-sm font-medium"
+                className="text-primary hover:text-primary/80 h-auto p-0 text-sm font-medium"
               >
                 Clear all
               </Button>
@@ -192,8 +192,8 @@ export default function FilterSidebar({ availableCategories = [], selectedSoftwa
           )}>
             {/* Active Filters Display - Moved to Top */}
             {hasActiveFilters && (
-              <div className="mb-6 pb-4 border-b border-gray-200">
-                <div className="text-xs text-gray-500 mb-2">Active filters:</div>
+              <div className="mb-6 pb-4 border-b border-border">
+                <div className="text-xs text-muted-foreground mb-2">Active filters:</div>
                 <div className="flex flex-wrap gap-1">
                   {filters.alternatives.map(alternative => (
                     <span key={alternative} className="inline-flex items-center gap-1 px-2 py-1 bg-purple-100 text-purple-700 text-xs rounded-md">
@@ -247,8 +247,8 @@ export default function FilterSidebar({ availableCategories = [], selectedSoftwa
             <div className="grid grid-cols-1 gap-6">
             {/* Proprietary Software Select - Moved to top */}
             <div>
-              <div className="text-sm text-gray-800 font-semibold mb-3">Alternatives to</div>
-              <div className="text-xs text-gray-500 mb-2">Currently showing alternatives to:</div>
+              <div className="text-sm text-foreground font-semibold mb-3">Alternatives to</div>
+              <div className="text-xs text-muted-foreground mb-2">Currently showing alternatives to:</div>
               <Select value={selectedSoftware || ''} onValueChange={handleSoftwareChange}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select software..." />
@@ -265,7 +265,7 @@ export default function FilterSidebar({ availableCategories = [], selectedSoftwa
 
             {/* Categories */}
             <div>
-              <div className="text-sm text-gray-800 font-semibold mb-3">Category</div>
+              <div className="text-sm text-foreground font-semibold mb-3">Category</div>
               <div className="space-y-2 max-h-48 overflow-y-auto">
                 {availableCategories.slice(0, 10).map((category) => (
                   <div key={category.name} className="flex items-center space-x-2">
@@ -276,14 +276,14 @@ export default function FilterSidebar({ availableCategories = [], selectedSoftwa
                     />
                     <label 
                       htmlFor={`category-${category.name}`}
-                      className="text-sm text-gray-600 cursor-pointer flex-1 truncate"
+                      className="text-sm text-muted-foreground cursor-pointer flex-1 truncate"
                     >
                       {category.name} ({category.count})
                     </label>
                   </div>
                 ))}
                 {availableCategories.length > 10 && (
-                  <div className="text-xs text-gray-500 italic">
+                  <div className="text-xs text-muted-foreground italic">
                     +{availableCategories.length - 10} more categories
                   </div>
                 )}
@@ -292,7 +292,7 @@ export default function FilterSidebar({ availableCategories = [], selectedSoftwa
 
             {/* License Type */}
             <div>
-              <div className="text-sm text-gray-800 font-semibold mb-3">License Type</div>
+              <div className="text-sm text-foreground font-semibold mb-3">License Type</div>
               <div className="space-y-2">
                 {LICENSE_OPTIONS.map((license) => (
                   <div key={license} className="flex items-center space-x-2">
@@ -303,7 +303,7 @@ export default function FilterSidebar({ availableCategories = [], selectedSoftwa
                     />
                     <label 
                       htmlFor={`license-${license}`}
-                      className="text-sm text-gray-600 cursor-pointer"
+                      className="text-sm text-muted-foreground cursor-pointer"
                     >
                       {license}
                     </label>
@@ -314,7 +314,7 @@ export default function FilterSidebar({ availableCategories = [], selectedSoftwa
 
             {/* GitHub Stars */}
             <div>
-              <div className="text-sm text-gray-800 font-semibold mb-3">GitHub Stars</div>
+              <div className="text-sm text-foreground font-semibold mb-3">GitHub Stars</div>
               <div className="space-y-2">
                 {GITHUB_STAR_RANGES.map((range) => (
                   <div key={range.value} className="flex items-center space-x-2">
@@ -325,7 +325,7 @@ export default function FilterSidebar({ availableCategories = [], selectedSoftwa
                     />
                     <label 
                       htmlFor={`stars-${range.value}`}
-                      className="text-sm text-gray-600 cursor-pointer"
+                      className="text-sm text-muted-foreground cursor-pointer"
                     >
                       {range.label}
                     </label>
@@ -337,7 +337,7 @@ export default function FilterSidebar({ availableCategories = [], selectedSoftwa
             {/* Features */}
             {availableFeatures.length > 0 && (
               <div>
-                <div className="text-sm text-gray-800 font-semibold mb-3">Features</div>
+                <div className="text-sm text-foreground font-semibold mb-3">Features</div>
                 <div className="space-y-2 max-h-48 overflow-y-auto">
                   {availableFeatures.slice(0, 15).map((feature) => (
                     <div key={feature.name} className="flex items-center space-x-2">
@@ -348,14 +348,14 @@ export default function FilterSidebar({ availableCategories = [], selectedSoftwa
                       />
                       <label 
                         htmlFor={`feature-${feature.name}`}
-                        className="text-sm text-gray-600 cursor-pointer flex-1 truncate"
+                        className="text-sm text-muted-foreground cursor-pointer flex-1 truncate"
                       >
                         {feature.name} ({feature.count})
                       </label>
                     </div>
                   ))}
                   {availableFeatures.length > 15 && (
-                    <div className="text-xs text-gray-500 italic">
+                    <div className="text-xs text-muted-foreground italic">
                       +{availableFeatures.length - 15} more features
                     </div>
                   )}

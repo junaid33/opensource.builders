@@ -63,7 +63,7 @@ export default function AnimatedText({
   }, [currentText, currentWordIndex, isTyping, isDeleting, words, typingSpeed, erasingSpeed, pauseDuration]);
 
   return (
-    <span className={`inline-block text-slate-600 ${className}`}>
+    <span className={`inline-block text-slate-500 dark:text-slate-300  ${className}`}>
       {currentText}
       <span className="animate-pulse text-gray-500">|</span>
     </span>

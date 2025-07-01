@@ -17,7 +17,7 @@ export default function Hero() {
               <br />
               <span className="font-geist-sans font-semibold"><AnimatedText /></span>
             </h1>
-            <p className="text-lg text-gray-500 mb-8">
+            <p className="text-lg text-muted-foreground mb-8">
               Discover powerful open source alternatives to popular proprietary software.
               <br className="hidden md:block" /> Save money, gain freedom, and support the open source community.
             </p>
@@ -31,8 +31,8 @@ export default function Hero() {
                 />
               </div>
               <div className="sm:flex sm:items-center sm:justify-center space-y-2 sm:space-y-0 sm:space-x-3">
-                <div className="text-sm text-gray-500 font-medium">
-                  Trusted by <span className="text-blue-500">100K+</span> Developers
+                <div className="text-sm text-muted-foreground font-medium">
+                  Trusted by <span className="text-primary">100K+</span> Developers
                 </div>
               </div>
             </div>

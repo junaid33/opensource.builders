@@ -61,7 +61,7 @@ export default async function AlternativesServerQuery({ searchParams = {} }: Alt
   if (alternatives.length === 0) {
     return (
       <div className="text-center py-12">
-        <p className="text-gray-500">No open source alternatives found for {selectedSoftware}</p>
+        <p className="text-muted-foreground">No open source alternatives found for {selectedSoftware}</p>
       </div>
     )
   }
@@ -69,10 +69,10 @@ export default async function AlternativesServerQuery({ searchParams = {} }: Alt
   return (
     <div className="space-y-6">
       <div className="mb-8">
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">
+        <h2 className="text-2xl font-bold text-foreground mb-4">
           Open Source Alternatives to {selectedSoftware}
         </h2>
-        <p className="text-gray-600 mb-6">
+        <p className="text-muted-foreground mb-6">
           {alternatives.length} alternatives found with feature compatibility scores
         </p>
       </div>

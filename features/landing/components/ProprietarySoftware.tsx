@@ -191,7 +191,7 @@ function ProgressiveBlur({
       className={cn('absolute inset-y-0 w-20 pointer-events-none', className)}
       style={{
         [direction]: 0,
-        background: `linear-gradient(${gradientDirection}, rgba(248, 250, 252, ${blurIntensity}) 0%, rgba(248, 250, 252, 0) 100%)`,
+        background: `linear-gradient(${gradientDirection}, hsl(var(--muted) / ${blurIntensity * 0.5}) 0%, hsl(var(--muted) / 0) 100%)`,
       }}
     />
   );
@@ -214,12 +214,12 @@ export default function ProprietarySoftware({ onSoftwareSelect, proprietaryTools
   }
 
   return (
-    <section className="bg-slate-50 overflow-hidden py-12">
+    <section className="bg-muted/50 overflow-hidden py-12">
       <div className="relative m-auto max-w-7xl px-6">
         <div className="flex flex-col items-center">
           <div className="mb-8">
-            <p className="font-silkscreen text-3xl text-sky-500 text-center">Popular proprietary software</p>
-            <p className="text-sm text-gray-600 text-center mt-2">Click any software to see open source alternatives</p>
+            <p className="font-silkscreen text-3xl text-primary text-center">Popular proprietary software</p>
+            <p className="text-sm text-muted-foreground text-center mt-2">Click any software to see open source alternatives</p>
           </div>
           <div className="relative py-6 w-full">
             <InfiniteSlider
@@ -255,7 +255,7 @@ export default function ProprietarySoftware({ onSoftwareSelect, proprietaryTools
                       </div>
                     )}
                   </div>
-                  <span className="font-medium text-sm text-gray-600 whitespace-nowrap">
+                  <span className="font-medium text-sm text-muted-foreground whitespace-nowrap">
                     {tool.name}
                   </span>
                 </div>

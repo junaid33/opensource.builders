@@ -84,11 +84,11 @@ export default async function ToolPage({ tool }: ToolPageProps) {
         <div className="py-8 md:py-16">
           <div className="space-y-6">
             <div className="mb-8">
-              <h2 className="text-2xl font-bold text-foreground mb-4">
-                Open Source Alternatives to {selectedSoftware}
-              </h2>
-              <p className="text-muted-foreground mb-6">
-                {alternatives.length} alternatives found with feature compatibility scores
+              <h1 className="text-5xl font-bold text-foreground mb-4 tracking-tight">
+                {selectedSoftware}
+              </h1>
+              <p className="text-muted-foreground mb-6 text-2xl tracking-tighter">
+                {alternatives.length} alternatives found
               </p>
             </div>
             

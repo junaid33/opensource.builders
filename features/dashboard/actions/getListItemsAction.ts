@@ -31,18 +31,25 @@ interface CacheOptions {
 const FIELD_GRAPHQL_SELECTIONS: Record<string, (fieldPath: string, fieldMeta?: any) => string> = {
   bigInt: (fieldPath) => fieldPath,
   checkbox: (fieldPath) => fieldPath,
-  document: (fieldPath) => `${fieldPath} { document }`,
+  document: (fieldPath) => `${fieldPath} { document(hydrateRelationships: true) }`,
   float: (fieldPath) => fieldPath,
   integer: (fieldPath) => fieldPath,
   json: (fieldPath) => fieldPath,
   password: (fieldPath) => `${fieldPath} { isSet }`,
-  relationship: (fieldPath, fieldMeta) => `${fieldPath} { id label: ${fieldMeta?.refLabelField || 'name'} }`,
+  relationship: (fieldPath, fieldMeta) => {
+    // Handle count display mode like the field controller
+    if (fieldMeta?.displayMode === 'count') {
+      return `${fieldPath}Count`
+    }
+    return `${fieldPath} { id label: ${fieldMeta?.refLabelField || 'name'} }`
+  },
   select: (fieldPath) => fieldPath,
   text: (fieldPath) => fieldPath,
   timestamp: (fieldPath) => fieldPath,
   id: (fieldPath) => fieldPath,
   decimal: (fieldPath) => fieldPath,
-  virtual: (fieldPath, fieldMeta) => `${fieldPath}${fieldMeta?.query}`,
+  virtual: (fieldPath, fieldMeta) => `${fieldPath}${fieldMeta?.query || ''}`,
+  image: (fieldPath) => `${fieldPath} { id url width height extension filesize }`,
   // Add more field types as needed
 }
 

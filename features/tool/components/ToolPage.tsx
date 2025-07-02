@@ -2,6 +2,8 @@ import { DisplayCard } from '@/features/landing/components/display-card'
 import { Badge } from '@/components/ui/badge'
 import FeatureBadge from '@/features/landing/components/FeatureBadge'
 import { fetchAlternativesServer, type FilterOptions } from '@/features/landing/actions/getAlternatives'
+import { getProprietaryTools } from '@/features/landing/actions/getProprietaryTools'
+import ToolSelector from './ToolSelector'
 
 interface ToolPageProps {
   tool: any
@@ -13,7 +15,10 @@ export default async function ToolPage({ tool }: ToolPageProps) {
     '!proprietaryTool_is': JSON.stringify(tool.id)
   }
   
-  const response = await fetchAlternativesServer(searchParams)
+  const [response, allProprietaryTools] = await Promise.all([
+    fetchAlternativesServer(searchParams),
+    getProprietaryTools()
+  ])
   
   if (!response.success) {
     return (
@@ -84,9 +89,12 @@ export default async function ToolPage({ tool }: ToolPageProps) {
         <div className="py-8 md:py-16">
           <div className="space-y-6">
             <div className="mb-8">
-              <h1 className="text-5xl font-bold text-foreground mb-4 tracking-tight">
-                {selectedSoftware}
-              </h1>
+              <div className="mb-4">
+                <ToolSelector 
+                  currentTool={selectedSoftware}
+                  allTools={allProprietaryTools}
+                />
+              </div>
               <p className="text-muted-foreground mb-6 text-2xl tracking-tighter">
                 {alternatives.length} alternatives found
               </p>

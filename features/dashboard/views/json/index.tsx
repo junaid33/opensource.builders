@@ -58,7 +58,7 @@ export function Field({
         value={value}
         className={`font-mono text-sm ${errorMessage ? 'border-red-500' : ''}`}
         rows={8}
-        placeholder='{\n  "key": "value"\n}'
+        placeholder={`{\n  "key": "value"\n}`}
       />
       {errorMessage && (
         <div className="text-sm text-red-600" role="alert">{errorMessage}</div>

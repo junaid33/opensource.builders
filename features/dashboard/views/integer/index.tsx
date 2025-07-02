@@ -144,7 +144,7 @@ export function Cell({ item, field }: CellProps) {
   const value = item[field.path]
   return (
     <span className="text-sm font-mono">
-      {value !== null && value !== undefined ? value.toLocaleString() : <span className="text-muted-foreground">—</span>}
+      {value !== null && value !== undefined ? value.toString() : <span className="text-muted-foreground">—</span>}
     </span>
   )
 }
@@ -155,7 +155,7 @@ export function CardValue({ item, field }: CellProps) {
     <div>
       <div className="text-sm font-medium">{field.label}</div>
       <div className="text-sm text-muted-foreground font-mono">
-        {value !== null && value !== undefined ? value.toLocaleString() : '—'}
+        {value !== null && value !== undefined ? value.toString() : '—'}
       </div>
     </div>
   )

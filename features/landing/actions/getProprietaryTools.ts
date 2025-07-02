@@ -19,7 +19,7 @@ const query = `
   }
 `
 
-export async function getProprietaryTools(): Promise<Array<{id: string, name: string, simpleIconSlug?: string, simpleIconColor?: string}>> {
+export async function getProprietaryTools(): Promise<Array<{id: string, name: string, slug: string, simpleIconSlug?: string, simpleIconColor?: string}>> {
   try {
     const response = await keystoneClient(query)
     
@@ -32,6 +32,7 @@ export async function getProprietaryTools(): Promise<Array<{id: string, name: st
           toolsMap.set(tool.id, { 
             id: tool.id, 
             name: tool.name,
+            slug: tool.slug,
             simpleIconSlug: tool.simpleIconSlug,
             simpleIconColor: tool.simpleIconColor
           })

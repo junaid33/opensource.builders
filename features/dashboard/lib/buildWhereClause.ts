@@ -153,11 +153,17 @@ const FIELD_FILTER_MAPPINGS: Record<string, {
       matches: { label: 'Matches', initialValue: [] },
       not_matches: { label: 'Does not match', initialValue: [] },
     },
-    graphql: (fieldPath: string, fieldMeta: any) => ({ type, value }: { type: string; value: string[] }) => ({
-      [fieldPath]: {
-        [type === 'not_matches' ? 'notIn' : 'in']: value,
-      },
-    }),
+    graphql: (fieldPath: string, fieldMeta: any) => ({ type, value }: { type: string; value: string[] }) => {
+      // Transform values like the field controller does
+      const transformValue = (v: string | null) =>
+        v === null ? null : fieldMeta?.type === 'integer' ? parseInt(v) : v
+      
+      return {
+        [fieldPath]: {
+          [type === 'not_matches' ? 'notIn' : 'in']: value.map(transformValue),
+        },
+      }
+    },
   },
   timestamp: {
     types: {
@@ -213,6 +219,46 @@ const FIELD_FILTER_MAPPINGS: Record<string, {
       if (type === 'some') return { [fieldPath]: { some: { id: { in: value } } } }
       if (type === 'not_some') return { [fieldPath]: { not: { some: { id: { in: value } } } } }
       return { [fieldPath]: { [type]: value } }
+    },
+  },
+  document: {
+    types: {
+      empty: { label: 'Is empty', initialValue: null },
+      not_empty: { label: 'Is not empty', initialValue: null },
+    },
+    graphql: (fieldPath: string, fieldMeta: any) => ({ type, value }: { type: string; value: any }) => {
+      if (type === 'empty') return { [fieldPath]: { equals: null } }
+      if (type === 'not_empty') return { [fieldPath]: { not: { equals: null } } }
+      return { [fieldPath]: { [type]: value } }
+    },
+  },
+  json: {
+    types: {
+      empty: { label: 'Is empty', initialValue: null },
+      not_empty: { label: 'Is not empty', initialValue: null },
+    },
+    graphql: (fieldPath: string, fieldMeta: any) => ({ type, value }: { type: string; value: any }) => {
+      if (type === 'empty') return { [fieldPath]: { equals: null } }
+      if (type === 'not_empty') return { [fieldPath]: { not: { equals: null } } }
+      return { [fieldPath]: { [type]: value } }
+    },
+  },
+  image: {
+    types: {
+      empty: { label: 'Has no image', initialValue: null },
+      not_empty: { label: 'Has image', initialValue: null },
+    },
+    graphql: (fieldPath: string, fieldMeta: any) => ({ type, value }: { type: string; value: any }) => {
+      if (type === 'empty') return { [fieldPath]: { equals: null } }
+      if (type === 'not_empty') return { [fieldPath]: { not: { equals: null } } }
+      return { [fieldPath]: { [type]: value } }
+    },
+  },
+  virtual: {
+    types: {},
+    graphql: (fieldPath: string, fieldMeta: any) => ({ type, value }: { type: string; value: any }) => {
+      // Virtual fields are not filterable
+      return {}
     },
   },
 }

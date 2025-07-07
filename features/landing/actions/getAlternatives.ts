@@ -30,11 +30,16 @@ async function fetchAlternativesServer(searchParams: Record<string, any> = {}) {
     const filterValue = searchParams[proprietaryToolFilter]
     
     try {
-      const value = JSON.parse(filterValue)
-      
-      if (filterType === 'is') {
+      if (filterType === 'slug') {
+        // Use slug directly (no JSON parsing needed)
+        proprietaryToolWhere = { slug: { equals: filterValue } }
+      } else if (filterType === 'is') {
+        // Legacy ID-based filtering (keep for backward compatibility)
+        const value = JSON.parse(filterValue)
         proprietaryToolWhere = { id: { equals: value } }
       } else if (filterType === 'is_i') {
+        // Legacy name-based filtering (keep for backward compatibility)
+        const value = JSON.parse(filterValue)
         proprietaryToolWhere = { name: { equals: value, mode: 'insensitive' } }
       }
       // Add more filter types as needed

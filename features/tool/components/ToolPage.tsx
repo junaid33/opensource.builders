@@ -10,9 +10,9 @@ interface ToolPageProps {
 }
 
 export default async function ToolPage({ tool }: ToolPageProps) {
-  // Use the tool ID from the passed tool prop
+  // Use the tool slug from the passed tool prop
   const searchParams = {
-    '!proprietaryTool_is': JSON.stringify(tool.id)
+    '!proprietaryTool_slug': tool.slug
   }
   
   const [response, allProprietaryTools] = await Promise.all([

@@ -10,7 +10,7 @@ interface LandingPageClientProps {
   initialSelectedSoftware: string
   sidebarSlot: ReactNode
   alternativesSlot: ReactNode
-  proprietaryTools: Array<{id: string, name: string}>
+  proprietaryTools: Array<{id: string, name: string, slug: string}>
 }
 
 export function LandingPageClient({ initialSelectedSoftware, sidebarSlot, alternativesSlot, proprietaryTools }: LandingPageClientProps) {
@@ -18,7 +18,7 @@ export function LandingPageClient({ initialSelectedSoftware, sidebarSlot, altern
   const searchParams = useSearchParams()
   const [selectedSoftware, setSelectedSoftware] = useState<string>(initialSelectedSoftware)
 
-  const handleSoftwareSelect = (toolId: string, toolName: string) => {
+  const handleSoftwareSelect = (toolSlug: string, toolName: string) => {
     setSelectedSoftware(toolName)
     
     // Update URL with proprietary tool filter
@@ -31,8 +31,8 @@ export function LandingPageClient({ initialSelectedSoftware, sidebarSlot, altern
       }
     })
     
-    // Add the new proprietaryTool filter
-    params.set('!proprietaryTool_is', JSON.stringify(toolId))
+    // Add the new proprietaryTool filter using slug
+    params.set('!proprietaryTool_slug', toolSlug)
     
     const newUrl = `?${params.toString()}`
     router.push(newUrl, { scroll: false })

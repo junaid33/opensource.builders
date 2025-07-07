@@ -21,7 +21,7 @@ export interface FilterState {
 interface FilterSidebarProps {
   availableCategories?: Array<{ name: string; count: number }>
   selectedSoftware?: string
-  proprietaryTools?: Array<{id: string, name: string}>
+  proprietaryTools?: Array<{id: string, name: string, slug: string}>
   availableFeatures?: Array<{ name: string; count: number }>
 }
 
@@ -126,7 +126,7 @@ export default function FilterSidebar({ availableCategories = [], selectedSoftwa
   const handleSoftwareChange = (software: string) => {
     const params = new URLSearchParams(searchParams.toString())
     
-    // Find the tool ID for the selected software
+    // Find the tool slug for the selected software
     const selectedTool = proprietaryTools?.find(tool => tool.name === software)
     
     if (selectedTool) {
@@ -137,8 +137,8 @@ export default function FilterSidebar({ availableCategories = [], selectedSoftwa
         }
       })
       
-      // Add the new proprietaryTool filter
-      params.set('!proprietaryTool_is', JSON.stringify(selectedTool.id))
+      // Add the new proprietaryTool filter using slug
+      params.set('!proprietaryTool_slug', selectedTool.slug)
     }
     
     const newUrl = `?${params.toString()}`

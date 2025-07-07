@@ -199,18 +199,19 @@ function ProgressiveBlur({
 
 
 interface ProprietarySoftwareProps {
-  onSoftwareSelect?: (toolId: string, toolName: string) => void
+  onSoftwareSelect?: (toolSlug: string, toolName: string) => void
   proprietaryTools?: Array<{
     id: string, 
     name: string, 
+    slug: string,
     simpleIconSlug?: string, 
     simpleIconColor?: string
   }>
 }
 
 export default function ProprietarySoftware({ onSoftwareSelect, proprietaryTools = [] }: ProprietarySoftwareProps) {
-  const handleSoftwareClick = (toolId: string, toolName: string) => {
-    onSoftwareSelect?.(toolId, toolName)
+  const handleSoftwareClick = (toolSlug: string, toolName: string) => {
+    onSoftwareSelect?.(toolSlug, toolName)
   }
 
   return (
@@ -231,7 +232,7 @@ export default function ProprietarySoftware({ onSoftwareSelect, proprietaryTools
               {proprietaryTools.map((tool, index) => (
                 <div
                   key={`${tool.name}-${index}`}
-                  onClick={() => handleSoftwareClick(tool.id, tool.name)}
+                  onClick={() => handleSoftwareClick(tool.slug, tool.name)}
                   className="flex flex-col items-center justify-center gap-2 px-4 py-3 transition-opacity hover:opacity-80 cursor-pointer"
                 >
                   <div className="w-12 h-12 flex items-center justify-center">

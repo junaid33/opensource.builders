@@ -6,8 +6,8 @@ import { GitHubStarsButton } from './GitHubStarsButton'
 import { Button } from '@/components/ui/button'
 
 interface HeroProps {
-  proprietaryTools?: Array<{id: string, name: string}>
-  onSoftwareSelect?: (toolId: string, toolName: string) => void
+  proprietaryTools?: Array<{id: string, name: string, slug: string}>
+  onSoftwareSelect?: (toolSlug: string, toolName: string) => void
 }
 
 export default function Hero({ proprietaryTools = [], onSoftwareSelect }: HeroProps) {
@@ -25,10 +25,10 @@ export default function Hero({ proprietaryTools = [], onSoftwareSelect }: HeroPr
               <span className="font-geist-sans font-semibold">
                 <AnimatedText 
                   onWordClick={(word) => {
-                    // Find the tool ID for the clicked word
+                    // Find the tool slug for the clicked word
                     const selectedTool = proprietaryTools?.find(tool => tool.name === word)
                     if (selectedTool && onSoftwareSelect) {
-                      onSoftwareSelect(selectedTool.id, selectedTool.name)
+                      onSoftwareSelect(selectedTool.slug, selectedTool.name)
                     }
                   }}
                 />

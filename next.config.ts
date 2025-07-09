@@ -18,6 +18,17 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async rewrites() {
+    if (process.env.OPENFRONT_GRAPHQL_URL) {
+      return [
+        {
+          source: '/api/:path*',
+          destination: `${process.env.OPENFRONT_GRAPHQL_URL}/:path*`,
+        },
+      ];
+    }
+    return [];
+  },
 };
 
 export default nextConfig;

@@ -25,7 +25,7 @@ export default function ToolIcon({
         style={{ 
           width: size, 
           height: size,
-          background: simpleIconColor || '#6B7280'
+          background: simpleIconColor || '#000000'
         }}
       >
         {/* Noise texture overlay for SimpleIcons too */}

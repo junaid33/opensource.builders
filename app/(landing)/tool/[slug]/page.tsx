@@ -29,8 +29,16 @@ export async function generateMetadata({ params }: PageProps) {
   }
 
   const tool = result.data
-  return {
-    title: `${tool.name} - Open Source ${tool.category?.name || 'Tool'} Alternative`,
-    description: tool.description,
+  
+  if (tool.isOpenSource) {
+    return {
+      title: `${tool.name} - Open Source ${tool.category?.name || 'Tool'}`,
+      description: `${tool.description} - Find what ${tool.name} is an alternative to and discover similar open source tools.`,
+    }
+  } else {
+    return {
+      title: `${tool.name} - Open Source ${tool.category?.name || 'Tool'} Alternative`,
+      description: `Find the best open source alternatives to ${tool.name}. ${tool.description}`,
+    }
   }
 }

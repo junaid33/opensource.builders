@@ -121,26 +121,52 @@ export function MobileFilterDropdown({ selectedSoftware }: MobileFilterDropdownP
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
-        <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 px-2 py-2 rounded-lg bg-card/50 backdrop-blur-sm border border-border/50 shadow-sm text-sm font-medium cursor-pointer">
-            <button
-              className="hover:bg-muted rounded p-0.5 transition-colors"
-            >
-              <X className="h-3 w-3 text-muted-foreground" />
-            </button>
-            <LogoIcon className="w-4 h-4" />
-            <span>Open Source Alternatives to {selectedSoftware}</span>
-            <div className="ml-auto flex items-center gap-1">
-              <button className="hover:bg-muted rounded p-1 transition-colors">
-                <Lightbulb className="h-4 w-4 text-muted-foreground" />
-              </button>
-              <button className="hover:bg-muted rounded p-1 transition-colors">
-                <ChevronDown className={cn(
-                  "h-4 w-4 text-muted-foreground transition-transform",
-                  isOpen && "rotate-180"
-                )} />
-              </button>
+        <div className="bg-muted/30 rounded-lg p-4 min-h-[60px] border border-border/50 shadow-inner w-full">
+          <div className="flex items-center justify-between">
+            <div className="flex-1">
+              <div className="text-sm font-medium text-foreground mb-2">Filters</div>
+              <div className="flex flex-wrap gap-2">
+                {hasActiveFilters ? (
+                  <>
+                    {filters.licenses.map(license => (
+                      <span key={license} className="inline-flex items-center gap-1 px-2 py-1 bg-green-100 text-green-700 text-xs rounded-md">
+                        {license}
+                        <X 
+                          className="w-3 h-3 cursor-pointer hover:text-green-900" 
+                          onClick={() => toggleArrayFilter('licenses', license)}
+                        />
+                      </span>
+                    ))}
+                    {filters.githubStars.map(stars => (
+                      <span key={stars} className="inline-flex items-center gap-1 px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded-md">
+                        {GITHUB_STAR_RANGES.find(r => r.value === stars)?.label || stars}
+                        <X 
+                          className="w-3 h-3 cursor-pointer hover:text-yellow-900" 
+                          onClick={() => toggleArrayFilter('githubStars', stars)}
+                        />
+                      </span>
+                    ))}
+                    {filters.categories.map(category => (
+                      <span key={category} className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-md">
+                        {category}
+                        <X 
+                          className="w-3 h-3 cursor-pointer hover:text-blue-900" 
+                          onClick={() => toggleArrayFilter('categories', category)}
+                        />
+                      </span>
+                    ))}
+                  </>
+                ) : (
+                  <span className="text-muted-foreground text-sm italic">No filters applied</span>
+                )}
+              </div>
             </div>
+            <button className="hover:bg-muted rounded p-1 transition-colors ml-4">
+              <ChevronDown className={cn(
+                "h-4 w-4 text-muted-foreground transition-transform",
+                isOpen && "rotate-180"
+              )} />
+            </button>
           </div>
         </div>
       </PopoverTrigger>

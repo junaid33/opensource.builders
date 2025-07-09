@@ -257,18 +257,20 @@ export function DisplayCard({
             <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors">
               {displayName}
             </h3>
-            {/* License and Open Source Info below title */}
-            <div className="flex items-center gap-2 mt-1 text-sm text-muted-foreground">
+            {/* License and Open Source Info below title - Mobile Friendly */}
+            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mt-1 text-sm text-muted-foreground">
               <div className="flex items-center gap-1.5">
                 <span>{isOpenSource ? "Open Source" : "Proprietary"}</span>
               </div>
               
-              {/* Middle Intersect */}
-              ∙ 
               {license && (
-                <div className="flex items-center gap-1.5">
-                  <span>{license}</span>
-                </div>
+                <>
+                  {/* Hide separator on mobile, show on desktop */}
+                  <span className="hidden sm:inline">∙</span>
+                  <div className="flex items-center gap-1.5">
+                    <span>{license}</span>
+                  </div>
+                </>
               )}
             </div>
           </div>

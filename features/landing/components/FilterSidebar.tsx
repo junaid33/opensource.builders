@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { X, ChevronDown, Filter } from 'lucide-react'
+import { X, ChevronDown, Filter, Settings } from 'lucide-react'
+import { LogoIcon } from '@/features/dashboard/components/Logo'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
@@ -152,40 +153,66 @@ export default function FilterSidebar({ availableCategories = [], selectedSoftwa
                           filters.features.length > 0
 
   return (
-    <aside className="mb-8 md:mb-0 md:w-64 lg:w-72 md:ml-12 lg:ml-20 md:shrink-0 md:order-1">
+    <aside className="hidden md:block mb-8 md:mb-0 md:w-64 lg:w-72 md:ml-12 lg:ml-20 md:shrink-0 md:order-1">
       <div data-sticky="" data-margin-top="32" data-sticky-for="768" data-sticky-wrap="">
         <Card className="relative bg-card p-5">
           {/* Header with Clear Button */}
           <div className="flex items-center justify-between mb-6">
             {isMobile ? (
-              <Button
-                variant="ghost"
-                onClick={() => setIsExpanded(!isExpanded)}
-                className="flex items-center gap-2 text-sm font-semibold text-foreground p-0 h-auto hover:bg-transparent"
-              >
-                <Filter className="h-4 w-4" />
-                Filters
-                <ChevronDown className={cn(
-                  "h-4 w-4 text-muted-foreground transition-transform",
-                  isExpanded && "rotate-180"
-                )} />
-              </Button>
+              <div className="w-full">
+                <Select open={isExpanded} onOpenChange={setIsExpanded}>
+                  <SelectTrigger
+                    className="h-auto ps-2 text-left border-0 shadow-none [&>span]:flex [&>span]:items-center [&>span]:gap-2 [&>span_span]:shrink-0"
+                  >
+                    <SelectValue>
+                      <span className="flex items-center gap-3">
+                        <Settings 
+                          className="w-6 h-6" 
+                        />
+                        <span>
+                          <span className="block font-medium">Filters</span>
+                          <span className="text-muted-foreground mt-0.5 block text-xs">
+                            {hasActiveFilters ? `${filters.categories.length + filters.licenses.length + filters.githubStars.length + filters.alternatives.length + filters.features.length} active` : 'Tap to filter'}
+                          </span>
+                        </span>
+                      </span>
+                    </SelectValue>
+                  </SelectTrigger>
+                  <SelectContent className="[&_*[role=option]]:ps-2 [&_*[role=option]]:pe-8 [&_*[role=option]>span]:start-auto [&_*[role=option]>span]:end-2">
+                    <SelectItem value="filters" disabled>
+                      <span className="text-muted-foreground text-sm">Filter options will appear here</span>
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+                {hasActiveFilters && (
+                  <Button 
+                    variant="ghost" 
+                    size="sm"
+                    onClick={clearAllFilters}
+                    className="text-primary hover:text-primary/80 h-auto p-0 text-sm font-medium mt-2"
+                  >
+                    Clear all
+                  </Button>
+                )}
+              </div>
             ) : (
-              <h3 className="text-sm font-semibold text-foreground">Filters</h3>
-            )}
-            {hasActiveFilters && (
-              <Button 
-                variant="ghost" 
-                size="sm"
-                onClick={clearAllFilters}
-                className="text-primary hover:text-primary/80 h-auto p-0 text-sm font-medium"
-              >
-                Clear all
-              </Button>
+              <>
+                <h3 className="text-sm font-semibold text-foreground">Filters</h3>
+                {hasActiveFilters && (
+                  <Button 
+                    variant="ghost" 
+                    size="sm"
+                    onClick={clearAllFilters}
+                    className="text-primary hover:text-primary/80 h-auto p-0 text-sm font-medium"
+                  >
+                    Clear all
+                  </Button>
+                )}
+              </>
             )}
           </div>
 
-          {/* Collapsible Content */}
+          {/* Filter Content */}
           <div className={cn(
             "overflow-hidden transition-all duration-300 ease-in-out",
             isMobile ? (isExpanded ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0") : "max-h-none opacity-100"

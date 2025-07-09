@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useId, useEffect, useRef, useCallback } from 'react'
-import { Search, Package, ExternalLink, X, Check, ChevronDown, Lightbulb, Nut, HelpCircle, Github, Copy, CheckCircle, Sparkles } from 'lucide-react'
+import { Search, Package, ExternalLink, X, Check, ChevronDown, Lightbulb, Nut, HelpCircle, Github, Copy, CheckCircle, Sparkles, Download, Info } from 'lucide-react'
 import { Label } from '@/components/ui/label'
 import {
   Select,
@@ -225,6 +225,7 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
   const [selectedFeatures, setSelectedFeatures] = useState<SelectedFeature[]>([])
   const [expandedChips, setExpandedChips] = useState<Set<string>>(new Set())
   const [copied, setCopied] = useState(false)
+  const [copiedGitClone, setCopiedGitClone] = useState(false)
   const selectId = useId()
 
   // Search state (copied from NavbarSearch)
@@ -340,17 +341,15 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
   const getTemplatePromptText = (templateId: string) => {
     // In a real app, this would come from a database or config
     const templatePrompts: Record<string, string> = {
-      '1': `Create a new repository using the Next.js + Keystone.js starter template:
+      '1': `This starter is a full-stack Next.js application that combines Next.js (App Router) with Keystone.js as a headless CMS. It features:
 
-1. Run: gh repo create my-project --template junaid33/next-keystone-starter --clone
-2. Run: npm install && npm run dev
-3. READ these documentation files to understand the architecture:
-   - docs/ARCHITECTURE.md (overall system design)
-   - docs/KEYSTONE-INTEGRATION.md (how Keystone.js integrates with Next.js)
-   - docs/DASHBOARD-SYSTEM.md (custom admin dashboard architecture)
-4. Reference https://keystonejs.com/docs for Keystone-specific implementation details
+- GraphQL API powered by Keystone.js
+- Custom admin dashboard built with Tailwind CSS and shadcn/ui
+- Authentication and user management
+- Database integration with schema management
+- Modern TypeScript architecture
 
-This starter combines Next.js (App Router) with Keystone.js as a headless CMS, featuring a custom admin dashboard built with Tailwind CSS and shadcn/ui. Before implementing any features, read the relevant documentation files to understand existing patterns and architecture.`,
+The repository includes comprehensive documentation in the docs/ folder covering the architecture, Keystone integration, and dashboard system. This starter powers Open Source Builders, Openfront, Openship, and many other projects.`,
       'byos': '' // No template setup for "bring your own starter"
     }
     return templatePrompts[templateId] || 'Use the selected starter template'
@@ -376,7 +375,7 @@ Use web search to research ${feature.toolName} and learn more about what flow th
 
   const getTemplateNutshell = (templateId: string) => {
     const nutshells: Record<string, string> = {
-      '1': 'Explains to the AI that the Next.js + Keystone starter is a Next.js app with GraphQL API from Keystone.js and custom admin dashboard.',
+      '1': 'Describes the Next.js + Keystone starter architecture and features to help AI understand the project structure.',
       'byos': 'No starter template setup - you will work with your existing codebase and integrate the selected features into your current architecture.'
     }
     return nutshells[templateId] || 'Starter template setup instructions'
@@ -409,7 +408,7 @@ Use web search to research ${feature.toolName} and learn more about what flow th
     
     let prompt = ''
     
-    // Add template prompt
+    // Add template context (not setup instructions)
     if (selectedTemplate && selectedTemplate !== 'none') {
       prompt += getTemplatePromptText(selectedTemplate) + '\n\n'
     }
@@ -446,6 +445,18 @@ Use web search to research ${feature.toolName} and learn more about what flow th
     }
   }
 
+  const handleCopyGitClone = async () => {
+    const gitCloneCommand = 'git clone https://github.com/junaid33/next-keystone-starter.git'
+    
+    try {
+      await navigator.clipboard.writeText(gitCloneCommand)
+      setCopiedGitClone(true)
+      setTimeout(() => setCopiedGitClone(false), 2000)
+    } catch (err) {
+      console.error('Failed to copy git clone command:', err)
+    }
+  }
+
   // Update prompt when features change
   useEffect(() => {
     const newPrompt = generatePrompt()
@@ -478,7 +489,7 @@ Use web search to research ${feature.toolName} and learn more about what flow th
         <div className="mx-auto max-w-xl text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-muted/80 border border-border mb-6">
             <span className="flex h-2 w-2 rounded-full bg-primary"></span>
-            <span className="text-sm font-medium">Extract proven features from open source</span>
+            <span className="text-sm font-medium">Context Engineering</span>
           </div>
           <h2 className="text-balance text-3xl font-bold md:text-4xl lg:text-5xl">AI-Powered Feature Builder</h2>
           <p className="text-muted-foreground mt-4 text-balance max-w-lg mx-auto">
@@ -522,44 +533,7 @@ Use web search to research ${feature.toolName} and learn more about what flow th
                 </SelectContent>
               </Select>
               
-              {/* Source and Info links below the select */}
-              {selectedTemplate && selectedTemplate !== 'none' && (
-                <div className="flex items-center gap-1 ml-2 mt-2">
-                  {selectedTemplate !== 'byos' && (
-                    <>
-                      <a
-                        href="https://github.com/junaid33/next-keystone-starter"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-xs text-muted-foreground hover:text-foreground transition-colors"
-                      >
-                        Source
-                      </a>
-                      <span className="text-muted-foreground text-xs">·</span>
-                    </>
-                  )}
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <button
-                        type="button"
-                        className="text-xs text-muted-foreground hover:text-foreground transition-colors"
-                      >
-                        Info
-                      </button>
-                    </PopoverTrigger>
-                    <PopoverContent side="top" className="w-80">
-                      <div className="space-y-2">
-                        <p className="text-sm text-foreground">
-                          {selectedTemplate === 'byos' 
-                            ? 'Use your existing codebase as the foundation. Perfect for integrating powerful features from open source tools into your current project without starting from scratch.'
-                            : 'The ultimate starter comes with a dashboard, GraphQL API, authentication, all built into one Next.js application, powers Open Source Builders, Openfront, Openship, and many more.'
-                          }
-                        </p>
-                      </div>
-                    </PopoverContent>
-                  </Popover>
-                </div>
-              )}
+              {/* Removed Source and Info links from here - moved to chip area */}
             </div>
 
             {/* Dash Separator */}
@@ -795,7 +769,7 @@ Use web search to research ${feature.toolName} and learn more about what flow th
                                         alternative.openSourceTool!.simpleIconSlug, 
                                         alternative.openSourceTool!.simpleIconColor,
                                         alternative.openSourceTool!.repositoryUrl,
-                                        alternative.openSourceTool!.isOpenSource
+                                        true
                                       )}
                                       className="flex w-full items-center gap-3 rounded-md px-2 py-2 text-left text-sm hover:bg-accent"
                                     >
@@ -860,50 +834,112 @@ Use web search to research ${feature.toolName} and learn more about what flow th
                         const isExpanded = expandedChips.has(chipId)
                         chips.push(
                           <div key="starter" className="space-y-2">
-                            <div className="inline-flex items-center gap-2 px-2 py-2 rounded-lg bg-card/50 backdrop-blur-sm border border-border/50 shadow-sm text-sm font-medium">
-                              <button
-                                onClick={() => setSelectedTemplate('')}
-                                className="hover:bg-muted rounded p-0.5 transition-colors"
-                              >
-                                <X className="h-3 w-3 text-muted-foreground" />
-                              </button>
-                              <LogoIcon 
-                                className={cn(
-                                  "w-4 h-4",
-                                  selectedTemplate === 'byos' ? "text-emerald-500" : ""
-                                )} 
-                              />
-                              <span>Use {template.name}</span>
-                              <div className="ml-auto flex items-center gap-1">
+                            <div className="space-y-2">
+                              <div className="inline-flex items-center gap-2 px-2 py-2 rounded-lg bg-card/50 backdrop-blur-sm border border-border/50 shadow-sm text-sm font-medium">
+                                <button
+                                  onClick={() => setSelectedTemplate('')}
+                                  className="hover:bg-muted rounded p-0.5 transition-colors"
+                                >
+                                  <X className="h-3 w-3 text-muted-foreground" />
+                                </button>
+                                <LogoIcon 
+                                  className={cn(
+                                    "w-4 h-4",
+                                    selectedTemplate === 'byos' ? "text-emerald-500" : ""
+                                  )} 
+                                />
+                                <span>Use {template.name}</span>
+                                <div className="ml-auto flex items-center gap-1">
+                                  <Popover>
+                                    <PopoverTrigger asChild>
+                                      <button className="hover:bg-muted rounded p-1 transition-colors">
+                                        <Lightbulb className="h-4 w-4 text-muted-foreground" />
+                                      </button>
+                                    </PopoverTrigger>
+                                    <PopoverContent side="top" className="w-80">
+                                      <div className="space-y-2">
+                                        <div className="flex items-center gap-2">
+                                          <Nut className="h-3 w-3 text-muted-foreground" />
+                                          <span className="text-sm font-medium">In a nutshell</span>
+                                        </div>
+                                        <p className="text-sm text-muted-foreground">{getTemplateNutshell(selectedTemplate)}</p>
+                                      </div>
+                                    </PopoverContent>
+                                  </Popover>
+                                  <button
+                                    onClick={() => toggleChipExpansion(chipId)}
+                                    className="hover:bg-muted rounded p-1 transition-colors"
+                                  >
+                                    <ChevronDown className={cn(
+                                      "h-4 w-4 text-muted-foreground transition-transform",
+                                      isExpanded && "rotate-180"
+                                    )} />
+                                  </button>
+                                </div>
+                              </div>
+                              {/* Action buttons below the chip */}
+                              <div className="ml-6 flex items-center gap-2 text-xs">
+                                {selectedTemplate !== 'byos' && (
+                                  <>
+                                    <button
+                                      onClick={handleCopyGitClone}
+                                      className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors"
+                                    >
+                                      {copiedGitClone ? (
+                                        <>
+                                          <CheckCircle className="h-3 w-3" />
+                                          <span>Copied!</span>
+                                        </>
+                                      ) : (
+                                        <>
+                                          <Copy className="h-3 w-3" />
+                                          <span>Copy Git Clone</span>
+                                        </>
+                                      )}
+                                    </button>
+                                    <span className="text-muted-foreground">•</span>
+                                    <button
+                                      disabled
+                                      className="flex items-center gap-1 text-muted-foreground/50 cursor-not-allowed"
+                                    >
+                                      <Download className="h-3 w-3" />
+                                      <span>Download ZIP</span>
+                                    </button>
+                                    <span className="text-muted-foreground">•</span>
+                                    <a
+                                      href="https://github.com/junaid33/next-keystone-starter"
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors"
+                                    >
+                                      <Github className="h-3 w-3" />
+                                      <span>Source</span>
+                                    </a>
+                                    <span className="text-muted-foreground">•</span>
+                                  </>
+                                )}
                                 <Popover>
                                   <PopoverTrigger asChild>
-                                    <button className="hover:bg-muted rounded p-1 transition-colors">
-                                      <Lightbulb className="h-4 w-4 text-muted-foreground" />
+                                    <button className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors">
+                                      <Info className="h-3 w-3" />
+                                      <span>Info</span>
                                     </button>
                                   </PopoverTrigger>
                                   <PopoverContent side="top" className="w-80">
                                     <div className="space-y-2">
-                                      <div className="flex items-center gap-2">
-                                        <Nut className="h-3 w-3 text-muted-foreground" />
-                                        <span className="text-sm font-medium">In a nutshell</span>
-                                      </div>
-                                      <p className="text-sm text-muted-foreground">{getTemplateNutshell(selectedTemplate)}</p>
+                                      <p className="text-sm text-foreground">
+                                        {selectedTemplate === 'byos' 
+                                          ? 'Use your existing codebase as the foundation. Perfect for integrating powerful features from open source tools into your current project without starting from scratch.'
+                                          : 'starter'
+                                        }
+                                      </p>
                                     </div>
                                   </PopoverContent>
                                 </Popover>
-                                <button
-                                  onClick={() => toggleChipExpansion(chipId)}
-                                  className="hover:bg-muted rounded p-1 transition-colors"
-                                >
-                                  <ChevronDown className={cn(
-                                    "h-4 w-4 text-muted-foreground transition-transform",
-                                    isExpanded && "rotate-180"
-                                  )} />
-                                </button>
                               </div>
                             </div>
                             {isExpanded && (
-                              <div className="ml-8 p-3 rounded-lg bg-background backdrop-blur-sm border border-border/50 shadow-sm text-xs text-muted-foreground">
+                              <div className="ml-6 p-3 rounded-lg bg-background backdrop-blur-sm border border-border/50 shadow-sm text-xs text-muted-foreground">
                                 {getTemplatePromptText(selectedTemplate)}
                               </div>
                             )}
@@ -961,7 +997,7 @@ Use web search to research ${feature.toolName} and learn more about what flow th
                             </div>
                           </div>
                           {isExpanded && (
-                            <div className="ml-8 p-3 rounded-lg bg-background backdrop-blur-sm border border-border/50 shadow-sm text-xs text-muted-foreground">
+                            <div className="ml-6 p-3 rounded-lg bg-background backdrop-blur-sm border border-border/50 shadow-sm text-xs text-muted-foreground">
                               {getFeaturePromptText(feature)}
                             </div>
                           )}

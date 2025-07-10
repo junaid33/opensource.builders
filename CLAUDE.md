@@ -1,238 +1,24 @@
-# CLAUDE.md - Open Source Builders GraphQL API Guide
+# CLAUDE.md - Open Source Builders AI Assistant Guide
 
-This file provides comprehensive guidance for working with the Open Source Builders GraphQL API, schema structure, and data management operations.
+**⚠️ AUTHENTICATION REQUIRED**: When using this guide, you must provide:
+1. **API Endpoint**: The GraphQL endpoint URL
+2. **Session Cookie**: Your KeystoneJS session cookie
 
-## API Configuration
+## Quick Start for AI Assistants
 
-**Base URL**: `http://localhost:3000/api/graphql`
-**Authentication**: Cookie-based session authentication using `keystonejs-session` cookie
+### Essential First Steps
+1. **Always start by checking current data** - Run discovery queries to understand existing tools/categories
+2. **Verify authentication** - Check if session cookie is valid
+3. **Research before creating** - Use search queries to avoid duplicates
+4. **Follow the workflow** - Discovery → Validation → Creation → Verification
 
-### Authentication Cookie Format
-```
-keystonejs-session=Fe26.2**[session-data]
-```
+---
 
-## Core Schema Models
+## 🔍 DISCOVERY QUERIES (Run These First)
 
-### Tool Model
-The primary entity representing software tools in the directory.
-
-**Key Fields**:
-- `id`: String (auto-generated)
-- `name`: String (display name)
-- `slug`: String (URL-friendly identifier)
-- `description`: String (tool description)
-- `isOpenSource`: Boolean (true for open source, false for proprietary)
-- `websiteUrl`: String (official website)
-- `repositoryUrl`: String (source code repository)
-- `simpleIconSlug`: String (Simple Icons identifier)
-- `simpleIconColor`: String (brand color hex)
-- `license`: String (software license)
-- `githubStars`: Int (GitHub star count)
-- `status`: String (development status)
-- `pricingModel`: String (pricing information)
-- `category`: Relationship to Category
-- `features`: Many-to-many relationship via ToolFeature
-- `proprietaryAlternatives`: Many-to-many via Alternative model
-- `openSourceAlternatives`: Many-to-many via Alternative model
-- `deploymentOptions`: Many-to-many relationship
-
-### Category Model
-Hierarchical categorization system for tools.
-
-**Key Fields**:
-- `id`: String
-- `name`: String (category name)
-- `description`: String
-- `tools`: One-to-many relationship with Tool
-
-### Alternative Model
-Junction table connecting proprietary and open source tools as alternatives.
-
-**Key Fields**:
-- `id`: String
-- `proprietaryTool`: Relationship to Tool (where isOpenSource=false)
-- `openSourceTool`: Relationship to Tool (where isOpenSource=true)
-- `similarityScore`: Int (relevance rating)
-- `notes`: String (comparison details)
-
-### Feature Model
-Represents software capabilities and features.
-
-**Key Fields**:
-- `id`: String
-- `name`: String
-- `description`: String
-- `featureType`: String (categorization)
-
-### ToolFeature Model
-Junction table connecting tools to features with quality ratings.
-
-**Key Fields**:
-- `id`: String
-- `tool`: Relationship to Tool
-- `feature`: Relationship to Feature
-- `implementationNotes`: String
-- `qualityScore`: Int (implementation quality 1-10)
-
-## Common Query Patterns
-
-### Get All Tools with Basic Info
+### Check Authentication Status
 ```graphql
-query {
-  tools {
-    id
-    name
-    slug
-    description
-    isOpenSource
-    websiteUrl
-    category {
-      id
-      name
-    }
-  }
-}
-```
-
-### Get Tools by Category
-```graphql
-query GetToolsByCategory($categoryId: ID!) {
-  tools(where: { category: { id: { equals: $categoryId } } }) {
-    id
-    name
-    slug
-    description
-    isOpenSource
-  }
-}
-```
-
-### Get Specific Tools by Slugs
-```graphql
-query GetSpecificTools($slugs: [String!]!) {
-  tools(where: { slug: { in: $slugs } }) {
-    id
-    name
-    slug
-    description
-    isOpenSource
-    websiteUrl
-  }
-}
-```
-
-### Get Proprietary Tools for Carousel
-```graphql
-query GetProprietaryTools {
-  tools(where: { 
-    isOpenSource: { equals: false }
-    slug: { in: ["shopify", "notion", "tailwind-plus", "cursor"] }
-  }) {
-    id
-    name
-    slug
-    description
-    websiteUrl
-    simpleIconSlug
-    simpleIconColor
-  }
-}
-```
-
-### Get Open Source Alternatives
-```graphql
-query GetAlternatives($proprietarySlug: String!) {
-  alternatives(where: { 
-    proprietaryTool: { slug: { equals: $proprietarySlug } } 
-  }) {
-    id
-    openSourceTool {
-      id
-      name
-      slug
-      description
-      repositoryUrl
-      githubStars
-    }
-    similarityScore
-    notes
-  }
-}
-```
-
-### Get Available Categories
-```graphql
-query GetCategories {
-  categories {
-    id
-    name
-    description
-    _count {
-      tools
-    }
-  }
-}
-```
-
-## Data Creation Patterns
-
-### Create a New Tool
-```graphql
-mutation CreateTool($data: ToolCreateInput!) {
-  createTool(data: $data) {
-    id
-    name
-    slug
-  }
-}
-```
-
-**Example Variables**:
-```json
-{
-  "data": {
-    "name": "Tool Name",
-    "slug": "tool-slug",
-    "description": "Tool description",
-    "isOpenSource": true,
-    "websiteUrl": "https://example.com",
-    "repositoryUrl": "https://github.com/org/repo",
-    "category": {
-      "connect": { "id": "category-id" }
-    }
-  }
-}
-```
-
-### Create Alternative Relationship
-```graphql
-mutation CreateAlternative($data: AlternativeCreateInput!) {
-  createAlternative(data: $data) {
-    id
-    proprietaryTool { name }
-    openSourceTool { name }
-  }
-}
-```
-
-**Example Variables**:
-```json
-{
-  "data": {
-    "proprietaryTool": { "connect": { "id": "proprietary-tool-id" } },
-    "openSourceTool": { "connect": { "id": "open-source-tool-id" } },
-    "similarityScore": 85,
-    "notes": "Both provide similar functionality for X"
-  }
-}
-```
-
-## Permission System
-
-### User Authentication Check
-```graphql
-query {
+query CheckAuth {
   authenticatedItem {
     __typename
     ... on User {
@@ -240,7 +26,6 @@ query {
       name
       email
       role {
-        id
         name
         canManageTools
         canManageCategories
@@ -252,141 +37,268 @@ query {
 }
 ```
 
-### Required Permissions for Operations
-- **Tool Management**: `canManageTools: true`
-- **Category Management**: `canManageCategories: true`
-- **Feature Management**: `canManageFeatures: true`
-- **Alternative Management**: `canManageAlternatives: true`
-
-## Schema Introspection
-
-### Get Input Type Fields
+### Get All Categories (Essential Reference)
 ```graphql
-query {
-  __type(name: "ToolCreateInput") {
-    inputFields {
-      name
-      type {
-        name
-        kind
-      }
-    }
-  }
-}
-```
-
-### Get Available Categories for Reference
-```graphql
-query {
+query GetAllCategories {
   categories {
     id
     name
+    description
+    _count {
+      tools
+    }
   }
 }
 ```
 
-## Data Management Best Practices
-
-### Tool Creation Workflow
-1. Check if category exists or create new category
-2. Verify tool slug is unique
-3. Create tool with proper category relationship
-4. Add features via ToolFeature junction if applicable
-5. Create alternative relationships if applicable
-
-### Alternative Relationship Workflow
-1. Ensure both proprietary and open source tools exist
-2. Create Alternative record linking them
-3. Set appropriate similarity score (1-100)
-4. Add descriptive notes about the relationship
-
-### Bulk Operations Strategy
-Create TypeScript scripts for bulk operations rather than manual GraphQL calls:
-- **Tool Import Script**: For adding multiple tools from JSON/CSV
-- **Alternative Mapping Script**: For creating multiple alternative relationships
-- **Category Management Script**: For organizing tool categories
-- **Feature Assignment Script**: For bulk feature assignments
-
-## GitHub Data Collection & Repository Analytics
-
-### GitHub Integration Fields
-The Tool model includes comprehensive GitHub repository analytics:
-
-**Core Repository Data**:
-- `repositoryUrl`: Full GitHub repository URL
-- `githubStars`: Current star count
-- `githubForks`: Number of repository forks
-- `githubIssues`: Count of open issues
-- `githubLastCommit`: Timestamp of last commit to main branch
-
-### GitHub API Data Collection
-
-**GitHub API Endpoints for Tool Data**:
-```bash
-# Get repository info
-GET https://api.github.com/repos/{owner}/{repo}
-
-# Response includes:
-{
-  "stargazers_count": 1234,
-  "forks_count": 567,
-  "open_issues_count": 89,
-  "pushed_at": "2023-12-01T10:30:00Z",
-  "description": "Tool description",
-  "homepage": "https://tool-website.com",
-  "license": { "name": "MIT" }
-}
-```
-
-**Rate Limiting & Authentication**:
-- GitHub API allows 60 requests/hour unauthenticated
-- 5000 requests/hour with personal access token
-- Use `Authorization: token YOUR_TOKEN` header
-
-### Automated GitHub Data Scripts
-
-**Repository Data Sync Script** (`scripts/sync-github-data.ts`):
-```typescript
-interface GitHubRepoData {
-  stars: number;
-  forks: number;
-  openIssues: number;
-  lastCommit: string;
-  description?: string;
-  license?: string;
-}
-
-async function fetchGitHubData(repoUrl: string): Promise<GitHubRepoData | null> {
-  const match = repoUrl.match(/github\.com\/([^\/]+)\/([^\/]+)/);
-  if (!match) return null;
-  
-  const [, owner, repo] = match;
-  const cleanRepo = repo.replace(/\.git$/, '');
-  
-  const response = await fetch(`https://api.github.com/repos/${owner}/${cleanRepo}`, {
-    headers: {
-      'Authorization': `token ${process.env.GITHUB_TOKEN}`,
-      'User-Agent': 'OpenSourceBuilders-DataSync'
+### Search for Existing Tools (Prevent Duplicates)
+```graphql
+query SearchTools($searchTerm: String!) {
+  tools(where: { 
+    OR: [
+      { name: { contains: $searchTerm, mode: insensitive } }
+      { slug: { contains: $searchTerm, mode: insensitive } }
+      { description: { contains: $searchTerm, mode: insensitive } }
+    ]
+  }) {
+    id
+    name
+    slug
+    description
+    isOpenSource
+    websiteUrl
+    repositoryUrl
+    category {
+      name
     }
-  });
-  
-  if (!response.ok) return null;
-  const data = await response.json();
-  
-  return {
-    stars: data.stargazers_count,
-    forks: data.forks_count,
-    openIssues: data.open_issues_count,
-    lastCommit: data.pushed_at,
-    description: data.description,
-    license: data.license?.name
-  };
+  }
 }
 ```
 
-### Missing GitHub Data Detection
+### Get Tool Details by Slug
+```graphql
+query GetToolBySlug($slug: String!) {
+  tool(where: { slug: $slug }) {
+    id
+    name
+    slug
+    description
+    isOpenSource
+    websiteUrl
+    repositoryUrl
+    simpleIconSlug
+    simpleIconColor
+    license
+    githubStars
+    githubForks
+    githubIssues
+    githubLastCommit
+    status
+    pricingModel
+    category {
+      id
+      name
+    }
+    features {
+      id
+      feature {
+        id
+        name
+        description
+        featureType
+      }
+      implementationNotes
+      qualityScore
+    }
+    proprietaryAlternatives {
+      id
+      proprietaryTool {
+        id
+        name
+        slug
+        description
+      }
+      similarityScore
+      notes
+    }
+    openSourceAlternatives {
+      id
+      openSourceTool {
+        id
+        name
+        slug
+        description
+      }
+      similarityScore
+      notes
+    }
+  }
+}
+```
 
-**Query to Find Tools Missing GitHub Data**:
+### Get All Features (For Adding to Tools)
+```graphql
+query GetAllFeatures {
+  features {
+    id
+    name
+    description
+    featureType
+  }
+}
+```
+
+---
+
+## 🛠️ CREATION MUTATIONS
+
+### Create New Tool
+```graphql
+mutation CreateTool($data: ToolCreateInput!) {
+  createTool(data: $data) {
+    id
+    name
+    slug
+    description
+    isOpenSource
+    websiteUrl
+    repositoryUrl
+    category {
+      name
+    }
+  }
+}
+```
+
+**Variables Template**:
+```json
+{
+  "data": {
+    "name": "Tool Name",
+    "slug": "tool-slug",
+    "description": "Comprehensive tool description",
+    "isOpenSource": true,
+    "websiteUrl": "https://example.com",
+    "repositoryUrl": "https://github.com/org/repo",
+    "simpleIconSlug": "simpleicons-slug",
+    "simpleIconColor": "#000000",
+    "license": "MIT",
+    "githubStars": 0,
+    "githubForks": 0,
+    "githubIssues": 0,
+    "status": "Active",
+    "pricingModel": "Free",
+    "category": {
+      "connect": { "id": "category-id-here" }
+    }
+  }
+}
+```
+
+### Update Existing Tool
+```graphql
+mutation UpdateTool($where: ToolWhereUniqueInput!, $data: ToolUpdateInput!) {
+  updateTool(where: $where, data: $data) {
+    id
+    name
+    slug
+    githubStars
+    githubForks
+    githubLastCommit
+  }
+}
+```
+
+### Create New Category
+```graphql
+mutation CreateCategory($data: CategoryCreateInput!) {
+  createCategory(data: $data) {
+    id
+    name
+    description
+  }
+}
+```
+
+### Create New Feature
+```graphql
+mutation CreateFeature($data: FeatureCreateInput!) {
+  createFeature(data: $data) {
+    id
+    name
+    description
+    featureType
+  }
+}
+```
+
+### Add Feature to Tool
+```graphql
+mutation AddFeatureToTool($data: ToolFeatureCreateInput!) {
+  createToolFeature(data: $data) {
+    id
+    tool {
+      name
+    }
+    feature {
+      name
+    }
+    implementationNotes
+    qualityScore
+  }
+}
+```
+
+**Variables Template**:
+```json
+{
+  "data": {
+    "tool": { "connect": { "id": "tool-id" } },
+    "feature": { "connect": { "id": "feature-id" } },
+    "implementationNotes": "How this feature is implemented",
+    "qualityScore": 8
+  }
+}
+```
+
+### Create Alternative Relationship
+```graphql
+mutation CreateAlternative($data: AlternativeCreateInput!) {
+  createAlternative(data: $data) {
+    id
+    proprietaryTool {
+      name
+    }
+    openSourceTool {
+      name
+    }
+    similarityScore
+    notes
+  }
+}
+```
+
+---
+
+## 📊 CURRENT DATABASE STATE
+
+### Known Category IDs
+- **Development Tools**: `cmbjbh3jp0019e6qfgvz44zgn`
+- **API Development**: `[run GetAllCategories to get current ID]`
+- **Mobile Development**: `[run GetAllCategories to get current ID]`
+- **Gaming & Game Development**: `[run GetAllCategories to get current ID]`
+
+### Featured Proprietary Tools (For Carousel)
+- **Shopify** (slug: "shopify")
+- **Notion** (slug: "notion")
+- **Tailwind Plus** (slug: "tailwind-plus")
+- **Cursor** (slug: "cursor")
+
+---
+
+## 🔧 MAINTENANCE QUERIES
+
+### Find Tools Missing GitHub Data
 ```graphql
 query ToolsMissingGitHubData {
   tools(where: { 
@@ -411,108 +323,232 @@ query ToolsMissingGitHubData {
 }
 ```
 
-**Data Quality Analysis**:
-```typescript
-// Check completion rates
-const tools = await query(`
-  query {
-    tools(where: { isOpenSource: { equals: true } }) {
-      totalCount
-    }
-    toolsWithStars: tools(where: { 
-      isOpenSource: { equals: true }
-      githubStars: { not: { equals: null } }
-    }) {
-      totalCount
-    }
-    toolsWithRepos: tools(where: { 
-      isOpenSource: { equals: true }
-      repositoryUrl: { not: { equals: null } }
-    }) {
-      totalCount
-    }
+### Find Tools Without Categories
+```graphql
+query ToolsWithoutCategories {
+  tools(where: { category: { equals: null } }) {
+    id
+    name
+    slug
+    description
+    isOpenSource
   }
-`);
-
-const completionRate = {
-  stars: (toolsWithStars.totalCount / tools.totalCount) * 100,
-  repositories: (toolsWithRepos.totalCount / tools.totalCount) * 100
-};
+}
 ```
 
-## Script Development Guidelines
-
-When creating data management scripts:
-1. Use TypeScript for type safety
-2. Include proper error handling and validation
-3. Support dry-run mode for testing
-4. Log operations for audit trail
-5. Handle authentication via environment variables
-6. Implement batch processing for large datasets
-7. **Include GitHub API integration for repository data**
-8. **Implement rate limiting and retry logic for API calls**
-9. **Cache GitHub responses to avoid redundant API calls**
-
-### Example Script Structure
-```typescript
-// scripts/add-tools.ts
-import { GraphQLClient } from 'graphql-request';
-
-const client = new GraphQLClient('http://localhost:3000/api/graphql', {
-  headers: {
-    Cookie: `keystonejs-session=${process.env.KEYSTONE_SESSION}`
+### Find Tools Without Features
+```graphql
+query ToolsWithoutFeatures {
+  tools(where: { features: { none: {} } }) {
+    id
+    name
+    slug
+    description
+    isOpenSource
+    category {
+      name
+    }
   }
-});
+}
+```
 
-interface ToolInput {
+---
+
+## 🎯 COMMON AI TASK WORKFLOWS
+
+### Adding a New Tool
+1. **Research**: Search for existing tools with similar names
+2. **Validate**: Check if category exists, create if needed
+3. **Create**: Use CreateTool mutation with proper data
+4. **Enhance**: Add features, GitHub data, alternatives if applicable
+5. **Verify**: Query the created tool to confirm all data
+
+### Updating GitHub Data
+1. **Discover**: Find tools missing GitHub data
+2. **Fetch**: Get GitHub API data for each repository
+3. **Update**: Use UpdateTool mutation with new GitHub stats
+4. **Verify**: Confirm updates were applied correctly
+
+### Adding Features to Tools
+1. **Research**: Check existing features, create new ones if needed
+2. **Map**: Identify which tools should have which features
+3. **Connect**: Use AddFeatureToTool mutation with quality scores
+4. **Verify**: Query tool features to confirm relationships
+
+### Feature Splitting Strategy
+When tools have overlapping but different capabilities, split generic features into specific ones:
+
+**Example Problem**: Shopify and Gumroad both "sell products online"
+- ❌ Generic: "E-commerce functionality" 
+- ✅ Split into: "Sell physical products" vs "Sell digital products"
+
+**Example Problem**: Shopify and NFT platform both handle transactions
+- ❌ Generic: "Payment processing"
+- ✅ Split into: "Traditional payment processing" vs "Cryptocurrency payments"
+
+**When to Split Features**:
+- Two tools have same feature but different implementations
+- One tool has limitations the other doesn't
+- Different target use cases despite similar functionality
+- Quality scores would be significantly different (8+ vs 5-)
+
+**Feature Splitting Process**:
+1. Identify the overly broad feature
+2. Research specific capabilities of each tool
+3. Create 2+ specific features to replace the generic one
+4. Update all affected tools with new specific features
+5. Remove the old generic feature if no longer needed
+
+---
+
+## 🧠 RESEARCH AI PROMPT TEMPLATE
+
+When you need comprehensive research on a tool before adding it to the database, use this prompt:
+
+```
+I need comprehensive research on [TOOL_NAME] for the Open Source Builders directory. Please gather:
+
+**Basic Information:**
+- Official name and description
+- Website URL
+- Repository URL (if open source)
+- Current GitHub stars/forks (if applicable)
+- License type
+- Development status (Active, Maintenance, Deprecated)
+- Pricing model (Free, Freemium, Paid, Open Source)
+
+**Categorization:**
+- Primary category (Development Tools, API Development, Mobile Development, etc.)
+- Key features and capabilities
+- Feature quality scores (1-10 scale)
+
+**Integration Data:**
+- Simple Icons slug (check https://simpleicons.org/)
+- Brand color hex code
+- Alternative tools (both proprietary and open source)
+
+**Technical Details:**
+- Installation/deployment options
+- System requirements
+- Integration capabilities
+- API availability
+
+**Market Position:**
+- Main competitors
+- Unique selling points
+- Target audience
+- Community size/activity
+
+Please format the response as structured data that can be directly used in GraphQL mutations for the Open Source Builders database.
+```
+
+---
+
+## 📋 SCHEMA REFERENCE
+
+### Tool Model Complete Fields
+```typescript
+interface Tool {
+  id: string;
   name: string;
   slug: string;
   description: string;
   isOpenSource: boolean;
-  // ... other fields
-}
-
-async function createTool(toolData: ToolInput) {
-  const mutation = `
-    mutation CreateTool($data: ToolCreateInput!) {
-      createTool(data: $data) { id name slug }
-    }
-  `;
-  
-  return await client.request(mutation, { data: toolData });
+  websiteUrl?: string;
+  repositoryUrl?: string;
+  simpleIconSlug?: string;
+  simpleIconColor?: string;
+  license?: string;
+  githubStars?: number;
+  githubForks?: number;
+  githubIssues?: number;
+  githubLastCommit?: string;
+  status?: string;
+  pricingModel?: string;
+  category?: Category;
+  features?: ToolFeature[];
+  proprietaryAlternatives?: Alternative[];
+  openSourceAlternatives?: Alternative[];
+  deploymentOptions?: DeploymentOption[];
 }
 ```
 
-## Current Database State
+### Common Status Values
+- `"Active"` - Actively maintained
+- `"Maintenance"` - Bug fixes only
+- `"Deprecated"` - No longer recommended
+- `"Beta"` - Pre-release version
+- `"Stable"` - Production ready
 
-**Existing Categories**:
-- Development Tools (ID: cmbjbh3jp0019e6qfgvz44zgn)
-- API Development
-- Mobile Development
-- Gaming & Game Development
-- Additional Development Tools
+### Common Pricing Models
+- `"Free"` - Completely free
+- `"Open Source"` - Free with open source license
+- `"Freemium"` - Free tier with paid upgrades
+- `"Paid"` - Commercial license required
+- `"Enterprise"` - Custom enterprise pricing
 
-**Key Proprietary Tools for Carousel**:
-- Shopify (slug: "shopify")
-- Notion (slug: "notion") 
-- Tailwind Plus (slug: "tailwind-plus")
-- Cursor (slug: "cursor") - Recently added
+---
 
-**Authentication**: Admin user "Junaid" with full tool management permissions
+## 🚨 ERROR HANDLING & COMMON MISTAKES
 
-## Common Issues & Solutions
+### Critical: Don't Assume Errors = Access Issues
 
-### Access Denied Errors
-- Verify authentication cookie is valid and not expired
-- Check user has required permissions for the operation
-- Ensure proper role assignment in the system
+**MOST ERRORS ARE NOT PERMISSION PROBLEMS** - They're usually:
+- Trying to create a tool that already exists
+- Trying to create a feature that already exists  
+- Trying to create a category that already exists
+- Not using `connect` to link existing entities
 
-### Schema Field Errors
-- Use introspection queries to verify available fields
-- Check field naming (e.g., `websiteUrl` not `website`)
-- Validate relationship field syntax (`connect`, `create`, etc.)
+### Common AI Mistakes and Solutions
 
-### Relationship Creation
-- Always verify related entities exist before creating relationships
-- Use proper GraphQL relationship syntax for connections
-- Handle many-to-many relationships via junction tables
+**"Tool already exists" errors**:
+- **Always search first** using SearchTools query
+- If tool exists, update it instead of creating new one
+- Check by name, slug, and similar variations
+
+**"Feature already exists" errors**:
+- **Always check existing features** using GetAllFeatures query
+- Use `connect` to link existing features to tools
+- Don't create new features if similar ones exist
+
+**"Category already exists" errors**:
+- **Always get categories first** using GetAllCategories query
+- Use `connect` to assign existing categories to tools
+- Only create new categories if genuinely needed
+
+**Authentication Errors**:
+- Verify session cookie is provided and valid
+- Check user permissions for the operation
+
+**Duplicate Key Errors**:
+- Always search for existing tools/categories first
+- Use unique slugs (auto-generate from name if needed)
+
+**Relation Errors**:
+- Verify related entities exist before creating relationships
+- Use proper `connect` syntax for existing relations
+- Use `create` syntax for new nested entities
+
+**GitHub API Rate Limits**:
+- Implement delays between requests
+- Use authenticated requests for higher limits
+- Cache responses to avoid redundant calls
+
+---
+
+## 💡 BEST PRACTICES FOR AI ASSISTANTS
+
+1. **Always query before creating** - Avoid duplicates
+2. **Use consistent naming** - Follow existing patterns
+3. **Validate relationships** - Ensure referenced entities exist
+4. **Provide comprehensive data** - Fill as many fields as possible
+5. **Verify operations** - Query created/updated entities to confirm
+6. **Handle errors gracefully** - Provide clear error messages
+7. **Batch operations** - Group related changes together
+8. **Use semantic slugs** - Create meaningful URL identifiers
+9. **Maintain data quality** - Regular cleanup and validation
+10. **Document changes** - Keep track of what was modified
+
+---
+
+*This guide is designed for AI assistants to efficiently manage the Open Source Builders database. Always start with discovery queries and provide the session cookie when making requests.*

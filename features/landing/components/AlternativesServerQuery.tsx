@@ -48,8 +48,9 @@ export default async function AlternativesServerQuery({ searchParams = {} }: Alt
       featureType: propFeature.feature.featureType
     }))
 
+    const compatibleFeaturesCount = featuresWithCompatibility.filter(f => f.compatible).length
     const compatibilityScore = proprietaryFeatures.length > 0 
-      ? Math.round(((alt.features?.length || 0) / proprietaryFeatures.length) * 100) 
+      ? Math.round((compatibleFeaturesCount / proprietaryFeatures.length) * 100) 
       : 0
 
     return {

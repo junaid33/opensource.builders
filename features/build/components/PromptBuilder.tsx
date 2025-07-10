@@ -484,9 +484,9 @@ Use web search to research ${feature.toolName} and learn more about what flow th
 
   return (
     <TooltipProvider>
-      <section className={cn("py-8", className)}>
+      <section className={cn("py-8 px-4 sm:px-6 lg:px-8", className)}>
         <div className="mx-auto max-w-5xl">
-        <div className="mx-auto max-w-xl text-center">
+        <div className="mx-auto max-w-xl text-center px-4 sm:px-0">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-muted/80 border border-border mb-6">
             <span className="flex h-2 w-2 rounded-full bg-primary"></span>
             <span className="text-sm font-medium">Context Engineering</span>
@@ -497,8 +497,8 @@ Use web search to research ${feature.toolName} and learn more about what flow th
           </p>
         </div>
 
-        <div className="mx-auto mt-12 max-w-xl">
-          <div className="bg-card w-full rounded-2xl border px-8 py-6 shadow-sm space-y-6">
+        <div className="mx-auto mt-12 max-w-xl px-4 sm:px-0">
+          <div className="bg-card w-full rounded-2xl border px-4 sm:px-6 lg:px-8 py-6 shadow-sm space-y-6">
             {/* Starter Template Selection */}
             <div className="space-y-4">
               <p className="text-xs text-muted-foreground uppercase tracking-wide">Choose Starter</p>
@@ -877,8 +877,8 @@ Use web search to research ${feature.toolName} and learn more about what flow th
                                   </button>
                                 </div>
                               </div>
-                              {/* Action buttons below the chip */}
-                              <div className="ml-6 flex items-center gap-2 text-xs">
+                              {/* Action buttons below the chip - Mobile responsive */}
+                              <div className="ml-6 flex flex-wrap items-center gap-2 text-xs">
                                 {selectedTemplate !== 'byos' && (
                                   <>
                                     <button
@@ -888,24 +888,24 @@ Use web search to research ${feature.toolName} and learn more about what flow th
                                       {copiedGitClone ? (
                                         <>
                                           <CheckCircle className="h-3 w-3" />
-                                          <span>Copied!</span>
+                                          <span className="hidden sm:inline">Copied!</span>
                                         </>
                                       ) : (
                                         <>
                                           <Copy className="h-3 w-3" />
-                                          <span>Copy Git Clone</span>
+                                          <span className="hidden sm:inline">Copy Git Clone</span>
                                         </>
                                       )}
                                     </button>
-                                    <span className="text-muted-foreground">•</span>
+                                    <span className="text-muted-foreground hidden sm:inline">•</span>
                                     <button
                                       disabled
                                       className="flex items-center gap-1 text-muted-foreground/50 cursor-not-allowed"
                                     >
                                       <Download className="h-3 w-3" />
-                                      <span>Download ZIP</span>
+                                      <span className="hidden sm:inline">Download ZIP</span>
                                     </button>
-                                    <span className="text-muted-foreground">•</span>
+                                    <span className="text-muted-foreground hidden sm:inline">•</span>
                                     <a
                                       href="https://github.com/junaid33/next-keystone-starter"
                                       target="_blank"
@@ -913,16 +913,16 @@ Use web search to research ${feature.toolName} and learn more about what flow th
                                       className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors"
                                     >
                                       <Github className="h-3 w-3" />
-                                      <span>Source</span>
+                                      <span className="hidden sm:inline">Source</span>
                                     </a>
-                                    <span className="text-muted-foreground">•</span>
+                                    <span className="text-muted-foreground hidden sm:inline">•</span>
                                   </>
                                 )}
                                 <Popover>
                                   <PopoverTrigger asChild>
                                     <button className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors">
                                       <Info className="h-3 w-3" />
-                                      <span>Info</span>
+                                      <span className="hidden sm:inline">Info</span>
                                     </button>
                                   </PopoverTrigger>
                                   <PopoverContent side="top" className="w-80">
@@ -939,7 +939,7 @@ Use web search to research ${feature.toolName} and learn more about what flow th
                               </div>
                             </div>
                             {isExpanded && (
-                              <div className="ml-6 p-3 rounded-lg bg-background backdrop-blur-sm border border-border/50 shadow-sm text-xs text-muted-foreground">
+                              <div className="ml-2 sm:ml-6 p-3 rounded-lg bg-background backdrop-blur-sm border border-border/50 shadow-sm text-xs text-muted-foreground">
                                 {getTemplatePromptText(selectedTemplate)}
                               </div>
                             )}
@@ -997,7 +997,7 @@ Use web search to research ${feature.toolName} and learn more about what flow th
                             </div>
                           </div>
                           {isExpanded && (
-                            <div className="ml-6 p-3 rounded-lg bg-background backdrop-blur-sm border border-border/50 shadow-sm text-xs text-muted-foreground">
+                            <div className="ml-2 sm:ml-6 p-3 rounded-lg bg-background backdrop-blur-sm border border-border/50 shadow-sm text-xs text-muted-foreground">
                               {getFeaturePromptText(feature)}
                             </div>
                           )}
@@ -1019,7 +1019,7 @@ Use web search to research ${feature.toolName} and learn more about what flow th
                 <div className="flex flex-col gap-4 mt-6">
                   <Button
                     onClick={handleCopyPrompt}
-                    className="h-10"
+                    className="h-10 w-full"
                     // className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors font-medium"
                   >
                     {copied ? (
@@ -1039,7 +1039,7 @@ Use web search to research ${feature.toolName} and learn more about what flow th
                   {selectedTemplate !== 'byos' && (
                     <div className="flex flex-col text-center p-4 rounded-lg bg-muted/30 border border-border/50 backdrop-blur-sm">
                       <div className="font-medium text-foreground text-sm">Build something open source?</div>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-muted-foreground px-2">
                          Submit your project to us and let others benefit from your work!
                       </p>
                     </div>

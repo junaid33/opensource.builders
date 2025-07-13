@@ -58,29 +58,16 @@ export default function ToolIcon({
   // Enhanced fallback with grainy background effect
   const firstLetter = name.charAt(0).toUpperCase()
   
-  // Use simpleIconColor if available, otherwise generate based on first letter
-  let backgroundColor = simpleIconColor
-  
-  if (!backgroundColor) {
-    // Generate a color based on the first letter for variety
-    const colors = [
-      'from-slate-600 to-slate-700',
-      'from-gray-600 to-gray-700', 
-      'from-zinc-600 to-zinc-700',
-      'from-stone-600 to-stone-700',
-      'from-neutral-600 to-neutral-700'
-    ]
-    const colorIndex = firstLetter.charCodeAt(0) % colors.length
-    backgroundColor = "#000000"
-  }
+  // Use simpleIconColor if available, otherwise default to black
+  let backgroundColor = simpleIconColor || '#000000'
   
   return (
     <div 
-      className={`flex aspect-square items-center justify-center rounded-md overflow-hidden ${simpleIconColor ? '' : `bg-gradient-to-br ${backgroundColor}`} relative after:rounded-[inherit] after:absolute after:inset-0 after:shadow-[0_1px_2px_0_rgb(0_0_0/.05),inset_0_1px_0_0_rgb(255_255_255/.12)] after:pointer-events-none ${className}`}
+      className={`flex aspect-square items-center justify-center rounded-md overflow-hidden relative after:rounded-[inherit] after:absolute after:inset-0 after:shadow-[0_1px_2px_0_rgb(0_0_0/.05),inset_0_1px_0_0_rgb(255_255_255/.12)] after:pointer-events-none ${className}`}
       style={{ 
         width: size, 
         height: size,
-        ...(simpleIconColor && { background: simpleIconColor })
+        background: backgroundColor
       }}
     >
       {/* Noise texture overlay */}

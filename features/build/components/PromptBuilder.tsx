@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useId, useEffect, useRef, useCallback } from 'react'
-import { Search, Package, ExternalLink, X, Check, ChevronDown, Lightbulb, Nut, HelpCircle, Github, Copy, CheckCircle, Sparkles, Download, Info } from 'lucide-react'
+import { Search, Package, ExternalLink, X, Check, ChevronDown, Lightbulb, Nut, HelpCircle, Copy, CheckCircle, Sparkles, Download, Info } from 'lucide-react'
 import { Label } from '@/components/ui/label'
 import {
   Select,
@@ -269,7 +269,7 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
       setLoading(true)
       try {
         const data = await request<SearchResult>(
-          '/api/graphql',
+          'http://localhost:3004/api/graphql',
           MULTI_MODEL_SEARCH,
           { search: searchTerm }
         )
@@ -547,82 +547,146 @@ Use web search to research ${feature.toolName} and learn more about what flow th
               {selectedFeatures.length > 0 && (
                 <div className="border-0 shadow-none space-y-3">
                   {Object.values(groupedSelectedFeatures).map((toolGroup) => (
-                    <div key={toolGroup.toolName} className="h-auto ps-2 text-left flex items-center gap-2">
-                      <div className="flex items-center gap-3">
-                        <ToolIcon
-                          name={toolGroup.toolName}
-                          simpleIconSlug={toolGroup.toolIcon}
-                          simpleIconColor={toolGroup.toolColor}
-                          size={24}
-                        />
-                        <div>
-                          <div className="block font-medium">
-                            {toolGroup.toolName}
+                    <div key={toolGroup.toolName} className="bg-muted/50 rounded-lg p-3 border border-border/50 shadow-inner">
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                        {/* Circular indicator - positioned above on mobile */}
+                        <div className="flex justify-center sm:hidden">
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <button
+                                className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity"
+                              >
+                                <MiniDonutChart
+                                  value={toolGroup.features.length}
+                                  total={Math.max(toolGroup.features.length, 5)}
+                                  size={20}
+                                  strokeWidth={3}
+                                  className="text-primary"
+                                />
+                                <span className="text-xs text-muted-foreground">
+                                  {toolGroup.features.length}/{Math.max(toolGroup.features.length, 5)}
+                                </span>
+                              </button>
+                            </PopoverTrigger>
+                            <PopoverContent align="center" className="w-80">
+                              <div className="space-y-3">
+                                <div className="flex items-center gap-2 pb-2 border-b">
+                                  <ToolIcon
+                                    name={toolGroup.toolName}
+                                    simpleIconSlug={toolGroup.toolIcon}
+                                    simpleIconColor={toolGroup.toolColor}
+                                    size={20}
+                                  />
+                                  <h4 className="font-medium">{toolGroup.toolName} Features</h4>
+                                </div>
+                                <div className="space-y-1 max-h-64 overflow-y-auto">
+                                  {toolGroup.features.map((feature) => (
+                                    <button
+                                      key={feature.id}
+                                      onClick={() => handleFeatureRemove(feature.id)}
+                                      className="w-full flex items-start gap-3 rounded-md px-2 py-2 text-left text-sm hover:bg-accent transition-colors"
+                                    >
+                                      <div className="flex h-4 w-4 items-center justify-center rounded border border-primary bg-primary text-primary-foreground flex-shrink-0 mt-0.5">
+                                        <Check className="h-2.5 w-2.5" />
+                                      </div>
+                                      <div className="flex-1">
+                                        <div className="font-medium">{feature.name}</div>
+                                        {feature.description && (
+                                          <div className="text-xs text-muted-foreground line-clamp-1">
+                                            {feature.description}
+                                          </div>
+                                        )}
+                                      </div>
+                                    </button>
+                                  ))}
+                                </div>
+                                <div className="pt-2 border-t text-xs text-muted-foreground">
+                                  Click any feature to remove it
+                                </div>
+                              </div>
+                            </PopoverContent>
+                          </Popover>
+                        </div>
+                        
+                        {/* Tool info and circular indicator on desktop */}
+                        <div className="flex items-center gap-3 flex-1">
+                          <ToolIcon
+                            name={toolGroup.toolName}
+                            simpleIconSlug={toolGroup.toolIcon}
+                            simpleIconColor={toolGroup.toolColor}
+                            size={24}
+                          />
+                          <div className="flex-1">
+                            <div className="block font-medium">
+                              {toolGroup.toolName}
+                            </div>
+                            <div className="text-muted-foreground mt-0.5 block text-xs">
+                              {toolGroup.features.length === 1 
+                                ? toolGroup.features[0].name
+                                : `${toolGroup.features.length} features selected`
+                              }
+                            </div>
                           </div>
-                          <div className="text-muted-foreground mt-0.5 block text-xs">
-                            {toolGroup.features.length === 1 
-                              ? toolGroup.features[0].name
-                              : `${toolGroup.features.length} features selected`
-                            }
+                          
+                          {/* Circular indicator - positioned on right for desktop */}
+                          <div className="hidden sm:block">
+                            <Popover>
+                              <PopoverTrigger asChild>
+                                <button
+                                  className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity"
+                                >
+                                  <MiniDonutChart
+                                    value={toolGroup.features.length}
+                                    total={Math.max(toolGroup.features.length, 5)}
+                                    size={20}
+                                    strokeWidth={3}
+                                    className="text-primary"
+                                  />
+                                  <span className="text-xs text-muted-foreground">
+                                    {toolGroup.features.length}/{Math.max(toolGroup.features.length, 5)}
+                                  </span>
+                                </button>
+                              </PopoverTrigger>
+                              <PopoverContent align="end" className="w-80">
+                                <div className="space-y-3">
+                                  <div className="flex items-center gap-2 pb-2 border-b">
+                                    <ToolIcon
+                                      name={toolGroup.toolName}
+                                      simpleIconSlug={toolGroup.toolIcon}
+                                      simpleIconColor={toolGroup.toolColor}
+                                      size={20}
+                                    />
+                                    <h4 className="font-medium">{toolGroup.toolName} Features</h4>
+                                  </div>
+                                  <div className="space-y-1 max-h-64 overflow-y-auto">
+                                    {toolGroup.features.map((feature) => (
+                                      <button
+                                        key={feature.id}
+                                        onClick={() => handleFeatureRemove(feature.id)}
+                                        className="w-full flex items-start gap-3 rounded-md px-2 py-2 text-left text-sm hover:bg-accent transition-colors"
+                                      >
+                                        <div className="flex h-4 w-4 items-center justify-center rounded border border-primary bg-primary text-primary-foreground flex-shrink-0 mt-0.5">
+                                          <Check className="h-2.5 w-2.5" />
+                                        </div>
+                                        <div className="flex-1">
+                                          <div className="font-medium">{feature.name}</div>
+                                          {feature.description && (
+                                            <div className="text-xs text-muted-foreground line-clamp-1">
+                                              {feature.description}
+                                            </div>
+                                          )}
+                                        </div>
+                                      </button>
+                                    ))}
+                                  </div>
+                                  <div className="pt-2 border-t text-xs text-muted-foreground">
+                                    Click any feature to remove it
+                                  </div>
+                                </div>
+                              </PopoverContent>
+                            </Popover>
                           </div>
                         </div>
-                      </div>
-                      <div className="ml-auto">
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <button
-                              className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity"
-                            >
-                              <MiniDonutChart
-                                value={toolGroup.features.length}
-                                total={Math.max(toolGroup.features.length, 5)}
-                                size={20}
-                                strokeWidth={3}
-                                className="text-primary"
-                              />
-                              <span className="text-xs text-muted-foreground">
-                                {toolGroup.features.length}/{Math.max(toolGroup.features.length, 5)}
-                              </span>
-                            </button>
-                          </PopoverTrigger>
-                          <PopoverContent align="end" className="w-80">
-                            <div className="space-y-3">
-                              <div className="flex items-center gap-2 pb-2 border-b">
-                                <ToolIcon
-                                  name={toolGroup.toolName}
-                                  simpleIconSlug={toolGroup.toolIcon}
-                                  simpleIconColor={toolGroup.toolColor}
-                                  size={20}
-                                />
-                                <h4 className="font-medium">{toolGroup.toolName} Features</h4>
-                              </div>
-                              <div className="space-y-1 max-h-64 overflow-y-auto">
-                                {toolGroup.features.map((feature) => (
-                                  <button
-                                    key={feature.id}
-                                    onClick={() => handleFeatureRemove(feature.id)}
-                                    className="w-full flex items-start gap-3 rounded-md px-2 py-2 text-left text-sm hover:bg-accent transition-colors"
-                                  >
-                                    <div className="flex h-4 w-4 items-center justify-center rounded border border-primary bg-primary text-primary-foreground flex-shrink-0 mt-0.5">
-                                      <Check className="h-2.5 w-2.5" />
-                                    </div>
-                                    <div className="flex-1">
-                                      <div className="font-medium">{feature.name}</div>
-                                      {feature.description && (
-                                        <div className="text-xs text-muted-foreground line-clamp-1">
-                                          {feature.description}
-                                        </div>
-                                      )}
-                                    </div>
-                                  </button>
-                                ))}
-                              </div>
-                              <div className="pt-2 border-t text-xs text-muted-foreground">
-                                Click any feature to remove it
-                              </div>
-                            </div>
-                          </PopoverContent>
-                        </Popover>
                       </div>
                     </div>
                   ))}
@@ -835,107 +899,230 @@ Use web search to research ${feature.toolName} and learn more about what flow th
                         chips.push(
                           <div key="starter" className="space-y-2">
                             <div className="space-y-2">
-                              <div className="inline-flex items-center gap-2 px-2 py-2 rounded-lg bg-card/50 backdrop-blur-sm border border-border/50 shadow-sm text-sm font-medium">
-                                <button
-                                  onClick={() => setSelectedTemplate('')}
-                                  className="hover:bg-muted rounded p-0.5 transition-colors"
-                                >
-                                  <X className="h-3 w-3 text-muted-foreground" />
-                                </button>
-                                <LogoIcon 
-                                  className={cn(
-                                    "w-4 h-4",
-                                    selectedTemplate === 'byos' ? "text-emerald-500" : ""
-                                  )} 
-                                />
-                                <span>Use {template.name}</span>
-                                <div className="ml-auto flex items-center gap-1">
-                                  <Popover>
-                                    <PopoverTrigger asChild>
-                                      <button className="hover:bg-muted rounded p-1 transition-colors">
-                                        <Lightbulb className="h-4 w-4 text-muted-foreground" />
+                              <div className="px-2 py-2 rounded-lg bg-card/50 backdrop-blur-sm border border-border/50 shadow-sm text-sm font-medium">
+                                {/* Mobile layout - controls above text */}
+                                <div className="flex sm:hidden flex-col space-y-2">
+                                  {/* Top row with X and controls */}
+                                  <div className="flex items-center justify-between">
+                                    <div className="flex items-center gap-2">
+                                      <button
+                                        onClick={() => setSelectedTemplate('')}
+                                        className="hover:bg-muted rounded p-0.5 transition-colors"
+                                      >
+                                        <X className="h-3 w-3 text-muted-foreground" />
                                       </button>
-                                    </PopoverTrigger>
-                                    <PopoverContent side="top" className="w-80">
-                                      <div className="space-y-2">
-                                        <div className="flex items-center gap-2">
-                                          <Nut className="h-3 w-3 text-muted-foreground" />
-                                          <span className="text-sm font-medium">In a nutshell</span>
-                                        </div>
-                                        <p className="text-sm text-muted-foreground">{getTemplateNutshell(selectedTemplate)}</p>
+                                      {/* Donut chart positioned next to X */}
+                                      <div className="flex items-center">
+                                        <LogoIcon 
+                                          className={cn(
+                                            "w-4 h-4",
+                                            selectedTemplate === 'byos' ? "text-emerald-500" : ""
+                                          )} 
+                                        />
                                       </div>
-                                    </PopoverContent>
-                                  </Popover>
-                                  <button
-                                    onClick={() => toggleChipExpansion(chipId)}
-                                    className="hover:bg-muted rounded p-1 transition-colors"
-                                  >
-                                    <ChevronDown className={cn(
-                                      "h-4 w-4 text-muted-foreground transition-transform",
-                                      isExpanded && "rotate-180"
-                                    )} />
-                                  </button>
-                                </div>
-                              </div>
-                              {/* Action buttons below the chip - Mobile responsive */}
-                              <div className="ml-6 flex flex-wrap items-center gap-2 text-xs">
-                                {selectedTemplate !== 'byos' && (
-                                  <>
-                                    <button
-                                      onClick={handleCopyGitClone}
-                                      className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors"
-                                    >
-                                      {copiedGitClone ? (
-                                        <>
-                                          <CheckCircle className="h-3 w-3" />
-                                          <span className="hidden sm:inline">Copied!</span>
-                                        </>
-                                      ) : (
-                                        <>
-                                          <Copy className="h-3 w-3" />
-                                          <span className="hidden sm:inline">Copy Git Clone</span>
-                                        </>
-                                      )}
-                                    </button>
-                                    <span className="text-muted-foreground hidden sm:inline">•</span>
-                                    <button
-                                      disabled
-                                      className="flex items-center gap-1 text-muted-foreground/50 cursor-not-allowed"
-                                    >
-                                      <Download className="h-3 w-3" />
-                                      <span className="hidden sm:inline">Download ZIP</span>
-                                    </button>
-                                    <span className="text-muted-foreground hidden sm:inline">•</span>
-                                    <a
-                                      href="https://github.com/junaid33/next-keystone-starter"
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors"
-                                    >
-                                      <Github className="h-3 w-3" />
-                                      <span className="hidden sm:inline">Source</span>
-                                    </a>
-                                    <span className="text-muted-foreground hidden sm:inline">•</span>
-                                  </>
-                                )}
-                                <Popover>
-                                  <PopoverTrigger asChild>
-                                    <button className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors">
-                                      <Info className="h-3 w-3" />
-                                      <span className="hidden sm:inline">Info</span>
-                                    </button>
-                                  </PopoverTrigger>
-                                  <PopoverContent side="top" className="w-80">
-                                    <div className="space-y-2">
-                                      <p className="text-sm text-foreground">
-                                        {selectedTemplate === 'byos' 
-                                          ? 'Use your existing codebase as the foundation. Perfect for integrating powerful features from open source tools into your current project without starting from scratch.'
-                                          : 'starter'
-                                        }
-                                      </p>
                                     </div>
-                                  </PopoverContent>
-                                </Popover>
+                                    <div className="flex items-center gap-1">
+                                      <Popover>
+                                        <PopoverTrigger asChild>
+                                          <button className="hover:bg-muted rounded p-1 transition-colors">
+                                            <Lightbulb className="h-4 w-4 text-muted-foreground" />
+                                          </button>
+                                        </PopoverTrigger>
+                                        <PopoverContent side="top" className="w-80">
+                                          <div className="space-y-2">
+                                            <div className="flex items-center gap-2">
+                                              <Nut className="h-3 w-3 text-muted-foreground" />
+                                              <span className="text-sm font-medium">In a nutshell</span>
+                                            </div>
+                                            <p className="text-sm text-muted-foreground">{getTemplateNutshell(selectedTemplate)}</p>
+                                          </div>
+                                        </PopoverContent>
+                                      </Popover>
+                                      <button
+                                        onClick={() => toggleChipExpansion(chipId)}
+                                        className="hover:bg-muted rounded p-1 transition-colors"
+                                      >
+                                        <ChevronDown className={cn(
+                                          "h-4 w-4 text-muted-foreground transition-transform",
+                                          isExpanded && "rotate-180"
+                                        )} />
+                                      </button>
+                                    </div>
+                                  </div>
+                                  
+                                  {/* Tool info */}
+                                  <div className="flex justify-center">
+                                    <span>Use {template.name}</span>
+                                  </div>
+                                  
+                                  {/* Action buttons inside card on mobile */}
+                                  <div className="flex flex-wrap items-center gap-2 text-xs">
+                                    {selectedTemplate !== 'byos' && (
+                                      <>
+                                        <button
+                                          onClick={handleCopyGitClone}
+                                          className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors"
+                                        >
+                                          {copiedGitClone ? (
+                                            <>
+                                              <CheckCircle className="h-3 w-3" />
+                                              <span>Copied!</span>
+                                            </>
+                                          ) : (
+                                            <>
+                                              <Copy className="h-3 w-3" />
+                                              <span>Copy Git Clone</span>
+                                            </>
+                                          )}
+                                        </button>
+                                        <span className="text-muted-foreground">•</span>
+                                        <button
+                                          disabled
+                                          className="flex items-center gap-1 text-muted-foreground/50 cursor-not-allowed"
+                                        >
+                                          <Download className="h-3 w-3" />
+                                          <span>Download ZIP</span>
+                                        </button>
+                                        <span className="text-muted-foreground">•</span>
+                                        <a
+                                          href="https://github.com/junaid33/next-keystone-starter"
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors"
+                                        >
+                                          <ExternalLink className="h-3 w-3" />
+                                          <span>Source</span>
+                                        </a>
+                                        <span className="text-muted-foreground">•</span>
+                                      </>
+                                    )}
+                                    <Popover>
+                                      <PopoverTrigger asChild>
+                                        <button className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors">
+                                          <Info className="h-3 w-3" />
+                                          <span>Info</span>
+                                        </button>
+                                      </PopoverTrigger>
+                                      <PopoverContent side="top" className="w-80">
+                                        <div className="space-y-2">
+                                          <p className="text-sm text-foreground">
+                                            {selectedTemplate === 'byos' 
+                                              ? 'Use your existing codebase as the foundation. Perfect for integrating powerful features from open source tools into your current project without starting from scratch.'
+                                              : 'starter'
+                                            }
+                                          </p>
+                                        </div>
+                                      </PopoverContent>
+                                    </Popover>
+                                  </div>
+                                </div>
+
+                                {/* Desktop layout - inline */}
+                                <div className="hidden sm:flex items-center gap-2">
+                                  <button
+                                    onClick={() => setSelectedTemplate('')}
+                                    className="hover:bg-muted rounded p-0.5 transition-colors"
+                                  >
+                                    <X className="h-3 w-3 text-muted-foreground" />
+                                  </button>
+                                  <LogoIcon 
+                                    className={cn(
+                                      "w-4 h-4",
+                                      selectedTemplate === 'byos' ? "text-emerald-500" : ""
+                                    )} 
+                                  />
+                                  <span>Use {template.name}</span>
+                                  <div className="ml-auto flex items-center gap-1">
+                                    <Popover>
+                                      <PopoverTrigger asChild>
+                                        <button className="hover:bg-muted rounded p-1 transition-colors">
+                                          <Lightbulb className="h-4 w-4 text-muted-foreground" />
+                                        </button>
+                                      </PopoverTrigger>
+                                      <PopoverContent side="top" className="w-80">
+                                        <div className="space-y-2">
+                                          <div className="flex items-center gap-2">
+                                            <Nut className="h-3 w-3 text-muted-foreground" />
+                                            <span className="text-sm font-medium">In a nutshell</span>
+                                          </div>
+                                          <p className="text-sm text-muted-foreground">{getTemplateNutshell(selectedTemplate)}</p>
+                                        </div>
+                                      </PopoverContent>
+                                    </Popover>
+                                    <button
+                                      onClick={() => toggleChipExpansion(chipId)}
+                                      className="hover:bg-muted rounded p-1 transition-colors"
+                                    >
+                                      <ChevronDown className={cn(
+                                        "h-4 w-4 text-muted-foreground transition-transform",
+                                        isExpanded && "rotate-180"
+                                      )} />
+                                    </button>
+                                  </div>
+                                </div>
+
+                                {/* Desktop action buttons - outside card */}
+                                <div className="hidden sm:block mt-2 ml-6">
+                                  <div className="flex flex-wrap items-center gap-2 text-xs">
+                                    {selectedTemplate !== 'byos' && (
+                                      <>
+                                        <button
+                                          onClick={handleCopyGitClone}
+                                          className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors"
+                                        >
+                                          {copiedGitClone ? (
+                                            <>
+                                              <CheckCircle className="h-3 w-3" />
+                                              <span>Copied!</span>
+                                            </>
+                                          ) : (
+                                            <>
+                                              <Copy className="h-3 w-3" />
+                                              <span>Copy Git Clone</span>
+                                            </>
+                                          )}
+                                        </button>
+                                        <span className="text-muted-foreground">•</span>
+                                        <button
+                                          disabled
+                                          className="flex items-center gap-1 text-muted-foreground/50 cursor-not-allowed"
+                                        >
+                                          <Download className="h-3 w-3" />
+                                          <span>Download ZIP</span>
+                                        </button>
+                                        <span className="text-muted-foreground">•</span>
+                                        <a
+                                          href="https://github.com/junaid33/next-keystone-starter"
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors"
+                                        >
+                                          <ExternalLink className="h-3 w-3" />
+                                          <span>Source</span>
+                                        </a>
+                                        <span className="text-muted-foreground">•</span>
+                                      </>
+                                    )}
+                                    <Popover>
+                                      <PopoverTrigger asChild>
+                                        <button className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors">
+                                          <Info className="h-3 w-3" />
+                                          <span>Info</span>
+                                        </button>
+                                      </PopoverTrigger>
+                                      <PopoverContent side="top" className="w-80">
+                                        <div className="space-y-2">
+                                          <p className="text-sm text-foreground">
+                                            {selectedTemplate === 'byos' 
+                                              ? 'Use your existing codebase as the foundation. Perfect for integrating powerful features from open source tools into your current project without starting from scratch.'
+                                              : 'starter'
+                                            }
+                                          </p>
+                                        </div>
+                                      </PopoverContent>
+                                    </Popover>
+                                  </div>
+                                </div>
                               </div>
                             </div>
                             {isExpanded && (

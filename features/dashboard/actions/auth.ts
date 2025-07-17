@@ -4,6 +4,7 @@ import { cookies } from 'next/headers';
 import { keystoneClient } from '@/features/dashboard/lib/keystoneClient';
 import { redirect } from 'next/navigation';
 import { removeAuthToken } from '@/features/dashboard/lib/cookies';
+import { revalidatePath } from 'next/cache';
 
 // Define types for GraphQL responses
 interface RedeemTokenResponse {
@@ -140,15 +141,23 @@ export async function signOut() {
     // This ensures the user is signed out locally
     await removeAuthToken();
 
+    // CRITICAL: Clear Next.js router cache to prevent stale data
+    revalidatePath("/", "layout");
+
     if (!response.success) {
-      return { error: `Failed to sign out: ${response.error}` };
+      console.error(`Failed to sign out: ${response.error}`);
+      // Still redirect even if server logout fails, since we cleared the cookie
     }
-    return { success: true };
   } catch (error) {
     // Still remove the cookie even if there's an error
     await removeAuthToken();
-    return { error: error instanceof Error ? error.message : 'An error occurred' };
+    // Clear cache even on error
+    revalidatePath("/", "layout");
+    console.error("Logout error:", error instanceof Error ? error.message : 'An error occurred');
   }
+  
+  // Always redirect after logout attempt
+  redirect("/dashboard/signin");
 }
 
 export async function createInitialUser(prevState: { message: string | null, formData: { name: string, email: string, password: string } }, formData: FormData) {

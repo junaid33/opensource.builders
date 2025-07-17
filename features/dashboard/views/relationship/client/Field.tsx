@@ -149,13 +149,12 @@ export function ClientField({
               refSearchFields: field.refSearchFields,
               many: field.many,
               label: field.label,
+              path: field.path,
               displayOptions: field.displayOptions
             }}
-
             value={value}
             onChange={onChange}
             foreignList={foreignList}
-
             forceValidation={forceValidation}
           />
         )}

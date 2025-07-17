@@ -32,7 +32,8 @@ export function CreateItemDrawer({ listKey, isOpen, onClose, onCreate }: CreateI
   }, [list]);
 
   // Use the create item hook with enhanced fields (same as create page)
-  const createItem = useCreateItem(list, enhancedFields);
+  // Skip revalidation to prevent page refresh in drawer context
+  const createItem = useCreateItem(list, enhancedFields, { skipRevalidation: true });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
+import { ImageIcon } from 'lucide-react'
 
 import type { FieldProps } from '../../types'
 import { formatBytes } from './utils'
@@ -99,11 +100,12 @@ function ImageView(props: {
         <ImageDetails {...imageData}>
           {onChange && (
             <div className="flex gap-2 items-center mt-auto">
-              <Button size="sm" variant="outline" onClick={onFileTrigger}>
+              <Button type="button" size="sm" variant="outline" onClick={onFileTrigger}>
                 Change
               </Button>
               {value.kind === 'from-server' && (
                 <Button
+                  type="button"
                   size="sm"
                   variant="outline"
                   onClick={() => {
@@ -115,6 +117,7 @@ function ImageView(props: {
               )}
               {value.kind === 'upload' && (
                 <Button
+                  type="button"
                   size="sm"
                   variant="outline"
                   onClick={() => {
@@ -131,11 +134,12 @@ function ImageView(props: {
 
       {!imageData && (
         <div className="flex gap-2 items-center">
-          <Button disabled={onChange === undefined} onClick={onFileTrigger}>
+          <Button type="button" disabled={onChange === undefined} onClick={onFileTrigger}>
             Upload
           </Button>
           {value.kind === 'remove' && value.previous && (
             <Button
+              type="button"
               variant="outline"
               onClick={() => {
                 if (value.previous !== undefined) {
@@ -171,20 +175,29 @@ function ImageDetails(props: PropsWithChildren<ImageData>) {
   return (
     <div
       className={cn(
-        "bg-background border rounded-md min-h-96 overflow-hidden flex transition-opacity",
+        "bg-background border rounded-md min-h-48 overflow-hidden flex transition-opacity",
         "max-sm:flex-col",
         isLoaded ? "opacity-100" : "opacity-0"
       )}
     >
-      <img
-        onLoad={props.onLoad}
-        className={cn(
-          "max-h-96 max-w-full min-w-0 object-cover",
-          "sm:h-96"
-        )}
-        alt="preview of the upload"
-        src={props.url}
-      />
+      {props.url ? (
+        <img
+          onLoad={props.onLoad}
+          className={cn(
+            "max-h-48 max-w-full min-w-0 object-contain",
+            "sm:h-48 sm:w-48 sm:flex-shrink-0"
+          )}
+          alt="preview of the upload"
+          src={props.url}
+        />
+      ) : (
+        <div className={cn(
+          "max-h-48 max-w-full min-w-0 flex items-center justify-center bg-muted",
+          "sm:h-48 sm:w-48 sm:flex-shrink-0"
+        )}>
+          <ImageIcon className="h-12 w-12 text-muted-foreground" />
+        </div>
+      )}
       <div className="p-4 flex flex-col gap-3 flex-1 min-w-0">
         {props.name ? (
           <div className="text-sm font-medium truncate" title={props.name}>

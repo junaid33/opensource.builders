@@ -121,7 +121,7 @@ export function MobileFilterDropdown({ selectedSoftware }: MobileFilterDropdownP
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
-        <div className="bg-muted/30 rounded-lg p-4 min-h-[60px] border border-border/50 shadow-inner w-full">
+        <div className="bg-muted/80 rounded-lg p-4 min-h-[60px] border border-border/50 ring-foreground/5 w-full">
           <div className="flex items-center justify-between">
             <div className="flex-1">
               <div className="text-sm font-medium text-foreground mb-2">Filters</div>

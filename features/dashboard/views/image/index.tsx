@@ -20,6 +20,7 @@ export const Cell: CellComponent<typeof controller> = ({ value }: { value: any; 
   )
 }
 
+
 export type ImageValue =
   | { kind: 'empty' }
   | {

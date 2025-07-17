@@ -36,7 +36,7 @@ export default function Hero({ proprietaryTools = [], onSoftwareSelect }: HeroPr
             </h1>
             <p className="text-lg text-muted-foreground mb-8">
               Discover powerful open source alternatives to popular proprietary software.
-              <br className="hidden md:block" /> Save money, gain freedom, and support the open source community.
+              <br className="hidden md:block" /> Take control of your software, gain freedom, and support the open source community.
             </p>
             {/* Button + Social proof */}
             <div className="sm:flex sm:items-center sm:justify-center md:justify-start space-y-6 sm:space-y-0 sm:space-x-5">
@@ -46,14 +46,6 @@ export default function Hero({ proprietaryTools = [], onSoftwareSelect }: HeroPr
                   repo="opensource.builders" 
                   // formatted={true}
                 />
-              </div>
-              <div className="sm:flex sm:items-center sm:justify-center space-y-2 sm:space-y-0 sm:space-x-3 md:hidden">
-                <Button asChild variant="outline" className="text-sm">
-                  <Link href="/build" className="flex items-center gap-2">
-                    <Sparkles className="h-5 w-5 text-muted-foreground" />
-                    Build
-                  </Link>
-                </Button>
               </div>
             </div>
           </div>

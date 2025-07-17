@@ -73,20 +73,18 @@ export default async function AlternativesServerQuery({ searchParams = {} }: Alt
 
   return (
     <div className="space-y-6">
-      <div className="mb-8">
-        {/* Mobile Chip */}
-        <div className="md:hidden mb-6">
-          <MobileFilterDropdown selectedSoftware={selectedSoftware} />
-        </div>
-        
+      <div className="mb-8">        
         {/* Desktop Title */}
-        <div className="hidden md:block">
+        <div>
           <h2 className="text-2xl font-bold text-foreground mb-4">
             Open Source Alternatives to {selectedSoftware}
           </h2>
           <p className="text-muted-foreground mb-6">
             {alternatives.length} alternatives found with feature compatibility scores
           </p>
+        </div>
+        <div className="md:hidden mb-6">
+          <MobileFilterDropdown selectedSoftware={selectedSoftware} />
         </div>
       </div>
       

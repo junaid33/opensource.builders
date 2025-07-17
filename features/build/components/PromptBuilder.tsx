@@ -13,6 +13,8 @@ import {
 import { Input } from '@/components/ui/input'
 import { Card } from '@/components/ui/card'
 import { LogoIcon } from '@/features/dashboard/components/Logo'
+import {LogoIcon as OpenFrontIcon} from '@/components/OpenFrontIcon'
+import {LogoIcon as OpenShipIcon} from '@/components/OpenShipIcon'
 import { DisplayCard } from '@/features/landing/components/display-card'
 import { MiniDonutChart } from '@/components/ui/mini-donut-chart'
 import { request } from 'graphql-request'
@@ -208,6 +210,16 @@ const starterTemplates = [
     description: 'Full-stack template with admin'
   },
   {
+    id: 'openfront',
+    name: 'OpenFront',
+    description: 'Open source Shopify alternative'
+  },
+  {
+    id: 'openship',
+    name: 'OpenShip',
+    description: 'Order routing & fulfillment platform'
+  },
+  {
     id: 'byos',
     name: 'Bring Your Own Starter',
     description: 'Start with what you have'
@@ -350,42 +362,102 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
 - Modern TypeScript architecture
 
 The repository includes comprehensive documentation in the docs/ folder covering the architecture, Keystone integration, and dashboard system. This starter powers Open Source Builders, Openfront, Openship, and many other projects.`,
+      'openfront': `OpenFront is a comprehensive open source e-commerce platform built as a Shopify alternative. It features:
+
+- **Complete E-commerce Stack**: Product management, order processing, payment handling, shipping integration
+- **Multi-Store Support**: Built-in multi-tenant architecture for managing multiple stores
+- **Modern Architecture**: Next.js 15 + React 19 + KeystoneJS 6 + PostgreSQL + Prisma
+- **Payment Processing**: Stripe, PayPal integrations with webhook handling
+- **Shipping & Fulfillment**: Multiple shipping providers, label generation, tracking
+- **Analytics Dashboard**: Built-in analytics with sales performance and customer insights
+- **Flexible Product System**: Variants, options, collections, inventory management
+- **Customer Management**: Accounts, profiles, order history, segmentation
+
+OpenFront provides everything needed to build a modern e-commerce platform without vendor lock-in. The codebase is production-ready with 78+ data models covering comprehensive e-commerce functionality.`,
+      'openship': `OpenShip is an intelligent order routing and fulfillment platform that automates e-commerce operations. It features:
+
+- **Order Routing Engine**: Automatically routes orders from shops to optimal fulfillment channels
+- **Multi-Platform Integration**: Connect Shopify, WooCommerce, and other e-commerce platforms
+- **Product Matching**: AI-assisted matching between shop products and supplier products
+- **Inventory Synchronization**: Real-time inventory tracking across all connected platforms
+- **Automated Fulfillment**: Automatically place orders with suppliers and track shipments
+- **Webhook Management**: Real-time event processing for order updates and tracking
+- **Bulk Processing**: Handle multiple orders simultaneously with intelligent batching
+- **Modern Architecture**: Next.js 15 + KeystoneJS 6 + PostgreSQL for scalable operations
+
+OpenShip eliminates manual order processing by intelligently routing orders to the best fulfillment channels, making it perfect for dropshipping, multi-vendor marketplaces, and complex fulfillment scenarios.`,
       'byos': '' // No template setup for "bring your own starter"
     }
     return templatePrompts[templateId] || 'Use the selected starter template'
   }
 
-  const getFeaturePromptText = (feature: SelectedFeature) => {
+  const getFeaturePromptText = (feature: SelectedFeature, templateId: string) => {
+    const isManualStarter = templateId === 'byos'
+    
+    // Get infrastructure description based on template
+    const getInfrastructureDescription = () => {
+      switch (templateId) {
+        case 'openfront':
+          return 'OpenFront e-commerce platform infrastructure. Follow the existing patterns in /features/ directory and integrate with the Keystone schema and e-commerce data models.'
+        case 'openship':
+          return 'OpenShip order routing platform infrastructure. Follow the existing patterns in /features/ directory and integrate with the Keystone schema and order processing system.'
+        case '1':
+          return 'Next.js + Keystone.js infrastructure. Follow our existing patterns in /features/ directory and integrate with the Keystone schema.'
+        default:
+          return 'existing codebase architecture. Follow your current patterns and integrate with your existing infrastructure.'
+      }
+    }
+    
     if (feature.isOpenSource) {
       // Open source tools - access their code directly
       const repoUrl = feature.toolRepo || `https://github.com/search?q=${feature.toolName.toLowerCase()}`
       
-      return `Implement ${feature.toolName}'s ${feature.name}. 
+      if (isManualStarter) {
+        return `Implement ${feature.toolName}'s ${feature.name}. 
 
 ${feature.toolName} repository: ${repoUrl}
 
-Use GitHub MCP (if available) or GitHub to find the relevant code that implements ${feature.name} and adapt it to our Next.js + Keystone.js infrastructure. Follow our existing patterns in /features/ directory and integrate with the Keystone schema.`
+Please understand how this application works and then implement ${feature.name}. Use GitHub MCP (if available) or GitHub to find the relevant code that implements ${feature.name} and adapt it to your ${getInfrastructureDescription()}`
+      } else {
+        return `Implement ${feature.toolName}'s ${feature.name}. 
+
+${feature.toolName} repository: ${repoUrl}
+
+Use GitHub MCP (if available) or GitHub to find the relevant code that implements ${feature.name} and adapt it to our ${getInfrastructureDescription()}`
+      }
     } else {
       // Proprietary tools - use web search to understand the feature
-      return `Implement ${feature.toolName}'s ${feature.name}.
+      if (isManualStarter) {
+        return `Implement ${feature.toolName}'s ${feature.name}.
 
-Use web search to research ${feature.toolName} and learn more about what flow this feature allows and how to implement it in our starter. Study their documentation, API references, and best practices, then create a similar implementation that integrates with our Next.js + Keystone.js infrastructure.`
+Please understand how this application works and then implement ${feature.name}. Use web search to research ${feature.toolName} and learn more about what flow this feature allows and how to implement it. Study their documentation, API references, and best practices, then create a similar implementation that integrates with your ${getInfrastructureDescription()}`
+      } else {
+        return `Implement ${feature.toolName}'s ${feature.name}.
+
+Use web search to research ${feature.toolName} and learn more about what flow this feature allows and how to implement it in our platform. Study their documentation, API references, and best practices, then create a similar implementation that integrates with our ${getInfrastructureDescription()}`
+      }
     }
   }
 
   const getTemplateNutshell = (templateId: string) => {
     const nutshells: Record<string, string> = {
       '1': 'Describes the Next.js + Keystone starter architecture and features to help AI understand the project structure.',
+      'openfront': 'Explains OpenFront\'s comprehensive e-commerce platform architecture, helping AI understand the full-stack Shopify alternative with 78+ data models.',
+      'openship': 'Details OpenShip\'s order routing and fulfillment automation system, helping AI understand the multi-platform integration architecture.',
       'byos': 'No starter template setup - you will work with your existing codebase and integrate the selected features into your current architecture.'
     }
     return nutshells[templateId] || 'Starter template setup instructions'
   }
 
-  const getFeatureNutshell = (feature: SelectedFeature) => {
+  const getFeatureNutshell = (feature: SelectedFeature, templateId: string) => {
+    const platformName = templateId === 'openfront' ? 'OpenFront' : 
+                        templateId === 'openship' ? 'OpenShip' : 
+                        templateId === '1' ? 'our starter' : 'your codebase'
+    
     if (feature.isOpenSource) {
-      return `Tells AI to examine ${feature.toolName}'s repository code for ${feature.name} and adapt it to our infrastructure.`
+      return `Tells AI to examine ${feature.toolName}'s repository code for ${feature.name} and adapt it to ${platformName}.`
     } else {
-      return `Tells AI to research ${feature.toolName}'s docs via web search and implement ${feature.name} in our starter.`
+      return `Tells AI to research ${feature.toolName}'s docs via web search and implement ${feature.name} in ${platformName}.`
     }
   }
 
@@ -396,7 +468,7 @@ Use web search to research ${feature.toolName} and learn more about what flow th
       
       let prompt = 'Implement the following features in your existing codebase:\n\n'
       selectedFeatures.forEach((feature, index) => {
-        prompt += `${index + 1}. ${getFeaturePromptText(feature)}\n\n`
+        prompt += `${index + 1}. ${getFeaturePromptText(feature, selectedTemplate)}\n\n`
       })
       prompt += 'Analyze your existing codebase architecture and integrate these features following your current patterns and conventions. Provide detailed step-by-step instructions that work with your specific tech stack.'
       
@@ -417,7 +489,7 @@ Use web search to research ${feature.toolName} and learn more about what flow th
     if (selectedFeatures.length > 0) {
       prompt += 'Implement the following features:\n\n'
       selectedFeatures.forEach((feature, index) => {
-        prompt += `${index + 1}. ${getFeaturePromptText(feature)}\n\n`
+        prompt += `${index + 1}. ${getFeaturePromptText(feature, selectedTemplate)}\n\n`
       })
     }
     
@@ -512,12 +584,18 @@ Use web search to research ${feature.toolName} and learn more about what flow th
                   {starterTemplates.map((template) => (
                     <SelectItem key={template.id} value={template.id}>
                       <span className="flex items-center gap-3">
-                        <LogoIcon 
-                          className={cn(
-                            "w-6 h-6",
-                            template.id === 'byos' ? "text-emerald-500" : ""
-                          )} 
-                        />
+                        {template.id === 'openfront' ? (
+                          <OpenFrontIcon className="w-6 h-6" />
+                        ) : template.id === 'openship' ? (
+                          <OpenShipIcon className="w-6 h-6" />
+                        ) : (
+                          <LogoIcon 
+                            className={cn(
+                              "w-6 h-6",
+                              template.id === 'byos' ? "text-emerald-500" : ""
+                            )} 
+                          />
+                        )}
                         <span>
                           <span className="block font-medium">{template.name}</span>
                           <span className="text-muted-foreground mt-0.5 block text-xs">
@@ -913,12 +991,18 @@ Use web search to research ${feature.toolName} and learn more about what flow th
                                       </button>
                                       {/* Donut chart positioned next to X */}
                                       <div className="flex items-center">
-                                        <LogoIcon 
-                                          className={cn(
-                                            "w-4 h-4",
-                                            selectedTemplate === 'byos' ? "text-emerald-500" : ""
-                                          )} 
-                                        />
+                                        {selectedTemplate === 'openfront' ? (
+                                          <OpenFrontIcon className="w-4 h-4" />
+                                        ) : selectedTemplate === 'openship' ? (
+                                          <OpenShipIcon className="w-4 h-4" />
+                                        ) : (
+                                          <LogoIcon 
+                                            className={cn(
+                                              "w-4 h-4",
+                                              selectedTemplate === 'byos' ? "text-emerald-500" : ""
+                                            )} 
+                                          />
+                                        )}
                                       </div>
                                     </div>
                                     <div className="flex items-center gap-1">
@@ -1025,12 +1109,18 @@ Use web search to research ${feature.toolName} and learn more about what flow th
                                   >
                                     <X className="h-3 w-3 text-muted-foreground" />
                                   </button>
-                                  <LogoIcon 
-                                    className={cn(
-                                      "w-4 h-4",
-                                      selectedTemplate === 'byos' ? "text-emerald-500" : ""
-                                    )} 
-                                  />
+                                  {selectedTemplate === 'openfront' ? (
+                                    <OpenFrontIcon className="w-4 h-4" />
+                                  ) : selectedTemplate === 'openship' ? (
+                                    <OpenShipIcon className="w-4 h-4" />
+                                  ) : (
+                                    <LogoIcon 
+                                      className={cn(
+                                        "w-4 h-4",
+                                        selectedTemplate === 'byos' ? "text-emerald-500" : ""
+                                      )} 
+                                    />
+                                  )}
                                   <span>Use {template.name}</span>
                                   <div className="ml-auto flex items-center gap-1">
                                     <Popover>
@@ -1168,7 +1258,7 @@ Use web search to research ${feature.toolName} and learn more about what flow th
                                       <Nut className="h-3 w-3 text-muted-foreground" />
                                       <span className="text-sm font-medium">In a nutshell</span>
                                     </div>
-                                    <p className="text-sm text-muted-foreground">{getFeatureNutshell(feature)}</p>
+                                    <p className="text-sm text-muted-foreground">{getFeatureNutshell(feature, selectedTemplate)}</p>
                                   </div>
                                 </PopoverContent>
                               </Popover>
@@ -1185,7 +1275,7 @@ Use web search to research ${feature.toolName} and learn more about what flow th
                           </div>
                           {isExpanded && (
                             <div className="ml-2 sm:ml-6 p-3 rounded-lg bg-background backdrop-blur-sm border border-border/50 shadow-sm text-xs text-muted-foreground">
-                              {getFeaturePromptText(feature)}
+                              {getFeaturePromptText(feature, selectedTemplate)}
                             </div>
                           )}
                         </div>

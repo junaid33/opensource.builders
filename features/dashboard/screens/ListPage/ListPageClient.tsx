@@ -10,9 +10,15 @@ import React, { useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { 
   SearchX,
-  Table as TableIcon 
+  Table as TableIcon,
+  Triangle,
+  Square,
+  Circle,
+  Search
 } from 'lucide-react'
 import { Alert, AlertDescription } from '@/components/ui/alert'
+import { EmptyState } from '@/components/ui/empty-state'
+import { Button } from '@/components/ui/button'
 import { PageContainer } from '../../components/PageContainer'
 import { FilterBar } from '../../components/FilterBar'
 import { ListTable } from '../../components/ListTable'
@@ -31,27 +37,27 @@ interface ListPageClientProps {
   }
 }
 
-function EmptyState({ isFiltered }: { isFiltered: boolean }) {
+function EmptyStateDefault({ list }: { list: any }) {
   return (
-    <div className="flex flex-col items-center justify-center p-8 text-center">
-      {isFiltered ? (
-        <>
-          <SearchX className="h-12 w-12 text-muted-foreground mb-4" />
-          <h3 className="text-lg font-semibold mb-2">No results found</h3>
-          <p className="text-muted-foreground">
-            No items found. Try adjusting your search or filters.
-          </p>
-        </>
-      ) : (
-        <>
-          <TableIcon className="h-12 w-12 text-muted-foreground mb-4" />
-          <h3 className="text-lg font-semibold mb-2">No items yet</h3>
-          <p className="text-muted-foreground">
-            Add the first item to see it here.
-          </p>
-        </>
-      )}
-    </div>
+    <EmptyState
+      title={`No ${list.label} Created`}
+      description={`You can create a new ${list.singular.toLowerCase()} to get started.`}
+      icons={[Triangle, Square, Circle]}
+    />
+  )
+}
+
+function EmptyStateSearch({ onResetFilters }: { onResetFilters: () => void }) {
+  return (
+    <EmptyState
+      title="No Results Found"
+      description="Try adjusting your search filters."
+      icons={[Search]}
+      action={{
+        label: "Reset Filters",
+        onClick: onResetFilters
+      }}
+    />
   )
 }
 
@@ -87,6 +93,11 @@ export function ListPageClient({
     
     const newUrl = params.toString() ? `?${params.toString()}` : ''
     router.push(newUrl)
+  }, [router])
+
+  // Handle reset filters
+  const handleResetFilters = useCallback(() => {
+    router.push(window.location.pathname)
   }, [router])
 
   if (!list) {
@@ -140,11 +151,11 @@ export function ListPageClient({
         </div>
       ) : isEmpty ? (
         <div className="px-4 md:px-6">
-          <EmptyState isFiltered={false} />
+          <EmptyStateDefault list={list} />
         </div>
       ) : data?.count === 0 ? (
         <div className="px-4 md:px-6">
-          <EmptyState isFiltered={isFiltered} />
+          <EmptyStateSearch onResetFilters={handleResetFilters} />
         </div>
       ) : (
         <ListTable

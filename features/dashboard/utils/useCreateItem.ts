@@ -20,7 +20,7 @@ interface CreateItemState {
   forceValidation: boolean
 }
 
-export function useCreateItem(list: any, enhancedFields: Record<string, any>) {
+export function useCreateItem(list: any, enhancedFields: Record<string, any>, options?: { skipRevalidation?: boolean }) {
   if (!list || !enhancedFields) return null
 
   const [state, setState] = useState<CreateItemState>({
@@ -100,7 +100,7 @@ export function useCreateItem(list: any, enhancedFields: Record<string, any>) {
       const selectedFields = `id ${list.labelField || ''}`
       
       // Call the server action to create the item
-      const result = await createItemAction(list.key, data, selectedFields)
+      const result = await createItemAction(list.key, data, selectedFields, options)
       
       if (result.errors && result.errors.length > 0) {
         setState(prev => ({ 

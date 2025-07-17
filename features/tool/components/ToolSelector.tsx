@@ -39,7 +39,7 @@ export default function ToolSelector({ currentTool, allTools }: ToolSelectorProp
           </h1>
         </SelectValue>
         <SelectPrimitive.Icon asChild>
-          <ChevronDown className="h-8 w-8 text-muted-foreground hover:text-foreground transition-colors" />
+          <ChevronDown className="h-8 w-8 text-muted-foreground hover:text-foreground transition-colors stroke-3" />
         </SelectPrimitive.Icon>
       </SelectPrimitive.Trigger>
       <SelectContent className="min-w-[300px] max-h-[400px]">

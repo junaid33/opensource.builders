@@ -339,7 +339,7 @@ export const controller = (config: {
         };
       }
       if (cardsDisplayOptions !== undefined) {
-        const initialIds = new Set(
+        const initialIds = new Set<string>(
           (Array.isArray(data[config.path])
             ? data[config.path]
             : data[config.path]

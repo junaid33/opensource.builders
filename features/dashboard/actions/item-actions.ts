@@ -43,7 +43,7 @@ export async function updateItemAction(listKey: string, id: string, data: Record
   }
 }
 
-export async function createItemAction(listKey: string, data: Record<string, unknown>, selectedFields: string = 'id') {
+export async function createItemAction(listKey: string, data: Record<string, unknown>, selectedFields: string = 'id', options?: { skipRevalidation?: boolean }) {
   try {
     // Build GraphQL mutation following Keystone's exact pattern
     const mutation = `
@@ -64,8 +64,10 @@ export async function createItemAction(listKey: string, data: Record<string, unk
       }
     }
     
-    // Revalidate paths on successful create
-    revalidatePath(`/dashboard/(admin)/${listKey}`)
+    // Revalidate paths on successful create (unless skipped for drawer context)
+    if (!options?.skipRevalidation) {
+      revalidatePath(`/dashboard/(admin)/${listKey}`)
+    }
     
     // Return Apollo-style response with empty errors array on success
     return { 

@@ -30,6 +30,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { ThemeSwitcher } from "@/components/ui/theme-switcher";
+import { signOut } from "@/features/dashboard/actions/auth";
 
 interface User {
   id: string;
@@ -51,11 +52,6 @@ export function UserProfileClient({ user }: UserProfileClientProps) {
         .join("")
         .toUpperCase()
     : user.email.slice(0, 2).toUpperCase();
-
-  const handleSignOut = async () => {
-    // Use dashboard signout endpoint
-    window.location.href = "/dashboard/signin";
-  };
 
   return (
     <SidebarMenu>
@@ -136,10 +132,12 @@ export function UserProfileClient({ user }: UserProfileClientProps) {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleSignOut} className="gap-3">
-              <LogOut className="h-4 w-4 text-muted-foreground" />
-              <span className="text-sm">Log out</span>
-            </DropdownMenuItem>
+            <form action={signOut}>
+              <button type="submit" className="flex items-center gap-3 w-full px-2 py-1.5 text-sm hover:bg-accent rounded-sm">
+                <LogOut className="h-4 w-4 text-muted-foreground" />
+                <span className="text-sm">Log out</span>
+              </button>
+            </form>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>

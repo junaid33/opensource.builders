@@ -32,6 +32,14 @@ const FIELD_GRAPHQL_SELECTIONS: Record<string, (fieldPath: string, fieldMeta?: a
   id: (fieldPath) => fieldPath,
   decimal: (fieldPath) => fieldPath,
   virtual: (fieldPath, fieldMeta) => `${fieldPath}${fieldMeta?.query}`,
+  image: (fieldPath) => `${fieldPath} {
+    id
+    url
+    extension
+    filesize
+    width
+    height
+  }`,
   // Add more field types as needed
 }
 

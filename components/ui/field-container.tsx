@@ -5,11 +5,11 @@ interface FieldContainerProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const FieldContainer = React.forwardRef<HTMLDivElement, FieldContainerProps>(
-  ({ children, ...props }, ref) => {
+  ({ children, className, ...props }, ref) => {
     return (
       <div
         ref={ref}
-        // className={cn("space-y-2", className)}
+        className={`space-y-2 ${className || ''}`}
         {...props}
       >
         {children}

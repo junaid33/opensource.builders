@@ -15,7 +15,7 @@ interface ToolPageProps {
 
 async function getToolAlternativeInfo(toolId: string) {
   const query = `
-    query GetToolAlternativeInfo($toolId: String!) {
+    query GetToolAlternativeInfo($toolId: ID!) {
       # Get what proprietary tools this open source tool is an alternative to
       alternatives(where: { openSourceTool: { id: { equals: $toolId } } }) {
         id

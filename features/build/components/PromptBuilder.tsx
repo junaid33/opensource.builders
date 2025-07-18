@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useId, useEffect, useRef, useCallback } from 'react'
-import { Search, Package, ExternalLink, X, Check, ChevronDown, Lightbulb, Nut, HelpCircle, Copy, CheckCircle, Sparkles, Download, Info } from 'lucide-react'
+import { Search, Package, ExternalLink, X, Check, ChevronDown, Lightbulb, Nut, HelpCircle, Copy, CheckCircle, Sparkles, Download, Info, Github, Folder } from 'lucide-react'
 import { Label } from '@/components/ui/label'
 import {
   Select,
@@ -13,8 +13,9 @@ import {
 import { Input } from '@/components/ui/input'
 import { Card } from '@/components/ui/card'
 import { LogoIcon } from '@/features/dashboard/components/Logo'
-import {LogoIcon as OpenFrontIcon} from '@/components/OpenFrontIcon'
-import {LogoIcon as OpenShipIcon} from '@/components/OpenShipIcon'
+import {LogoIcon as OpenfrontIcon} from '@/components/OpenFrontIcon'
+import {LogoIcon as OpenshipIcon} from '@/components/OpenShipIcon'
+import { NextKeystoneIcon } from './NextKeystoneIcon'
 import { DisplayCard } from '@/features/landing/components/display-card'
 import { MiniDonutChart } from '@/components/ui/mini-donut-chart'
 import { request } from 'graphql-request'
@@ -207,22 +208,37 @@ const starterTemplates = [
   {
     id: '1',
     name: 'Next.js + Keystone Starter',
-    description: 'Full-stack template with admin'
+    description: 'Full-stack template with admin',
+    info: 'A full stack Next.js application with a Keystone admin built in, a GraphQL API, one-click deployable to Vercel and Railway',
+    source: 'https://github.com/junaid33/next-keystone-starter'
   },
   {
     id: 'openfront',
-    name: 'OpenFront',
-    description: 'Open source Shopify alternative'
+    name: 'Openfront',
+    description: 'Open source e-commerce platform',
+    info: 'Openfront is built off of this same starter, but it\'s a Shopify alternative',
+    source: 'https://github.com/openshiporg/openfront'
   },
   {
     id: 'openship',
-    name: 'OpenShip',
-    description: 'Order routing & fulfillment platform'
+    name: 'Openship',
+    description: 'Order routing & fulfillment platform',
+    info: 'Openship is built off the same Next.js + Keystone starter with additional order routing and fulfillment automation capabilities',
+    source: 'https://github.com/openshiporg/openship'
+  },
+  {
+    id: 'opensource-builders',
+    name: 'opensource.builders',
+    description: 'Open source tool discovery platform',
+    info: 'opensource.builders is built off the same Next.js + Keystone starter and helps developers discover and compare open source alternatives to proprietary tools',
+    source: 'https://github.com/junaid33/opensource.builders'
   },
   {
     id: 'byos',
     name: 'Bring Your Own Starter',
-    description: 'Start with what you have'
+    description: 'Start with what you have',
+    info: 'Use your existing codebase as the foundation. Perfect for integrating powerful features from open source tools into your current project without starting from scratch.',
+    source: null
   }
 ]
 
@@ -281,7 +297,7 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
       setLoading(true)
       try {
         const data = await request<SearchResult>(
-          'http://localhost:3004/api/graphql',
+          '/api/graphql',
           MULTI_MODEL_SEARCH,
           { search: searchTerm }
         )
@@ -362,7 +378,7 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
 - Modern TypeScript architecture
 
 The repository includes comprehensive documentation in the docs/ folder covering the architecture, Keystone integration, and dashboard system. This starter powers Open Source Builders, Openfront, Openship, and many other projects.`,
-      'openfront': `OpenFront is a comprehensive open source e-commerce platform built as a Shopify alternative. It features:
+      'openfront': `Openfront is a comprehensive open source e-commerce platform built as a Shopify alternative. It features:
 
 - **Complete E-commerce Stack**: Product management, order processing, payment handling, shipping integration
 - **Multi-Store Support**: Built-in multi-tenant architecture for managing multiple stores
@@ -373,8 +389,8 @@ The repository includes comprehensive documentation in the docs/ folder covering
 - **Flexible Product System**: Variants, options, collections, inventory management
 - **Customer Management**: Accounts, profiles, order history, segmentation
 
-OpenFront provides everything needed to build a modern e-commerce platform without vendor lock-in. The codebase is production-ready with 78+ data models covering comprehensive e-commerce functionality.`,
-      'openship': `OpenShip is an intelligent order routing and fulfillment platform that automates e-commerce operations. It features:
+Openfront provides everything needed to build a modern e-commerce platform without vendor lock-in. The codebase is production-ready with 78+ data models covering comprehensive e-commerce functionality.`,
+      'openship': `Openship is an intelligent order routing and fulfillment platform that automates e-commerce operations. It features:
 
 - **Order Routing Engine**: Automatically routes orders from shops to optimal fulfillment channels
 - **Multi-Platform Integration**: Connect Shopify, WooCommerce, and other e-commerce platforms
@@ -385,7 +401,7 @@ OpenFront provides everything needed to build a modern e-commerce platform witho
 - **Bulk Processing**: Handle multiple orders simultaneously with intelligent batching
 - **Modern Architecture**: Next.js 15 + KeystoneJS 6 + PostgreSQL for scalable operations
 
-OpenShip eliminates manual order processing by intelligently routing orders to the best fulfillment channels, making it perfect for dropshipping, multi-vendor marketplaces, and complex fulfillment scenarios.`,
+Openship eliminates manual order processing by intelligently routing orders to the best fulfillment channels, making it perfect for dropshipping, multi-vendor marketplaces, and complex fulfillment scenarios.`,
       'byos': '' // No template setup for "bring your own starter"
     }
     return templatePrompts[templateId] || 'Use the selected starter template'
@@ -398,9 +414,9 @@ OpenShip eliminates manual order processing by intelligently routing orders to t
     const getInfrastructureDescription = () => {
       switch (templateId) {
         case 'openfront':
-          return 'OpenFront e-commerce platform infrastructure. Follow the existing patterns in /features/ directory and integrate with the Keystone schema and e-commerce data models.'
+          return 'Openfront e-commerce platform infrastructure. Follow the existing patterns in /features/ directory and integrate with the Keystone schema and e-commerce data models.'
         case 'openship':
-          return 'OpenShip order routing platform infrastructure. Follow the existing patterns in /features/ directory and integrate with the Keystone schema and order processing system.'
+          return 'Openship order routing platform infrastructure. Follow the existing patterns in /features/ directory and integrate with the Keystone schema and order processing system.'
         case '1':
           return 'Next.js + Keystone.js infrastructure. Follow our existing patterns in /features/ directory and integrate with the Keystone schema.'
         default:
@@ -442,16 +458,16 @@ Use web search to research ${feature.toolName} and learn more about what flow th
   const getTemplateNutshell = (templateId: string) => {
     const nutshells: Record<string, string> = {
       '1': 'Describes the Next.js + Keystone starter architecture and features to help AI understand the project structure.',
-      'openfront': 'Explains OpenFront\'s comprehensive e-commerce platform architecture, helping AI understand the full-stack Shopify alternative with 78+ data models.',
-      'openship': 'Details OpenShip\'s order routing and fulfillment automation system, helping AI understand the multi-platform integration architecture.',
+      'openfront': 'Explains Openfront\'s comprehensive e-commerce platform architecture, helping AI understand the full-stack Shopify alternative with 78+ data models.',
+      'openship': 'Details Openship\'s order routing and fulfillment automation system, helping AI understand the multi-platform integration architecture.',
       'byos': 'No starter template setup - you will work with your existing codebase and integrate the selected features into your current architecture.'
     }
     return nutshells[templateId] || 'Starter template setup instructions'
   }
 
   const getFeatureNutshell = (feature: SelectedFeature, templateId: string) => {
-    const platformName = templateId === 'openfront' ? 'OpenFront' : 
-                        templateId === 'openship' ? 'OpenShip' : 
+    const platformName = templateId === 'openfront' ? 'Openfront' : 
+                        templateId === 'openship' ? 'Openship' : 
                         templateId === '1' ? 'our starter' : 'your codebase'
     
     if (feature.isOpenSource) {
@@ -585,14 +601,18 @@ Use web search to research ${feature.toolName} and learn more about what flow th
                     <SelectItem key={template.id} value={template.id}>
                       <span className="flex items-center gap-3">
                         {template.id === 'openfront' ? (
-                          <OpenFrontIcon className="w-6 h-6" />
+                          <OpenfrontIcon className="w-6 h-6" />
                         ) : template.id === 'openship' ? (
-                          <OpenShipIcon className="w-6 h-6" />
+                          <OpenshipIcon className="w-6 h-6" />
+                        ) : template.id === 'byos' ? (
+                          <Folder className="w-6 h-6 text-emerald-500" />
+                        ) : template.id === '1' ? (
+                          <NextKeystoneIcon className="w-6 h-6" />
                         ) : (
                           <LogoIcon 
                             className={cn(
                               "w-6 h-6",
-                              template.id === 'byos' ? "text-emerald-500" : ""
+                              template.id === 'opensource-builders' ? "text-blue-500" : ""
                             )} 
                           />
                         )}
@@ -611,7 +631,47 @@ Use web search to research ${feature.toolName} and learn more about what flow th
                 </SelectContent>
               </Select>
               
-              {/* Removed Source and Info links from here - moved to chip area */}
+              {/* Source and Info for selected starter */}
+              {selectedTemplate && selectedTemplate !== 'none' && (
+                <div className="flex items-center gap-2 mt-3">
+                  {(() => {
+                    const template = starterTemplates.find(t => t.id === selectedTemplate);
+                    return (
+                      <>
+                        {template?.source && (
+                          <>
+                            <a
+                              href={template.source}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors text-xs"
+                            >
+                              <Github className="h-3 w-3" />
+                              <span>Source</span>
+                            </a>
+                            <span className="text-muted-foreground">•</span>
+                          </>
+                        )}
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <button className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors text-xs">
+                              <Info className="h-3 w-3" />
+                              <span>Info</span>
+                            </button>
+                          </PopoverTrigger>
+                          <PopoverContent side="top" className="w-80">
+                            <div className="space-y-2">
+                              <p className="text-sm text-foreground">
+                                {template?.info || 'starter'}
+                              </p>
+                            </div>
+                          </PopoverContent>
+                        </Popover>
+                      </>
+                    )
+                  })()}
+                </div>
+              )}
             </div>
 
             {/* Dash Separator */}
@@ -992,14 +1052,18 @@ Use web search to research ${feature.toolName} and learn more about what flow th
                                       {/* Donut chart positioned next to X */}
                                       <div className="flex items-center">
                                         {selectedTemplate === 'openfront' ? (
-                                          <OpenFrontIcon className="w-4 h-4" />
+                                          <OpenfrontIcon className="w-4 h-4" />
                                         ) : selectedTemplate === 'openship' ? (
-                                          <OpenShipIcon className="w-4 h-4" />
+                                          <OpenshipIcon className="w-4 h-4" />
+                                        ) : selectedTemplate === 'byos' ? (
+                                          <Folder className="w-4 h-4 text-emerald-500" />
+                                        ) : selectedTemplate === '1' ? (
+                                          <NextKeystoneIcon className="w-4 h-4" />
                                         ) : (
                                           <LogoIcon 
                                             className={cn(
                                               "w-4 h-4",
-                                              selectedTemplate === 'byos' ? "text-emerald-500" : ""
+                                              selectedTemplate === 'opensource-builders' ? "text-blue-500" : ""
                                             )} 
                                           />
                                         )}
@@ -1074,7 +1138,7 @@ Use web search to research ${feature.toolName} and learn more about what flow th
                                           rel="noopener noreferrer"
                                           className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors"
                                         >
-                                          <ExternalLink className="h-3 w-3" />
+                                          <Github className="h-3 w-3" />
                                           <span>Source</span>
                                         </a>
                                         <span className="text-muted-foreground">•</span>
@@ -1090,10 +1154,7 @@ Use web search to research ${feature.toolName} and learn more about what flow th
                                       <PopoverContent side="top" className="w-80">
                                         <div className="space-y-2">
                                           <p className="text-sm text-foreground">
-                                            {selectedTemplate === 'byos' 
-                                              ? 'Use your existing codebase as the foundation. Perfect for integrating powerful features from open source tools into your current project without starting from scratch.'
-                                              : 'starter'
-                                            }
+                                            {starterTemplates.find(t => t.id === selectedTemplate)?.info || 'starter'}
                                           </p>
                                         </div>
                                       </PopoverContent>
@@ -1110,14 +1171,18 @@ Use web search to research ${feature.toolName} and learn more about what flow th
                                     <X className="h-3 w-3 text-muted-foreground" />
                                   </button>
                                   {selectedTemplate === 'openfront' ? (
-                                    <OpenFrontIcon className="w-4 h-4" />
+                                    <OpenfrontIcon className="w-4 h-4" />
                                   ) : selectedTemplate === 'openship' ? (
-                                    <OpenShipIcon className="w-4 h-4" />
+                                    <OpenshipIcon className="w-4 h-4" />
+                                  ) : selectedTemplate === 'byos' ? (
+                                    <Folder className="w-4 h-4 text-emerald-500" />
+                                  ) : selectedTemplate === '1' ? (
+                                    <NextKeystoneIcon className="w-4 h-4" />
                                   ) : (
                                     <LogoIcon 
                                       className={cn(
                                         "w-4 h-4",
-                                        selectedTemplate === 'byos' ? "text-emerald-500" : ""
+                                        selectedTemplate === 'opensource-builders' ? "text-blue-500" : ""
                                       )} 
                                     />
                                   )}
@@ -1187,7 +1252,7 @@ Use web search to research ${feature.toolName} and learn more about what flow th
                                           rel="noopener noreferrer"
                                           className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors"
                                         >
-                                          <ExternalLink className="h-3 w-3" />
+                                          <Github className="h-3 w-3" />
                                           <span>Source</span>
                                         </a>
                                         <span className="text-muted-foreground">•</span>
@@ -1203,10 +1268,7 @@ Use web search to research ${feature.toolName} and learn more about what flow th
                                       <PopoverContent side="top" className="w-80">
                                         <div className="space-y-2">
                                           <p className="text-sm text-foreground">
-                                            {selectedTemplate === 'byos' 
-                                              ? 'Use your existing codebase as the foundation. Perfect for integrating powerful features from open source tools into your current project without starting from scratch.'
-                                              : 'starter'
-                                            }
+                                            {starterTemplates.find(t => t.id === selectedTemplate)?.info || 'starter'}
                                           </p>
                                         </div>
                                       </PopoverContent>

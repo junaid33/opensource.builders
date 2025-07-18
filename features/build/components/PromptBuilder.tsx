@@ -377,7 +377,7 @@ export function PromptBuilder({ onPromptChange, className }: PromptBuilderProps)
 - Database integration with schema management
 - Modern TypeScript architecture
 
-The repository includes comprehensive documentation in the docs/ folder covering the architecture, Keystone integration, and dashboard system. This starter powers Open Source Builders, Openfront, Openship, and many other projects.`,
+The repository includes comprehensive documentation in the docs/ folder covering the architecture, Keystone integration, and dashboard system. opensource.builders, Openfront, and Openship are built-out applications already based on this same starter. Feel free to use GitHub MCP (if available) to explore how they've implemented their platforms and learn from their architecture.`,
       'openfront': `Openfront is a comprehensive open source e-commerce platform built as a Shopify alternative. It features:
 
 - **Complete E-commerce Stack**: Product management, order processing, payment handling, shipping integration
@@ -468,7 +468,7 @@ Use web search to research ${feature.toolName} and learn more about what flow th
   const getFeatureNutshell = (feature: SelectedFeature, templateId: string) => {
     const platformName = templateId === 'openfront' ? 'Openfront' : 
                         templateId === 'openship' ? 'Openship' : 
-                        templateId === '1' ? 'our starter' : 'your codebase'
+                        templateId === '1' ? 'the selected template' : 'your codebase'
     
     if (feature.isOpenSource) {
       return `Tells AI to examine ${feature.toolName}'s repository code for ${feature.name} and adapt it to ${platformName}.`

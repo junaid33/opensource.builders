@@ -229,7 +229,7 @@ export function ListTable({
       <div className="relative w-full border-y bg-background mb-18">
         <div className="relative overflow-auto" style={{ position: 'relative' }}>
           <table className="w-full border-collapse min-w-full">
-            <thead className="sticky top-0 z-20 bg-background border-b">
+            <thead className="sticky top-0 bg-background border-b">
               <tr>
                 <th className="w-[64px] pl-6 bg-background text-left font-normal">
                   <Checkbox

@@ -100,8 +100,8 @@ export const Logo = ({ className }: LogoProps) => {
   return (
     <div className={cn(spaceGrotesk.className, className)}>
       <div className="flex items-center gap-2 text-zinc-700 dark:text-white">
-        <LogoIcon className="size-5" />
-        <h1 className="mb-1 font-bold tracking-tight text-base sm:text-xl">
+        <LogoIcon className="size-4" />
+        <h1 className="mb-1 font-bold tracking-tight text-base sm:text-lg">
           opensource<span className="font-semibold opacity-60 mx-1">x</span>
           builders
         </h1>

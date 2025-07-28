@@ -111,8 +111,8 @@ export function SortSelection({ listMeta, children }: SortSelectionProps) {
       <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
         <DropdownMenuTrigger asChild>
           <Button
-            variant="ghost"
-            className="rounded-r-none border-0 px-3 hover:bg-accent"
+            variant="outline"
+            className="rounded-r-none px-3"
           >
             <ArrowUpDown className="h-3 w-3 stroke-muted-foreground" />
             {listMeta.fields[field]?.label}
@@ -152,8 +152,8 @@ export function SortSelection({ listMeta, children }: SortSelectionProps) {
         </DropdownMenuContent>
       </DropdownMenu>
       <Button
-        variant="ghost"
-        className="bg-muted/40 rounded-l-none border-l border-input pl-3 pr-2 font-normal hover:bg-accent"
+        variant="outline"
+        className="rounded-l-none pl-3 pr-2"
         onClick={() => handleSortChange(field)}
       >
         <span className="text-[10px] tracking-wide font-semibold uppercase">

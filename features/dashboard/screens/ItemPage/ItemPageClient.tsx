@@ -169,14 +169,14 @@ function ResetButton(props: { onReset: () => void; hasChanges?: boolean; isDeskt
 // Item Not Found Component (adapted from Keystone)
 function ItemNotFound({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col items-center justify-center min-h-[400px] space-y-4 bg-gray-50 rounded-lg p-8">
+    <div className="flex flex-col items-center justify-center min-h-[400px] space-y-4 bg-muted/40 rounded-lg p-8 border shadow">
       <div className="text-gray-400">
         <svg className="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
         </svg>
       </div>
       <h2 className="text-xl font-semibold">Not found</h2>
-      <div className="text-center max-w-md text-gray-600">
+      <div className="text-center max-w-md text-muted-foreground">
         {children}
       </div>
     </div>
@@ -381,7 +381,7 @@ export function ItemPageClient({ list, item, itemId }: ItemPageClientProps) {
   // If item doesn't exist
   if (!item || Object.keys(item).length === 0) {
     return (
-      <div className="container mx-auto py-6">
+      <div className="container mx-auto p-6">
         <ItemNotFound>
           {list.isSingleton ? (
             itemId === '1' ? (

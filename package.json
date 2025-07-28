@@ -7,7 +7,7 @@
     "build": "keystone build --no-ui && npm run migrate && next build",
     "start": "next start",
     "lint": "next lint",
-    "migrate:gen": "keystone build --no-ui && tsx features/dashboard/views/index-to-view && keystone prisma migrate dev",
+    "migrate:gen": "keystone build --no-ui && tsx features/keystone/view-order/generate-view-order.ts && keystone prisma migrate dev",
     "migrate": "prisma migrate deploy"
   },
   "dependencies": {
@@ -83,13 +83,17 @@
     "react-day-picker": "^9.7.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.54.1",
+    "react-markdown": "^10.1.0",
     "react-resizable-panels": "^3.0.2",
     "react-use-measure": "^2.1.7",
     "recharts": "^2.15.3",
+    "remark-breaks": "^4.0.0",
+    "remark-gfm": "^4.0.1",
     "sonner": "^2.0.3",
     "swr": "^2.3.3",
     "tailwind-merge": "^3.3.0",
     "tailwindcss-animate": "^1.0.7",
+    "use-stick-to-bottom": "^1.1.1",
     "zod": "^3.25.50"
   },
   "devDependencies": {

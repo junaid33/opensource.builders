@@ -808,9 +808,9 @@ export function AiChatSidebar() {
                       remarkPlugins={[remarkGfm, remarkBreaks]}
                       components={{
                         p: ({ children }) => (
-                          <p className="mb-1 last:mb-0 break-words">
+                          <div className="mb-1 last:mb-0 break-words">
                             {children}
-                          </p>
+                          </div>
                         ),
                         ul: ({ children }) => (
                           <ul className="mb-1 last:mb-0 pl-2">{children}</ul>
@@ -849,18 +849,7 @@ export function AiChatSidebar() {
                     </ReactMarkdown>
                   ) : (
                     <div className="flex items-center gap-1 text-muted-foreground">
-                      <div className="flex gap-0.5">
-                        <div className="w-1 h-1 text-muted-foreground/40 rounded-full animate-pulse"></div>
-                        <div
-                          className="w-1 h-1 text-muted-foreground/40 rounded-full animate-pulse"
-                          style={{ animationDelay: "0.2s" }}
-                        ></div>
-                        <div
-                          className="w-1 h-1 text-muted-foreground/40 rounded-full animate-pulse"
-                          style={{ animationDelay: "0.4s" }}
-                        ></div>
-                      </div>
-                      <span>Thinking...</span>
+                      <span className="animate-pulse">Thinking...</span>
                     </div>
                   )}
                 </>

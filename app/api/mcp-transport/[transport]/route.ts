@@ -248,6 +248,27 @@ export async function POST(request: Request, { params }: { params: Promise<{ tra
           },
           required: ['operation', 'where', 'fields']
         }
+      }, {
+        name: 'modelSpecificSearch',
+        description: 'Perform intelligent search on a specific model using the same logic as the dashboard search functionality',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            modelName: {
+              type: 'string',
+              description: 'The model name to search (e.g., "Product", "User", "Todo"). Will be automatically converted to the correct GraphQL operation name.'
+            },
+            searchQuery: {
+              type: 'string',
+              description: 'The search term to find within the model. Supports both ID matching and text field searching with case-insensitive matching.'
+            },
+            fields: {
+              type: 'string',
+              description: 'The fields to return from matching items (e.g., "id name email" or "id title description")'
+            }
+          },
+          required: ['modelName', 'searchQuery', 'fields']
+        }
       }];
       
       return new Response(JSON.stringify({
@@ -694,6 +715,162 @@ export async function POST(request: Request, { params }: { params: Promise<{ tra
               'Content-Type': 'application/json',
               'X-Data-Changed': 'true'
             },
+          });
+        }
+        
+        if (name === 'modelSpecificSearch') {
+          const { modelName, searchQuery, fields, limit = 10 } = args;
+          
+          // Get all types from schema to find the correct model
+          const typeMap = schema.getTypeMap();
+          let foundModel = null;
+          let operationName = null;
+          
+          // Find the model by name (case-insensitive)
+          const modelNameLower = modelName.toLowerCase();
+          for (const [typeName] of Object.entries(typeMap)) {
+            if (typeName.toLowerCase() === modelNameLower || 
+                typeName.toLowerCase() === modelNameLower + 's' ||
+                typeName.toLowerCase().replace(/s$/, '') === modelNameLower) {
+              foundModel = typeName;
+              break;
+            }
+          }
+          
+          if (!foundModel) {
+            return new Response(JSON.stringify({
+              jsonrpc: '2.0',
+              id: body.id,
+              result: {
+                content: [{
+                  type: 'text',
+                  text: JSON.stringify({
+                    error: `Model '${modelName}' not found in schema`,
+                    availableModels: Object.keys(typeMap).filter(name => !name.startsWith('__'))
+                  }, null, 2),
+                }],
+              }
+            }), {
+              status: 200,
+              headers: { 'Content-Type': 'application/json' },
+            });
+          }
+          
+          // Find the corresponding query operation
+          if (schema.getQueryType()) {
+            const queryFields = schema.getQueryType()!.getFields();
+            const modelLower = foundModel.toLowerCase();
+            
+            // Try various naming conventions
+            const possibleNames = [
+              modelLower + 's',  // products
+              modelLower,        // product
+              foundModel.charAt(0).toLowerCase() + foundModel.slice(1) + 's', // Products -> products
+              foundModel.charAt(0).toLowerCase() + foundModel.slice(1)        // Products -> product
+            ];
+            
+            for (const name of possibleNames) {
+              if (queryFields[name]) {
+                operationName = name;
+                break;
+              }
+            }
+          }
+          
+          if (!operationName) {
+            return new Response(JSON.stringify({
+              jsonrpc: '2.0',
+              id: body.id,
+              result: {
+                content: [{
+                  type: 'text',
+                  text: JSON.stringify({
+                    error: `No query operation found for model '${modelName}'`,
+                    foundModel,
+                    availableOperations: schema.getQueryType() ? Object.keys(schema.getQueryType()!.getFields()) : []
+                  }, null, 2),
+                }],
+              }
+            }), {
+              status: 200,
+              headers: { 'Content-Type': 'application/json' },
+            });
+          }
+          
+          // Get the actual fields available on this model by checking the GraphQL schema
+          const queryField = schema.getQueryType()?.getFields()[operationName];
+          const returnType = queryField?.type;
+          let availableFields: string[] = [];
+          
+          // Extract the element type from list types and non-null wrappers
+          let elementType = returnType;
+          while (elementType && (isListType(elementType) || isNonNullType(elementType))) {
+            elementType = elementType.ofType;
+          }
+          
+          if (elementType && 'getFields' in elementType && typeof elementType.getFields === 'function') {
+            const modelFields = elementType.getFields();
+            availableFields = Object.keys(modelFields);
+          }
+          
+          // Build search conditions using only fields that exist on the model
+          const searchConditions = [];
+          const searchTerm = searchQuery.trim();
+          
+          // Add ID search (exact match) - ID should always exist
+          if (searchTerm && availableFields.includes('id')) {
+            searchConditions.push(`{ id: { equals: "${searchTerm}" } }`);
+          }
+          
+          // Add text field search (case-insensitive contains) for fields that exist
+          const commonSearchFields = ['name', 'title', 'label', 'description', 'email'];
+          const validSearchFields = commonSearchFields.filter(field => availableFields.includes(field));
+          
+          for (const fieldName of validSearchFields) {
+            searchConditions.push(`{ ${fieldName}: { contains: "${searchTerm}", mode: insensitive } }`);
+          }
+          
+          // Build the GraphQL query manually to avoid JSON.stringify issues with enums
+          let whereClause = '';
+          if (searchConditions.length > 0) {
+            whereClause = `where: { OR: [${searchConditions.join(', ')}] },`;
+          }
+          
+          const queryString = `
+            query Search${foundModel} {
+              ${operationName}(
+                ${whereClause}
+                take: ${limit}
+              ) {
+                ${fields}
+              }
+            }
+          `.trim();
+          
+          // Execute the search query
+          const result = await executeGraphQL(queryString, graphqlEndpoint, cookie || '');
+          
+          return new Response(JSON.stringify({
+            jsonrpc: '2.0',
+            id: body.id,
+            result: {
+              content: [{
+                type: 'text',
+                text: JSON.stringify({
+                  searchQuery: searchTerm,
+                  modelName: foundModel,
+                  operationName,
+                  availableFields,
+                  validSearchFields,
+                  queryUsed: queryString,
+                  results: result,
+                  total: result?.data?.[operationName]?.length || 0
+                }, null, 2),
+              }],
+            }
+          }), {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' },
           });
         }
         

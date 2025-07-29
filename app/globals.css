@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "nprogress/nprogress.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -136,4 +137,19 @@
 
 .animate-infinite-scroll {
   animation: infinite-scroll linear infinite;
+}
+
+/* NProgress Styling */
+#nprogress .bar {
+  background: #3b82f6 !important;
+  height: 3px !important;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px #3b82f6, 0 0 5px #3b82f6 !important;
+}
+
+#nprogress .spinner-icon {
+  border-top-color: #3b82f6 !important;
+  border-left-color: #3b82f6 !important;
 }

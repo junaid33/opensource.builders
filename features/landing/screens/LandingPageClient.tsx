@@ -1,10 +1,10 @@
 'use client'
 
-import { useState, ReactNode } from 'react'
+import { useState, ReactNode, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
+import NProgress from 'nprogress'
 import Hero from '../components/Hero'
 import ProprietarySoftware from '../components/ProprietarySoftware'
-import Navbar from '@/components/ui/navbar'
 
 interface LandingPageClientProps {
   initialSelectedSoftware: string
@@ -18,7 +18,19 @@ export function LandingPageClient({ initialSelectedSoftware, sidebarSlot, altern
   const searchParams = useSearchParams()
   const [selectedSoftware, setSelectedSoftware] = useState<string>(initialSelectedSoftware)
 
+  // Configure NProgress
+  useEffect(() => {
+    NProgress.configure({ 
+      showSpinner: false, // Hide the spinner, only show the bar
+      speed: 500,
+      minimum: 0.3
+    })
+  }, [])
+
   const handleSoftwareSelect = (toolSlug: string, toolName: string) => {
+    // Start loading indicator
+    NProgress.start()
+    
     setSelectedSoftware(toolName)
     
     // Update URL with proprietary tool filter
@@ -36,6 +48,12 @@ export function LandingPageClient({ initialSelectedSoftware, sidebarSlot, altern
     
     const newUrl = `?${params.toString()}`
     router.push(newUrl, { scroll: false })
+    
+    // The progress will automatically complete when the page finishes loading
+    // due to Next.js router events, but we can add a timeout as fallback
+    setTimeout(() => {
+      NProgress.done()
+    }, 2000)
   }
 
   return (

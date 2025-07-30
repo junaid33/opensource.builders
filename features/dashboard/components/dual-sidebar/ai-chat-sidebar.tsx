@@ -18,6 +18,13 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { getSharedKeys, checkSharedKeysAvailable } from "@/features/dashboard/actions/ai-chat";
 import { ModeSplitButton } from "./mode-split-button";
 import {
@@ -97,8 +104,6 @@ const SharedKeysModal = ({
   onOpenChange: (open: boolean) => void;
   sharedKeysStatus: {available: boolean; missing: {apiKey: boolean; model: boolean; maxTokens: boolean}} | null;
 }) => {
-  if (!open) return null;
-
   const setVars = [];
   const missingVars = [];
 
@@ -121,11 +126,13 @@ const SharedKeysModal = ({
   }
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-xl max-w-sm w-full p-4">
-        <h2 className="text-lg font-semibold mb-3">Shared API Keys</h2>
-        <div className="space-y-3 mb-4">
-          <p className="text-sm text-gray-600">
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-sm">
+        <DialogHeader>
+          <DialogTitle>Shared API Keys</DialogTitle>
+        </DialogHeader>
+        <div className="space-y-3">
+          <p className="text-sm text-muted-foreground">
             When using shared keys, the API keys are configured at the
             application level through environment variables.
           </p>
@@ -148,8 +155,8 @@ const SharedKeysModal = ({
           )}
 
           {missingVars.length > 0 && (
-            <div className="bg-red-50 rounded-lg p-3 border border-red-200">
-              <h4 className="font-medium text-sm mb-2 text-red-800">
+            <div className="bg-destructive/5 rounded-lg p-3 border border-destructive/20">
+              <h4 className="font-medium text-sm mb-2 text-destructive-foreground">
                 Missing Keys
               </h4>
               <div className="space-y-1">
@@ -164,18 +171,18 @@ const SharedKeysModal = ({
             </div>
           )}
 
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-muted-foreground">
             Set these environment variables when deploying your application to
             enable AI chat functionality.
           </p>
         </div>
-        <div className="flex justify-end">
+        <DialogFooter>
           <Button onClick={() => onOpenChange(false)} size="sm">
             Close
           </Button>
-        </div>
-      </div>
-    </div>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 };
 
@@ -222,20 +229,20 @@ const LocalKeysModal = ({
     onOpenChange(false);
   };
 
-  if (!open) return null;
-
   return (
-    <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-xl max-w-sm w-full p-4">
-        <h2 className="text-lg font-semibold mb-3">Configure API Keys</h2>
-        <div className="mb-4">
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-sm">
+        <DialogHeader>
+          <DialogTitle>Configure API Keys</DialogTitle>
+        </DialogHeader>
+        <div className="space-y-4">
           <div>
             <div className="flex items-center gap-2 mb-2">
               <Label htmlFor="apiKey">OpenRouter API Key</Label>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Info className="size-3 text-gray-400 hover:text-gray-600 cursor-help" />
+                    <Info className="size-3 text-muted-foreground hover:text-foreground cursor-help" />
                   </TooltipTrigger>
                   <TooltipContent>
                     <p>You can get your OpenRouter API key at https://openrouter.ai/settings/keys</p>
@@ -256,13 +263,13 @@ const LocalKeysModal = ({
               placeholder={showMaskedKey ? "••••••••••••••••••••••••••••••••" : "sk-or-..."}
             />
           </div>
-          <div className="mt-4">
+          <div>
             <div className="flex items-center gap-2 mb-2">
               <Label htmlFor="model">Model</Label>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Info className="size-3 text-gray-400 hover:text-gray-600 cursor-help" />
+                    <Info className="size-3 text-muted-foreground hover:text-foreground cursor-help" />
                   </TooltipTrigger>
                   <TooltipContent>
                     <p>You can get different model slugs from https://openrouter.ai/models</p>
@@ -278,7 +285,7 @@ const LocalKeysModal = ({
               placeholder="openai/gpt-4o-mini"
             />
           </div>
-          <div className="mt-4">
+          <div>
             <Label htmlFor="maxTokens" className="block mb-2">Max Tokens</Label>
             <Input
               id="maxTokens"
@@ -289,7 +296,7 @@ const LocalKeysModal = ({
             />
           </div>
         </div>
-        <div className="flex justify-end space-x-2">
+        <DialogFooter>
           <Button
             variant="outline"
             onClick={() => onOpenChange(false)}
@@ -300,9 +307,9 @@ const LocalKeysModal = ({
           <Button onClick={handleSave} disabled={!apiKey && !initialKeys?.apiKey} size="sm">
             Save Keys
           </Button>
-        </div>
-      </div>
-    </div>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 };
 
@@ -827,13 +834,13 @@ export function AiChatSidebar() {
                         code: ({ children, ...props }) => {
                           if ((props as any).inline) {
                             return (
-                              <code className="bg-gray-100 px-1 rounded font-mono break-all">
+                              <code className="bg-muted px-1 rounded font-mono break-all">
                                 {children}
                               </code>
                             );
                           }
                           return (
-                            <pre className="bg-gray-100 border rounded p-2 overflow-x-auto">
+                            <pre className="bg-muted border rounded p-2 overflow-x-auto">
                               <code className="font-mono break-all">
                                 {children}
                               </code>
@@ -901,7 +908,7 @@ export function AiChatSidebar() {
 
             <Button
               size="icon"
-              className="size-7 rounded-2xl bg-black"
+              className="size-7 rounded-2xl bg-foreground text-background hover:bg-foreground/90"
               onClick={handleSubmit}
               disabled={sending || loading || !input.trim()}
             >

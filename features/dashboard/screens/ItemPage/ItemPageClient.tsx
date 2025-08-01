@@ -35,6 +35,7 @@ import {
 } from 'lucide-react'
 import { toast } from 'sonner'
 import { updateItemAction, deleteItemAction } from '../../actions/item-actions'
+import { useDashboard } from '../../context/DashboardProvider'
 
 interface ItemPageClientProps {
   list: any
@@ -68,6 +69,7 @@ function DeleteButton({
 }) {
   const itemId = ((value.id ?? '') as string | number).toString()
   const router = useRouter()
+  const { basePath } = useDashboard()
 
   const handleDelete = useEventCallback(async () => {
     try {
@@ -88,7 +90,7 @@ function DeleteButton({
       
       toast.success(`${list.singular} deleted successfully.`)
       
-      router.push(list.isSingleton ? '/' : `/${list.path}`)
+      router.push(list.isSingleton ? `${basePath}/` : `${basePath}/${list.path}`)
     } catch (err: any) {
       toast.error("Unable to delete item.", {
         action: {

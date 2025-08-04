@@ -4,6 +4,7 @@ import "dotenv/config";
 import { models } from "./models";
 import { statelessSessions } from "@keystone-6/core/session";
 import { extendGraphqlSchema } from "./mutations";
+import { sendPasswordResetEmail } from "./lib/mail";
 
 const databaseURL = process.env.DATABASE_URL || "file:./keystone.db";
 
@@ -36,6 +37,12 @@ const { withAuth } = createAuth({
           canManageTechStacks: true,
         },
       },
+    },
+  },
+  passwordResetLink: {
+    async sendToken(args) {
+      // send the email
+      await sendPasswordResetEmail(args.token, args.identity);
     },
   },
   sessionData: `

@@ -12,8 +12,8 @@ export const VIEW_ORDER = [
   "text",
   "password",
   "relationship",
-  "checkbox",
   "timestamp",
+  "checkbox",
   "integer",
   "select",
   "decimal"

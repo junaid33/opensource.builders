@@ -52,7 +52,7 @@
     "@types/nodemailer": "^6.4.17",
     "@types/nprogress": "^0.2.3",
     "@vercel/mcp-adapter": "^0.11.2",
-    "ai": "^4.3.17",
+    "ai": "^5.0.43",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",

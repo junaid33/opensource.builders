@@ -130,7 +130,7 @@ const Footer = () => {
             <p className="text-sm text-muted-foreground max-w-xs mb-4">
               Find open source alternatives to popular proprietary software
             </p>
-            <Link
+            {/* <Link
               href="https://github.com/junaid33/opensource.builders"
               target="_blank"
               rel="noopener noreferrer"
@@ -142,7 +142,7 @@ const Footer = () => {
                   <span className="text-primary-foreground/60 text-xs">1,266</span>
                 </span>
               </Button>
-            </Link>
+            </Link> */}
             <div className="mt-4 text-sm text-muted-foreground">
               &copy; {CURRENT_YEAR} opensource.builders
             </div>

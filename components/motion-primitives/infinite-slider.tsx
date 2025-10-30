@@ -1,6 +1,6 @@
 'use client'
 
-import { ReactNode, useEffect, useRef, useState } from 'react'
+import { ReactNode, useRef } from 'react'
 
 interface InfiniteSliderProps {
   children: ReactNode[]
@@ -17,25 +17,17 @@ export function InfiniteSlider({
   gap = 40,
   className = '' 
 }: InfiniteSliderProps) {
-  const [isHovered, setIsHovered] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
-
-  const currentSpeed = isHovered ? speedOnHover : speed
 
   return (
     <div 
       ref={containerRef}
       className={`relative overflow-hidden ${className}`}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
       <div 
-        className="flex animate-infinite-scroll"
+        className="flex animate-infinite-scroll hover:animate-infinite-scroll-slow"
         style={{
           gap: `${gap}px`,
-          animationDuration: `${currentSpeed}s`,
-          animationTimingFunction: 'linear',
-          animationIterationCount: 'infinite',
         }}
       >
         {/* First set of children */}
@@ -67,6 +59,12 @@ export const infiniteSliderCSS = `
 }
 
 .animate-infinite-scroll {
-  animation: infinite-scroll linear infinite;
+  animation: infinite-scroll 40s linear infinite;
+  transition: animation-duration 0.3s ease-in-out;
+}
+
+.animate-infinite-scroll-slow {
+  animation: infinite-scroll 20s linear infinite;
+  transition: animation-duration 0.3s ease-in-out;
 }
 `

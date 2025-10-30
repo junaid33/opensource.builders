@@ -7,6 +7,7 @@ interface MiniDonutChartProps {
   size?: number;
   strokeWidth?: number;
   className?: string;
+  color?: string;
 }
 
 export function MiniDonutChart({
@@ -14,7 +15,8 @@ export function MiniDonutChart({
   total,
   size = 16,
   strokeWidth = 2,
-  className
+  className,
+  color
 }: MiniDonutChartProps) {
   const percentage = total > 0 ? (value / total) * 100 : 0;
   const radius = (size - strokeWidth) / 2;
@@ -50,9 +52,11 @@ export function MiniDonutChart({
           strokeLinecap="round"
           className={cn(
             "transition-all duration-300 ease-in-out",
-            percentage >= 80 ? "text-emerald-500" :
-            percentage >= 60 ? "text-yellow-500" :
-            "text-red-500"
+            color ? color : (
+              percentage >= 80 ? "text-emerald-500" :
+              percentage >= 60 ? "text-yellow-500" :
+              "text-red-500"
+            )
           )}
         />
       </svg>

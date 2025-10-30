@@ -150,12 +150,9 @@ type Role {
   canManagePeople: Boolean
   canManageRoles: Boolean
   canAccessDashboard: Boolean
-  canManageTools: Boolean
+  canManageApplications: Boolean
   canManageCategories: Boolean
-  canManageFeatures: Boolean
-  canManageAlternatives: Boolean
-  canManageDeploymentOptions: Boolean
-  canManageTechStacks: Boolean
+  canManageCapabilities: Boolean
   assignedTo(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserWhereUniqueInput): [User!]
   assignedToCount(where: UserWhereInput! = {}): Int
 }
@@ -175,12 +172,9 @@ input RoleWhereInput {
   canManagePeople: BooleanFilter
   canManageRoles: BooleanFilter
   canAccessDashboard: BooleanFilter
-  canManageTools: BooleanFilter
+  canManageApplications: BooleanFilter
   canManageCategories: BooleanFilter
-  canManageFeatures: BooleanFilter
-  canManageAlternatives: BooleanFilter
-  canManageDeploymentOptions: BooleanFilter
-  canManageTechStacks: BooleanFilter
+  canManageCapabilities: BooleanFilter
   assignedTo: UserManyRelationFilter
 }
 
@@ -203,12 +197,9 @@ input RoleOrderByInput {
   canManagePeople: OrderDirection
   canManageRoles: OrderDirection
   canAccessDashboard: OrderDirection
-  canManageTools: OrderDirection
+  canManageApplications: OrderDirection
   canManageCategories: OrderDirection
-  canManageFeatures: OrderDirection
-  canManageAlternatives: OrderDirection
-  canManageDeploymentOptions: OrderDirection
-  canManageTechStacks: OrderDirection
+  canManageCapabilities: OrderDirection
 }
 
 input RoleUpdateInput {
@@ -218,12 +209,9 @@ input RoleUpdateInput {
   canManagePeople: Boolean
   canManageRoles: Boolean
   canAccessDashboard: Boolean
-  canManageTools: Boolean
+  canManageApplications: Boolean
   canManageCategories: Boolean
-  canManageFeatures: Boolean
-  canManageAlternatives: Boolean
-  canManageDeploymentOptions: Boolean
-  canManageTechStacks: Boolean
+  canManageCapabilities: Boolean
   assignedTo: UserRelateToManyForUpdateInput
 }
 
@@ -246,12 +234,9 @@ input RoleCreateInput {
   canManagePeople: Boolean
   canManageRoles: Boolean
   canAccessDashboard: Boolean
-  canManageTools: Boolean
+  canManageApplications: Boolean
   canManageCategories: Boolean
-  canManageFeatures: Boolean
-  canManageAlternatives: Boolean
-  canManageDeploymentOptions: Boolean
-  canManageTechStacks: Boolean
+  canManageCapabilities: Boolean
   assignedTo: UserRelateToManyForCreateInput
 }
 
@@ -268,10 +253,8 @@ type Category {
   icon: String
   color: String
   createdAt: DateTime
-  tools(where: ToolWhereInput! = {}, orderBy: [ToolOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ToolWhereUniqueInput): [Tool!]
-  toolsCount(where: ToolWhereInput! = {}): Int
-  features(where: FeatureWhereInput! = {}, orderBy: [FeatureOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FeatureWhereUniqueInput): [Feature!]
-  featuresCount(where: FeatureWhereInput! = {}): Int
+  proprietaryApplications(where: ProprietaryApplicationWhereInput! = {}, orderBy: [ProprietaryApplicationOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ProprietaryApplicationWhereUniqueInput): [ProprietaryApplication!]
+  proprietaryApplicationsCount(where: ProprietaryApplicationWhereInput! = {}): Int
 }
 
 input CategoryWhereUniqueInput {
@@ -290,20 +273,13 @@ input CategoryWhereInput {
   icon: StringFilter
   color: StringFilter
   createdAt: DateTimeNullableFilter
-  tools: ToolManyRelationFilter
-  features: FeatureManyRelationFilter
+  proprietaryApplications: ProprietaryApplicationManyRelationFilter
 }
 
-input ToolManyRelationFilter {
-  every: ToolWhereInput
-  some: ToolWhereInput
-  none: ToolWhereInput
-}
-
-input FeatureManyRelationFilter {
-  every: FeatureWhereInput
-  some: FeatureWhereInput
-  none: FeatureWhereInput
+input ProprietaryApplicationManyRelationFilter {
+  every: ProprietaryApplicationWhereInput
+  some: ProprietaryApplicationWhereInput
+  none: ProprietaryApplicationWhereInput
 }
 
 input CategoryOrderByInput {
@@ -323,22 +299,14 @@ input CategoryUpdateInput {
   icon: String
   color: String
   createdAt: DateTime
-  tools: ToolRelateToManyForUpdateInput
-  features: FeatureRelateToManyForUpdateInput
+  proprietaryApplications: ProprietaryApplicationRelateToManyForUpdateInput
 }
 
-input ToolRelateToManyForUpdateInput {
-  disconnect: [ToolWhereUniqueInput!]
-  set: [ToolWhereUniqueInput!]
-  create: [ToolCreateInput!]
-  connect: [ToolWhereUniqueInput!]
-}
-
-input FeatureRelateToManyForUpdateInput {
-  disconnect: [FeatureWhereUniqueInput!]
-  set: [FeatureWhereUniqueInput!]
-  create: [FeatureCreateInput!]
-  connect: [FeatureWhereUniqueInput!]
+input ProprietaryApplicationRelateToManyForUpdateInput {
+  disconnect: [ProprietaryApplicationWhereUniqueInput!]
+  set: [ProprietaryApplicationWhereUniqueInput!]
+  create: [ProprietaryApplicationCreateInput!]
+  connect: [ProprietaryApplicationWhereUniqueInput!]
 }
 
 input CategoryUpdateArgs {
@@ -353,76 +321,195 @@ input CategoryCreateInput {
   icon: String
   color: String
   createdAt: DateTime
-  tools: ToolRelateToManyForCreateInput
-  features: FeatureRelateToManyForCreateInput
+  proprietaryApplications: ProprietaryApplicationRelateToManyForCreateInput
 }
 
-input ToolRelateToManyForCreateInput {
-  create: [ToolCreateInput!]
-  connect: [ToolWhereUniqueInput!]
+input ProprietaryApplicationRelateToManyForCreateInput {
+  create: [ProprietaryApplicationCreateInput!]
+  connect: [ProprietaryApplicationWhereUniqueInput!]
 }
 
-input FeatureRelateToManyForCreateInput {
-  create: [FeatureCreateInput!]
-  connect: [FeatureWhereUniqueInput!]
-}
-
-type Tool {
+type ProprietaryApplication {
   id: ID!
   name: String
   slug: String
   description: String
   websiteUrl: String
-  repositoryUrl: String
   simpleIconSlug: String
   simpleIconColor: String
-  isOpenSource: Boolean
   category: Category
-  license: String
-  githubStars: Int
-  status: String
-  pricingModel: String
+  capabilities(where: ProprietaryCapabilityWhereInput! = {}, orderBy: [ProprietaryCapabilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ProprietaryCapabilityWhereUniqueInput): [ProprietaryCapability!]
+  capabilitiesCount(where: ProprietaryCapabilityWhereInput! = {}): Int
+  openSourceAlternatives(where: OpenSourceApplicationWhereInput! = {}, orderBy: [OpenSourceApplicationOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OpenSourceApplicationWhereUniqueInput): [OpenSourceApplication!]
+  openSourceAlternativesCount(where: OpenSourceApplicationWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
-  features(where: ToolFeatureWhereInput! = {}, orderBy: [ToolFeatureOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ToolFeatureWhereUniqueInput): [ToolFeature!]
-  featuresCount(where: ToolFeatureWhereInput! = {}): Int
-  proprietaryAlternatives(where: AlternativeWhereInput! = {}, orderBy: [AlternativeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AlternativeWhereUniqueInput): [Alternative!]
-  proprietaryAlternativesCount(where: AlternativeWhereInput! = {}): Int
-  openSourceAlternatives(where: AlternativeWhereInput! = {}, orderBy: [AlternativeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AlternativeWhereUniqueInput): [Alternative!]
-  openSourceAlternativesCount(where: AlternativeWhereInput! = {}): Int
-  deploymentOptions(where: DeploymentOptionWhereInput! = {}, orderBy: [DeploymentOptionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DeploymentOptionWhereUniqueInput): [DeploymentOption!]
-  deploymentOptionsCount(where: DeploymentOptionWhereInput! = {}): Int
 }
 
-input ToolWhereUniqueInput {
+input ProprietaryApplicationWhereUniqueInput {
   id: ID
   slug: String
 }
 
-input ToolWhereInput {
-  AND: [ToolWhereInput!]
-  OR: [ToolWhereInput!]
-  NOT: [ToolWhereInput!]
+input ProprietaryApplicationWhereInput {
+  AND: [ProprietaryApplicationWhereInput!]
+  OR: [ProprietaryApplicationWhereInput!]
+  NOT: [ProprietaryApplicationWhereInput!]
   id: IDFilter
   name: StringFilter
   slug: StringFilter
   description: StringFilter
   websiteUrl: StringFilter
-  repositoryUrl: StringFilter
   simpleIconSlug: StringFilter
   simpleIconColor: StringFilter
-  isOpenSource: BooleanFilter
   category: CategoryWhereInput
-  license: StringFilter
-  githubStars: IntNullableFilter
-  status: StringNullableFilter
-  pricingModel: StringNullableFilter
+  capabilities: ProprietaryCapabilityManyRelationFilter
+  openSourceAlternatives: OpenSourceApplicationManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
-  features: ToolFeatureManyRelationFilter
-  proprietaryAlternatives: AlternativeManyRelationFilter
-  openSourceAlternatives: AlternativeManyRelationFilter
-  deploymentOptions: DeploymentOptionManyRelationFilter
+}
+
+input ProprietaryCapabilityManyRelationFilter {
+  every: ProprietaryCapabilityWhereInput
+  some: ProprietaryCapabilityWhereInput
+  none: ProprietaryCapabilityWhereInput
+}
+
+input OpenSourceApplicationManyRelationFilter {
+  every: OpenSourceApplicationWhereInput
+  some: OpenSourceApplicationWhereInput
+  none: OpenSourceApplicationWhereInput
+}
+
+input ProprietaryApplicationOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  slug: OrderDirection
+  description: OrderDirection
+  websiteUrl: OrderDirection
+  simpleIconSlug: OrderDirection
+  simpleIconColor: OrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+}
+
+input ProprietaryApplicationUpdateInput {
+  name: String
+  slug: String
+  description: String
+  websiteUrl: String
+  simpleIconSlug: String
+  simpleIconColor: String
+  category: CategoryRelateToOneForUpdateInput
+  capabilities: ProprietaryCapabilityRelateToManyForUpdateInput
+  openSourceAlternatives: OpenSourceApplicationRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input CategoryRelateToOneForUpdateInput {
+  create: CategoryCreateInput
+  connect: CategoryWhereUniqueInput
+  disconnect: Boolean
+}
+
+input ProprietaryCapabilityRelateToManyForUpdateInput {
+  disconnect: [ProprietaryCapabilityWhereUniqueInput!]
+  set: [ProprietaryCapabilityWhereUniqueInput!]
+  create: [ProprietaryCapabilityCreateInput!]
+  connect: [ProprietaryCapabilityWhereUniqueInput!]
+}
+
+input OpenSourceApplicationRelateToManyForUpdateInput {
+  disconnect: [OpenSourceApplicationWhereUniqueInput!]
+  set: [OpenSourceApplicationWhereUniqueInput!]
+  create: [OpenSourceApplicationCreateInput!]
+  connect: [OpenSourceApplicationWhereUniqueInput!]
+}
+
+input ProprietaryApplicationUpdateArgs {
+  where: ProprietaryApplicationWhereUniqueInput!
+  data: ProprietaryApplicationUpdateInput!
+}
+
+input ProprietaryApplicationCreateInput {
+  name: String
+  slug: String
+  description: String
+  websiteUrl: String
+  simpleIconSlug: String
+  simpleIconColor: String
+  category: CategoryRelateToOneForCreateInput
+  capabilities: ProprietaryCapabilityRelateToManyForCreateInput
+  openSourceAlternatives: OpenSourceApplicationRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input CategoryRelateToOneForCreateInput {
+  create: CategoryCreateInput
+  connect: CategoryWhereUniqueInput
+}
+
+input ProprietaryCapabilityRelateToManyForCreateInput {
+  create: [ProprietaryCapabilityCreateInput!]
+  connect: [ProprietaryCapabilityWhereUniqueInput!]
+}
+
+input OpenSourceApplicationRelateToManyForCreateInput {
+  create: [OpenSourceApplicationCreateInput!]
+  connect: [OpenSourceApplicationWhereUniqueInput!]
+}
+
+type OpenSourceApplication {
+  id: ID!
+  name: String
+  slug: String
+  description: String
+  primaryAlternativeTo: ProprietaryApplication
+  repositoryUrl: String
+  websiteUrl: String
+  simpleIconSlug: String
+  simpleIconColor: String
+  license: String
+  githubStars: Int
+  githubForks: Int
+  githubIssues: Int
+  githubLastCommit: DateTime
+  status: String
+  capabilities(where: OpenSourceCapabilityWhereInput! = {}, orderBy: [OpenSourceCapabilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OpenSourceCapabilityWhereUniqueInput): [OpenSourceCapability!]
+  capabilitiesCount(where: OpenSourceCapabilityWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input OpenSourceApplicationWhereUniqueInput {
+  id: ID
+  slug: String
+}
+
+input OpenSourceApplicationWhereInput {
+  AND: [OpenSourceApplicationWhereInput!]
+  OR: [OpenSourceApplicationWhereInput!]
+  NOT: [OpenSourceApplicationWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  slug: StringFilter
+  description: StringFilter
+  primaryAlternativeTo: ProprietaryApplicationWhereInput
+  repositoryUrl: StringFilter
+  websiteUrl: StringFilter
+  simpleIconSlug: StringFilter
+  simpleIconColor: StringFilter
+  license: StringFilter
+  githubStars: IntNullableFilter
+  githubForks: IntNullableFilter
+  githubIssues: IntNullableFilter
+  githubLastCommit: DateTimeNullableFilter
+  status: StringNullableFilter
+  capabilities: OpenSourceCapabilityManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
 }
 
 input IntNullableFilter {
@@ -451,401 +538,316 @@ input StringNullableFilter {
   not: StringNullableFilter
 }
 
-input ToolFeatureManyRelationFilter {
-  every: ToolFeatureWhereInput
-  some: ToolFeatureWhereInput
-  none: ToolFeatureWhereInput
+input OpenSourceCapabilityManyRelationFilter {
+  every: OpenSourceCapabilityWhereInput
+  some: OpenSourceCapabilityWhereInput
+  none: OpenSourceCapabilityWhereInput
 }
 
-input AlternativeManyRelationFilter {
-  every: AlternativeWhereInput
-  some: AlternativeWhereInput
-  none: AlternativeWhereInput
-}
-
-input DeploymentOptionManyRelationFilter {
-  every: DeploymentOptionWhereInput
-  some: DeploymentOptionWhereInput
-  none: DeploymentOptionWhereInput
-}
-
-input ToolOrderByInput {
+input OpenSourceApplicationOrderByInput {
   id: OrderDirection
   name: OrderDirection
   slug: OrderDirection
   description: OrderDirection
-  websiteUrl: OrderDirection
   repositoryUrl: OrderDirection
+  websiteUrl: OrderDirection
   simpleIconSlug: OrderDirection
   simpleIconColor: OrderDirection
-  isOpenSource: OrderDirection
   license: OrderDirection
   githubStars: OrderDirection
+  githubForks: OrderDirection
+  githubIssues: OrderDirection
+  githubLastCommit: OrderDirection
   status: OrderDirection
-  pricingModel: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
 }
 
-input ToolUpdateInput {
+input OpenSourceApplicationUpdateInput {
   name: String
   slug: String
   description: String
-  websiteUrl: String
+  primaryAlternativeTo: ProprietaryApplicationRelateToOneForUpdateInput
   repositoryUrl: String
+  websiteUrl: String
   simpleIconSlug: String
   simpleIconColor: String
-  isOpenSource: Boolean
-  category: CategoryRelateToOneForUpdateInput
   license: String
   githubStars: Int
+  githubForks: Int
+  githubIssues: Int
+  githubLastCommit: DateTime
   status: String
-  pricingModel: String
+  capabilities: OpenSourceCapabilityRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
-  features: ToolFeatureRelateToManyForUpdateInput
-  proprietaryAlternatives: AlternativeRelateToManyForUpdateInput
-  openSourceAlternatives: AlternativeRelateToManyForUpdateInput
-  deploymentOptions: DeploymentOptionRelateToManyForUpdateInput
 }
 
-input CategoryRelateToOneForUpdateInput {
-  create: CategoryCreateInput
-  connect: CategoryWhereUniqueInput
+input ProprietaryApplicationRelateToOneForUpdateInput {
+  create: ProprietaryApplicationCreateInput
+  connect: ProprietaryApplicationWhereUniqueInput
   disconnect: Boolean
 }
 
-input ToolFeatureRelateToManyForUpdateInput {
-  disconnect: [ToolFeatureWhereUniqueInput!]
-  set: [ToolFeatureWhereUniqueInput!]
-  create: [ToolFeatureCreateInput!]
-  connect: [ToolFeatureWhereUniqueInput!]
+input OpenSourceCapabilityRelateToManyForUpdateInput {
+  disconnect: [OpenSourceCapabilityWhereUniqueInput!]
+  set: [OpenSourceCapabilityWhereUniqueInput!]
+  create: [OpenSourceCapabilityCreateInput!]
+  connect: [OpenSourceCapabilityWhereUniqueInput!]
 }
 
-input AlternativeRelateToManyForUpdateInput {
-  disconnect: [AlternativeWhereUniqueInput!]
-  set: [AlternativeWhereUniqueInput!]
-  create: [AlternativeCreateInput!]
-  connect: [AlternativeWhereUniqueInput!]
+input OpenSourceApplicationUpdateArgs {
+  where: OpenSourceApplicationWhereUniqueInput!
+  data: OpenSourceApplicationUpdateInput!
 }
 
-input DeploymentOptionRelateToManyForUpdateInput {
-  disconnect: [DeploymentOptionWhereUniqueInput!]
-  set: [DeploymentOptionWhereUniqueInput!]
-  create: [DeploymentOptionCreateInput!]
-  connect: [DeploymentOptionWhereUniqueInput!]
-}
-
-input ToolUpdateArgs {
-  where: ToolWhereUniqueInput!
-  data: ToolUpdateInput!
-}
-
-input ToolCreateInput {
+input OpenSourceApplicationCreateInput {
   name: String
   slug: String
   description: String
-  websiteUrl: String
+  primaryAlternativeTo: ProprietaryApplicationRelateToOneForCreateInput
   repositoryUrl: String
+  websiteUrl: String
   simpleIconSlug: String
   simpleIconColor: String
-  isOpenSource: Boolean
-  category: CategoryRelateToOneForCreateInput
   license: String
   githubStars: Int
+  githubForks: Int
+  githubIssues: Int
+  githubLastCommit: DateTime
   status: String
-  pricingModel: String
+  capabilities: OpenSourceCapabilityRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
-  features: ToolFeatureRelateToManyForCreateInput
-  proprietaryAlternatives: AlternativeRelateToManyForCreateInput
-  openSourceAlternatives: AlternativeRelateToManyForCreateInput
-  deploymentOptions: DeploymentOptionRelateToManyForCreateInput
 }
 
-input CategoryRelateToOneForCreateInput {
-  create: CategoryCreateInput
-  connect: CategoryWhereUniqueInput
+input ProprietaryApplicationRelateToOneForCreateInput {
+  create: ProprietaryApplicationCreateInput
+  connect: ProprietaryApplicationWhereUniqueInput
 }
 
-input ToolFeatureRelateToManyForCreateInput {
-  create: [ToolFeatureCreateInput!]
-  connect: [ToolFeatureWhereUniqueInput!]
+input OpenSourceCapabilityRelateToManyForCreateInput {
+  create: [OpenSourceCapabilityCreateInput!]
+  connect: [OpenSourceCapabilityWhereUniqueInput!]
 }
 
-input AlternativeRelateToManyForCreateInput {
-  create: [AlternativeCreateInput!]
-  connect: [AlternativeWhereUniqueInput!]
-}
-
-input DeploymentOptionRelateToManyForCreateInput {
-  create: [DeploymentOptionCreateInput!]
-  connect: [DeploymentOptionWhereUniqueInput!]
-}
-
-type Feature {
+type Capability {
   id: ID!
   name: String
   slug: String
   description: String
-  category: Category
-  featureType: String
+  category: String
+  complexity: String
+  proprietaryApplications(where: ProprietaryCapabilityWhereInput! = {}, orderBy: [ProprietaryCapabilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ProprietaryCapabilityWhereUniqueInput): [ProprietaryCapability!]
+  proprietaryApplicationsCount(where: ProprietaryCapabilityWhereInput! = {}): Int
+  openSourceApplications(where: OpenSourceCapabilityWhereInput! = {}, orderBy: [OpenSourceCapabilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OpenSourceCapabilityWhereUniqueInput): [OpenSourceCapability!]
+  openSourceApplicationsCount(where: OpenSourceCapabilityWhereInput! = {}): Int
   createdAt: DateTime
-  tools(where: ToolFeatureWhereInput! = {}, orderBy: [ToolFeatureOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ToolFeatureWhereUniqueInput): [ToolFeature!]
-  toolsCount(where: ToolFeatureWhereInput! = {}): Int
+  updatedAt: DateTime
 }
 
-input FeatureWhereUniqueInput {
+input CapabilityWhereUniqueInput {
   id: ID
   slug: String
 }
 
-input FeatureWhereInput {
-  AND: [FeatureWhereInput!]
-  OR: [FeatureWhereInput!]
-  NOT: [FeatureWhereInput!]
+input CapabilityWhereInput {
+  AND: [CapabilityWhereInput!]
+  OR: [CapabilityWhereInput!]
+  NOT: [CapabilityWhereInput!]
   id: IDFilter
   name: StringFilter
   slug: StringFilter
   description: StringFilter
-  category: CategoryWhereInput
-  featureType: StringNullableFilter
+  category: StringNullableFilter
+  complexity: StringNullableFilter
+  proprietaryApplications: ProprietaryCapabilityManyRelationFilter
+  openSourceApplications: OpenSourceCapabilityManyRelationFilter
   createdAt: DateTimeNullableFilter
-  tools: ToolFeatureManyRelationFilter
+  updatedAt: DateTimeNullableFilter
 }
 
-input FeatureOrderByInput {
+input CapabilityOrderByInput {
   id: OrderDirection
   name: OrderDirection
   slug: OrderDirection
   description: OrderDirection
-  featureType: OrderDirection
+  category: OrderDirection
+  complexity: OrderDirection
   createdAt: OrderDirection
+  updatedAt: OrderDirection
 }
 
-input FeatureUpdateInput {
+input CapabilityUpdateInput {
   name: String
   slug: String
   description: String
-  category: CategoryRelateToOneForUpdateInput
-  featureType: String
+  category: String
+  complexity: String
+  proprietaryApplications: ProprietaryCapabilityRelateToManyForUpdateInput
+  openSourceApplications: OpenSourceCapabilityRelateToManyForUpdateInput
   createdAt: DateTime
-  tools: ToolFeatureRelateToManyForUpdateInput
+  updatedAt: DateTime
 }
 
-input FeatureUpdateArgs {
-  where: FeatureWhereUniqueInput!
-  data: FeatureUpdateInput!
+input CapabilityUpdateArgs {
+  where: CapabilityWhereUniqueInput!
+  data: CapabilityUpdateInput!
 }
 
-input FeatureCreateInput {
+input CapabilityCreateInput {
   name: String
   slug: String
   description: String
-  category: CategoryRelateToOneForCreateInput
-  featureType: String
+  category: String
+  complexity: String
+  proprietaryApplications: ProprietaryCapabilityRelateToManyForCreateInput
+  openSourceApplications: OpenSourceCapabilityRelateToManyForCreateInput
   createdAt: DateTime
-  tools: ToolFeatureRelateToManyForCreateInput
+  updatedAt: DateTime
 }
 
-type ToolFeature {
+type ProprietaryCapability {
   id: ID!
-  tool: Tool
-  feature: Feature
-  implementationNotes: String
-  qualityScore: Int
-  verified: Boolean
+  proprietaryApplication: ProprietaryApplication
+  capability: Capability
+  isActive: Boolean
   createdAt: DateTime
 }
 
-input ToolFeatureWhereUniqueInput {
+input ProprietaryCapabilityWhereUniqueInput {
   id: ID
 }
 
-input ToolFeatureWhereInput {
-  AND: [ToolFeatureWhereInput!]
-  OR: [ToolFeatureWhereInput!]
-  NOT: [ToolFeatureWhereInput!]
+input ProprietaryCapabilityWhereInput {
+  AND: [ProprietaryCapabilityWhereInput!]
+  OR: [ProprietaryCapabilityWhereInput!]
+  NOT: [ProprietaryCapabilityWhereInput!]
   id: IDFilter
-  tool: ToolWhereInput
-  feature: FeatureWhereInput
+  proprietaryApplication: ProprietaryApplicationWhereInput
+  capability: CapabilityWhereInput
+  isActive: BooleanFilter
+  createdAt: DateTimeNullableFilter
+}
+
+input ProprietaryCapabilityOrderByInput {
+  id: OrderDirection
+  isActive: OrderDirection
+  createdAt: OrderDirection
+}
+
+input ProprietaryCapabilityUpdateInput {
+  proprietaryApplication: ProprietaryApplicationRelateToOneForUpdateInput
+  capability: CapabilityRelateToOneForUpdateInput
+  isActive: Boolean
+  createdAt: DateTime
+}
+
+input CapabilityRelateToOneForUpdateInput {
+  create: CapabilityCreateInput
+  connect: CapabilityWhereUniqueInput
+  disconnect: Boolean
+}
+
+input ProprietaryCapabilityUpdateArgs {
+  where: ProprietaryCapabilityWhereUniqueInput!
+  data: ProprietaryCapabilityUpdateInput!
+}
+
+input ProprietaryCapabilityCreateInput {
+  proprietaryApplication: ProprietaryApplicationRelateToOneForCreateInput
+  capability: CapabilityRelateToOneForCreateInput
+  isActive: Boolean
+  createdAt: DateTime
+}
+
+input CapabilityRelateToOneForCreateInput {
+  create: CapabilityCreateInput
+  connect: CapabilityWhereUniqueInput
+}
+
+type OpenSourceCapability {
+  id: ID!
+  openSourceApplication: OpenSourceApplication
+  capability: Capability
+  isActive: Boolean
+  implementationNotes: String
+  githubPath: String
+  documentationUrl: String
+  implementationComplexity: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input OpenSourceCapabilityWhereUniqueInput {
+  id: ID
+}
+
+input OpenSourceCapabilityWhereInput {
+  AND: [OpenSourceCapabilityWhereInput!]
+  OR: [OpenSourceCapabilityWhereInput!]
+  NOT: [OpenSourceCapabilityWhereInput!]
+  id: IDFilter
+  openSourceApplication: OpenSourceApplicationWhereInput
+  capability: CapabilityWhereInput
+  isActive: BooleanFilter
   implementationNotes: StringFilter
-  qualityScore: IntNullableFilter
-  verified: BooleanFilter
+  githubPath: StringFilter
+  documentationUrl: StringFilter
+  implementationComplexity: StringNullableFilter
   createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
 }
 
-input ToolFeatureOrderByInput {
+input OpenSourceCapabilityOrderByInput {
   id: OrderDirection
+  isActive: OrderDirection
   implementationNotes: OrderDirection
-  qualityScore: OrderDirection
-  verified: OrderDirection
+  githubPath: OrderDirection
+  documentationUrl: OrderDirection
+  implementationComplexity: OrderDirection
   createdAt: OrderDirection
+  updatedAt: OrderDirection
 }
 
-input ToolFeatureUpdateInput {
-  tool: ToolRelateToOneForUpdateInput
-  feature: FeatureRelateToOneForUpdateInput
+input OpenSourceCapabilityUpdateInput {
+  openSourceApplication: OpenSourceApplicationRelateToOneForUpdateInput
+  capability: CapabilityRelateToOneForUpdateInput
+  isActive: Boolean
   implementationNotes: String
-  qualityScore: Int
-  verified: Boolean
+  githubPath: String
+  documentationUrl: String
+  implementationComplexity: String
   createdAt: DateTime
+  updatedAt: DateTime
 }
 
-input ToolRelateToOneForUpdateInput {
-  create: ToolCreateInput
-  connect: ToolWhereUniqueInput
+input OpenSourceApplicationRelateToOneForUpdateInput {
+  create: OpenSourceApplicationCreateInput
+  connect: OpenSourceApplicationWhereUniqueInput
   disconnect: Boolean
 }
 
-input FeatureRelateToOneForUpdateInput {
-  create: FeatureCreateInput
-  connect: FeatureWhereUniqueInput
-  disconnect: Boolean
+input OpenSourceCapabilityUpdateArgs {
+  where: OpenSourceCapabilityWhereUniqueInput!
+  data: OpenSourceCapabilityUpdateInput!
 }
 
-input ToolFeatureUpdateArgs {
-  where: ToolFeatureWhereUniqueInput!
-  data: ToolFeatureUpdateInput!
-}
-
-input ToolFeatureCreateInput {
-  tool: ToolRelateToOneForCreateInput
-  feature: FeatureRelateToOneForCreateInput
+input OpenSourceCapabilityCreateInput {
+  openSourceApplication: OpenSourceApplicationRelateToOneForCreateInput
+  capability: CapabilityRelateToOneForCreateInput
+  isActive: Boolean
   implementationNotes: String
-  qualityScore: Int
-  verified: Boolean
+  githubPath: String
+  documentationUrl: String
+  implementationComplexity: String
   createdAt: DateTime
+  updatedAt: DateTime
 }
 
-input ToolRelateToOneForCreateInput {
-  create: ToolCreateInput
-  connect: ToolWhereUniqueInput
-}
-
-input FeatureRelateToOneForCreateInput {
-  create: FeatureCreateInput
-  connect: FeatureWhereUniqueInput
-}
-
-type Alternative {
-  id: ID!
-  proprietaryTool: Tool
-  openSourceTool: Tool
-  similarityScore: Decimal
-  matchType: String
-  comparisonNotes: String
-  createdAt: DateTime
-}
-
-scalar Decimal
-
-input AlternativeWhereUniqueInput {
-  id: ID
-}
-
-input AlternativeWhereInput {
-  AND: [AlternativeWhereInput!]
-  OR: [AlternativeWhereInput!]
-  NOT: [AlternativeWhereInput!]
-  id: IDFilter
-  proprietaryTool: ToolWhereInput
-  openSourceTool: ToolWhereInput
-  similarityScore: DecimalNullableFilter
-  matchType: StringNullableFilter
-  comparisonNotes: StringFilter
-  createdAt: DateTimeNullableFilter
-}
-
-input DecimalNullableFilter {
-  equals: Decimal
-  in: [Decimal!]
-  notIn: [Decimal!]
-  lt: Decimal
-  lte: Decimal
-  gt: Decimal
-  gte: Decimal
-  not: DecimalNullableFilter
-}
-
-input AlternativeOrderByInput {
-  id: OrderDirection
-  similarityScore: OrderDirection
-  matchType: OrderDirection
-  comparisonNotes: OrderDirection
-  createdAt: OrderDirection
-}
-
-input AlternativeUpdateInput {
-  proprietaryTool: ToolRelateToOneForUpdateInput
-  openSourceTool: ToolRelateToOneForUpdateInput
-  similarityScore: Decimal
-  matchType: String
-  comparisonNotes: String
-  createdAt: DateTime
-}
-
-input AlternativeUpdateArgs {
-  where: AlternativeWhereUniqueInput!
-  data: AlternativeUpdateInput!
-}
-
-input AlternativeCreateInput {
-  proprietaryTool: ToolRelateToOneForCreateInput
-  openSourceTool: ToolRelateToOneForCreateInput
-  similarityScore: Decimal
-  matchType: String
-  comparisonNotes: String
-  createdAt: DateTime
-}
-
-type DeploymentOption {
-  id: ID!
-  tool: Tool
-  platform: String
-  deployUrl: String
-  createdAt: DateTime
-}
-
-input DeploymentOptionWhereUniqueInput {
-  id: ID
-}
-
-input DeploymentOptionWhereInput {
-  AND: [DeploymentOptionWhereInput!]
-  OR: [DeploymentOptionWhereInput!]
-  NOT: [DeploymentOptionWhereInput!]
-  id: IDFilter
-  tool: ToolWhereInput
-  platform: StringFilter
-  deployUrl: StringFilter
-  createdAt: DateTimeNullableFilter
-}
-
-input DeploymentOptionOrderByInput {
-  id: OrderDirection
-  platform: OrderDirection
-  deployUrl: OrderDirection
-  createdAt: OrderDirection
-}
-
-input DeploymentOptionUpdateInput {
-  tool: ToolRelateToOneForUpdateInput
-  platform: String
-  deployUrl: String
-  createdAt: DateTime
-}
-
-input DeploymentOptionUpdateArgs {
-  where: DeploymentOptionWhereUniqueInput!
-  data: DeploymentOptionUpdateInput!
-}
-
-input DeploymentOptionCreateInput {
-  tool: ToolRelateToOneForCreateInput
-  platform: String
-  deployUrl: String
-  createdAt: DateTime
+input OpenSourceApplicationRelateToOneForCreateInput {
+  create: OpenSourceApplicationCreateInput
+  connect: OpenSourceApplicationWhereUniqueInput
 }
 
 """
@@ -872,36 +874,36 @@ type Mutation {
   updateCategories(data: [CategoryUpdateArgs!]!): [Category]
   deleteCategory(where: CategoryWhereUniqueInput!): Category
   deleteCategories(where: [CategoryWhereUniqueInput!]!): [Category]
-  createTool(data: ToolCreateInput!): Tool
-  createTools(data: [ToolCreateInput!]!): [Tool]
-  updateTool(where: ToolWhereUniqueInput!, data: ToolUpdateInput!): Tool
-  updateTools(data: [ToolUpdateArgs!]!): [Tool]
-  deleteTool(where: ToolWhereUniqueInput!): Tool
-  deleteTools(where: [ToolWhereUniqueInput!]!): [Tool]
-  createFeature(data: FeatureCreateInput!): Feature
-  createFeatures(data: [FeatureCreateInput!]!): [Feature]
-  updateFeature(where: FeatureWhereUniqueInput!, data: FeatureUpdateInput!): Feature
-  updateFeatures(data: [FeatureUpdateArgs!]!): [Feature]
-  deleteFeature(where: FeatureWhereUniqueInput!): Feature
-  deleteFeatures(where: [FeatureWhereUniqueInput!]!): [Feature]
-  createToolFeature(data: ToolFeatureCreateInput!): ToolFeature
-  createToolFeatures(data: [ToolFeatureCreateInput!]!): [ToolFeature]
-  updateToolFeature(where: ToolFeatureWhereUniqueInput!, data: ToolFeatureUpdateInput!): ToolFeature
-  updateToolFeatures(data: [ToolFeatureUpdateArgs!]!): [ToolFeature]
-  deleteToolFeature(where: ToolFeatureWhereUniqueInput!): ToolFeature
-  deleteToolFeatures(where: [ToolFeatureWhereUniqueInput!]!): [ToolFeature]
-  createAlternative(data: AlternativeCreateInput!): Alternative
-  createAlternatives(data: [AlternativeCreateInput!]!): [Alternative]
-  updateAlternative(where: AlternativeWhereUniqueInput!, data: AlternativeUpdateInput!): Alternative
-  updateAlternatives(data: [AlternativeUpdateArgs!]!): [Alternative]
-  deleteAlternative(where: AlternativeWhereUniqueInput!): Alternative
-  deleteAlternatives(where: [AlternativeWhereUniqueInput!]!): [Alternative]
-  createDeploymentOption(data: DeploymentOptionCreateInput!): DeploymentOption
-  createDeploymentOptions(data: [DeploymentOptionCreateInput!]!): [DeploymentOption]
-  updateDeploymentOption(where: DeploymentOptionWhereUniqueInput!, data: DeploymentOptionUpdateInput!): DeploymentOption
-  updateDeploymentOptions(data: [DeploymentOptionUpdateArgs!]!): [DeploymentOption]
-  deleteDeploymentOption(where: DeploymentOptionWhereUniqueInput!): DeploymentOption
-  deleteDeploymentOptions(where: [DeploymentOptionWhereUniqueInput!]!): [DeploymentOption]
+  createProprietaryApplication(data: ProprietaryApplicationCreateInput!): ProprietaryApplication
+  createProprietaryApplications(data: [ProprietaryApplicationCreateInput!]!): [ProprietaryApplication]
+  updateProprietaryApplication(where: ProprietaryApplicationWhereUniqueInput!, data: ProprietaryApplicationUpdateInput!): ProprietaryApplication
+  updateProprietaryApplications(data: [ProprietaryApplicationUpdateArgs!]!): [ProprietaryApplication]
+  deleteProprietaryApplication(where: ProprietaryApplicationWhereUniqueInput!): ProprietaryApplication
+  deleteProprietaryApplications(where: [ProprietaryApplicationWhereUniqueInput!]!): [ProprietaryApplication]
+  createOpenSourceApplication(data: OpenSourceApplicationCreateInput!): OpenSourceApplication
+  createOpenSourceApplications(data: [OpenSourceApplicationCreateInput!]!): [OpenSourceApplication]
+  updateOpenSourceApplication(where: OpenSourceApplicationWhereUniqueInput!, data: OpenSourceApplicationUpdateInput!): OpenSourceApplication
+  updateOpenSourceApplications(data: [OpenSourceApplicationUpdateArgs!]!): [OpenSourceApplication]
+  deleteOpenSourceApplication(where: OpenSourceApplicationWhereUniqueInput!): OpenSourceApplication
+  deleteOpenSourceApplications(where: [OpenSourceApplicationWhereUniqueInput!]!): [OpenSourceApplication]
+  createCapability(data: CapabilityCreateInput!): Capability
+  createCapabilities(data: [CapabilityCreateInput!]!): [Capability]
+  updateCapability(where: CapabilityWhereUniqueInput!, data: CapabilityUpdateInput!): Capability
+  updateCapabilities(data: [CapabilityUpdateArgs!]!): [Capability]
+  deleteCapability(where: CapabilityWhereUniqueInput!): Capability
+  deleteCapabilities(where: [CapabilityWhereUniqueInput!]!): [Capability]
+  createProprietaryCapability(data: ProprietaryCapabilityCreateInput!): ProprietaryCapability
+  createProprietaryCapabilities(data: [ProprietaryCapabilityCreateInput!]!): [ProprietaryCapability]
+  updateProprietaryCapability(where: ProprietaryCapabilityWhereUniqueInput!, data: ProprietaryCapabilityUpdateInput!): ProprietaryCapability
+  updateProprietaryCapabilities(data: [ProprietaryCapabilityUpdateArgs!]!): [ProprietaryCapability]
+  deleteProprietaryCapability(where: ProprietaryCapabilityWhereUniqueInput!): ProprietaryCapability
+  deleteProprietaryCapabilities(where: [ProprietaryCapabilityWhereUniqueInput!]!): [ProprietaryCapability]
+  createOpenSourceCapability(data: OpenSourceCapabilityCreateInput!): OpenSourceCapability
+  createOpenSourceCapabilities(data: [OpenSourceCapabilityCreateInput!]!): [OpenSourceCapability]
+  updateOpenSourceCapability(where: OpenSourceCapabilityWhereUniqueInput!, data: OpenSourceCapabilityUpdateInput!): OpenSourceCapability
+  updateOpenSourceCapabilities(data: [OpenSourceCapabilityUpdateArgs!]!): [OpenSourceCapability]
+  deleteOpenSourceCapability(where: OpenSourceCapabilityWhereUniqueInput!): OpenSourceCapability
+  deleteOpenSourceCapabilities(where: [OpenSourceCapabilityWhereUniqueInput!]!): [OpenSourceCapability]
   endSession: Boolean!
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
@@ -947,21 +949,21 @@ type Query {
   category(where: CategoryWhereUniqueInput!): Category
   categories(where: CategoryWhereInput! = {}, orderBy: [CategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CategoryWhereUniqueInput): [Category!]
   categoriesCount(where: CategoryWhereInput! = {}): Int
-  tool(where: ToolWhereUniqueInput!): Tool
-  tools(where: ToolWhereInput! = {}, orderBy: [ToolOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ToolWhereUniqueInput): [Tool!]
-  toolsCount(where: ToolWhereInput! = {}): Int
-  feature(where: FeatureWhereUniqueInput!): Feature
-  features(where: FeatureWhereInput! = {}, orderBy: [FeatureOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FeatureWhereUniqueInput): [Feature!]
-  featuresCount(where: FeatureWhereInput! = {}): Int
-  toolFeature(where: ToolFeatureWhereUniqueInput!): ToolFeature
-  toolFeatures(where: ToolFeatureWhereInput! = {}, orderBy: [ToolFeatureOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ToolFeatureWhereUniqueInput): [ToolFeature!]
-  toolFeaturesCount(where: ToolFeatureWhereInput! = {}): Int
-  alternative(where: AlternativeWhereUniqueInput!): Alternative
-  alternatives(where: AlternativeWhereInput! = {}, orderBy: [AlternativeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AlternativeWhereUniqueInput): [Alternative!]
-  alternativesCount(where: AlternativeWhereInput! = {}): Int
-  deploymentOption(where: DeploymentOptionWhereUniqueInput!): DeploymentOption
-  deploymentOptions(where: DeploymentOptionWhereInput! = {}, orderBy: [DeploymentOptionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DeploymentOptionWhereUniqueInput): [DeploymentOption!]
-  deploymentOptionsCount(where: DeploymentOptionWhereInput! = {}): Int
+  proprietaryApplication(where: ProprietaryApplicationWhereUniqueInput!): ProprietaryApplication
+  proprietaryApplications(where: ProprietaryApplicationWhereInput! = {}, orderBy: [ProprietaryApplicationOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ProprietaryApplicationWhereUniqueInput): [ProprietaryApplication!]
+  proprietaryApplicationsCount(where: ProprietaryApplicationWhereInput! = {}): Int
+  openSourceApplication(where: OpenSourceApplicationWhereUniqueInput!): OpenSourceApplication
+  openSourceApplications(where: OpenSourceApplicationWhereInput! = {}, orderBy: [OpenSourceApplicationOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OpenSourceApplicationWhereUniqueInput): [OpenSourceApplication!]
+  openSourceApplicationsCount(where: OpenSourceApplicationWhereInput! = {}): Int
+  capability(where: CapabilityWhereUniqueInput!): Capability
+  capabilities(where: CapabilityWhereInput! = {}, orderBy: [CapabilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CapabilityWhereUniqueInput): [Capability!]
+  capabilitiesCount(where: CapabilityWhereInput! = {}): Int
+  proprietaryCapability(where: ProprietaryCapabilityWhereUniqueInput!): ProprietaryCapability
+  proprietaryCapabilities(where: ProprietaryCapabilityWhereInput! = {}, orderBy: [ProprietaryCapabilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ProprietaryCapabilityWhereUniqueInput): [ProprietaryCapability!]
+  proprietaryCapabilitiesCount(where: ProprietaryCapabilityWhereInput! = {}): Int
+  openSourceCapability(where: OpenSourceCapabilityWhereUniqueInput!): OpenSourceCapability
+  openSourceCapabilities(where: OpenSourceCapabilityWhereInput! = {}, orderBy: [OpenSourceCapabilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OpenSourceCapabilityWhereUniqueInput): [OpenSourceCapability!]
+  openSourceCapabilitiesCount(where: OpenSourceCapabilityWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
   validateUserPasswordResetToken(email: String!, token: String!): ValidateUserPasswordResetTokenResult

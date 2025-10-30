@@ -126,7 +126,8 @@ export function Sidebar({ adminMeta, user }: SidebarProps) {
 
         {/* Models Dropdown - Collapsible */}
         {dashboardItems.map((dashboardItem) => (
-          <SidebarGroup key={dashboardItem.title}>
+        <SidebarGroup key={dashboardItem.title}>
+          <SidebarMenu>
             <SidebarGroupLabel>{dashboardItem.title}</SidebarGroupLabel>
             <div className="max-h-full overflow-y-auto group-has-[[data-collapsible=icon]]/sidebar-wrapper:hidden">
               <Collapsible
@@ -213,6 +214,7 @@ export function Sidebar({ adminMeta, user }: SidebarProps) {
                 </SidebarMenuItem>
               </DropdownMenu>
             </div>
+           </SidebarMenu>
           </SidebarGroup>
         ))}
       </SidebarContent>

@@ -88,10 +88,12 @@ export default function ToolIcon({
       {/* Letter */}
       <div className="absolute inset-0 flex items-center justify-center">
         <span
-          className="font-silkscreen text-gray-200 select-none"
+          className="font-instrument-serif font-bold text-foreground select-none"
           style={{
             fontSize: size * 0.45,
             textShadow: "0 1px 4px rgba(255,255,255,0.3), 0 0 8px rgba(255,255,255,0.2)",
+            filter: 'brightness(0) invert(1)',
+            opacity: 0.9
           }}
         >
           {firstLetter}

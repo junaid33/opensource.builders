@@ -41,12 +41,9 @@ function isSignedIn({ session }) {
 var permissions = {
   canManagePeople: ({ session }) => session?.data.role?.canManagePeople ?? false,
   canManageRoles: ({ session }) => session?.data.role?.canManageRoles ?? false,
-  canManageTools: ({ session }) => session?.data.role?.canManageTools ?? false,
+  canManageApplications: ({ session }) => session?.data.role?.canManageApplications ?? false,
   canManageCategories: ({ session }) => session?.data.role?.canManageCategories ?? false,
-  canManageFeatures: ({ session }) => session?.data.role?.canManageFeatures ?? false,
-  canManageAlternatives: ({ session }) => session?.data.role?.canManageAlternatives ?? false,
-  canManageDeploymentOptions: ({ session }) => session?.data.role?.canManageDeploymentOptions ?? false,
-  canManageTechStacks: ({ session }) => session?.data.role?.canManageTechStacks ?? false
+  canManageCapabilities: ({ session }) => session?.data.role?.canManageCapabilities ?? false
 };
 var rules = {
   canReadPeople: ({ session }) => {
@@ -152,12 +149,9 @@ var Role = (0, import_core2.list)({
     canManagePeople: (0, import_fields2.checkbox)({ defaultValue: false }),
     canManageRoles: (0, import_fields2.checkbox)({ defaultValue: false }),
     canAccessDashboard: (0, import_fields2.checkbox)({ defaultValue: false }),
-    canManageTools: (0, import_fields2.checkbox)({ defaultValue: false }),
+    canManageApplications: (0, import_fields2.checkbox)({ defaultValue: false }),
     canManageCategories: (0, import_fields2.checkbox)({ defaultValue: false }),
-    canManageFeatures: (0, import_fields2.checkbox)({ defaultValue: false }),
-    canManageAlternatives: (0, import_fields2.checkbox)({ defaultValue: false }),
-    canManageDeploymentOptions: (0, import_fields2.checkbox)({ defaultValue: false }),
-    canManageTechStacks: (0, import_fields2.checkbox)({ defaultValue: false }),
+    canManageCapabilities: (0, import_fields2.checkbox)({ defaultValue: false }),
     assignedTo: (0, import_fields2.relationship)({
       ref: "User.role",
       many: true,
@@ -223,38 +217,35 @@ var Category = (0, import_core3.list)({
     createdAt: (0, import_fields3.timestamp)({
       defaultValue: { kind: "now" }
     }),
-    tools: (0, import_fields3.relationship)({
-      ref: "Tool.category",
-      many: true
-    }),
-    features: (0, import_fields3.relationship)({
-      ref: "Feature.category",
+    // Relationships to new application models
+    proprietaryApplications: (0, import_fields3.relationship)({
+      ref: "ProprietaryApplication.category",
       many: true
     })
   }
 });
 
-// features/keystone/models/Tool.ts
+// features/keystone/models/ProprietaryApplication.ts
 var import_core4 = require("@keystone-6/core");
 var import_fields4 = require("@keystone-6/core/fields");
-var Tool = (0, import_core4.list)({
+var ProprietaryApplication = (0, import_core4.list)({
   access: {
     operation: {
       query: () => true,
       // Allow public read access
-      create: permissions.canManageTools,
-      update: permissions.canManageTools,
-      delete: permissions.canManageTools
+      create: permissions.canManageApplications,
+      update: permissions.canManageApplications,
+      delete: permissions.canManageApplications
     }
   },
   ui: {
-    hideCreate: (args) => !permissions.canManageTools(args),
-    hideDelete: (args) => !permissions.canManageTools(args),
+    hideCreate: (args) => !permissions.canManageApplications(args),
+    hideDelete: (args) => !permissions.canManageApplications(args),
     listView: {
-      initialColumns: ["name", "slug", "category", "isOpenSource", "status", "createdAt"]
+      initialColumns: ["name", "slug", "category", "createdAt"]
     },
     itemView: {
-      defaultFieldMode: (args) => permissions.canManageTools(args) ? "edit" : "read"
+      defaultFieldMode: (args) => permissions.canManageApplications(args) ? "edit" : "read"
     }
   },
   fields: {
@@ -282,12 +273,6 @@ var Tool = (0, import_core4.list)({
         length: { max: 500 }
       }
     }),
-    repositoryUrl: (0, import_fields4.text)({
-      label: "Repository URL",
-      validation: {
-        length: { max: 500 }
-      }
-    }),
     simpleIconSlug: (0, import_fields4.text)({
       label: "Simple Icon Slug",
       validation: {
@@ -301,43 +286,21 @@ var Tool = (0, import_core4.list)({
         // For hex colors like #7AB55C
       }
     }),
-    isOpenSource: (0, import_fields4.checkbox)({
-      label: "Is Open Source",
-      defaultValue: false
-    }),
     category: (0, import_fields4.relationship)({
-      ref: "Category.tools",
+      ref: "Category.proprietaryApplications",
       ui: {
         displayMode: "select"
       }
     }),
-    license: (0, import_fields4.text)({
-      validation: {
-        length: { max: 100 }
-      }
+    // Capabilities this proprietary app has (for comparison baseline)
+    capabilities: (0, import_fields4.relationship)({
+      ref: "ProprietaryCapability.proprietaryApplication",
+      many: true
     }),
-    githubStars: (0, import_fields4.integer)({
-      label: "GitHub Stars"
-    }),
-    status: (0, import_fields4.select)({
-      options: [
-        { label: "Active", value: "active" },
-        { label: "Inactive", value: "inactive" },
-        { label: "Deprecated", value: "deprecated" },
-        { label: "Beta", value: "beta" }
-      ],
-      defaultValue: "active"
-    }),
-    pricingModel: (0, import_fields4.select)({
-      label: "Pricing Model",
-      options: [
-        { label: "Free", value: "free" },
-        { label: "Freemium", value: "freemium" },
-        { label: "Paid", value: "paid" },
-        { label: "One-time", value: "one_time" },
-        { label: "Subscription", value: "subscription" },
-        { label: "Usage-based", value: "usage_based" }
-      ]
+    // Open source alternatives to this proprietary app
+    openSourceAlternatives: (0, import_fields4.relationship)({
+      ref: "OpenSourceApplication.primaryAlternativeTo",
+      many: true
     }),
     createdAt: (0, import_fields4.timestamp)({
       defaultValue: { kind: "now" }
@@ -347,60 +310,44 @@ var Tool = (0, import_core4.list)({
       db: {
         updatedAt: true
       }
-    }),
-    features: (0, import_fields4.relationship)({
-      ref: "ToolFeature.tool",
-      many: true
-    }),
-    proprietaryAlternatives: (0, import_fields4.relationship)({
-      ref: "Alternative.proprietaryTool",
-      many: true
-    }),
-    openSourceAlternatives: (0, import_fields4.relationship)({
-      ref: "Alternative.openSourceTool",
-      many: true
-    }),
-    deploymentOptions: (0, import_fields4.relationship)({
-      ref: "DeploymentOption.tool",
-      many: true
     })
   }
 });
 
-// features/keystone/models/Feature.ts
+// features/keystone/models/OpenSourceApplication.ts
 var import_core5 = require("@keystone-6/core");
 var import_fields5 = require("@keystone-6/core/fields");
-var Feature = (0, import_core5.list)({
+var OpenSourceApplication = (0, import_core5.list)({
   access: {
     operation: {
       query: () => true,
       // Allow public read access
-      create: permissions.canManageFeatures,
-      update: permissions.canManageFeatures,
-      delete: permissions.canManageFeatures
+      create: permissions.canManageApplications,
+      update: permissions.canManageApplications,
+      delete: permissions.canManageApplications
     }
   },
   ui: {
-    hideCreate: (args) => !permissions.canManageFeatures(args),
-    hideDelete: (args) => !permissions.canManageFeatures(args),
+    hideCreate: (args) => !permissions.canManageApplications(args),
+    hideDelete: (args) => !permissions.canManageApplications(args),
     listView: {
-      initialColumns: ["name", "slug", "category", "featureType", "createdAt"]
+      initialColumns: ["name", "slug", "primaryAlternativeTo", "githubStars", "status", "createdAt"]
     },
     itemView: {
-      defaultFieldMode: (args) => permissions.canManageFeatures(args) ? "edit" : "read"
+      defaultFieldMode: (args) => permissions.canManageApplications(args) ? "edit" : "read"
     }
   },
   fields: {
     name: (0, import_fields5.text)({
       validation: {
         isRequired: true,
-        length: { max: 100 }
+        length: { max: 255 }
       }
     }),
     slug: (0, import_fields5.text)({
       validation: {
         isRequired: true,
-        length: { max: 100 }
+        length: { max: 255 }
       },
       isIndexed: "unique"
     }),
@@ -409,155 +356,217 @@ var Feature = (0, import_core5.list)({
         displayMode: "textarea"
       }
     }),
-    category: (0, import_fields5.relationship)({
-      ref: "Category.features",
+    // Direct connection to ONE proprietary application
+    primaryAlternativeTo: (0, import_fields5.relationship)({
+      ref: "ProprietaryApplication.openSourceAlternatives",
       ui: {
         displayMode: "select"
       }
     }),
-    featureType: (0, import_fields5.select)({
-      label: "Feature Type",
+    // Open source specific fields
+    repositoryUrl: (0, import_fields5.text)({
+      label: "Repository URL",
+      validation: {
+        length: { max: 500 }
+      }
+    }),
+    websiteUrl: (0, import_fields5.text)({
+      label: "Website URL",
+      validation: {
+        length: { max: 500 }
+      }
+    }),
+    simpleIconSlug: (0, import_fields5.text)({
+      label: "Simple Icon Slug",
+      validation: {
+        length: { max: 100 }
+      }
+    }),
+    simpleIconColor: (0, import_fields5.text)({
+      label: "Simple Icon Color",
+      validation: {
+        length: { max: 7 }
+        // For hex colors like #7AB55C
+      }
+    }),
+    license: (0, import_fields5.text)({
+      validation: {
+        length: { max: 100 }
+      }
+    }),
+    githubStars: (0, import_fields5.integer)({
+      label: "GitHub Stars"
+    }),
+    githubForks: (0, import_fields5.integer)({
+      label: "GitHub Forks"
+    }),
+    githubIssues: (0, import_fields5.integer)({
+      label: "GitHub Issues"
+    }),
+    githubLastCommit: (0, import_fields5.timestamp)({
+      label: "GitHub Last Commit"
+    }),
+    status: (0, import_fields5.select)({
       options: [
-        { label: "Core", value: "core" },
-        { label: "Integration", value: "integration" },
-        { label: "UI/UX", value: "ui_ux" },
-        { label: "API", value: "api" },
-        { label: "Security", value: "security" },
-        { label: "Performance", value: "performance" },
-        { label: "Analytics", value: "analytics" },
-        { label: "Collaboration", value: "collaboration" },
-        { label: "Deployment", value: "deployment" },
-        { label: "Customization", value: "customization" }
-      ]
+        { label: "Active", value: "active" },
+        { label: "Maintenance", value: "maintenance" },
+        { label: "Deprecated", value: "deprecated" },
+        { label: "Beta", value: "beta" }
+      ],
+      defaultValue: "active"
+    }),
+    // Rich capabilities for build page
+    capabilities: (0, import_fields5.relationship)({
+      ref: "OpenSourceCapability.openSourceApplication",
+      many: true
     }),
     createdAt: (0, import_fields5.timestamp)({
       defaultValue: { kind: "now" }
     }),
-    tools: (0, import_fields5.relationship)({
-      ref: "ToolFeature.feature",
-      many: true
+    updatedAt: (0, import_fields5.timestamp)({
+      defaultValue: { kind: "now" },
+      db: {
+        updatedAt: true
+      }
     })
   }
 });
 
-// features/keystone/models/ToolFeature.ts
+// features/keystone/models/Capability.ts
 var import_core6 = require("@keystone-6/core");
 var import_fields6 = require("@keystone-6/core/fields");
-var ToolFeature = (0, import_core6.list)({
+var Capability = (0, import_core6.list)({
   access: {
     operation: {
       query: () => true,
       // Allow public read access
-      create: permissions.canManageTools,
-      update: permissions.canManageTools,
-      delete: permissions.canManageTools
+      create: permissions.canManageCapabilities,
+      update: permissions.canManageCapabilities,
+      delete: permissions.canManageCapabilities
     }
   },
   ui: {
-    hideCreate: (args) => !permissions.canManageTools(args),
-    hideDelete: (args) => !permissions.canManageTools(args),
+    hideCreate: (args) => !permissions.canManageCapabilities(args),
+    hideDelete: (args) => !permissions.canManageCapabilities(args),
     listView: {
-      initialColumns: ["tool", "feature", "qualityScore", "verified", "createdAt"]
+      initialColumns: ["name", "slug", "category", "complexity", "createdAt"]
     },
     itemView: {
-      defaultFieldMode: (args) => permissions.canManageTools(args) ? "edit" : "read"
+      defaultFieldMode: (args) => permissions.canManageCapabilities(args) ? "edit" : "read"
     }
   },
   fields: {
-    tool: (0, import_fields6.relationship)({
-      ref: "Tool.features",
-      ui: {
-        displayMode: "select"
+    name: (0, import_fields6.text)({
+      validation: {
+        isRequired: true,
+        length: { max: 255 }
       }
     }),
-    feature: (0, import_fields6.relationship)({
-      ref: "Feature.tools",
-      ui: {
-        displayMode: "select"
-      }
+    slug: (0, import_fields6.text)({
+      validation: {
+        isRequired: true,
+        length: { max: 255 }
+      },
+      isIndexed: "unique"
     }),
-    implementationNotes: (0, import_fields6.text)({
-      label: "Implementation Notes",
+    description: (0, import_fields6.text)({
       ui: {
         displayMode: "textarea"
       }
     }),
-    qualityScore: (0, import_fields6.integer)({
-      label: "Quality Score",
-      validation: {
-        min: 1,
-        max: 10
-      }
+    // Categorization for build page
+    category: (0, import_fields6.select)({
+      label: "Capability Category",
+      options: [
+        { label: "Authentication", value: "authentication" },
+        { label: "Payment", value: "payment" },
+        { label: "Storage", value: "storage" },
+        { label: "Communication", value: "communication" },
+        { label: "Analytics", value: "analytics" },
+        { label: "UI Components", value: "ui_components" },
+        { label: "Database", value: "database" },
+        { label: "Email", value: "email" },
+        { label: "Search", value: "search" },
+        { label: "Media", value: "media" },
+        { label: "Security", value: "security" },
+        { label: "Deployment", value: "deployment" },
+        { label: "Monitoring", value: "monitoring" },
+        { label: "Testing", value: "testing" },
+        { label: "Other", value: "other" }
+      ]
     }),
-    verified: (0, import_fields6.checkbox)({
-      defaultValue: false
+    // Overall implementation complexity
+    complexity: (0, import_fields6.select)({
+      label: "Implementation Complexity",
+      options: [
+        { label: "Basic", value: "basic" },
+        { label: "Intermediate", value: "intermediate" },
+        { label: "Advanced", value: "advanced" }
+      ],
+      defaultValue: "intermediate"
+    }),
+    // Relationships to applications
+    proprietaryApplications: (0, import_fields6.relationship)({
+      ref: "ProprietaryCapability.capability",
+      many: true
+    }),
+    openSourceApplications: (0, import_fields6.relationship)({
+      ref: "OpenSourceCapability.capability",
+      many: true
     }),
     createdAt: (0, import_fields6.timestamp)({
       defaultValue: { kind: "now" }
+    }),
+    updatedAt: (0, import_fields6.timestamp)({
+      defaultValue: { kind: "now" },
+      db: {
+        updatedAt: true
+      }
     })
   }
 });
 
-// features/keystone/models/Alternative.ts
+// features/keystone/models/ProprietaryCapability.ts
 var import_core7 = require("@keystone-6/core");
 var import_fields7 = require("@keystone-6/core/fields");
-var Alternative = (0, import_core7.list)({
+var ProprietaryCapability = (0, import_core7.list)({
   access: {
     operation: {
       query: () => true,
       // Allow public read access
-      create: permissions.canManageAlternatives,
-      update: permissions.canManageAlternatives,
-      delete: permissions.canManageAlternatives
+      create: permissions.canManageCapabilities,
+      update: permissions.canManageCapabilities,
+      delete: permissions.canManageCapabilities
     }
   },
   ui: {
-    hideCreate: (args) => !permissions.canManageAlternatives(args),
-    hideDelete: (args) => !permissions.canManageAlternatives(args),
+    hideCreate: (args) => !permissions.canManageCapabilities(args),
+    hideDelete: (args) => !permissions.canManageCapabilities(args),
     listView: {
-      initialColumns: ["proprietaryTool", "openSourceTool", "similarityScore", "matchType", "createdAt"]
+      initialColumns: ["proprietaryApplication", "capability", "isActive", "createdAt"]
     },
     itemView: {
-      defaultFieldMode: (args) => permissions.canManageAlternatives(args) ? "edit" : "read"
+      defaultFieldMode: (args) => permissions.canManageCapabilities(args) ? "edit" : "read"
     }
   },
   fields: {
-    proprietaryTool: (0, import_fields7.relationship)({
-      ref: "Tool.proprietaryAlternatives",
-      label: "Proprietary Tool",
+    proprietaryApplication: (0, import_fields7.relationship)({
+      ref: "ProprietaryApplication.capabilities",
       ui: {
         displayMode: "select"
       }
     }),
-    openSourceTool: (0, import_fields7.relationship)({
-      ref: "Tool.openSourceAlternatives",
-      label: "Open Source Tool",
+    capability: (0, import_fields7.relationship)({
+      ref: "Capability.proprietaryApplications",
       ui: {
         displayMode: "select"
       }
     }),
-    similarityScore: (0, import_fields7.decimal)({
-      label: "Similarity Score",
-      precision: 3,
-      scale: 2,
-      validation: {
-        min: "0.00",
-        max: "1.00"
-      }
-    }),
-    matchType: (0, import_fields7.select)({
-      label: "Match Type",
-      options: [
-        { label: "Direct", value: "direct" },
-        { label: "Partial", value: "partial" },
-        { label: "Alternative", value: "alternative" },
-        { label: "Complementary", value: "complementary" }
-      ]
-    }),
-    comparisonNotes: (0, import_fields7.text)({
-      label: "Comparison Notes",
+    // Simple tracking - does this proprietary app have this capability?
+    isActive: (0, import_fields7.checkbox)({
+      defaultValue: true,
       ui: {
-        displayMode: "textarea"
+        description: "Does this proprietary application currently have this capability?"
       }
     }),
     createdAt: (0, import_fields7.timestamp)({
@@ -566,56 +575,95 @@ var Alternative = (0, import_core7.list)({
   }
 });
 
-// features/keystone/models/DeploymentOption.ts
+// features/keystone/models/OpenSourceCapability.ts
 var import_core8 = require("@keystone-6/core");
 var import_fields8 = require("@keystone-6/core/fields");
-var DeploymentOption = (0, import_core8.list)({
+var OpenSourceCapability = (0, import_core8.list)({
   access: {
     operation: {
       query: () => true,
       // Allow public read access
-      create: permissions.canManageDeploymentOptions,
-      update: permissions.canManageDeploymentOptions,
-      delete: permissions.canManageDeploymentOptions
+      create: permissions.canManageCapabilities,
+      update: permissions.canManageCapabilities,
+      delete: permissions.canManageCapabilities
     }
   },
   ui: {
-    hideCreate: (args) => !permissions.canManageDeploymentOptions(args),
-    hideDelete: (args) => !permissions.canManageDeploymentOptions(args),
+    hideCreate: (args) => !permissions.canManageCapabilities(args),
+    hideDelete: (args) => !permissions.canManageCapabilities(args),
     listView: {
-      initialColumns: ["tool", "platform", "createdAt"]
+      initialColumns: ["openSourceApplication", "capability", "isActive", "implementationComplexity", "createdAt"]
     },
     itemView: {
-      defaultFieldMode: (args) => permissions.canManageDeploymentOptions(args) ? "edit" : "read"
+      defaultFieldMode: (args) => permissions.canManageCapabilities(args) ? "edit" : "read"
     }
   },
   fields: {
-    tool: (0, import_fields8.relationship)({
-      ref: "Tool.deploymentOptions",
+    openSourceApplication: (0, import_fields8.relationship)({
+      ref: "OpenSourceApplication.capabilities",
       ui: {
         displayMode: "select"
       }
     }),
-    platform: (0, import_fields8.text)({
-      validation: {
-        isRequired: true,
-        length: { max: 100 }
-      },
+    capability: (0, import_fields8.relationship)({
+      ref: "Capability.openSourceApplications",
       ui: {
-        description: "Platform name (e.g., Vercel, Railway, Render)"
+        displayMode: "select"
       }
     }),
-    deployUrl: (0, import_fields8.text)({
-      label: "Deploy URL",
+    // Basic status
+    isActive: (0, import_fields8.checkbox)({
+      defaultValue: true,
+      ui: {
+        description: "Does this open source application currently have this capability?"
+      }
+    }),
+    // Rich implementation details for build page
+    implementationNotes: (0, import_fields8.text)({
+      label: "Implementation Notes",
+      ui: {
+        displayMode: "textarea",
+        description: "How this application implements this capability"
+      }
+    }),
+    githubPath: (0, import_fields8.text)({
+      label: "GitHub Path",
       validation: {
         length: { max: 500 }
       },
       ui: {
-        description: "One-click deploy URL"
+        description: 'Relative path to code that implements this capability (e.g., "src/auth/providers/google.ts")'
+      }
+    }),
+    documentationUrl: (0, import_fields8.text)({
+      label: "Documentation URL",
+      validation: {
+        length: { max: 500 }
+      },
+      ui: {
+        description: "Link to documentation for this specific capability"
+      }
+    }),
+    implementationComplexity: (0, import_fields8.select)({
+      label: "Implementation Complexity",
+      options: [
+        { label: "Basic", value: "basic" },
+        { label: "Intermediate", value: "intermediate" },
+        { label: "Advanced", value: "advanced" }
+      ],
+      defaultValue: "intermediate",
+      ui: {
+        description: "How complex it is to implement this capability in this application"
       }
     }),
     createdAt: (0, import_fields8.timestamp)({
       defaultValue: { kind: "now" }
+    }),
+    updatedAt: (0, import_fields8.timestamp)({
+      defaultValue: { kind: "now" },
+      db: {
+        updatedAt: true
+      }
     })
   }
 });
@@ -625,11 +673,11 @@ var models = {
   User,
   Role,
   Category,
-  Tool,
-  Feature,
-  ToolFeature,
-  Alternative,
-  DeploymentOption
+  ProprietaryApplication,
+  OpenSourceApplication,
+  Capability,
+  ProprietaryCapability,
+  OpenSourceCapability
 };
 
 // features/keystone/index.ts
@@ -752,12 +800,9 @@ var { withAuth } = (0, import_auth.createAuth)({
           canManagePeople: true,
           canManageRoles: true,
           canAccessDashboard: true,
-          canManageTools: true,
+          canManageApplications: true,
           canManageCategories: true,
-          canManageFeatures: true,
-          canManageAlternatives: true,
-          canManageDeploymentOptions: true,
-          canManageTechStacks: true
+          canManageCapabilities: true
         }
       }
     }
@@ -778,12 +823,9 @@ var { withAuth } = (0, import_auth.createAuth)({
       canManagePeople
       canManageRoles
       canAccessDashboard
-      canManageTools
+      canManageApplications
       canManageCategories
-      canManageFeatures
-      canManageAlternatives
-      canManageDeploymentOptions
-      canManageTechStacks
+      canManageCapabilities
     }
   `
 });

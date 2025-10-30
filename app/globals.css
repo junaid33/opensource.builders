@@ -9,9 +9,8 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
-  --font-handwriting: var(--font-handwriting);
-  --font-silkscreen: var(--font-silkscreen);
   --font-geist-sans: var(--font-geist-sans);
+  --font-instrument-serif: var(--font-instrument-serif);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -136,7 +135,13 @@
 }
 
 .animate-infinite-scroll {
-  animation: infinite-scroll linear infinite;
+  animation: infinite-scroll 40s linear infinite;
+  transition: animation-duration 0.3s ease-in-out;
+}
+
+.animate-infinite-scroll-slow {
+  animation: infinite-scroll 20s linear infinite;
+  transition: animation-duration 0.3s ease-in-out;
 }
 
 /* NProgress Styling */

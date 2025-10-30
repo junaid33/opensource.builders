@@ -1,66 +1,90 @@
-"use client"
+/* eslint-disable @typescript-eslint/no-unused-vars */
+"use client";
 
-import { useState, useEffect } from "react"
-import { MoonIcon, SunIcon, Monitor } from "lucide-react"
-import { useTheme } from "next-themes"
+import { cn } from "@/lib/utils";
+import { Monitor, Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
+import { type ComponentProps, useDeferredValue } from "react";
 
-import { Button } from "@/components/ui/button"
+const THEMES = [
+  {
+    type: "system",
+    icon: Monitor,
+    label: "system theme",
+  },
+  {
+    type: "light",
+    icon: Sun,
+    label: "light theme",
+  },
+  {
+    type: "dark",
+    icon: Moon,
+    label: "dark theme",
+  },
+] as const;
 
-export function ThemeToggle() {
-  const { theme, setTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
+type Theme = (typeof THEMES)[number]["type"];
 
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+interface ThemeSwitcherProps
+  extends Omit<ComponentProps<"div">, "onChange" | "value" | "defaultValue"> {
+  value?: Theme;
+  onChange?: (theme: Theme) => void;
+  defaultValue?: Theme;
+}
 
-  if (!mounted) {
-    return <div className="size-9" />
-  }
-
-  const handleClick = () => {
-    if (theme === "system") {
-      setTheme("light")
-    } else if (theme === "light") {
-      setTheme("dark")
-    } else {
-      setTheme("system")
-    }
-  }
-
-  const getCurrentIcon = () => {
-    switch (theme) {
-      case "light":
-        return <SunIcon size={16} />
-      case "dark":
-        return <MoonIcon size={16} />
-      case "system":
-      default:
-        return <Monitor size={16} />
-    }
-  }
-
-  const getAriaLabel = () => {
-    switch (theme) {
-      case "light":
-        return "Switch to dark mode"
-      case "dark":
-        return "Switch to system mode"
-      case "system":
-      default:
-        return "Switch to light mode"
-    }
-  }
+function ThemeSwitcher({
+  value,
+  onChange,
+  defaultValue,
+  className,
+  ...props
+}: ThemeSwitcherProps) {
+  const { theme, setTheme } = useTheme();
+  const deferredTheme = useDeferredValue(theme, "system");
 
   return (
-    <Button
-      variant="outline"
-      size="icon"
-      className="size-8"
-      onClick={handleClick}
-      aria-label={getAriaLabel()}
+    <div
+      className={cn(
+        "relative isolate inline-flex h-8 items-center rounded-full border shadow-xs px-1",
+        className
+      )}
+      data-theme-switcher
+      {...props}
     >
-      {getCurrentIcon()}
-    </Button>
-  )
+      {THEMES.map(({ type, icon: Icon, label }) => {
+        const isActive = deferredTheme === type;
+
+        return (
+          <button
+            aria-label={`Switch to ${label}`}
+            className="group relative size-5.5 rounded-full transition duration-200 ease-out"
+            key={type}
+            onClick={() => setTheme(type)}
+            title={`Switch to ${label}`}
+            type="button"
+            data-umami-event={`Switch Theme to ${type}`}
+          >
+            {isActive && (
+              <div className="-z-1 absolute inset-0 rounded-full bg-blue-100 dark:bg-blue-500" />
+            )}
+            <Icon
+              className={cn(
+                "relative m-auto size-3.5",
+                "transition duration-200 ease-out",
+                isActive
+                  ? "text-foreground"
+                  : "text-secondary-foreground group-hover:text-foreground group-focus-visible:text-foreground"
+              )}
+            />
+          </button>
+        );
+      })}
+    </div>
+  );
 }
+
+export { ThemeSwitcher };
+
+// Keep the old ThemeToggle export for backward compatibility
+export const ThemeToggle = ThemeSwitcher;

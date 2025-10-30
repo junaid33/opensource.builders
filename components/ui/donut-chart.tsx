@@ -36,7 +36,7 @@ export function DonutChart({
             fill="transparent"
             stroke="currentColor"
             strokeWidth={strokeWidth}
-            className="text-gray-200"
+            className="text-gray-200 dark:text-gray-700"
           />
           {/* Progress circle */}
           <circle
@@ -48,12 +48,12 @@ export function DonutChart({
             strokeWidth={strokeWidth}
             strokeDasharray={strokeDasharray}
             strokeLinecap="round"
-            className="text-green-500 transition-all duration-300 ease-in-out"
+            className="text-green-500 dark:text-green-400 transition-all duration-300 ease-in-out"
           />
         </svg>
         {showLabel && (
           <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-xs font-semibold text-gray-700">
+            <span className="text-xs font-semibold text-gray-700 dark:text-gray-300">
               {value}/{total}
             </span>
           </div>

@@ -55,12 +55,9 @@ export const Category = list({
     createdAt: timestamp({
       defaultValue: { kind: 'now' },
     }),
-    tools: relationship({
-      ref: 'Tool.category',
-      many: true,
-    }),
-    features: relationship({
-      ref: 'Feature.category',
+    // Relationships to new application models
+    proprietaryApplications: relationship({
+      ref: 'ProprietaryApplication.category',
       many: true,
     }),
   },

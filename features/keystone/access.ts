@@ -11,12 +11,9 @@ export type Session = {
       canManagePeople: boolean
       canManageRoles: boolean
       canAccessDashboard: boolean
-      canManageTools: boolean
+      canManageApplications: boolean
       canManageCategories: boolean
-      canManageFeatures: boolean
-      canManageAlternatives: boolean
-      canManageDeploymentOptions: boolean
-      canManageTechStacks: boolean
+      canManageCapabilities: boolean
     }
   }
 }
@@ -32,12 +29,9 @@ export function isSignedIn({ session }: AccessArgs) {
 export const permissions = {
   canManagePeople: ({ session }: AccessArgs) => session?.data.role?.canManagePeople ?? false,
   canManageRoles: ({ session }: AccessArgs) => session?.data.role?.canManageRoles ?? false,
-  canManageTools: ({ session }: AccessArgs) => session?.data.role?.canManageTools ?? false,
+  canManageApplications: ({ session }: AccessArgs) => session?.data.role?.canManageApplications ?? false,
   canManageCategories: ({ session }: AccessArgs) => session?.data.role?.canManageCategories ?? false,
-  canManageFeatures: ({ session }: AccessArgs) => session?.data.role?.canManageFeatures ?? false,
-  canManageAlternatives: ({ session }: AccessArgs) => session?.data.role?.canManageAlternatives ?? false,
-  canManageDeploymentOptions: ({ session }: AccessArgs) => session?.data.role?.canManageDeploymentOptions ?? false,
-  canManageTechStacks: ({ session }: AccessArgs) => session?.data.role?.canManageTechStacks ?? false,
+  canManageCapabilities: ({ session }: AccessArgs) => session?.data.role?.canManageCapabilities ?? false,
 }
 
 export const rules = {

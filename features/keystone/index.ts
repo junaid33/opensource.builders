@@ -29,12 +29,9 @@ const { withAuth } = createAuth({
           canManagePeople: true,
           canManageRoles: true,
           canAccessDashboard: true,
-          canManageTools: true,
+          canManageApplications: true,
           canManageCategories: true,
-          canManageFeatures: true,
-          canManageAlternatives: true,
-          canManageDeploymentOptions: true,
-          canManageTechStacks: true,
+          canManageCapabilities: true,
         },
       },
     },
@@ -56,12 +53,9 @@ const { withAuth } = createAuth({
       canManagePeople
       canManageRoles
       canAccessDashboard
-      canManageTools
+      canManageApplications
       canManageCategories
-      canManageFeatures
-      canManageAlternatives
-      canManageDeploymentOptions
-      canManageTechStacks
+      canManageCapabilities
     }
   `,
 });

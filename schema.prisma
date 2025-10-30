@@ -26,111 +26,112 @@ model User {
 }
 
 model Role {
-  id                         String  @id @default(cuid())
-  name                       String  @default("")
-  canSeeOtherPeople          Boolean @default(false)
-  canEditOtherPeople         Boolean @default(false)
-  canManagePeople            Boolean @default(false)
-  canManageRoles             Boolean @default(false)
-  canAccessDashboard         Boolean @default(false)
-  canManageTools             Boolean @default(false)
-  canManageCategories        Boolean @default(false)
-  canManageFeatures          Boolean @default(false)
-  canManageAlternatives      Boolean @default(false)
-  canManageDeploymentOptions Boolean @default(false)
-  canManageTechStacks        Boolean @default(false)
-  assignedTo                 User[]  @relation("User_role")
+  id                    String  @id @default(cuid())
+  name                  String  @default("")
+  canSeeOtherPeople     Boolean @default(false)
+  canEditOtherPeople    Boolean @default(false)
+  canManagePeople       Boolean @default(false)
+  canManageRoles        Boolean @default(false)
+  canAccessDashboard    Boolean @default(false)
+  canManageApplications Boolean @default(false)
+  canManageCategories   Boolean @default(false)
+  canManageCapabilities Boolean @default(false)
+  assignedTo            User[]  @relation("User_role")
 }
 
 model Category {
-  id          String    @id @default(cuid())
-  name        String    @default("")
-  slug        String    @unique @default("")
-  description String    @default("")
-  icon        String    @default("")
-  color       String    @default("")
-  createdAt   DateTime? @default(now())
-  tools       Tool[]    @relation("Tool_category")
-  features    Feature[] @relation("Feature_category")
+  id                      String                   @id @default(cuid())
+  name                    String                   @default("")
+  slug                    String                   @unique @default("")
+  description             String                   @default("")
+  icon                    String                   @default("")
+  color                   String                   @default("")
+  createdAt               DateTime?                @default(now())
+  proprietaryApplications ProprietaryApplication[] @relation("ProprietaryApplication_category")
 }
 
-model Tool {
-  id                      String             @id @default(cuid())
-  name                    String             @default("")
-  slug                    String             @unique @default("")
-  description             String             @default("")
-  websiteUrl              String             @default("")
-  repositoryUrl           String             @default("")
-  simpleIconSlug          String             @default("")
-  simpleIconColor         String             @default("")
-  isOpenSource            Boolean            @default(false)
-  category                Category?          @relation("Tool_category", fields: [categoryId], references: [id])
-  categoryId              String?            @map("category")
-  license                 String             @default("")
-  githubStars             Int?
-  status                  String?            @default("active")
-  pricingModel            String?
-  createdAt               DateTime?          @default(now())
-  updatedAt               DateTime?          @default(now()) @updatedAt
-  features                ToolFeature[]      @relation("ToolFeature_tool")
-  proprietaryAlternatives Alternative[]      @relation("Alternative_proprietaryTool")
-  openSourceAlternatives  Alternative[]      @relation("Alternative_openSourceTool")
-  deploymentOptions       DeploymentOption[] @relation("DeploymentOption_tool")
+model ProprietaryApplication {
+  id                     String                  @id @default(cuid())
+  name                   String                  @default("")
+  slug                   String                  @unique @default("")
+  description            String                  @default("")
+  websiteUrl             String                  @default("")
+  simpleIconSlug         String                  @default("")
+  simpleIconColor        String                  @default("")
+  category               Category?               @relation("ProprietaryApplication_category", fields: [categoryId], references: [id])
+  categoryId             String?                 @map("category")
+  capabilities           ProprietaryCapability[] @relation("ProprietaryCapability_proprietaryApplication")
+  openSourceAlternatives OpenSourceApplication[] @relation("OpenSourceApplication_primaryAlternativeTo")
+  createdAt              DateTime?               @default(now())
+  updatedAt              DateTime?               @default(now()) @updatedAt
 
   @@index([categoryId])
 }
 
-model Feature {
-  id          String        @id @default(cuid())
-  name        String        @default("")
-  slug        String        @unique @default("")
-  description String        @default("")
-  category    Category?     @relation("Feature_category", fields: [categoryId], references: [id])
-  categoryId  String?       @map("category")
-  featureType String?
-  createdAt   DateTime?     @default(now())
-  tools       ToolFeature[] @relation("ToolFeature_feature")
+model OpenSourceApplication {
+  id                     String                  @id @default(cuid())
+  name                   String                  @default("")
+  slug                   String                  @unique @default("")
+  description            String                  @default("")
+  primaryAlternativeTo   ProprietaryApplication? @relation("OpenSourceApplication_primaryAlternativeTo", fields: [primaryAlternativeToId], references: [id])
+  primaryAlternativeToId String?                 @map("primaryAlternativeTo")
+  repositoryUrl          String                  @default("")
+  websiteUrl             String                  @default("")
+  simpleIconSlug         String                  @default("")
+  simpleIconColor        String                  @default("")
+  license                String                  @default("")
+  githubStars            Int?
+  githubForks            Int?
+  githubIssues           Int?
+  githubLastCommit       DateTime?
+  status                 String?                 @default("active")
+  capabilities           OpenSourceCapability[]  @relation("OpenSourceCapability_openSourceApplication")
+  createdAt              DateTime?               @default(now())
+  updatedAt              DateTime?               @default(now()) @updatedAt
 
-  @@index([categoryId])
+  @@index([primaryAlternativeToId])
 }
 
-model ToolFeature {
-  id                  String    @id @default(cuid())
-  tool                Tool?     @relation("ToolFeature_tool", fields: [toolId], references: [id])
-  toolId              String?   @map("tool")
-  feature             Feature?  @relation("ToolFeature_feature", fields: [featureId], references: [id])
-  featureId           String?   @map("feature")
-  implementationNotes String    @default("")
-  qualityScore        Int?
-  verified            Boolean   @default(false)
-  createdAt           DateTime? @default(now())
-
-  @@index([toolId])
-  @@index([featureId])
+model Capability {
+  id                      String                  @id @default(cuid())
+  name                    String                  @default("")
+  slug                    String                  @unique @default("")
+  description             String                  @default("")
+  category                String?
+  complexity              String?                 @default("intermediate")
+  proprietaryApplications ProprietaryCapability[] @relation("ProprietaryCapability_capability")
+  openSourceApplications  OpenSourceCapability[]  @relation("OpenSourceCapability_capability")
+  createdAt               DateTime?               @default(now())
+  updatedAt               DateTime?               @default(now()) @updatedAt
 }
 
-model Alternative {
-  id                String    @id @default(cuid())
-  proprietaryTool   Tool?     @relation("Alternative_proprietaryTool", fields: [proprietaryToolId], references: [id])
-  proprietaryToolId String?   @map("proprietaryTool")
-  openSourceTool    Tool?     @relation("Alternative_openSourceTool", fields: [openSourceToolId], references: [id])
-  openSourceToolId  String?   @map("openSourceTool")
-  similarityScore   Decimal?  @postgresql.Decimal(3, 2)
-  matchType         String?
-  comparisonNotes   String    @default("")
-  createdAt         DateTime? @default(now())
+model ProprietaryCapability {
+  id                       String                  @id @default(cuid())
+  proprietaryApplication   ProprietaryApplication? @relation("ProprietaryCapability_proprietaryApplication", fields: [proprietaryApplicationId], references: [id])
+  proprietaryApplicationId String?                 @map("proprietaryApplication")
+  capability               Capability?             @relation("ProprietaryCapability_capability", fields: [capabilityId], references: [id])
+  capabilityId             String?                 @map("capability")
+  isActive                 Boolean                 @default(true)
+  createdAt                DateTime?               @default(now())
 
-  @@index([proprietaryToolId])
-  @@index([openSourceToolId])
+  @@index([proprietaryApplicationId])
+  @@index([capabilityId])
 }
 
-model DeploymentOption {
-  id        String    @id @default(cuid())
-  tool      Tool?     @relation("DeploymentOption_tool", fields: [toolId], references: [id])
-  toolId    String?   @map("tool")
-  platform  String    @default("")
-  deployUrl String    @default("")
-  createdAt DateTime? @default(now())
+model OpenSourceCapability {
+  id                       String                 @id @default(cuid())
+  openSourceApplication    OpenSourceApplication? @relation("OpenSourceCapability_openSourceApplication", fields: [openSourceApplicationId], references: [id])
+  openSourceApplicationId  String?                @map("openSourceApplication")
+  capability               Capability?            @relation("OpenSourceCapability_capability", fields: [capabilityId], references: [id])
+  capabilityId             String?                @map("capability")
+  isActive                 Boolean                @default(true)
+  implementationNotes      String                 @default("")
+  githubPath               String                 @default("")
+  documentationUrl         String                 @default("")
+  implementationComplexity String?                @default("intermediate")
+  createdAt                DateTime?              @default(now())
+  updatedAt                DateTime?              @default(now()) @updatedAt
 
-  @@index([toolId])
+  @@index([openSourceApplicationId])
+  @@index([capabilityId])
 }

@@ -1,9 +1,5 @@
-import { StorefrontHomePage } from "@/features/storefront/screens/StorefrontHomePage";
-import { LandingPage } from "@/features/landing/screens/LandingPage";
-interface PageProps {
-  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
-}
+import { LandingPage } from "@/features/public-site/screens/LandingPage";
 
-export default async function HomePage({ searchParams }: PageProps) {
-  return <LandingPage searchParams={searchParams} />
+export default function HomePage() {
+  return <LandingPage />
 }

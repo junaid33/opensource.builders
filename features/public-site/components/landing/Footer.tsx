@@ -141,7 +141,7 @@ const Footer = () => {
                 className="bg-[#4885ED] hover:bg-[#3d73d4] text-white border-0 shadow-sm h-8"
               >
                 <StarIcon className="fill-current opacity-90" size={12} aria-hidden="true" />
-                <span className="text-xs font-medium">2.4k</span>
+                <span className="text-xs font-medium">1.2k</span>
               </Button>
             </Link>
             <div className="mt-4 text-sm text-muted-foreground">

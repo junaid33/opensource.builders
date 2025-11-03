@@ -1051,12 +1051,12 @@ export function DataTableDrawer({
                                     size={32}
                                   />
                                 ) : (
-                                  <div 
+                                  <div
                                     className="flex aspect-square items-center justify-center rounded-md overflow-hidden relative after:rounded-[inherit] after:absolute after:inset-0 after:shadow-[0_1px_2px_0_rgb(0_0_0/.05),inset_0_1px_0_0_rgb(255_255_255/.12)] after:pointer-events-none"
-                                    style={{ 
-                                      width: 32, 
+                                    style={{
+                                      width: 32,
                                       height: 32,
-                                      background: capability.toolColor || '#6B7280'
+                                      background: capability.toolColor || '#000000'
                                     }}
                                   >
                                     {/* Noise texture overlay */}
@@ -1067,17 +1067,28 @@ export function DataTableDrawer({
                                         backgroundSize: "256px 256px",
                                       }}
                                     />
-                                    
+
+                                    {/* Additional inner shadow for depth */}
+                                    <div
+                                      className="absolute inset-0 rounded-md"
+                                      style={{ boxShadow: "inset 0 1px 2px rgba(0,0,0,0.3), inset 0 -1px 2px rgba(255,255,255,0.1)" }}
+                                    />
+
                                     {/* Letter */}
                                     <div className="absolute inset-0 flex items-center justify-center">
                                       <span
-                                        className="font-instrument-serif font-bold text-primary-foreground select-none"
-                                        style={{ fontSize: 16 }}
+                                        className="font-instrument-serif font-bold text-foreground select-none"
+                                        style={{
+                                          fontSize: 32 * 0.45,
+                                          textShadow: "0 1px 4px rgba(255,255,255,0.3), 0 0 8px rgba(255,255,255,0.2)",
+                                          filter: 'brightness(0) invert(1)',
+                                          opacity: 0.9
+                                        }}
                                       >
                                         {capability.toolName.charAt(0).toUpperCase()}
                                       </span>
                                     </div>
-                                    
+
                                     {/* Subtle highlight */}
                                     <div className="absolute top-0 left-0 right-0 h-1/4 bg-gradient-to-b from-white/10 to-transparent rounded-t-md" />
                                   </div>
@@ -1555,12 +1566,12 @@ export function DataTableDrawer({
                             size={32}
                           />
                         ) : (
-                          <div 
+                          <div
                             className="flex aspect-square items-center justify-center rounded-md overflow-hidden relative after:rounded-[inherit] after:absolute after:inset-0 after:shadow-[0_1px_2px_0_rgb(0_0_0/.05),inset_0_1px_0_0_rgb(255_255_255/.12)] after:pointer-events-none"
-                            style={{ 
-                              width: 32, 
+                            style={{
+                              width: 32,
                               height: 32,
-                              background: capability.toolColor || '#6B7280'
+                              background: capability.toolColor || '#000000'
                             }}
                           >
                             {/* Noise texture overlay */}
@@ -1571,17 +1582,28 @@ export function DataTableDrawer({
                                 backgroundSize: "256px 256px",
                               }}
                             />
-                            
+
+                            {/* Additional inner shadow for depth */}
+                            <div
+                              className="absolute inset-0 rounded-md"
+                              style={{ boxShadow: "inset 0 1px 2px rgba(0,0,0,0.3), inset 0 -1px 2px rgba(255,255,255,0.1)" }}
+                            />
+
                             {/* Letter */}
                             <div className="absolute inset-0 flex items-center justify-center">
                               <span
-                                className="font-instrument-serif font-bold text-primary-foreground select-none"
-                                style={{ fontSize: 16 }}
+                                className="font-instrument-serif font-bold text-foreground select-none"
+                                style={{
+                                  fontSize: 32 * 0.45,
+                                  textShadow: "0 1px 4px rgba(255,255,255,0.3), 0 0 8px rgba(255,255,255,0.2)",
+                                  filter: 'brightness(0) invert(1)',
+                                  opacity: 0.9
+                                }}
                               >
                                 {capability.toolName.charAt(0).toUpperCase()}
                               </span>
                             </div>
-                            
+
                             {/* Subtle highlight */}
                             <div className="absolute top-0 left-0 right-0 h-1/4 bg-gradient-to-b from-white/10 to-transparent rounded-t-md" />
                           </div>

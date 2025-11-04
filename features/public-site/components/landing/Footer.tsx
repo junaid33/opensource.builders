@@ -1,13 +1,13 @@
 "use client"
 
 import { StarIcon } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
 import Link from "next/link"
 import { Logo } from "@/features/dashboard/components/Logo"
 import { ThemeToggle } from "@/components/ui/theme-toggle"
 import { useQuery } from '@tanstack/react-query'
 import { fetchAllOpenSourceApps, fetchAllProprietaryApps } from '../../lib/data'
-import { GitHubStarsButton } from './GitHubStarsButton'
+import { cn } from "@/lib/utils"
 
 const CURRENT_YEAR = new Date().getFullYear()
 
@@ -131,12 +131,18 @@ const Footer = () => {
             <p className="text-sm text-muted-foreground max-w-xs mb-4">
               Find open source alternatives to popular proprietary software
             </p>
-            <GitHubStarsButton
-              username="junaid33"
-              repo="opensource.builders"
-              formatted={true}
-              className="text-sm h-8 px-3"
-            />
+            <Link
+              href="https://github.com/junaid33/opensource.builders"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(
+                buttonVariants({ variant: "default", size: "sm" }),
+                "cursor-pointer h-8 px-3 text-xs"
+              )}
+            >
+              <StarIcon className="fill-current" size={12} aria-hidden="true" />
+              <span>1.2k</span>
+            </Link>
             <div className="mt-4 text-sm text-muted-foreground">
               &copy; {CURRENT_YEAR} opensource.builders
             </div>

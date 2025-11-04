@@ -131,18 +131,20 @@ const Footer = () => {
             <p className="text-sm text-muted-foreground max-w-xs mb-4">
               Find open source alternatives to popular proprietary software
             </p>
-            <Link
-              href="https://github.com/junaid33/opensource.builders"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={cn(
-                buttonVariants({ variant: "default", size: "sm" }),
-                "cursor-pointer h-8 px-3 text-xs !inline-flex w-auto"
-              )}
-            >
-              <StarIcon className="fill-current" size={12} aria-hidden="true" />
-              <span>1.2k</span>
-            </Link>
+            <div className="inline-block">
+              <Link
+                href="https://github.com/junaid33/opensource.builders"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(
+                  buttonVariants({ variant: "default", size: "sm" }),
+                  "cursor-pointer h-8 px-3 text-xs"
+                )}
+              >
+                <StarIcon className="fill-current" size={12} aria-hidden="true" />
+                <span>1.2k</span>
+              </Link>
+            </div>
             <div className="mt-4 text-sm text-muted-foreground">
               &copy; {CURRENT_YEAR} opensource.builders
             </div>

@@ -7,6 +7,7 @@ import { Logo } from "@/features/dashboard/components/Logo"
 import { ThemeToggle } from "@/components/ui/theme-toggle"
 import { useQuery } from '@tanstack/react-query'
 import { fetchAllOpenSourceApps, fetchAllProprietaryApps } from '../../lib/data'
+import { GitHubStarsButton } from './GitHubStarsButton'
 
 const CURRENT_YEAR = new Date().getFullYear()
 
@@ -130,20 +131,12 @@ const Footer = () => {
             <p className="text-sm text-muted-foreground max-w-xs mb-4">
               Find open source alternatives to popular proprietary software
             </p>
-            <Link
-              href="https://github.com/junaid33/opensource.builders"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block"
-            >
-              <Button
-                size="sm"
-                className="bg-[#4885ED] hover:bg-[#3d73d4] text-white border-0 shadow-sm h-8"
-              >
-                <StarIcon className="fill-current opacity-90" size={12} aria-hidden="true" />
-                <span className="text-xs font-medium">1.2k</span>
-              </Button>
-            </Link>
+            <GitHubStarsButton
+              username="junaid33"
+              repo="opensource.builders"
+              formatted={true}
+              className="text-sm h-8 px-3"
+            />
             <div className="mt-4 text-sm text-muted-foreground">
               &copy; {CURRENT_YEAR} opensource.builders
             </div>

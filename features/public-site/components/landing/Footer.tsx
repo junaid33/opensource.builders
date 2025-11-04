@@ -137,7 +137,7 @@ const Footer = () => {
               rel="noopener noreferrer"
               className={cn(
                 buttonVariants({ variant: "default", size: "sm" }),
-                "cursor-pointer h-8 px-3 text-xs"
+                "cursor-pointer h-8 px-3 text-xs !inline-flex w-auto"
               )}
             >
               <StarIcon className="fill-current" size={12} aria-hidden="true" />

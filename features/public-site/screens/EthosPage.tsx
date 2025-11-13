@@ -309,24 +309,14 @@ export function EthosPage() {
               >
                 Openship & opensource.builders
               </TextScramble>
-              <TextScramble
-                as="p"
-                className="text-muted-foreground leading-relaxed sm:text-lg font-medium mb-4"
-                trigger={scrambleTrigger}
-                duration={1.2}
-              >
-                At Openship, we are creating open source software-as-a-service
-                platforms for every vertical, from hotels to grocery stores to
+              <p className="text-muted-foreground leading-relaxed sm:text-lg font-medium mb-4">
+                At <a href="https://openship.org" target="_blank" rel="noopener noreferrer" className="text-fd-foreground underline hover:text-fd-muted-foreground transition-colors">Openship</a>, we are creating <a href="https://github.com/openshiporg/openfront" target="_blank" rel="noopener noreferrer" className="text-fd-foreground underline hover:text-fd-muted-foreground transition-colors">open source software-as-a-service
+                platforms</a> for every vertical, from hotels to grocery stores to
                 barbershops. Together, these vertical platforms form the
-                foundation of a decentralized marketplace, where businesses
+                foundation of a <a href="https://github.com/openshiporg/marketplace" target="_blank" rel="noopener noreferrer" className="text-fd-foreground underline hover:text-fd-muted-foreground transition-colors">decentralized marketplace</a>, where businesses
                 fully own their storefronts and customer relationships.
-              </TextScramble>
-              <TextScramble
-                as="p"
-                className="text-muted-foreground leading-relaxed sm:text-lg font-medium mb-4"
-                trigger={scrambleTrigger}
-                duration={1.2}
-              >
+              </p>
+              <p className="text-muted-foreground leading-relaxed sm:text-lg font-medium mb-4">
                 Opensource.Builders is the companion to that vision. Each
                 Openfront we build can stand on its own, but with our feature
                 tracking and Build Drawer, businesses can go further. For
@@ -335,17 +325,12 @@ export function EthosPage() {
                 Openfront and add them to the barbershop Openfront. The result
                 is a personal platform that reflects your business exactly as
                 you need it.
-              </TextScramble>
-              <TextScramble
-                as="p"
-                className="text-muted-foreground leading-relaxed sm:text-lg font-medium"
-                trigger={scrambleTrigger}
-                duration={1.2}
-              >
+              </p>
+              <p className="text-muted-foreground leading-relaxed sm:text-lg font-medium">
                 Instead of being limited by a single provider, you have the
                 freedom to combine, customize, and evolve your own Openfront,
                 building an alternative that truly belongs to you.
-              </TextScramble>
+              </p>
             </div>
           </div>
         ) : (

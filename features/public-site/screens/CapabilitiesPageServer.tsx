@@ -3,6 +3,7 @@ import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query
 import { CapabilitiesPageClient } from './CapabilitiesPage';
 import { queryKeys } from '../lib/query-keys';
 import { fetchCapabilityApplications } from '../lib/data';
+import { PublicSiteProvider } from '../lib/provider';
 
 interface CapabilitiesPageServerProps {
   slug: string;
@@ -30,8 +31,10 @@ export async function CapabilitiesPageServer({ slug }: CapabilitiesPageServerPro
   }
 
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <CapabilitiesPageClient slug={slug} />
-    </HydrationBoundary>
+    <PublicSiteProvider>
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <CapabilitiesPageClient slug={slug} />
+      </HydrationBoundary>
+    </PublicSiteProvider>
   );
 }

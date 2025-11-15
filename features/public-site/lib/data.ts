@@ -1,22 +1,23 @@
 // Single data functions used by both server prefetch and client useQuery
+import { cache } from 'react';
 import { makeGraphQLRequest } from './graphql/client';
 import { GET_POPULAR_APPS, GET_ALTERNATIVES, GET_ALL_PROPRIETARY_APPS, MULTI_MODEL_SEARCH, GET_OS_ALTERNATIVES, GET_CAPABILITY_APPLICATIONS, GET_ALL_CAPABILITIES, GET_ALL_OPEN_SOURCE_APPS } from './graphql/queries';
 import { PopularAppsResponse, AlternativesResponse, SearchResult, PopularApp, ProprietaryApplication, OpenSourceApplication, CapabilityApplicationsResponse, AllCapabilitiesResponse, AllOpenSourceAppsResponse, Capability } from '../types';
 
 // Fetch popular apps
-export async function fetchPopularApps(): Promise<PopularApp[]> {
+export const fetchPopularApps = cache(async function (): Promise<PopularApp[]> {
   const data = await makeGraphQLRequest<PopularAppsResponse>(GET_POPULAR_APPS);
   return data.proprietaryApplications;
-}
+});
 
 // Fetch all proprietary apps
-export async function fetchAllProprietaryApps(): Promise<PopularApp[]> {
+export const fetchAllProprietaryApps = cache(async function (): Promise<PopularApp[]> {
   const data = await makeGraphQLRequest<PopularAppsResponse>(GET_ALL_PROPRIETARY_APPS);
   return data.proprietaryApplications;
-}
+});
 
 // Fetch alternatives for a proprietary app
-export async function fetchAlternatives(slug: string): Promise<ProprietaryApplication> {
+export const fetchAlternatives = cache(async function (slug: string): Promise<ProprietaryApplication> {
   const data = await makeGraphQLRequest<AlternativesResponse>(GET_ALTERNATIVES, { slug });
   
   const proprietaryApps = data.proprietaryApplications;
@@ -79,18 +80,18 @@ export async function fetchAlternatives(slug: string): Promise<ProprietaryApplic
       })) || [],
     })),
   };
-  
+
   return proprietaryApp;
-}
+});
 
 // Fetch search results
-export async function fetchSearchResults(searchQuery: string): Promise<SearchResult> {
+export const fetchSearchResults = cache(async function (searchQuery: string): Promise<SearchResult> {
   const data = await makeGraphQLRequest<SearchResult>(MULTI_MODEL_SEARCH, { search: searchQuery });
   return data;
-}
+});
 
 // Fetch OS alternatives - show other open source alternatives to the same proprietary app
-export async function fetchOsAlternatives(slug: string): Promise<{ 
+export const fetchOsAlternatives = cache(async function (slug: string): Promise<{ 
   openSourceApp: OpenSourceApplication; 
   proprietaryApp: ProprietaryApplication; 
   otherAlternatives: OpenSourceApplication[];
@@ -190,10 +191,10 @@ export async function fetchOsAlternatives(slug: string): Promise<{
       })) || [],
     })),
   };
-}
+});
 
 // Fetch all applications that have a specific capability
-export async function fetchCapabilityApplications(slug: string): Promise<CapabilityApplicationsResponse> {
+export const fetchCapabilityApplications = cache(async function (slug: string): Promise<CapabilityApplicationsResponse> {
   const data = await makeGraphQLRequest(GET_CAPABILITY_APPLICATIONS, { slug });
   
   const capabilities = data.capabilities;
@@ -241,16 +242,16 @@ export async function fetchCapabilityApplications(slug: string): Promise<Capabil
       isActive: app.isActive,
     })) || [],
   };
-}
+});
 
 // Fetch all capabilities
-export async function fetchAllCapabilities(): Promise<Capability[]> {
+export const fetchAllCapabilities = cache(async function (): Promise<Capability[]> {
   const data = await makeGraphQLRequest<AllCapabilitiesResponse>(GET_ALL_CAPABILITIES);
   return data.capabilities;
-}
+});
 
 // Fetch all open source applications
-export async function fetchAllOpenSourceApps(): Promise<OpenSourceApplication[]> {
+export const fetchAllOpenSourceApps = cache(async function (): Promise<OpenSourceApplication[]> {
   const data = await makeGraphQLRequest<AllOpenSourceAppsResponse>(GET_ALL_OPEN_SOURCE_APPS);
   return data.openSourceApplications;
-}
+});

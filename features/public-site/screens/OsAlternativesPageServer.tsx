@@ -3,6 +3,7 @@ import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query
 import { OsAlternativesPageClient } from './OsAlternativesPage';
 import { queryKeys } from '../lib/query-keys';
 import { fetchOsAlternatives } from '../lib/data';
+import { PublicSiteProvider } from '../lib/provider';
 
 interface OsAlternativesPageServerProps {
   slug: string;
@@ -30,8 +31,10 @@ export async function OsAlternativesPageServer({ slug }: OsAlternativesPageServe
   }
 
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <OsAlternativesPageClient slug={slug} />
-    </HydrationBoundary>
+    <PublicSiteProvider>
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <OsAlternativesPageClient slug={slug} />
+      </HydrationBoundary>
+    </PublicSiteProvider>
   );
 }

@@ -1531,7 +1531,7 @@ export function DataTableDrawer({
       {/* Thank You Dialog */}
       <Dialog open={showThankYouDialog} onOpenChange={setShowThankYouDialog}>
         <DialogContent className="sm:max-w-lg p-6">
-          <div className="relative flex shrink-0 items-center justify-center rounded-full size-16 bg-blue-50 text-blue-600 mb-3">
+          <div className="relative flex shrink-0 items-center justify-center rounded-full size-16 bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 mb-3">
             <CircleCheck className="size-8" />
           </div>
           
@@ -1623,7 +1623,7 @@ export function DataTableDrawer({
                         href={`https://github.com/${username}/${repo.replace('.git', '')}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-gradient-to-b from-gray-50 to-gray-100 border border-gray-200 hover:from-gray-100 hover:to-gray-150 transition-all duration-200 shadow-sm text-sm font-medium"
+                        className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 hover:from-gray-100 hover:to-gray-150 dark:hover:from-gray-700 dark:hover:to-gray-800 transition-all duration-200 shadow-sm text-sm font-medium"
                       >
                         <Star className="h-4 w-4" />
                         <span>Star</span>

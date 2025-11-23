@@ -18,7 +18,7 @@ interface MarqueeProps extends React.HTMLAttributes<HTMLDivElement> {
   fontSize?: "sm" | "md" | "lg" | "xl" | "2xl" | "3xl"
   strokeWidth?: string
   reverse?: boolean
-  accentColor?: "blue" | "green" | "purple" | "red" | "orange"
+  accentColor?: "blue" | "green" | "purple" | "red" | "orange" | "slate" | "stone" | "neutral"
 }
 
 const fontSizeClasses = {
@@ -50,6 +50,19 @@ const accentColors = {
   orange: {
     className: 'text-orange-500/10 dark:text-orange-400/15',
     strokeClassName: '[--marquee-stroke:theme(colors.orange.500)] dark:[--marquee-stroke:theme(colors.orange.400)]'
+  },
+  // Grayscale shades using different color palettes
+  'slate': {
+    className: 'text-slate-600/10 dark:text-slate-300/15',
+    strokeClassName: '[--marquee-stroke:theme(colors.slate.600)] dark:[--marquee-stroke:theme(colors.slate.300)]'
+  },
+  'stone': {
+    className: 'text-stone-500/10 dark:text-stone-400/15',
+    strokeClassName: '[--marquee-stroke:theme(colors.stone.500)] dark:[--marquee-stroke:theme(colors.stone.400)]'
+  },
+  'neutral': {
+    className: 'text-neutral-400/10 dark:text-neutral-500/15',
+    strokeClassName: '[--marquee-stroke:theme(colors.neutral.400)] dark:[--marquee-stroke:theme(colors.neutral.500)]'
   },
 }
 

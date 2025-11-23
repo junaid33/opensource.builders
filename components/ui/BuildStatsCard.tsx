@@ -536,14 +536,9 @@ export default function BuildStatsCard({
                                   </button>
                                 </PopoverTrigger>
                                 <PopoverContent className="w-auto p-3" side="bottom" align="start">
-                                  <a
-                                    href={item.githubPath}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-sm text-primary hover:underline break-all"
-                                  >
+                                  <span className="text-sm text-muted-foreground break-all">
                                     {item.githubPath}
-                                  </a>
+                                  </span>
                                 </PopoverContent>
                               </Popover>
                               <span className="text-muted-foreground">·</span>

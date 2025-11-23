@@ -54,7 +54,7 @@ const MarqueeSection = () => {
         duration={30}
         fontSize="lg"
         className="py-2"
-        accentColor="blue"
+        accentColor="slate"
       />
 
       {/* Middle row - Open Source Apps - going right */}
@@ -65,7 +65,7 @@ const MarqueeSection = () => {
         fontSize="lg"
         className="py-2"
         reverse={true}
-        accentColor="green"
+        accentColor="stone"
       />
 
       {/* Bottom row - Capabilities - going left */}
@@ -75,7 +75,7 @@ const MarqueeSection = () => {
         duration={35}
         fontSize="lg"
         className="py-2"
-        accentColor="orange"
+        accentColor="neutral"
       />
     </div>
   )

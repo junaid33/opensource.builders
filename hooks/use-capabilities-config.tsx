@@ -23,7 +23,7 @@ interface CapabilitiesConfig {
   selectedCapabilities: SelectedCapability[]
   lastPinnedToolId?: string // Track the last tool that had a capability pinned
   buildStatsCard: {
-    currentAppIndex: number
+    currentAppId?: string // ID of the currently selected app (more robust than index)
     isCollapsed: boolean
     capabilitySearch: string
     appSearchTerm: string
@@ -39,7 +39,7 @@ interface CapabilitiesProviderProps {
 interface CapabilitiesProviderState {
   config: CapabilitiesConfig
   setConfig: (config: Partial<CapabilitiesConfig> | ((prev: CapabilitiesConfig) => Partial<CapabilitiesConfig>)) => void
-  addCapability: (capability: SelectedCapability, apps?: any[]) => void
+  addCapability: (capability: SelectedCapability) => void
   removeCapability: (capabilityId: string) => void
   isHydrated: boolean
 }
@@ -53,7 +53,7 @@ const defaultCapabilitiesConfig: CapabilitiesConfig = {
   selectedCapabilities: [],
   lastPinnedToolId: undefined,
   buildStatsCard: {
-    currentAppIndex: 0,
+    currentAppId: undefined,
     isCollapsed: false,
     capabilitySearch: '',
     appSearchTerm: '',
@@ -87,7 +87,7 @@ const loadFromLS = (storageKey: string, defaultConfig: CapabilitiesConfig): Capa
         // Always reset these UI states on page load - they should never be persisted
         buildStatsCard: {
           ...parsed.buildStatsCard,
-          currentAppIndex: 0, // Always start with first app
+          currentAppId: undefined, // Always start with first app (will default to index 0)
           isAppsDropdownOpen: false, // Always start closed
           appSearchTerm: '', // Clear search
         }
@@ -152,17 +152,8 @@ const CapabilitiesRoot = ({
   )
 
   const addCapability = React.useCallback(
-    (capability: SelectedCapability, apps?: any[]) => {
+    (capability: SelectedCapability) => {
       setConfig((prev) => {
-        // Find the app index if apps array is provided
-        let newAppIndex = prev.buildStatsCard.currentAppIndex
-        if (apps && apps.length > 0) {
-          const foundIndex = apps.findIndex(app => app.id === capability.toolId)
-          if (foundIndex !== -1) {
-            newAppIndex = foundIndex
-          }
-        }
-
         return {
           selectedCapabilities: [
             ...prev.selectedCapabilities.filter(c => c.id !== capability.id),
@@ -171,7 +162,7 @@ const CapabilitiesRoot = ({
           lastPinnedToolId: capability.toolId,
           buildStatsCard: {
             ...prev.buildStatsCard,
-            currentAppIndex: newAppIndex
+            currentAppId: capability.toolId // Store the tool ID directly
           }
         }
       })

@@ -931,7 +931,7 @@ export function DataTableDrawer({
                       <p className="text-xs text-muted-foreground uppercase tracking-wide">Choose Starter</p>
                       <CustomSelect value={selectedTemplate} onValueChange={(value) => {
                         setSelectedTemplate(value)
-                        updateBuildStatsCard({ currentAppIndex: 0 })
+                        updateBuildStatsCard({ currentAppId: undefined })
                       }}>
                         <CustomSelectTrigger>
                           {(() => {
@@ -1455,7 +1455,7 @@ export function DataTableDrawer({
                       <CustomSelect value={selectedTemplate} onValueChange={(value) => {
                         setSelectedTemplate(value)
                         // Reset to first app when starter changes
-                        updateBuildStatsCard({ currentAppIndex: 0 })
+                        updateBuildStatsCard({ currentAppId: undefined })
                       }}>
                         <CustomSelectTrigger>
                           {(() => {

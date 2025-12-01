@@ -44,21 +44,21 @@ export function OsAlternativesHeroSection({ openSourceApp, proprietaryApp }: OsA
             href={openSourceApp.websiteUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center rounded-md bg-muted shadow-xs ring-1 ring-inset ring-border gap-1.5 px-2 py-0.5 hover:bg-muted/80 transition-colors"
+            className="inline-flex items-center justify-center rounded-full bg-muted shadow-xs ring-1 ring-inset ring-border gap-2.5 px-3 py-1 hover:bg-muted/80 transition-colors"
           >
-            <span 
-              className="inline-block size-2 shrink-0 rounded-full outline outline-3 -outline-offset-1"
-              style={{ 
+            <span
+              className="size-2.5 shrink-0 rounded-full outline outline-3 -outline-offset-1"
+              style={{
                 backgroundColor: openSourceApp.simpleIconColor || '#3b82f6',
                 outlineColor: `${openSourceApp.simpleIconColor || '#3b82f6'}30`
               }}
             />
-            <span className="text-sm font-medium">
-              {openSourceApp.websiteUrl 
+            <span className="text-sm font-medium mb-[1px]">
+              {openSourceApp.websiteUrl
                 ? openSourceApp.websiteUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')
                 : 'website.com'}
             </span>
-            <ArrowUpRight className="h-3 w-3 opacity-60" />
+            <ArrowUpRight className="size-3.5 opacity-60" />
           </a>
         </div>
       </div>

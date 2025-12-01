@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { useAlternatives } from '../lib/hooks';
 import { HeroSection } from '../components/alternatives/HeroSection';
 import { EventsSection } from '../components/alternatives/EventsSection';
-import NoiseBackground from '../components/alternatives/NoiseBackground';
 import StatsCard from '../components/alternatives/StatsCard';
 import { DataTableDrawer } from '@/components/ui/DataTableDrawer';
 import { useSelectedCapabilities, useCapabilityActions } from '@/hooks/use-capabilities-config';
@@ -95,15 +94,8 @@ export function AlternativesPageClient({ slug }: AlternativesPageClientProps) {
 
   return (
     <div className="relative flex flex-col min-h-screen text-foreground pt-16 md:pt-20">
-      {/* Full-page noise background */}
-      <div className="absolute inset-0 w-full h-full">
-        <NoiseBackground 
-          color={proprietaryApp.simpleIconColor || "#10b981"}
-        />
-      </div>
-      
       {/* Content */}
-      <div className="relative z-10">
+      <div className="relative">
         <HeroSection 
           proprietaryApp={proprietaryApp} 
         />

@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { useOsAlternatives } from '../lib/hooks';
 import { OsAlternativesHeroSection } from '../components/alternatives/OsAlternativesHeroSection';
 import { EventsSection } from '../components/alternatives/EventsSection';
-import NoiseBackground from '../components/alternatives/NoiseBackground';
 import StatsCard from '../components/alternatives/StatsCard';
 import { DataTableDrawer } from '@/components/ui/DataTableDrawer';
 import { useSelectedCapabilities, useCapabilityActions } from '@/hooks/use-capabilities-config';
@@ -96,15 +95,8 @@ export function OsAlternativesPageClient({ slug }: OsAlternativesPageClientProps
 
   return (
     <div className="relative flex flex-col min-h-screen text-foreground pt-16 md:pt-20">
-      {/* Full-page noise background */}
-      <div className="absolute inset-0 w-full h-full">
-        <NoiseBackground 
-          color={openSourceApp.simpleIconColor || "#10b981"}
-        />
-      </div>
-      
       {/* Content */}
-      <div className="relative z-10">
+      <div className="relative">
         <OsAlternativesHeroSection 
           openSourceApp={openSourceApp}
           proprietaryApp={proprietaryApp}

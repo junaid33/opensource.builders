@@ -372,6 +372,56 @@ export const GET_ALL_CAPABILITIES = gql`
   }
 `;
 
+// Paginated alternatives query with count for hero section
+export const GET_PAGINATED_ALTERNATIVES = gql`
+  query GetPaginatedAlternatives($slug: String!, $take: Int!, $skip: Int!) {
+    proprietaryApplications(where: { slug: { equals: $slug } }) {
+      id
+      name
+      slug
+      capabilities {
+        capability {
+          id
+          name
+          slug
+          description
+          category
+          complexity
+        }
+      }
+      openSourceAlternatives(take: $take, skip: $skip) {
+        id
+        name
+        slug
+        description
+        githubStars
+        githubForks
+        license
+        websiteUrl
+        repositoryUrl
+        simpleIconSlug
+        simpleIconColor
+        capabilities {
+          capability {
+            id
+            name
+            slug
+            description
+            category
+            complexity
+          }
+          implementationNotes
+          githubPath
+          documentationUrl
+          implementationComplexity
+          isActive
+        }
+      }
+      openSourceAlternativesCount
+    }
+  }
+`;
+
 // All open source applications query
 export const GET_ALL_OPEN_SOURCE_APPS = gql`
   query GetAllOpenSourceApps {

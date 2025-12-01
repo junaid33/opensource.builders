@@ -1,6 +1,6 @@
 "use client";
 
-import { Sparkles, Info, Wand2, Leaf, Globe } from "lucide-react";
+import { Sparkles, Info, Wand2, Leaf, Globe, Star } from "lucide-react";
 import { Logo } from "@/features/dashboard/components/Logo";
 import { Button } from "@/components/ui/button";
 import { NavbarSearch } from "@/features/public-site/components/search/NavbarSearch";
@@ -55,8 +55,19 @@ export default function Navbar({ className, apps }: NavbarProps) {
               <NavbarSearch />
             </div>
 
-            {/* Right side - About and Build button */}
-            <div className="flex items-center gap-4">
+            {/* Right side - GitHub, About and Build button */}
+            <div className="flex items-center gap-2 sm:gap-4">
+              {/* GitHub Stars */}
+              <a
+                href="https://github.com/junaid33/opensource.builders"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <Star className="size-3.5" />
+                <span className="hidden sm:inline">1.3k</span>
+              </a>
+
               {/* About - outline button on desktop, icon only on mobile */}
               <Button
                 variant="ghost"
@@ -64,12 +75,10 @@ export default function Navbar({ className, apps }: NavbarProps) {
                 asChild
               >
                 <a href="/ethos">
-                <Globe className="size-3.5" />
-                  Ethos
+                  <Globe className="size-3.5" />
+                  <span className="hidden sm:inline ml-1">Ethos</span>
                 </a>
               </Button>
-
-           
 
               {/* Build - text on desktop, icon only on mobile */}
               <Button

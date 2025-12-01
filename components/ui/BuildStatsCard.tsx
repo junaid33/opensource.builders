@@ -78,8 +78,8 @@ export default function BuildStatsCard({
   const { buildStatsCard, updateBuildStatsCard } = useBuildStatsCardState();
   const { addCapability, removeCapability } = useCapabilityActions();
   
-  const { currentAppIndex, isCollapsed, capabilitySearch, appSearchTerm, isAppsDropdownOpen } = buildStatsCard;
-  
+  const { currentAppId, isCollapsed, capabilitySearch, appSearchTerm, isAppsDropdownOpen } = buildStatsCard;
+
   const dropdownRef = useRef<HTMLDivElement>(null);
   const appSearchRef = useRef<HTMLInputElement>(null);
 
@@ -130,30 +130,36 @@ export default function BuildStatsCard({
       )
     : organizedApps;
 
-  // Ensure currentAppIndex is within bounds (use organizedApps)
-  const safeCurrentAppIndex = Math.max(0, Math.min(currentAppIndex, organizedApps.length - 1));
-  const currentApp = organizedApps[safeCurrentAppIndex];
-  
-  // If the index changed due to bounds checking, update it
-  if (safeCurrentAppIndex !== currentAppIndex) {
-    updateBuildStatsCard({ currentAppIndex: safeCurrentAppIndex });
-  }
+  // Find current app by ID, fallback to first app if not found
+  const currentAppIndex = useMemo(() => {
+    if (!currentAppId || organizedApps.length === 0) return 0;
+    const foundIndex = organizedApps.findIndex(app => app.id === currentAppId);
+    return foundIndex !== -1 ? foundIndex : 0;
+  }, [currentAppId, organizedApps]);
 
-  const handleAppChange = (newIndex: number) => {
-    updateBuildStatsCard({ 
-      currentAppIndex: newIndex, 
-      capabilitySearch: '' 
+  const currentApp = organizedApps[currentAppIndex];
+
+  const handleAppChange = (app: OpenSourceApp) => {
+    updateBuildStatsCard({
+      currentAppId: app.id,
+      capabilitySearch: ''
     });
   };
 
   const nextApp = () => {
     const newIndex = (currentAppIndex + 1) % organizedApps.length;
-    handleAppChange(newIndex);
+    const nextAppObj = organizedApps[newIndex];
+    if (nextAppObj) {
+      handleAppChange(nextAppObj);
+    }
   };
 
   const prevApp = () => {
     const newIndex = (currentAppIndex - 1 + organizedApps.length) % organizedApps.length;
-    handleAppChange(newIndex);
+    const prevAppObj = organizedApps[newIndex];
+    if (prevAppObj) {
+      handleAppChange(prevAppObj);
+    }
   };
 
   const toggleAppsDropdown = () => {
@@ -171,10 +177,7 @@ export default function BuildStatsCard({
   };
 
   const selectApp = (app: OpenSourceApp) => {
-    const originalIndex = organizedApps.findIndex(a => a.id === app.id);
-    if (originalIndex !== -1) {
-      handleAppChange(originalIndex);
-    }
+    handleAppChange(app);
     updateBuildStatsCard({
       appSearchTerm: '',
       isAppsDropdownOpen: false
@@ -212,7 +215,7 @@ export default function BuildStatsCard({
     if (externalSelectedCapabilities?.has(compositeId)) {
       removeCapability(compositeId);
     } else {
-      addCapability(selectedCapability, organizedApps);
+      addCapability(selectedCapability);
     }
   };
 

@@ -248,7 +248,7 @@ export default function StatsCard({ capabilities = [], openSourceAlternatives = 
         githubPath: capabilityItem.githubPath,
         documentationUrl: capabilityItem.documentationUrl
       }
-      addCapability(newCapability, apps)
+      addCapability(newCapability)
     } else {
       removeCapability(compositeId)
     }

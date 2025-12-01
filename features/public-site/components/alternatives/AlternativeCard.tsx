@@ -57,18 +57,24 @@ function CapabilityDonut({
   onClick?: () => void;
   isSelected?: boolean;
 }) {
+  const [isHovered, setIsHovered] = useState(false);
   const isCompatible = capability.compatible !== false;
   const isExtra = capability.isExtra === true;
+  const isClickable = isCompatible && onClick; // Only green and blue are clickable
+
+  const handleClick = (e: React.MouseEvent) => {
+    if (!isClickable) return;
+    e.preventDefault();
+    e.stopPropagation();
+    onClick?.();
+  };
 
   if (!isCompatible) {
-    // For missing features, show a fully red donut with opacity
+    // For missing features, show a fully red donut with opacity - NOT clickable
     return (
       <div
-        className={cn(
-          "inline-flex items-center gap-1.5 px-2 py-1 rounded-full border bg-background text-xs cursor-pointer transition-colors",
-          isSelected ? "border-orange-500 bg-orange-50" : "hover:bg-muted/50"
-        )}
-        onClick={onClick}
+        data-capability
+        className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full border bg-background text-xs cursor-default"
       >
         <div className="relative w-3 h-3">
           <svg width="12" height="12" viewBox="0 0 12 12" className="transform -rotate-90">
@@ -90,22 +96,40 @@ function CapabilityDonut({
   }
 
   if (isExtra) {
-    // For extra capabilities (OS has but proprietary doesn't), show blue donut
+    // For extra capabilities (OS has but proprietary doesn't), show blue donut - clickable
     return (
       <div
+        data-capability
         className={cn(
-          "inline-flex items-center gap-1.5 px-2 py-1 rounded-full border bg-background text-xs cursor-pointer transition-colors",
-          isSelected ? "border-orange-500 bg-orange-50" : "hover:bg-muted/50"
+          "inline-flex items-center gap-1.5 px-2 py-1 rounded-full border bg-background text-xs transition-colors",
+          isClickable ? "cursor-pointer hover:bg-blue-50 hover:border-blue-300 dark:hover:bg-blue-950 dark:hover:border-blue-700" : "cursor-default",
+          isSelected && "border-orange-500 bg-orange-50 dark:bg-orange-950"
         )}
-        onClick={onClick}
+        onClick={handleClick}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        title={isClickable ? "Click to add to build" : undefined}
       >
-        <MiniDonutChart
-          value={1}
-          total={1}
-          size={12}
-          strokeWidth={2}
-          color="text-blue-500"
-        />
+        {isClickable && isHovered ? (
+          <div className="w-3 h-3 flex items-center justify-center">
+            <svg width="12" height="12" viewBox="0 0 12 12" className="text-blue-500">
+              <path
+                d="M6 2v8M2 6h8"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+            </svg>
+          </div>
+        ) : (
+          <MiniDonutChart
+            value={1}
+            total={1}
+            size={12}
+            strokeWidth={2}
+            color="text-blue-500"
+          />
+        )}
         <span className="font-medium text-foreground">
           {capability.name}
         </span>
@@ -113,22 +137,40 @@ function CapabilityDonut({
     );
   }
 
-  // For matching capabilities, show green donut
+  // For matching capabilities, show green donut - clickable
   return (
     <div
+      data-capability
       className={cn(
-        "inline-flex items-center gap-1.5 px-2 py-1 rounded-full border bg-background text-xs cursor-pointer transition-colors",
-        isSelected ? "border-orange-500 bg-orange-50" : "hover:bg-muted/50"
+        "inline-flex items-center gap-1.5 px-2 py-1 rounded-full border bg-background text-xs transition-colors",
+        isClickable ? "cursor-pointer hover:bg-green-50 hover:border-green-300 dark:hover:bg-green-950 dark:hover:border-green-700" : "cursor-default",
+        isSelected && "border-orange-500 bg-orange-50 dark:bg-orange-950"
       )}
-      onClick={onClick}
+      onClick={handleClick}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      title={isClickable ? "Click to add to build" : undefined}
     >
-      <MiniDonutChart
-        value={isSelected ? 1 : 1}
-        total={1}
-        size={12}
-        strokeWidth={2}
-        className={isSelected ? "text-orange-500" : ""}
-      />
+      {isClickable && isHovered ? (
+        <div className="w-3 h-3 flex items-center justify-center">
+          <svg width="12" height="12" viewBox="0 0 12 12" className="text-green-500">
+            <path
+              d="M6 2v8M2 6h8"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+          </svg>
+        </div>
+      ) : (
+        <MiniDonutChart
+          value={1}
+          total={1}
+          size={12}
+          strokeWidth={2}
+          className={isSelected ? "text-orange-500" : ""}
+        />
+      )}
       <span className="font-medium text-foreground">
         {capability.name}
       </span>

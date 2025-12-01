@@ -1,7 +1,7 @@
 // Single data functions used by both server prefetch and client useQuery
 import { cache } from 'react';
 import { makeGraphQLRequest } from './graphql/client';
-import { GET_POPULAR_APPS, GET_ALTERNATIVES, GET_ALL_PROPRIETARY_APPS, MULTI_MODEL_SEARCH, GET_OS_ALTERNATIVES, GET_CAPABILITY_APPLICATIONS, GET_ALL_CAPABILITIES, GET_ALL_OPEN_SOURCE_APPS } from './graphql/queries';
+import { GET_POPULAR_APPS, GET_ALTERNATIVES, GET_ALL_PROPRIETARY_APPS, MULTI_MODEL_SEARCH, GET_OS_ALTERNATIVES, GET_CAPABILITY_APPLICATIONS, GET_ALL_CAPABILITIES, GET_ALL_OPEN_SOURCE_APPS, GET_PAGINATED_ALTERNATIVES } from './graphql/queries';
 import { PopularAppsResponse, AlternativesResponse, SearchResult, PopularApp, ProprietaryApplication, OpenSourceApplication, CapabilityApplicationsResponse, AllCapabilitiesResponse, AllOpenSourceAppsResponse, Capability } from '../types';
 
 // Fetch popular apps
@@ -255,3 +255,80 @@ export const fetchAllOpenSourceApps = cache(async function (): Promise<OpenSourc
   const data = await makeGraphQLRequest<AllOpenSourceAppsResponse>(GET_ALL_OPEN_SOURCE_APPS);
   return data.openSourceApplications;
 });
+
+// Fetch paginated alternatives for hero section
+export interface PaginatedAlternativesResponse {
+  alternatives: OpenSourceApplication[];
+  totalCount: number;
+  capabilities: Array<{
+    id: string;
+    name: string;
+    slug: string;
+    description: string;
+    category: string;
+    complexity: string;
+  }>;
+}
+
+export async function fetchPaginatedAlternatives(
+  slug: string,
+  take: number,
+  skip: number
+): Promise<PaginatedAlternativesResponse> {
+  const data = await makeGraphQLRequest<any>(GET_PAGINATED_ALTERNATIVES, { slug, take, skip });
+
+  const proprietaryApps = data.proprietaryApplications;
+
+  if (!proprietaryApps || proprietaryApps.length === 0) {
+    return { alternatives: [], totalCount: 0, capabilities: [] };
+  }
+
+  const proprietaryApp = proprietaryApps[0];
+
+  // Deduplicate capabilities
+  const capabilityMap = new Map();
+  proprietaryApp.capabilities?.forEach((pc: any) => {
+    const capability = {
+      id: pc.capability.id,
+      name: pc.capability.name,
+      slug: pc.capability.slug,
+      description: pc.capability.description || '',
+      category: pc.capability.category,
+      complexity: pc.capability.complexity,
+    };
+    capabilityMap.set(capability.id, capability);
+  });
+
+  return {
+    alternatives: proprietaryApp.openSourceAlternatives?.map((alt: any) => ({
+      id: alt.id,
+      name: alt.name,
+      slug: alt.slug,
+      description: alt.description || '',
+      githubStars: alt.githubStars || 0,
+      githubForks: alt.githubForks || 0,
+      license: alt.license,
+      websiteUrl: alt.websiteUrl,
+      repositoryUrl: alt.repositoryUrl,
+      simpleIconSlug: alt.simpleIconSlug,
+      simpleIconColor: alt.simpleIconColor,
+      capabilities: alt.capabilities?.map((c: any) => ({
+        capability: {
+          id: c.capability.id,
+          name: c.capability.name,
+          slug: c.capability.slug,
+          description: c.capability.description || '',
+          category: c.capability.category,
+          complexity: c.capability.complexity,
+        },
+        implementationNotes: c.implementationNotes,
+        githubPath: c.githubPath,
+        documentationUrl: c.documentationUrl,
+        implementationComplexity: c.implementationComplexity,
+        isActive: c.isActive,
+      })) || [],
+    })) || [],
+    totalCount: proprietaryApp.openSourceAlternativesCount || 0,
+    capabilities: Array.from(capabilityMap.values()),
+  };
+}

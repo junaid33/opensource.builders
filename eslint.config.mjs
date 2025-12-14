@@ -1,16 +1,44 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
+import js from "@eslint/js";
+import tseslint from "typescript-eslint";
+import nextPlugin from "@next/eslint-plugin-next";
+import reactPlugin from "eslint-plugin-react";
+import hooksPlugin from "eslint-plugin-react-hooks";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+export default tseslint.config(
+  // 1. Global Ignores
+  {
+    ignores: [".next/*", "node_modules/*", "**/*.d.ts", "migrations/*"],
+  },
 
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
+  // 2. Base JS & TS Recommended rules
+  js.configs.recommended,
+  ...tseslint.configs.recommended,
 
-const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
-];
+  // 3. Next.js & React Plugin Composition
+  {
+    plugins: {
+      "@next/next": nextPlugin,
+      react: reactPlugin,
+      "react-hooks": hooksPlugin,
+    },
+    rules: {
+      // Spread recommended rules from plugins
+      ...reactPlugin.configs.recommended.rules,
+      ...hooksPlugin.configs.recommended.rules,
+      ...nextPlugin.configs.recommended.rules,
+      ...nextPlugin.configs["core-web-vitals"].rules,
 
-export default eslintConfig;
+      // React 17+ JSX Transform compatibility
+      "react/react-in-jsx-scope": "off",
+      
+      // Custom TS rules
+      "@typescript-eslint/no-unused-vars": "warn",
+      "@typescript-eslint/no-explicit-any": "warn",
+    },
+    settings: {
+      react: {
+        version: "detect",
+      },
+    },
+  }
+);

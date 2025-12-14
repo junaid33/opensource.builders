@@ -6,7 +6,7 @@
     "dev": "keystone build --no-ui && npm run migrate && next dev",
     "build": "keystone build --no-ui && npm run migrate && next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "migrate:gen": "keystone build --no-ui && tsx features/keystone/view-order/generate-view-order.ts && keystone prisma migrate dev",
     "migrate": "prisma migrate deploy"
   },
@@ -94,6 +94,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@next/eslint-plugin-next": "^16.0.10",
     "@tailwindcss/postcss": "^4",
     "@types/graphql-upload": "^17.0.0",
     "@types/node": "^20.14.10",
@@ -104,12 +105,15 @@
     "babel-plugin-react-compiler": "^1.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.0.3",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
     "node-fetch": "^3.3.2",
     "prisma": "6.5.0",
     "tailwindcss": "^4",
     "tsx": "^4.19.4",
     "tw-animate-css": "^1.3.2",
-    "typescript": "^5"
+    "typescript": "^5",
+    "typescript-eslint": "^8.49.0"
   },
   "engines": {
     "node": ">=20.0.0"

@@ -116,6 +116,9 @@
   },
   "overrides": {
     "react": "^19.2.1",
-    "react-dom": "^19.2.1"
+    "react-dom": "^19.2.1",
+    "@keystone-6/core": {
+      "next": "14.2.35"
+    }
   }
 }

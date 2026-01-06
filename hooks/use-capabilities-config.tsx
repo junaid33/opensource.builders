@@ -63,10 +63,6 @@ const defaultCapabilitiesConfig: CapabilitiesConfig = {
 
 const saveToLS = (storageKey: string, config: CapabilitiesConfig) => {
   try {
-    // Save to localStorage - using same key as existing implementation
-    localStorage.setItem('pinnedCapabilities', JSON.stringify(config.selectedCapabilities))
-    
-    // Also save the complete config as JSON for easier future management
     localStorage.setItem(storageKey, JSON.stringify(config))
   } catch {
     // Unsupported
@@ -77,7 +73,6 @@ const loadFromLS = (storageKey: string, defaultConfig: CapabilitiesConfig): Capa
   if (isServer) return defaultConfig
 
   try {
-    // Try to load from new JSON format first
     const savedConfig = localStorage.getItem(storageKey)
     if (savedConfig) {
       const parsed = JSON.parse(savedConfig) as CapabilitiesConfig
@@ -92,21 +87,6 @@ const loadFromLS = (storageKey: string, defaultConfig: CapabilitiesConfig): Capa
           appSearchTerm: '', // Clear search
         }
       }
-    }
-
-    // Fallback to legacy pinnedCapabilities key for backward compatibility
-    const pinnedCapabilities = localStorage.getItem('pinnedCapabilities')
-    if (pinnedCapabilities) {
-      const selectedCapabilities = JSON.parse(pinnedCapabilities) as SelectedCapability[]
-      const config: CapabilitiesConfig = {
-        ...defaultConfig,
-        selectedCapabilities,
-      }
-
-      // Migrate to new format
-      saveToLS(storageKey, config)
-
-      return config
     }
 
     return defaultConfig
@@ -182,7 +162,7 @@ const CapabilitiesRoot = ({
   // localStorage event handling for cross-tab synchronization
   React.useEffect(() => {
     const handleStorage = (e: StorageEvent) => {
-      if (e.key !== storageKey && e.key !== 'pinnedCapabilities') {
+     if (e.key !== storageKey) {
         return
       }
 

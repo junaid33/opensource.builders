@@ -1,12 +1,12 @@
 "use client";
 
-import { Sparkles, Info, Wand2, Leaf, Globe, Star } from "lucide-react";
+import { Wand2, Globe, Star } from "lucide-react";
 import { Logo } from "@/features/dashboard/components/Logo";
 import { Button } from "@/components/ui/button";
 import { NavbarSearch } from "@/features/public-site/components/search/NavbarSearch";
 import { DataTableDrawer } from "@/components/ui/DataTableDrawer";
 import { cn } from "@/lib/utils";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 interface NavbarProps {
   className?: string;
@@ -15,27 +15,6 @@ interface NavbarProps {
 
 export default function Navbar({ className, apps }: NavbarProps) {
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [selectedCapabilities, setSelectedCapabilities] = useState([]);
-
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem('pinnedCapabilities');
-      if (saved) {
-        setSelectedCapabilities(JSON.parse(saved));
-      }
-    } catch (error) {
-      console.error('Error loading capabilities:', error);
-    }
-  }, []);
-
-  const handleSelectedCapabilitiesChange = (capabilities) => {
-    setSelectedCapabilities(capabilities);
-    try {
-      localStorage.setItem('pinnedCapabilities', JSON.stringify(capabilities));
-    } catch (error) {
-      console.error('Error saving capabilities:', error);
-    }
-  };
 
   return (
     <>
@@ -112,8 +91,6 @@ export default function Navbar({ className, apps }: NavbarProps) {
         open={drawerOpen} 
         onOpenChange={setDrawerOpen}
         apps={apps}
-        selectedCapabilities={selectedCapabilities}
-        onSelectedCapabilitiesChange={handleSelectedCapabilitiesChange}
       />
     </>
   );

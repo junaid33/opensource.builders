@@ -11,7 +11,7 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { AnimatePresence, motion, useMotionTemplate, useMotionValue, type MotionStyle, type MotionValue, type Variants } from 'framer-motion';
 import type { MouseEvent } from 'react';
-import { useCapabilityActions, useSelectedCapabilities } from '@/hooks/use-capabilities-config';
+ import { useCapabilityActions } from '@/hooks/use-capabilities-config';
 import type { SelectedCapability } from '@/hooks/use-capabilities-config';
 import { DataTableDrawer } from '@/components/ui/DataTableDrawer';
 import { makeGraphQLRequest } from '../../lib/graphql/client';
@@ -503,7 +503,6 @@ export default function HeroAlternatives() {
   const [isTyping, setIsTyping] = useState(true);
   const [isDeleting, setIsDeleting] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const selectedCapabilities = useSelectedCapabilities();
 
   // Fetch all open source apps for the drawer
   const { data: apps = [] } = useQuery({
@@ -585,11 +584,6 @@ export default function HeroAlternatives() {
     handleStepChange(nextIndex);
   };
 
-  const handleSelectedCapabilitiesChange = (capabilities: any) => {
-    // The provider handles the sync through the context
-    console.log('Capability change handled by provider', capabilities);
-  };
-
   return (
     <>
       <div className="space-y-8">
@@ -651,8 +645,6 @@ export default function HeroAlternatives() {
         open={drawerOpen}
         onOpenChange={setDrawerOpen}
         apps={apps}
-        selectedCapabilities={selectedCapabilities}
-        onSelectedCapabilitiesChange={handleSelectedCapabilitiesChange}
       />
     </>
   );

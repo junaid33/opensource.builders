@@ -107,8 +107,6 @@ interface DataTableDrawerProps {
   onOpenChange: (open: boolean) => void
   data?: Transaction
   apps: any[]
-  selectedCapabilities: SelectedCapability[]
-  onSelectedCapabilitiesChange?: (capabilities: SelectedCapability[]) => void // Made optional since we use provider
 }
 
 const categories = [
@@ -696,8 +694,6 @@ export function DataTableDrawer({
   onOpenChange,
   data = defaultTransaction,
   apps,
-  selectedCapabilities, // This comes from the provider now
-  onSelectedCapabilitiesChange, // Optional fallback
 }: DataTableDrawerProps) {
   const status = expense_statuses.find(
     (item) => item.value === data?.expense_status,
@@ -706,8 +702,8 @@ export function DataTableDrawer({
   const { addCapability, removeCapability } = useCapabilityActions()
   const lastPinnedToolId = useLastPinnedTool()
   
-  // Use capabilities from provider, fallback to prop
-  const actualSelectedCapabilities = config.selectedCapabilities.length > 0 ? config.selectedCapabilities : selectedCapabilities
+  // Always use capabilities from provider - it's the source of truth
+  const actualSelectedCapabilities = config.selectedCapabilities
 
   // Starter templates (from legacy Build page)
   const starterTemplates = [
@@ -772,11 +768,11 @@ export function DataTableDrawer({
       documentationUrl: capability.documentationUrl
     }
 
-    const isAlreadySelected = selectedCapabilities.some(f => f.id === compositeId)
+    const isAlreadySelected = actualSelectedCapabilities.some(f => f.id === compositeId)
     if (isAlreadySelected) {
-      onSelectedCapabilitiesChange(selectedCapabilities.filter(f => f.id !== compositeId))
+      removeCapability(compositeId)
     } else {
-      onSelectedCapabilitiesChange([...selectedCapabilities, selectedCapability])
+      addCapability(selectedCapability)
     }
   }
 

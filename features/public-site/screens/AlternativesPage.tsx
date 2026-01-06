@@ -6,7 +6,6 @@ import { HeroSection } from '../components/alternatives/HeroSection';
 import { EventsSection } from '../components/alternatives/EventsSection';
 import StatsCard from '../components/alternatives/StatsCard';
 import { DataTableDrawer } from '@/components/ui/DataTableDrawer';
-import { useSelectedCapabilities, useCapabilityActions } from '@/hooks/use-capabilities-config';
 import { useQuery } from '@tanstack/react-query';
 import { queryKeys } from '../lib/query-keys';
 import { makeGraphQLRequest } from '../lib/graphql/client';
@@ -51,8 +50,6 @@ const GET_ALL_OPEN_SOURCE_APPS = `
 
 export function AlternativesPageClient({ slug }: AlternativesPageClientProps) {
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const selectedCapabilities = useSelectedCapabilities();
-  const { addCapability, removeCapability } = useCapabilityActions();
 
   // This data is already prefetched by server, so it loads instantly
   const { data: proprietaryApp, error: alternativesError } = useAlternatives(slug);
@@ -67,12 +64,6 @@ export function AlternativesPageClient({ slug }: AlternativesPageClientProps) {
     staleTime: 10 * 60 * 1000, // 10 minutes
     gcTime: 15 * 60 * 1000, // 15 minutes
   });
-
-  const handleSelectedCapabilitiesChange = (capabilities: any) => {
-    // This is called when capabilities are changed from the BuildStatsCard - but we use the provider now
-    // The provider will automatically handle the sync through the context
-    console.log('Capability change handled by provider', capabilities);
-  };
 
   // Since data is prefetched, this should never show loading
   // But handle error state  
@@ -121,8 +112,6 @@ export function AlternativesPageClient({ slug }: AlternativesPageClientProps) {
         open={drawerOpen} 
         onOpenChange={setDrawerOpen}
         apps={apps}
-        selectedCapabilities={selectedCapabilities}
-        onSelectedCapabilitiesChange={handleSelectedCapabilitiesChange}
       />
     </div>
   );

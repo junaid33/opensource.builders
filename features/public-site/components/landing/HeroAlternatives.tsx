@@ -1,20 +1,21 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { queryKeys } from '../../lib/query-keys';
 import { fetchPaginatedAlternatives } from '../../lib/data';
 import { DisplayCard } from '../alternatives/AlternativeCard';
-import { ChevronLeft, ChevronRight, Plus, ArrowUpRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Plus, ArrowUpRight, Search, X } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { AnimatePresence, motion, useMotionTemplate, useMotionValue, type MotionStyle, type MotionValue, type Variants } from 'framer-motion';
 import type { MouseEvent } from 'react';
- import { useCapabilityActions } from '@/hooks/use-capabilities-config';
+import { useCapabilityActions } from '@/hooks/use-capabilities-config';
 import type { SelectedCapability } from '@/hooks/use-capabilities-config';
 import { DataTableDrawer } from '@/components/ui/DataTableDrawer';
 import { makeGraphQLRequest } from '../../lib/graphql/client';
+import { useDebouncedSearch } from '../../lib/hooks/use-search';
 
 // Types
 type WrapperStyle = MotionStyle & {
@@ -27,16 +28,29 @@ interface ProprietaryApp {
   slug: string;
 }
 
-const PROPRIETARY_APPS: ProprietaryApp[] = [
-  { name: 'Shopify', slug: 'shopify' },
-  { name: 'Notion', slug: 'notion' },
-  { name: 'Tailwind Plus', slug: 'tailwind-plus' },
-  { name: 'v0', slug: 'v0' },
-  { name: 'Cursor', slug: 'cursor' },
-  { name: 'Figma', slug: 'figma' },
-  { name: 'Slack', slug: 'slack' },
-  { name: 'Zoom', slug: 'zoom' },
+// Default apps to show when not searching (featured/popular ones)
+const DEFAULT_APP_SLUGS = [
+  'shopify',
+  'notion',
+  'tailwind-plus',
+  'screen-studio',
+  'v0',
+  'cursor',
+  'figma',
+  'slack',
+  'zoom',
 ];
+
+// Query to fetch all proprietary apps for search
+const GET_ALL_PROPRIETARY_APPS = `
+  query GetAllProprietaryApps {
+    proprietaryApplications(orderBy: { name: asc }) {
+      id
+      name
+      slug
+    }
+  }
+`;
 
 const ANIMATION_INTERVAL = 5000; // 5 seconds per step
 const INITIAL_LOAD = 2; // Start with 2 cards
@@ -181,43 +195,148 @@ function FeatureCard({
 // Navigation for switching between proprietary apps
 function AppsNav({
   apps,
+  allApps,
   current,
-  onChange
+  onChange,
+  onSelectApp
 }: {
   apps: ProprietaryApp[];
+  allApps: ProprietaryApp[];
   current: number;
   onChange: (index: number) => void;
+  onSelectApp: (app: ProprietaryApp) => void;
 }) {
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (isSearchOpen && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isSearchOpen]);
+
+  const handleClose = () => {
+    setIsSearchOpen(false);
+    setSearchQuery('');
+  };
+
+  // Filter all apps based on search query
+  const filteredApps = searchQuery.trim()
+    ? allApps.filter(app => 
+        app.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        app.slug.toLowerCase().includes(searchQuery.toLowerCase())
+      ).slice(0, 12) // Limit results
+    : [];
+
+  // Determine which apps to show: filtered results or default list
+  const displayApps = searchQuery.trim() ? filteredApps : apps;
+  const isFiltering = searchQuery.trim().length > 0;
+
   return (
     <nav aria-label="Alternatives" className="flex justify-center px-4">
       <ol className="flex w-full flex-wrap items-center justify-center gap-2" role="list">
-        {apps.map((app, idx) => {
-          const isCurrent = current === idx;
-          return (
-            <motion.li
-              key={app.slug}
-              initial="inactive"
-              animate={isCurrent ? "active" : "inactive"}
-              variants={stepVariants}
-              transition={{ duration: 0.3 }}
-              className="relative"
-            >
-              <button
-                type="button"
-                className={cn(
-                  "group flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-medium transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary",
-                  isCurrent
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground"
-                )}
-                onClick={() => onChange(idx)}
+        {/* Search button/input */}
+        <motion.li className="relative">
+          <AnimatePresence mode="wait">
+            {isSearchOpen ? (
+              <motion.div
+                key="search-input"
+                initial={{ width: 36, opacity: 0 }}
+                animate={{ width: 180, opacity: 1 }}
+                exit={{ width: 36, opacity: 0 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
+                className="flex items-center gap-1 rounded-full bg-muted border border-border overflow-hidden"
               >
-                <span className="hidden sm:inline-block">{app.name}</span>
-                <span className="sm:hidden">{app.name.split(' ')[0]}</span>
-              </button>
-            </motion.li>
-          );
-        })}
+                <Search className="w-4 h-4 ml-3 text-muted-foreground flex-shrink-0" />
+                <input
+                  ref={inputRef}
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search apps..."
+                  className="flex-1 bg-transparent text-sm py-1.5 pr-2 outline-none placeholder:text-muted-foreground min-w-0"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Escape') {
+                      handleClose();
+                    }
+                  }}
+                />
+                {searchQuery && (
+                  <button
+                    type="button"
+                    onClick={() => setSearchQuery('')}
+                    className="p-1 mr-1 text-muted-foreground hover:text-foreground"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                )}
+              </motion.div>
+            ) : (
+              <motion.button
+                key="search-button"
+                initial={{ scale: 0.95, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.95, opacity: 0 }}
+                transition={{ duration: 0.15 }}
+                type="button"
+                onClick={() => setIsSearchOpen(true)}
+                className="flex items-center justify-center w-9 h-9 rounded-full bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground transition-colors"
+                aria-label="Search for proprietary app"
+              >
+                <Search className="w-4 h-4" />
+              </motion.button>
+            )}
+          </AnimatePresence>
+        </motion.li>
+
+        <AnimatePresence mode="popLayout">
+          {displayApps.map((app, idx) => {
+            const isCurrent = !isFiltering && current === idx;
+            return (
+              <motion.li
+                key={app.slug}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.2 }}
+                layout
+                className="relative"
+              >
+                <button
+                  type="button"
+                  className={cn(
+                    "group flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-medium transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary",
+                    isCurrent
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground"
+                  )}
+                  onClick={() => {
+                    if (isFiltering) {
+                      onSelectApp(app);
+                      handleClose();
+                    } else {
+                      onChange(idx);
+                    }
+                  }}
+                >
+                  <span className="hidden sm:inline-block">{app.name}</span>
+                  <span className="sm:hidden">{app.name.split(' ')[0]}</span>
+                </button>
+              </motion.li>
+            );
+          })}
+        </AnimatePresence>
+
+        {isFiltering && filteredApps.length === 0 && (
+          <motion.li
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-sm text-muted-foreground py-1.5"
+          >
+            No apps found
+          </motion.li>
+        )}
       </ol>
     </nav>
   );
@@ -503,6 +622,18 @@ export default function HeroAlternatives() {
   const [isTyping, setIsTyping] = useState(true);
   const [isDeleting, setIsDeleting] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [selectedApp, setSelectedApp] = useState<ProprietaryApp | null>(null);
+
+  // Fetch all proprietary apps for search
+  const { data: allProprietaryApps = [] } = useQuery({
+    queryKey: ['allProprietaryApps'],
+    queryFn: async () => {
+      const result = await makeGraphQLRequest<any>(GET_ALL_PROPRIETARY_APPS);
+      return result.proprietaryApplications as ProprietaryApp[];
+    },
+    staleTime: 10 * 60 * 1000,
+    gcTime: 15 * 60 * 1000,
+  });
 
   // Fetch all open source apps for the drawer
   const { data: apps = [] } = useQuery({
@@ -515,26 +646,35 @@ export default function HeroAlternatives() {
     gcTime: 15 * 60 * 1000,
   });
 
+  // Build default apps list from fetched data, maintaining order from DEFAULT_APP_SLUGS
+  const defaultApps = DEFAULT_APP_SLUGS
+    .map(slug => allProprietaryApps.find(app => app.slug === slug))
+    .filter((app): app is ProprietaryApp => app !== undefined);
+
+  // Use defaultApps for cycling, but allow override when user selects from search
+  const displayDefaultApps = defaultApps.length > 0 ? defaultApps : [{ name: 'Loading...', slug: '' }];
+
   const { currentStep, setStep } = useStepCycler(
-    PROPRIETARY_APPS.length,
+    displayDefaultApps.length,
     ANIMATION_INTERVAL,
-    isPaused
+    isPaused || selectedApp !== null
   );
 
-  const currentApp = PROPRIETARY_APPS[currentStep];
+  // Current app is either the selected one from search, or the cycling default
+  const currentApp = selectedApp || displayDefaultApps[currentStep] || { name: '', slug: '' };
   const currentSlug = currentApp.slug;
 
   // Typing animation synced with step changes
   useEffect(() => {
-    // Reset typing when step changes
+    // Reset typing when app changes
     setCurrentText('');
     setIsTyping(true);
     setIsDeleting(false);
-  }, [currentStep]);
+  }, [currentApp.slug]);
 
   // Typing effect
   useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || !currentApp.name) return;
 
     const currentWord = currentApp.name;
     const typingSpeed = 80;
@@ -545,8 +685,8 @@ export default function HeroAlternatives() {
       if (isTyping && !isDeleting) {
         if (currentText.length < currentWord.length) {
           setCurrentText(currentWord.slice(0, currentText.length + 1));
-        } else {
-          // Finished typing, wait then erase
+        } else if (!selectedApp) {
+          // Only auto-erase if not a manually selected app
           setTimeout(() => {
             setIsDeleting(true);
             setIsTyping(false);
@@ -556,31 +696,42 @@ export default function HeroAlternatives() {
         if (currentText.length > 0) {
           setCurrentText(currentText.slice(0, -1));
         }
-        // Note: step change is handled by useStepCycler
       }
     }, isDeleting ? erasingSpeed : typingSpeed);
 
     return () => clearTimeout(timeout);
-  }, [currentText, isTyping, isDeleting, currentApp.name, isPaused]);
+  }, [currentText, isTyping, isDeleting, currentApp.name, isPaused, selectedApp]);
 
   const handleTextClick = () => {
-    router.push(`/alternatives/${currentSlug}`);
+    if (currentSlug) {
+      router.push(`/alternatives/${currentSlug}`);
+    }
   };
 
   const handleStepChange = (index: number) => {
+    setSelectedApp(null); // Clear any search selection
     setStep(index);
     setCurrentText('');
     setIsTyping(true);
     setIsDeleting(false);
   };
 
+  const handleSelectApp = (app: ProprietaryApp) => {
+    setSelectedApp(app);
+    setCurrentText('');
+    setIsTyping(true);
+    setIsDeleting(false);
+  };
+
   const handlePrev = () => {
-    const prevIndex = (currentStep - 1 + PROPRIETARY_APPS.length) % PROPRIETARY_APPS.length;
+    setSelectedApp(null);
+    const prevIndex = (currentStep - 1 + displayDefaultApps.length) % displayDefaultApps.length;
     handleStepChange(prevIndex);
   };
 
   const handleNext = () => {
-    const nextIndex = (currentStep + 1) % PROPRIETARY_APPS.length;
+    setSelectedApp(null);
+    const nextIndex = (currentStep + 1) % displayDefaultApps.length;
     handleStepChange(nextIndex);
   };
 
@@ -633,9 +784,11 @@ export default function HeroAlternatives() {
             transition={{ delay: 0.3 }}
           >
             <AppsNav
-              apps={PROPRIETARY_APPS}
-              current={currentStep}
+              apps={displayDefaultApps}
+              allApps={allProprietaryApps}
+              current={selectedApp ? -1 : currentStep}
               onChange={handleStepChange}
+              onSelectApp={handleSelectApp}
             />
           </motion.div>
         </div>

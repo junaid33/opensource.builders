@@ -16,9 +16,49 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "opensource.builders - Find Open Source Alternatives",
+  metadataBase: new URL("https://opensource.builders"),
+  title: {
+    default: "opensource.builders - Find Open Source Alternatives",
+    template: "%s | opensource.builders",
+  },
   description:
-    "Discover open source alternatives to popular proprietary software",
+    "Discover open source alternatives to popular proprietary software. Compare features, capabilities, and find the best open source tools for your needs.",
+  keywords: [
+    "open source",
+    "alternatives",
+    "free software",
+    "FOSS",
+    "open source alternatives",
+    "software comparison",
+  ],
+  authors: [{ name: "opensource.builders" }],
+  creator: "opensource.builders",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "/",
+    siteName: "opensource.builders",
+    title: "opensource.builders - Find Open Source Alternatives",
+    description:
+      "Discover open source alternatives to popular proprietary software. Compare features, capabilities, and find the best open source tools for your needs.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "opensource.builders - Find Open Source Alternatives",
+    description:
+      "Discover open source alternatives to popular proprietary software.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 export default function RootLayout({

@@ -4,7 +4,7 @@ import * as DrawerPrimitives from "@radix-ui/react-dialog"
 import * as TabsPrimitives from "@radix-ui/react-tabs"
 import * as SelectPrimitives from "@radix-ui/react-select"
 import { RiCloseLine, RiExpandUpDownLine, RiCheckLine, RiArrowUpSLine, RiArrowDownSLine } from "@remixicon/react"
-import { Download, File, Trash2, CircleCheck, Github, Info, Folder, Lightbulb, ChevronDown, ChevronLeft, ChevronRight, Nut, Search, X, Package, Star, ExternalLink } from "lucide-react"
+import { Download, Copy, File, Trash2, CircleCheck, Github, Info, Folder, Lightbulb, ChevronDown, ChevronLeft, ChevronRight, Nut, Search, X, Package, Star, ExternalLink } from "lucide-react"
 import React from "react"
 import {
   motion,
@@ -748,6 +748,8 @@ export function DataTableDrawer({
   const [copied, setCopied] = React.useState(false)
   const [githubMcpEnabled, setGithubMcpEnabled] = React.useState(true)
   const [showThankYouDialog, setShowThankYouDialog] = React.useState(false)
+  const [selectedAgent, setSelectedAgent] = React.useState('claude-code')
+  const [skillViewMode, setSkillViewMode] = React.useState<'structured' | 'raw'>('structured')
 
   const handleCapabilitySelect = (capability: any, toolId: string, toolName: string, toolIcon?: string, toolColor?: string, toolRepo?: string) => {
     const compositeId = `${toolId}-${capability.capability.id}`
@@ -796,26 +798,61 @@ export function DataTableDrawer({
   }, [actualSelectedCapabilities])
 
 
+  const generateSkillName = () => {
+    const slugify = (str: string) => str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+    
+    const currentTemplate = starterTemplates.find(t => t.id === selectedTemplate)
+    const templateSlug = currentTemplate ? slugify(currentTemplate.name) : 'custom'
+    
+    const capabilitySlugs = actualSelectedCapabilities?.slice(0, 2).map(c => slugify(c.name)).join('-') || ''
+    
+    return capabilitySlugs ? `${templateSlug}-${capabilitySlugs}` : templateSlug
+  }
+
   const generatePromptText = () => {
-    // Get the current template and capabilities using the same logic as the UI
     const currentTemplate = starterTemplates.find(t => t.id === selectedTemplate)
     
     if (!currentTemplate && (!actualSelectedCapabilities || actualSelectedCapabilities.length === 0)) {
-      return "Select a starter and add capabilities to generate your AI prompt."
+      return "Select a starter and add capabilities to generate your skill."
     }
 
-    let prompt = ""
+    const skillName = generateSkillName()
+    const capabilityNames = actualSelectedCapabilities?.map(c => c.name).join(', ') || ''
     
-    // Add starter section (reusing the same logic as the UI)
+    let skill = `---
+name: ${skillName}
+description: ${currentTemplate ? `Build features using ${currentTemplate.name}` : 'Build features'}${capabilityNames ? ` with ${capabilityNames}` : ''}. Use when implementing these capabilities or when the user asks about building similar features.
+---
+
+# ${currentTemplate?.name || 'Custom'} Skill
+
+`
+    
+    // Add starter section
     if (currentTemplate) {
-      prompt += `Use the ${currentTemplate.name} as your starting point. This template provides ${currentTemplate.description.toLowerCase()} and will serve as the foundation for your application.\n\n`
+      skill += `## Starter Template
+
+Use **${currentTemplate.name}** as your starting point. ${currentTemplate.description}.
+
+`
       
       if (currentTemplate.id === '1') {
-        prompt += `Please git clone this repo: git clone https://github.com/junaid33/next-keystone-starter.git\n\nThen read the README.md and other relevant markdown files to get a general sense of how this full-stack Next.js application works. It's a Next.js application with a Keystone admin dashboard built-in, a GraphQL API, role-based permissions, and is designed with feature slices architecture. Review the /features directory structure and the project's architecture documentation.\n\n`
+        skill += `### Setup
+
+\`\`\`bash
+git clone https://github.com/junaid33/next-keystone-starter.git
+\`\`\`
+
+Read the README.md and other relevant markdown files to understand how this full-stack Next.js application works. It includes:
+- Next.js (App Router) with Keystone admin dashboard
+- GraphQL API with role-based permissions
+- Feature slices architecture in \`/features\` directory
+
+`
       }
     }
     
-    // Group capabilities by name (same logic as the UI)
+    // Group capabilities by name
     const capabilitiesByName: {[capabilityName: string]: SelectedCapability[]} = {}
     actualSelectedCapabilities?.forEach(capability => {
       if (!capabilitiesByName[capability.name]) {
@@ -824,38 +861,59 @@ export function DataTableDrawer({
       capabilitiesByName[capability.name].push(capability)
     })
     
-    // Add capability sections (simplified text version of the UI)
+    if (Object.keys(capabilitiesByName).length > 0) {
+      skill += `## Capabilities to Implement
+
+`
+    }
+
+    // Add capability sections
     Object.entries(capabilitiesByName).forEach(([capabilityName, implementations]) => {
-      prompt += `Implement ${capabilityName}:\n\n`
+      skill += `### ${capabilityName}
+
+`
       
       implementations.forEach((implementation) => {
         if (implementations.length > 1) {
-          prompt += `${implementation.toolName} approach:\n`
+          skill += `**${implementation.toolName} approach:**
+
+`
         }
         
         if (implementation.description) {
-          prompt += `${implementation.description}\n\n`
+          skill += `${implementation.description}
+
+`
         }
         
         if (implementation.githubPath && implementation.toolRepo) {
-          if (githubMcpEnabled) {
-            prompt += `Use the GitHub MCP to access the ${implementation.toolName} repository at ${implementation.toolRepo}, then analyze ${implementation.githubPath} to understand the implementation.\n\n`
-          } else {
-            prompt += `Look up ${implementation.githubPath} in the ${implementation.toolName} repository on GitHub for implementation details.\n\n`
-          }
+          skill += `Reference implementation: [${implementation.toolName}/${implementation.githubPath}](${implementation.toolRepo}/tree/main/${implementation.githubPath})\n\n`
         }
         
         if (implementation.documentationUrl) {
-          prompt += `Reference the documentation at: ${implementation.documentationUrl}\n\n`
+          skill += `Documentation: ${implementation.documentationUrl}
+
+`
         }
         
         if (implementation.implementationNotes) {
-          prompt += `Note: ${implementation.implementationNotes}\n\n`
+          skill += `> **Note:** ${implementation.implementationNotes}
+
+`
         }
       })
     })
+
+    // Add attribution
+    const uniqueTools = Array.from(new Set(actualSelectedCapabilities?.map(c => c.toolName) || []))
+    if (uniqueTools.length > 0) {
+      skill += `---
+
+*This skill references implementations from: ${uniqueTools.join(', ')}. Generated by [opensource.builders](https://opensource.builders)*
+`
+    }
     
-    return prompt.trim()
+    return skill.trim()
   }
 
   const handleCopyPrompt = async () => {
@@ -868,6 +926,21 @@ export function DataTableDrawer({
     } catch (_error) {
       setCopied(false)
     }
+  }
+
+  const handleDownloadSkill = () => {
+    const skillContent = generatePromptText()
+    const skillName = generateSkillName()
+    const blob = new Blob([skillContent], { type: 'text/markdown' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `${skillName}.md`
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
+    setShowThankYouDialog(true)
   }
 
   return (
@@ -898,11 +971,11 @@ export function DataTableDrawer({
               <div className="-mx-6 flex items-start justify-between gap-x-4 border-b border-border px-6 pb-4">
                 <div className="mt-1 flex flex-col gap-y-1">
                   <DrawerPrimitives.Title className="text-base font-semibold text-foreground w-full">
-                    Interactive Prompt Builder
+                    Skill Builder
                   </DrawerPrimitives.Title>
                   <div className="mt-1">
                     <span className="text-left text-sm text-muted-foreground">
-                      Build a copy-ready AI prompt by choosing a starter and adding capabilities from open source tools. Pin compatibilities on any alternatives page to add them here.
+                      Create a skill for your AI coding agent. Choose a starter, add capabilities from open source tools, then export as a skill for Claude Code, Cursor, or any AI assistant.
                     </span>
                   </div>
                 </div>
@@ -988,12 +1061,12 @@ export function DataTableDrawer({
                         return (
                           <div className="flex items-center gap-2">
                             {template.source && (
-                              <a href={template.source} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-gray-500 dark:text-gray-500 hover:text-gray-900 dark:hover:text-gray-50 transition-colors text-xs">
+                              <a href={template.source} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors text-xs">
                                 <Github className="h-3 w-3" />
                                 <span>Source</span>
                               </a>
                             )}
-                            <span className="text-gray-500 dark:text-gray-600 text-xs">•</span>
+                            <span className="text-muted-foreground text-xs">•</span>
                             <Popover>
                               <PopoverTrigger asChild>
                                 <button className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors text-xs">
@@ -1024,13 +1097,21 @@ export function DataTableDrawer({
                       />
                     </div>
 
-                    {/* Copy Prompt Button */}
-                    <div className="pt-4 mt-auto">
+                    {/* Copy & Download Skill Buttons */}
+                    <div className="pt-4 mt-auto flex gap-2">
                       <button
                         onClick={handleCopyPrompt}
-                        className="w-full inline-flex items-center justify-center gap-3 px-3 py-2 rounded-lg bg-gradient-to-b from-background to-muted border border-border hover:from-muted hover:to-muted/80 transition-all duration-200 shadow-sm text-sm font-medium"
+                        className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-gradient-to-b from-background to-muted border border-border hover:from-muted hover:to-muted/80 transition-all duration-200 shadow-sm text-sm font-medium"
                       >
-                        {copied ? "Copied!" : "Copy Prompt"}
+                        <Copy className="h-4 w-4" />
+                        {copied ? "Copied!" : "Copy Skill"}
+                      </button>
+                      <button
+                        onClick={handleDownloadSkill}
+                        className="inline-flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-gradient-to-b from-background to-muted border border-border hover:from-muted hover:to-muted/80 transition-all duration-200 shadow-sm text-sm font-medium"
+                        title="Download as SKILL.md"
+                      >
+                        <Download className="h-4 w-4" />
                       </button>
                     </div>
                   </div>
@@ -1124,8 +1205,8 @@ export function DataTableDrawer({
 
                   {/* Right Column: Full Prompt Preview */}
                   <div className="flex-1 space-y-3 overflow-y-auto px-4 border-l border-border -my-4 py-4">
-                    {/* MCP Toggle */}
-                    <div className="space-y-3">
+                    {/* MCP Toggle - Commented out: AI can access GitHub directly via api.github.com */}
+                    {/* <div className="space-y-3">
                       <p className="text-xs text-muted-foreground uppercase tracking-wide">MCP Servers</p>
                       <div className="flex items-center gap-2">
                         <button
@@ -1178,9 +1259,41 @@ export function DataTableDrawer({
                           </PopoverContent>
                         </Popover>
                       </div>
+                    </div> */}
+
+                    <p className="text-xs text-muted-foreground uppercase tracking-wide">Generated Skill</p>
+                    
+                    {/* Structured/Raw Tabs */}
+                    <div className="inline-flex rounded-lg border border-border p-0.5 bg-muted/50">
+                      <button
+                        onClick={() => setSkillViewMode('structured')}
+                        className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${
+                          skillViewMode === 'structured'
+                            ? 'bg-background text-foreground shadow-sm'
+                            : 'text-muted-foreground hover:text-foreground'
+                        }`}
+                      >
+                        Structured
+                      </button>
+                      <button
+                        onClick={() => setSkillViewMode('raw')}
+                        className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${
+                          skillViewMode === 'raw'
+                            ? 'bg-background text-foreground shadow-sm'
+                            : 'text-muted-foreground hover:text-foreground'
+                        }`}
+                      >
+                        Raw
+                      </button>
                     </div>
 
-                    <p className="text-xs text-muted-foreground uppercase tracking-wide">Generated Prompt</p>
+                    {skillViewMode === 'raw' ? (
+                      <div className="p-4 rounded-lg bg-muted/30 border border-border/50 shadow-sm">
+                        <pre className="text-xs leading-relaxed text-foreground whitespace-pre-wrap font-mono overflow-x-auto">
+                          {generatePromptText()}
+                        </pre>
+                      </div>
+                    ) : (
                     <div className="p-4 rounded-lg bg-muted/30 border border-border/50 shadow-sm">
                       <div className="text-sm leading-relaxed text-foreground">
                         {(() => {
@@ -1190,7 +1303,7 @@ export function DataTableDrawer({
                           if (!currentTemplate && capabilityGroups.length === 0) {
                             return (
                               <span className="text-muted-foreground italic">
-                                Select a starter and add capabilities to generate your AI prompt.
+                                Select a starter and add capabilities to generate your skill.
                               </span>
                             )
                           }
@@ -1399,11 +1512,7 @@ export function DataTableDrawer({
                                                   )}
                                                   {implementation.githubPath && implementation.toolRepo && (
                                                     <div className="text-muted-foreground">
-                                                      {githubMcpEnabled ? (
-                                                        <>Use the GitHub MCP to access the {implementation.toolName} repository at <code className="bg-muted px-1 rounded text-xs">{implementation.toolRepo}</code>, then analyze <code className="bg-muted px-1 rounded text-xs">{implementation.githubPath}</code> to understand the implementation.</>
-                                                      ) : (
-                                                        <>Look up <code className="bg-muted px-1 rounded text-xs">{implementation.githubPath}</code> in the {implementation.toolName} repository on GitHub for implementation details.</>
-                                                      )}
+                                                      Reference: <a href={`${implementation.toolRepo}/tree/main/${implementation.githubPath}`} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline"><code className="bg-muted px-1 rounded text-xs">{implementation.githubPath}</code></a> in {implementation.toolName}
                                                     </div>
                                                   )}
                                                   {implementation.documentationUrl && (
@@ -1431,6 +1540,7 @@ export function DataTableDrawer({
                         })()}
                       </div>
                     </div>
+                    )}
                   </div>
                 </div>
 
@@ -1512,12 +1622,12 @@ export function DataTableDrawer({
                         return (
                           <div className="flex items-center gap-2">
                             {template.source && (
-                              <a href={template.source} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-gray-500 dark:text-gray-500 hover:text-gray-900 dark:hover:text-gray-50 transition-colors text-xs">
+                              <a href={template.source} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors text-xs">
                                 <Github className="h-3 w-3" />
                                 <span>Source</span>
                               </a>
                             )}
-                            <span className="text-gray-500 dark:text-gray-600 text-xs">•</span>
+                            <span className="text-muted-foreground text-xs">•</span>
                             <Popover>
                               <PopoverTrigger asChild>
                                 <button className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors text-xs">
@@ -1642,8 +1752,8 @@ export function DataTableDrawer({
                     </div>
                   </CustomTabsContent>
                   <CustomTabsContent value="full-prompt" className="space-y-6 px-6 mt-4">
-                    {/* Available MCP Servers */}
-                    <div className="space-y-3">
+                    {/* Available MCP Servers - Commented out: AI can access GitHub directly */}
+                    {/* <div className="space-y-3">
                       <p className="text-xs text-muted-foreground uppercase tracking-wide">Available MCP Servers</p>
                       <div className="flex items-center gap-2">
                         <button
@@ -1696,10 +1806,42 @@ export function DataTableDrawer({
                           </PopoverContent>
                         </Popover>
                       </div>
-                    </div>
+                    </div> */}
 
                     <div className="space-y-3">
-                      <p className="text-xs text-muted-foreground uppercase tracking-wide">Generated Prompt</p>
+                      <p className="text-xs text-muted-foreground uppercase tracking-wide">Generated Skill</p>
+                      
+                      {/* Structured/Raw Tabs */}
+                      <div className="inline-flex rounded-lg border border-border p-0.5 bg-muted/50">
+                        <button
+                          onClick={() => setSkillViewMode('structured')}
+                          className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${
+                            skillViewMode === 'structured'
+                              ? 'bg-background text-foreground shadow-sm'
+                              : 'text-muted-foreground hover:text-foreground'
+                          }`}
+                        >
+                          Structured
+                        </button>
+                        <button
+                          onClick={() => setSkillViewMode('raw')}
+                          className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${
+                            skillViewMode === 'raw'
+                              ? 'bg-background text-foreground shadow-sm'
+                              : 'text-muted-foreground hover:text-foreground'
+                          }`}
+                        >
+                          Raw
+                        </button>
+                      </div>
+
+                      {skillViewMode === 'raw' ? (
+                        <div className="p-4 rounded-lg bg-muted/30 border border-border/50 shadow-sm">
+                          <pre className="text-xs leading-relaxed text-foreground whitespace-pre-wrap font-mono overflow-x-auto">
+                            {generatePromptText()}
+                          </pre>
+                        </div>
+                      ) : (
                       <div className="p-4 rounded-lg bg-muted/30 border border-border/50 shadow-sm">
                         <div className="text-sm leading-relaxed text-foreground">
                           {(() => {
@@ -1709,7 +1851,7 @@ export function DataTableDrawer({
                             if (!currentTemplate && capabilityGroups.length === 0) {
                               return (
                                 <span className="text-muted-foreground italic">
-                                  Select a starter and add capabilities to generate your AI prompt.
+                                  Select a starter and add capabilities to generate your skill.
                                 </span>
                               )
                             }
@@ -1979,11 +2121,7 @@ export function DataTableDrawer({
                                                 
                                                 {implementation.githubPath && implementation.toolRepo && (
                                                   <div className="text-muted-foreground">
-                                                    {githubMcpEnabled ? (
-                                                      <>Use the GitHub MCP to access the {implementation.toolName} repository at <code className="bg-muted px-1 rounded text-xs">{implementation.toolRepo}</code>, then analyze <code className="bg-muted px-1 rounded text-xs">{implementation.githubPath}</code> to understand the implementation.</>
-                                                    ) : (
-                                                      <>Look up <code className="bg-muted px-1 rounded text-xs">{implementation.githubPath}</code> in the {implementation.toolName} repository on GitHub for implementation details.</>
-                                                    )}
+                                                    Reference: <a href={`${implementation.toolRepo}/tree/main/${implementation.githubPath}`} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline"><code className="bg-muted px-1 rounded text-xs">{implementation.githubPath}</code></a> in {implementation.toolName}
                                                   </div>
                                                 )}
                                                 
@@ -2027,6 +2165,7 @@ export function DataTableDrawer({
                           })()}
                         </div>
                       </div>
+                      )}
                     </div>
                   </CustomTabsContent>
                 </CustomTabs>
@@ -2038,7 +2177,7 @@ export function DataTableDrawer({
                   onClick={handleCopyPrompt}
                   className="w-full inline-flex items-center justify-center gap-3 px-3 py-2 rounded-lg bg-gradient-to-b from-background to-muted border border-border hover:from-muted hover:to-muted/80 transition-all duration-200 shadow-sm text-sm font-medium"
                 >
-                  {copied ? "Copied!" : "Copy Prompt"}
+                  {copied ? "Copied!" : "Copy Skill"}
                 </button>
               </div>
             </DrawerPrimitives.Content>
@@ -2055,12 +2194,55 @@ export function DataTableDrawer({
           
           <DialogHeader>
             <DialogTitle className="text-xl font-bold text-foreground mb-2">
-              Prompt Copied Successfully!
+              Skill Ready!
             </DialogTitle>
             <DialogDescription className="text-sm text-muted-foreground mb-3">
-              Your prompt references amazing features built by these projects. Please consider starring them to show your support.
+              Your skill references amazing features built by these projects. Please consider starring them to show your support.
             </DialogDescription>
           </DialogHeader>
+
+          {/* Installation Instructions Dropdown */}
+          <div className="rounded-lg bg-muted/50 border p-4 mb-3">
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-sm font-medium">Install your skill:</p>
+              <select
+                value={selectedAgent}
+                onChange={(e) => setSelectedAgent(e.target.value)}
+                className="text-xs bg-background border rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-ring"
+              >
+                <option value="claude-code">Claude Code</option>
+                <option value="cursor">Cursor</option>
+                <option value="droid">Droid</option>
+                <option value="codex">Codex CLI</option>
+              </select>
+            </div>
+            <div className="text-xs text-muted-foreground">
+              {selectedAgent === 'claude-code' && (
+                <div className="space-y-1.5">
+                  <code className="block bg-background px-2 py-1.5 rounded border text-[11px]">.claude/skills/{generateSkillName()}.md</code>
+                  <p className="text-[11px]">Place in project root or <code className="bg-background px-1 rounded">~/.claude/skills/</code> for global access.</p>
+                </div>
+              )}
+              {selectedAgent === 'cursor' && (
+                <div className="space-y-1.5">
+                  <code className="block bg-background px-2 py-1.5 rounded border text-[11px]">.cursor/rules/{generateSkillName()}.mdc</code>
+                  <p className="text-[11px]">Cursor will auto-detect rules in the <code className="bg-background px-1 rounded">.cursor/rules/</code> directory.</p>
+                </div>
+              )}
+              {selectedAgent === 'droid' && (
+                <div className="space-y-1.5">
+                  <code className="block bg-background px-2 py-1.5 rounded border text-[11px]">.factory/droids/{generateSkillName()}.md</code>
+                  <p className="text-[11px]">Place in project root or <code className="bg-background px-1 rounded">~/.factory/droids/</code> for personal droids.</p>
+                </div>
+              )}
+              {selectedAgent === 'codex' && (
+                <div className="space-y-1.5">
+                  <code className="block bg-background px-2 py-1.5 rounded border text-[11px]">AGENTS.md</code>
+                  <p className="text-[11px]">Add to your project&apos;s AGENTS.md file or create one in the root directory.</p>
+                </div>
+              )}
+            </div>
+          </div>
           
           <div className="space-y-3 py-2">
             {actualSelectedCapabilities && Array.from(

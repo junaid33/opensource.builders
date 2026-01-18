@@ -1,8 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Opensource.Builders
+
+Find open-source alternatives to popular software, compare features side-by-side, and generate skills with code references that help AI build those features in your project.
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fjunaid33%2Fopensource.builders%2F&stores=[{"type"%3A"postgres"}])
 
 [![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/TK5wC1?referralCode=I_tWSs)
+
+## Features
+
+- **Browse Alternatives** - Discover open-source alternatives to proprietary applications
+- **Compare Applications** - See feature-by-feature comparisons between apps
+- **Skill Builder** - Generate AI coding agent skills from curated features with implementation details and code references
+- **Multi-Agent Support** - Install skills in Claude Code, Cursor, Droid, or Codex CLI
+
+## Skill Builder
+
+The Skill Builder lets you select features from multiple open-source projects and generates a skill - a guide with specific code references that your AI coding agent can use to build those features in your project. Each skill includes:
+
+- Feature descriptions and implementation notes
+- Links to reference code in GitHub repositories
+- Documentation URLs for deeper context
+
+### Installing Skills
+
+After generating a skill, you can install it in your preferred AI coding agent:
+
+**Claude Code**
+```bash
+# Save the skill file to your project
+mkdir -p .claude/skills && cp ~/Downloads/SKILL.md .claude/skills/
+```
+
+**Cursor**
+```bash
+# Add the skill content to your rules file
+cat ~/Downloads/SKILL.md >> .cursor/rules/skill.mdc
+```
+
+**Droid**
+```bash
+# Save to your project's skills directory
+mkdir -p .factory/skills && cp ~/Downloads/SKILL.md .factory/skills/
+```
+
+**Codex CLI**
+```bash
+# Add to your agents instructions
+cat ~/Downloads/SKILL.md >> codex.md
+```
 
 ## Getting Started
 
@@ -20,25 +65,27 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- [Next.js](https://nextjs.org) - React framework
+- [Keystone](https://keystonejs.com) - Headless CMS
+- [PostgreSQL](https://www.postgresql.org) - Database
+- [Tailwind CSS](https://tailwindcss.com) - Styling
 
-## Learn More
+## Contributing
 
-To learn more about Next.js, take a look at the following resources:
+See [CONTRIBUTING_TO_OSB.md](./CONTRIBUTING_TO_OSB.md) for guidelines on adding applications, capabilities, and improving the platform.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deploy
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Vercel
 
-## Deploy on Vercel
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fjunaid33%2Fopensource.builders%2F&stores=[{"type"%3A"postgres"}])
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Railway
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/TK5wC1?referralCode=I_tWSs)
 
-## Deploy on Railway
+## License
 
-[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/ucKhjV?referralCode=I_tWSs)
+MIT

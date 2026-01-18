@@ -252,13 +252,10 @@ export function EthosPage() {
               >
                 Opensource.Builders supports this by doing more than simply
                 listing which applications offer certain features. We also track
-                where in the code those features live. This gives AI the context
-                it needs to learn from working examples and then generate
-                similar functionality for your environment. This is the idea
-                behind the Build Drawer. You select the features you want from
-                existing projects, and we create a structured prompt you can
-                feed to the AI system of your choice. The AI then has a clear
-                guide to help you bring those features into your own project.
+                where in the code those features live. You select the features
+                you want from existing projects, and we generate a skill - a
+                guide with specific code references that your AI coding agent
+                can use to build those features in your project.
               </TextScramble>
             </div>
 
@@ -319,7 +316,7 @@ export function EthosPage() {
               <p className="text-muted-foreground leading-relaxed sm:text-lg font-medium mb-4">
                 Opensource.Builders is the companion to that vision. Each
                 Openfront we build can stand on its own, but with our feature
-                tracking and Build Drawer, businesses can go further. For
+                tracking and Skill Builder, businesses can go further. For
                 example, if you run a barbershop and also want to sell
                 merchandise, you can take e-commerce features from the retail
                 Openfront and add them to the barbershop Openfront. The result

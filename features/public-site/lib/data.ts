@@ -332,3 +332,104 @@ export async function fetchPaginatedAlternatives(
     capabilities: Array.from(capabilityMap.values()),
   };
 }
+
+// Application type for comparison (can be either proprietary or open source)
+export interface ComparisonApplication {
+  id: string;
+  name: string;
+  slug: string;
+  description: string;
+  websiteUrl?: string;
+  repositoryUrl?: string;
+  license?: string;
+  githubStars?: number;
+  githubForks?: number;
+  simpleIconSlug?: string;
+  simpleIconColor?: string;
+  isOpenSource: boolean;
+  capabilities: Array<{
+    capability: {
+      id: string;
+      name: string;
+      slug: string;
+      description: string;
+      category?: string;
+      complexity?: string;
+    };
+    implementationNotes?: string;
+    githubPath?: string;
+    documentationUrl?: string;
+    implementationComplexity?: string;
+    isActive?: boolean;
+  }>;
+}
+
+// Fetch application by slug (either proprietary or open source)
+export const fetchApplicationBySlug = cache(async function (slug: string): Promise<ComparisonApplication | null> {
+  const { GET_APPLICATION_BY_SLUG } = await import('./graphql/compare-queries');
+  const data = await makeGraphQLRequest<{
+    proprietaryApplications: any[];
+    openSourceApplications: any[];
+  }>(GET_APPLICATION_BY_SLUG, { slug });
+
+  // Check open source first (more common use case)
+  if (data.openSourceApplications && data.openSourceApplications.length > 0) {
+    const app = data.openSourceApplications[0];
+    return {
+      id: app.id,
+      name: app.name,
+      slug: app.slug,
+      description: app.description || '',
+      websiteUrl: app.websiteUrl,
+      repositoryUrl: app.repositoryUrl,
+      license: app.license,
+      githubStars: app.githubStars,
+      githubForks: app.githubForks,
+      simpleIconSlug: app.simpleIconSlug,
+      simpleIconColor: app.simpleIconColor,
+      isOpenSource: true,
+      capabilities: app.capabilities?.map((c: any) => ({
+        capability: {
+          id: c.capability.id,
+          name: c.capability.name,
+          slug: c.capability.slug,
+          description: c.capability.description || '',
+          category: c.capability.category,
+          complexity: c.capability.complexity,
+        },
+        implementationNotes: c.implementationNotes,
+        githubPath: c.githubPath,
+        documentationUrl: c.documentationUrl,
+        implementationComplexity: c.implementationComplexity,
+        isActive: c.isActive,
+      })) || [],
+    };
+  }
+
+  // Check proprietary
+  if (data.proprietaryApplications && data.proprietaryApplications.length > 0) {
+    const app = data.proprietaryApplications[0];
+    return {
+      id: app.id,
+      name: app.name,
+      slug: app.slug,
+      description: app.description || '',
+      websiteUrl: app.websiteUrl,
+      simpleIconSlug: app.simpleIconSlug,
+      simpleIconColor: app.simpleIconColor,
+      isOpenSource: false,
+      capabilities: app.capabilities?.map((c: any) => ({
+        capability: {
+          id: c.capability.id,
+          name: c.capability.name,
+          slug: c.capability.slug,
+          description: c.capability.description || '',
+          category: c.capability.category,
+          complexity: c.capability.complexity,
+        },
+      })) || [],
+    };
+  }
+
+  return null;
+});

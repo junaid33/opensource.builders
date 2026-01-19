@@ -674,12 +674,30 @@ export default function HeroAlternatives() {
 
   // Typing effect
   useEffect(() => {
-    if (isPaused || !currentApp.name) return;
+    if (!currentApp.name) return;
 
     const currentWord = currentApp.name;
     const typingSpeed = 80;
     const erasingSpeed = 40;
     const pauseBeforeErase = 3000;
+
+    // If paused, ensure we are typing back to the full word and NOT deleting
+    if (isPaused) {
+      if (currentText !== currentWord) {
+        const timeout = setTimeout(() => {
+          // Type back one character at a time or just snap? 
+          // Typing back is smoother than snapping.
+          if (currentText.length < currentWord.length) {
+            setCurrentText(currentWord.slice(0, currentText.length + 1));
+          } else {
+            // If somehow longer, snap to it
+            setCurrentText(currentWord);
+          }
+        }, typingSpeed);
+        return () => clearTimeout(timeout);
+      }
+      return;
+    }
 
     const timeout = setTimeout(() => {
       if (isTyping && !isDeleting) {
@@ -695,6 +713,10 @@ export default function HeroAlternatives() {
       } else if (isDeleting) {
         if (currentText.length > 0) {
           setCurrentText(currentText.slice(0, -1));
+        } else {
+          // Once fully deleted, we can't just stop here because useStepCycler
+          // will change currentApp after ANIMATION_INTERVAL.
+          // The typing effect will naturally restart when currentApp changes.
         }
       }
     }, isDeleting ? erasingSpeed : typingSpeed);

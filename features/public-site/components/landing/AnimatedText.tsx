@@ -13,11 +13,11 @@ interface AnimatedTextProps {
 
 export default function AnimatedText({
   words = [
+    'Superwhisper',
     'Shopify',
     'Notion', 
     'Tailwind Plus',
     'v0',
-    'Cursor',
     'Figma',
     'Slack',
     'Zoom'

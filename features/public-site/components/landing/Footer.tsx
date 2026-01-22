@@ -142,7 +142,7 @@ const Footer = () => {
                 )}
               >
                 <StarIcon className="fill-current" size={12} aria-hidden="true" />
-                <span>1.2k</span>
+                <span>1.3k</span>
               </Link>
             </div>
             <div className="mt-4 text-sm text-muted-foreground">

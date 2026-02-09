@@ -53,5 +53,42 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function AlternativePageRoute({ params }: PageProps) {
   const { slug } = await params;
   
-  return <AlternativesPageServer slug={slug} />;
+  const proprietaryApp = await fetchAlternatives(slug);
+  
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": proprietaryApp.name,
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web",
+    "description": proprietaryApp.description,
+    "mainEntity": {
+      "@type": "ItemList",
+      "name": `Open Source Alternatives to ${proprietaryApp.name}`,
+      "itemListElement": proprietaryApp.openSourceAlternatives.map((alt, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "item": {
+          "@type": "SoftwareApplication",
+          "name": alt.name,
+          "description": alt.description,
+          "applicationCategory": "BusinessApplication",
+          "operatingSystem": "Web",
+          "url": `https://opensource.builders/os-alternatives/${alt.slug}`,
+          "softwareRequirements": "Open Source",
+          "license": alt.license,
+        }
+      }))
+    }
+  };
+  
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <AlternativesPageServer slug={slug} />
+    </>
+  );
 }

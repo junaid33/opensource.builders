@@ -17,6 +17,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly',
       priority: 0.5,
     },
+    {
+      url: `${BASE_URL}/llms`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.6,
+    },
   ];
 
   try {
@@ -83,7 +89,28 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       })
     );
 
-    return [...staticPages, ...alternativePages, ...osPages, ...capabilityPages];
+    // Fetch all categories
+    const categoriesData = await makeGraphQLRequest<{
+      categories: { slug: string; createdAt?: string }[];
+    }>(`
+      query {
+        categories(orderBy: { name: asc }) {
+          slug
+          createdAt
+        }
+      }
+    `);
+
+    const categoryPages: MetadataRoute.Sitemap = categoriesData.categories.map(
+      (cat) => ({
+        url: `${BASE_URL}/categories/${cat.slug}`,
+        lastModified: cat.createdAt ? new Date(cat.createdAt) : new Date(),
+        changeFrequency: 'weekly' as const,
+        priority: 0.9, // Higher priority for verticals
+      })
+    );
+
+    return [...staticPages, ...alternativePages, ...osPages, ...capabilityPages, ...categoryPages];
   } catch (error) {
     console.error('Error generating sitemap:', error);
     return staticPages;

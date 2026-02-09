@@ -443,3 +443,46 @@ export const GET_ALL_OPEN_SOURCE_APPS = gql`
     }
   }
 `;
+
+export const GET_ALL_CATEGORIES = gql`
+  query GetAllCategories {
+    categories(orderBy: { name: asc }) {
+      id
+      name
+      slug
+      description
+      icon
+      color
+    }
+  }
+`;
+
+export const GET_CATEGORY_DETAILS = gql`
+  query GetCategoryDetails($slug: String!) {
+    categories(where: { slug: { equals: $slug } }) {
+      id
+      name
+      slug
+      description
+      icon
+      color
+      proprietaryApplications {
+        id
+        name
+        slug
+        description
+        websiteUrl
+        simpleIconSlug
+        simpleIconColor
+        openSourceAlternatives {
+          id
+          name
+          slug
+          description
+          githubStars
+          license
+        }
+      }
+    }
+  }
+`;

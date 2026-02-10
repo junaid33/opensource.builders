@@ -335,21 +335,31 @@ export async function fetchPaginatedAlternatives(
 
 // Fetch all categories
 export const fetchAllCategories = cache(async function (): Promise<any[]> {
-  const { GET_ALL_CATEGORIES } = await import('./graphql/queries');
-  const data = await makeGraphQLRequest<{ categories: any[] }>(GET_ALL_CATEGORIES);
-  return data.categories;
+  try {
+    const { GET_ALL_CATEGORIES } = await import('./graphql/queries');
+    const data = await makeGraphQLRequest<{ categories: any[] }>(GET_ALL_CATEGORIES);
+    return data.categories;
+  } catch (error) {
+    console.error('fetchAllCategories failed:', error);
+    return [];
+  }
 });
 
 // Fetch category details
 export const fetchCategoryDetails = cache(async function (slug: string): Promise<any> {
-  const { GET_CATEGORY_DETAILS } = await import('./graphql/queries');
-  const data = await makeGraphQLRequest<{ categories: any[] }>(GET_CATEGORY_DETAILS, { slug });
-  
-  if (!data.categories || data.categories.length === 0) {
-    throw new Error('Category not found');
+  try {
+    const { GET_CATEGORY_DETAILS } = await import('./graphql/queries');
+    const data = await makeGraphQLRequest<{ categories: any[] }>(GET_CATEGORY_DETAILS, { slug });
+    
+    if (!data.categories || data.categories.length === 0) {
+      throw new Error('Category not found');
+    }
+    
+    return data.categories[0];
+  } catch (error) {
+    console.error(`fetchCategoryDetails for ${slug} failed:`, error);
+    throw error; // Still throw for detail page so notFound() can be triggered if appropriate
   }
-  
-  return data.categories[0];
 });
 
 // Application type for comparison (can be either proprietary or open source)

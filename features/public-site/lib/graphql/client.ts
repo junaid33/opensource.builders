@@ -27,7 +27,7 @@ async function getBaseUrl(): Promise<string> {
     }
   }
   
-  return 'http://localhost:3005';
+  return '';
 }
 
 // Single data fetching function used by both server prefetch and client useQuery

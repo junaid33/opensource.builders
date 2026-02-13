@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import { OsAlternativesPageServer } from '@/features/public-site/screens/OsAlternativesPageServer';
-import { fetchOsAlternatives } from '@/features/public-site/lib/data';
+import { fetchOsAlternatives, isExpectedOsAlternativesError } from '@/features/public-site/lib/data';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -51,8 +52,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function OsAlternativePageRoute({ params }: PageProps) {
   const { slug } = await params;
-  
-  const { openSourceApp, proprietaryApp } = await fetchOsAlternatives(slug);
+
+  let osAlternativesData: Awaited<ReturnType<typeof fetchOsAlternatives>>;
+
+  try {
+    osAlternativesData = await fetchOsAlternatives(slug);
+  } catch (error) {
+    if (isExpectedOsAlternativesError(error)) {
+      notFound();
+    }
+
+    throw error;
+  }
+
+  const { openSourceApp, proprietaryApp } = osAlternativesData;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -75,7 +88,7 @@ export default async function OsAlternativePageRoute({ params }: PageProps) {
       "url": `https://opensource.builders/alternatives/${proprietaryApp.slug}`
     }
   };
-  
+
   return (
     <>
       <script

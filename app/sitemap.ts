@@ -55,24 +55,31 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     // Fetch all open source applications
     const osData = await makeGraphQLRequest<{
-      openSourceApplications: { slug: string; updatedAt?: string }[];
+      openSourceApplications: {
+        slug: string;
+        updatedAt?: string;
+        primaryAlternativeTo?: { id: string } | null;
+      }[];
     }>(`
       query {
         openSourceApplications(orderBy: { name: asc }) {
           slug
           updatedAt
+          primaryAlternativeTo {
+            id
+          }
         }
       }
     `);
 
-    const osPages: MetadataRoute.Sitemap = osData.openSourceApplications.map(
-      (app) => ({
+    const osPages: MetadataRoute.Sitemap = osData.openSourceApplications
+      .filter((app) => Boolean(app.primaryAlternativeTo))
+      .map((app) => ({
         url: `${BASE_URL}/os-alternatives/${app.slug}`,
         lastModified: app.updatedAt ? new Date(app.updatedAt) : new Date(),
         changeFrequency: 'weekly' as const,
         priority: 0.7,
-      })
-    );
+      }));
 
     // Fetch all capabilities
     const capabilitiesData = await makeGraphQLRequest<{

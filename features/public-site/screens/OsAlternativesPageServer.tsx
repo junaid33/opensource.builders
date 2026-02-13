@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import { OsAlternativesPageClient } from './OsAlternativesPage';
 import { queryKeys } from '../lib/query-keys';
-import { fetchOsAlternatives } from '../lib/data';
+import { fetchOsAlternatives, isExpectedOsAlternativesError } from '../lib/data';
 import { PublicSiteProvider } from '../lib/provider';
 
 interface OsAlternativesPageServerProps {
@@ -26,8 +26,11 @@ export async function OsAlternativesPageServer({ slug }: OsAlternativesPageServe
       queryFn: () => fetchOsAlternatives(slug),
     });
   } catch (error) {
-    console.error('Failed to prefetch OS alternatives:', error);
-    notFound();
+    if (isExpectedOsAlternativesError(error)) {
+      notFound();
+    }
+
+    throw error;
   }
 
   return (

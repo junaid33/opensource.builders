@@ -4,6 +4,18 @@ import { makeGraphQLRequest } from './graphql/client';
 import { GET_POPULAR_APPS, GET_ALTERNATIVES, GET_ALL_PROPRIETARY_APPS, MULTI_MODEL_SEARCH, GET_OS_ALTERNATIVES, GET_CAPABILITY_APPLICATIONS, GET_ALL_CAPABILITIES, GET_ALL_OPEN_SOURCE_APPS, GET_PAGINATED_ALTERNATIVES } from './graphql/queries';
 import { PopularAppsResponse, AlternativesResponse, SearchResult, PopularApp, ProprietaryApplication, OpenSourceApplication, CapabilityApplicationsResponse, AllCapabilitiesResponse, AllOpenSourceAppsResponse, Capability } from '../types';
 
+export const OPEN_SOURCE_APP_NOT_FOUND_ERROR = 'Open source application not found';
+export const OS_APP_NOT_MARKED_AS_ALTERNATIVE_ERROR = 'This open source application is not marked as an alternative to any proprietary application';
+
+export function isExpectedOsAlternativesError(error: unknown): boolean {
+  if (!(error instanceof Error)) return false;
+
+  return (
+    error.message === OPEN_SOURCE_APP_NOT_FOUND_ERROR ||
+    error.message === OS_APP_NOT_MARKED_AS_ALTERNATIVE_ERROR
+  );
+}
+
 // Fetch popular apps
 export const fetchPopularApps = cache(async function (): Promise<PopularApp[]> {
   const data = await makeGraphQLRequest<PopularAppsResponse>(GET_POPULAR_APPS);
@@ -96,18 +108,18 @@ export const fetchOsAlternatives = cache(async function (slug: string): Promise<
   proprietaryApp: ProprietaryApplication; 
   otherAlternatives: OpenSourceApplication[];
 }> {
-  const data = await makeGraphQLRequest(GET_OS_ALTERNATIVES, { slug });
+  const data = await makeGraphQLRequest<{ openSourceApplications: any[] }>(GET_OS_ALTERNATIVES, { slug });
   
   const openSourceApps = data.openSourceApplications;
   
   if (!openSourceApps || openSourceApps.length === 0) {
-    throw new Error('Open source application not found');
+    throw new Error(OPEN_SOURCE_APP_NOT_FOUND_ERROR);
   }
 
   const openSourceApp = openSourceApps[0];
   
   if (!openSourceApp.primaryAlternativeTo) {
-    throw new Error('This open source application is not marked as an alternative to any proprietary application');
+    throw new Error(OS_APP_NOT_MARKED_AS_ALTERNATIVE_ERROR);
   }
 
   const proprietaryApp = openSourceApp.primaryAlternativeTo;
@@ -195,7 +207,7 @@ export const fetchOsAlternatives = cache(async function (slug: string): Promise<
 
 // Fetch all applications that have a specific capability
 export const fetchCapabilityApplications = cache(async function (slug: string): Promise<CapabilityApplicationsResponse> {
-  const data = await makeGraphQLRequest(GET_CAPABILITY_APPLICATIONS, { slug });
+  const data = await makeGraphQLRequest<{ capabilities: any[] }>(GET_CAPABILITY_APPLICATIONS, { slug });
   
   const capabilities = data.capabilities;
   

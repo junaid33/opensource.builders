@@ -6,6 +6,8 @@ interface ToolIconProps {
   simpleIconColor?: string
   size?: number
   className?: string
+  rounded?: "md" | "none" | "full"
+  dotOnly?: boolean
 }
 
 export default function ToolIcon({ 
@@ -13,15 +15,50 @@ export default function ToolIcon({
   simpleIconSlug,
   simpleIconColor,
   size = 32, 
-  className = '' 
+  className = '',
+  rounded = "md",
+  dotOnly = false,
 }: ToolIconProps) {
+  const borderRadius = rounded === "none" ? "rounded-none" : rounded === "full" ? "rounded-full" : "rounded-md";
+
+  if (dotOnly) {
+    return (
+      <div 
+        className={cn(
+          "flex aspect-square items-center justify-center overflow-hidden relative",
+          borderRadius,
+          className
+        )}
+        style={{ 
+          width: size, 
+          height: size,
+          background: simpleIconColor || '#000000'
+        }}
+      >
+        <div
+          className="absolute inset-0 opacity-30"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+            backgroundSize: "256px 256px",
+          }}
+        />
+        <div className="w-1.5 h-1.5 rounded-full bg-white opacity-90 z-10" />
+      </div>
+    );
+  }
+
   // If we have a SimpleIcon slug, use it with enhanced styling
   if (simpleIconSlug) {
     const iconUrl = `https://cdn.jsdelivr.net/npm/simple-icons@v15/icons/${simpleIconSlug}.svg`
     
     return (
       <div 
-        className={`flex aspect-square items-center justify-center rounded-md overflow-hidden relative after:rounded-[inherit] after:absolute after:inset-0 after:shadow-[0_1px_2px_0_rgb(0_0_0/.05),inset_0_1px_0_0_rgb(255_255_255/.12)] after:pointer-events-none ${className}`}
+        className={cn(
+          "flex aspect-square items-center justify-center overflow-hidden relative after:absolute after:inset-0 after:shadow-[0_1px_2px_0_rgb(0_0_0/.05),inset_0_1px_0_0_rgb(255_255_255/.12)] after:pointer-events-none",
+          borderRadius,
+          `after:${borderRadius}`,
+          className
+        )}
         style={{ 
           width: size, 
           height: size,
@@ -50,7 +87,7 @@ export default function ToolIcon({
         />
         
         {/* Subtle highlight */}
-        <div className="absolute top-0 left-0 right-0 h-1/4 bg-gradient-to-b from-white/10 to-transparent rounded-t-md" />
+        <div className={cn("absolute top-0 left-0 right-0 h-1/4 bg-gradient-to-b from-white/10 to-transparent", borderRadius === "rounded-md" && "rounded-t-md")} />
       </div>
     )
   }
@@ -63,7 +100,12 @@ export default function ToolIcon({
   
   return (
     <div 
-      className={`flex aspect-square items-center justify-center rounded-md overflow-hidden relative after:rounded-[inherit] after:absolute after:inset-0 after:shadow-[0_1px_2px_0_rgb(0_0_0/.05),inset_0_1px_0_0_rgb(255_255_255/.12)] after:pointer-events-none ${className}`}
+      className={cn(
+        "flex aspect-square items-center justify-center overflow-hidden relative after:absolute after:inset-0 after:shadow-[0_1px_2px_0_rgb(0_0_0/.05),inset_0_1px_0_0_rgb(255_255_255/.12)] after:pointer-events-none",
+        borderRadius,
+        `after:${borderRadius}`,
+        className
+      )}
       style={{ 
         width: size, 
         height: size,
@@ -81,7 +123,7 @@ export default function ToolIcon({
 
       {/* Additional inner shadow for depth */}
       <div
-        className="absolute inset-0 rounded-md"
+        className={cn("absolute inset-0", borderRadius)}
         style={{ boxShadow: "inset 0 1px 2px rgba(0,0,0,0.3), inset 0 -1px 2px rgba(255,255,255,0.1)" }}
       />
 
@@ -101,7 +143,9 @@ export default function ToolIcon({
       </div>
 
       {/* Subtle highlight on top */}
-      <div className="absolute top-0 left-0 right-0 h-1/4 bg-gradient-to-b from-white/10 to-transparent rounded-t-md" />
+      <div className={cn("absolute top-0 left-0 right-0 h-1/4 bg-gradient-to-b from-white/10 to-transparent", borderRadius === "rounded-md" && "rounded-t-md")} />
     </div>
   )
 }
+
+import { cn } from "@/lib/utils"

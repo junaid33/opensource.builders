@@ -1,22 +1,10 @@
 "use client";
 
-import { useRef, useEffect, useMemo } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { ChartContainer, type ChartConfig } from "@/components/ui/chart";
-import { Cell, Pie, PieChart } from "recharts";
-import { ChevronLeft, ChevronRight, Plus, Search, ChevronDown } from "lucide-react";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { useMemo, useState } from "react";
+import { Search, Plus, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import ToolIcon from '@/components/ToolIcon';
 import { useBuildStatsCardState, useCapabilityActions } from '@/hooks/use-capabilities-config';
-import { DonutChart } from '@/components/ui/shared-donut-chart';
-import starterAppsConfig from '@/config/starter-apps.json';
-
 
 interface Capability {
   id: string;
@@ -36,19 +24,6 @@ interface CapabilityImpl {
   isActive?: boolean;
 }
 
-interface CapabilityItem {
-  name: string;
-  category: string;
-  percentage: number;
-  compatible: boolean;
-  implementationNotes?: string;
-  githubPath?: string;
-  documentationUrl?: string;
-  implementationComplexity?: string;
-  description?: string;
-  complexity?: string;
-}
-
 interface OpenSourceApp {
   id: string;
   name: string;
@@ -61,559 +36,203 @@ interface OpenSourceApp {
   capabilities: CapabilityImpl[];
 }
 
-
 interface BuildStatsCardProps {
   apps: OpenSourceApp[];
   selectedCapabilities?: Set<string>;
   selectedStarterId?: string;
 }
 
-
 export default function BuildStatsCard({
   apps,
   selectedCapabilities: externalSelectedCapabilities,
-  selectedStarterId
 }: BuildStatsCardProps) {
-  // Get all state from global context
-  const { buildStatsCard, updateBuildStatsCard } = useBuildStatsCardState();
   const { addCapability, removeCapability } = useCapabilityActions();
-  
-  const { currentAppId, isCollapsed, capabilitySearch, appSearchTerm, isAppsDropdownOpen } = buildStatsCard;
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const appSearchRef = useRef<HTMLInputElement>(null);
-
-  // Close dropdown on click outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        updateBuildStatsCard({ isAppsDropdownOpen: false })
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [updateBuildStatsCard])
-
-  // Close dropdown on escape key
-  useEffect(() => {
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        updateBuildStatsCard({ isAppsDropdownOpen: false })
-      }
-    }
-    document.addEventListener('keydown', handleEscape)
-    return () => document.removeEventListener('keydown', handleEscape)
-  }, [updateBuildStatsCard])
-
-  // Organize apps: prioritize apps built with the selected starter
-  const organizedApps = useMemo(() => {
-    const starterConfig = selectedStarterId ? starterAppsConfig[selectedStarterId as keyof typeof starterAppsConfig] : null;
-
-    if (!starterConfig) {
-      return apps;
-    }
-
-    const starterAppSlugs = new Set(starterConfig.appSlugs);
-    const builtWithStarter = apps.filter(app => starterAppSlugs.has(app.slug));
-    const otherApps = apps.filter(app => !starterAppSlugs.has(app.slug));
-
-    return [...builtWithStarter, ...otherApps];
-  }, [apps, selectedStarterId]);
-
-  // TODO: Consider moving filtering to GraphQL where clause or implementing search index (FlexSearch)
-  // Currently doing client-side filtering - could be improved with proper search index like in OpenFront
   // Filter apps based on search
-  const filteredApps = appSearchTerm.trim()
-    ? organizedApps.filter(app =>
-        app.name.toLowerCase().includes(appSearchTerm.toLowerCase()) ||
-        app.description?.toLowerCase().includes(appSearchTerm.toLowerCase())
-      )
-    : organizedApps;
-
-  // Find current app by ID, fallback to first app if not found
-  const currentAppIndex = useMemo(() => {
-    if (!currentAppId || organizedApps.length === 0) return 0;
-    const foundIndex = organizedApps.findIndex(app => app.id === currentAppId);
-    return foundIndex !== -1 ? foundIndex : 0;
-  }, [currentAppId, organizedApps]);
-
-  const currentApp = organizedApps[currentAppIndex];
-
-  const handleAppChange = (app: OpenSourceApp) => {
-    updateBuildStatsCard({
-      currentAppId: app.id,
-      capabilitySearch: ''
-    });
-  };
-
-  const nextApp = () => {
-    const newIndex = (currentAppIndex + 1) % organizedApps.length;
-    const nextAppObj = organizedApps[newIndex];
-    if (nextAppObj) {
-      handleAppChange(nextAppObj);
-    }
-  };
-
-  const prevApp = () => {
-    const newIndex = (currentAppIndex - 1 + organizedApps.length) % organizedApps.length;
-    const prevAppObj = organizedApps[newIndex];
-    if (prevAppObj) {
-      handleAppChange(prevAppObj);
-    }
-  };
-
-  const toggleAppsDropdown = () => {
-    const newIsOpen = !isAppsDropdownOpen;
-    updateBuildStatsCard({ isAppsDropdownOpen: newIsOpen });
-    
-    // Focus search input when dropdown opens
-    if (newIsOpen) {
-      setTimeout(() => {
-        appSearchRef.current?.focus();
-      }, 0);
-    } else {
-      updateBuildStatsCard({ appSearchTerm: '' });
-    }
-  };
-
-  const selectApp = (app: OpenSourceApp) => {
-    handleAppChange(app);
-    updateBuildStatsCard({
-      appSearchTerm: '',
-      isAppsDropdownOpen: false
-    });
-  };
-
-  const handlePinCapability = (capability: CapabilityItem) => {
-    const currentApp = organizedApps[currentAppIndex];
-    if (!currentApp) return;
-    
-    const capabilityImpl = currentApp.capabilities.find(
-      capImpl => capImpl.capability.name === capability.name
+  const filteredApps = useMemo(() => {
+    if (!searchTerm.trim()) return apps.slice(0, 10); // Show top 10 by default
+    const q = searchTerm.toLowerCase();
+    return apps.filter(app => 
+      app.name.toLowerCase().includes(q) || 
+      app.description?.toLowerCase().includes(q)
     );
-    
-    if (!capabilityImpl) return;
+  }, [apps, searchTerm]);
 
-    const compositeId = `${currentApp.id}-${capabilityImpl.capability.id}`;
-    const selectedCapability = {
-      id: compositeId,
-      capabilityId: capabilityImpl.capability.id,
-      toolId: currentApp.id,
-      name: capabilityImpl.capability.name,
-      description: capabilityImpl.capability.description,
-      category: capabilityImpl.capability.category,
-      complexity: capabilityImpl.capability.complexity,
-      toolName: currentApp.name,
-      toolIcon: currentApp.simpleIconSlug,
-      toolColor: currentApp.simpleIconColor,
-      toolRepo: currentApp.repositoryUrl,
-      implementationNotes: capabilityImpl.implementationNotes,
-      githubPath: capabilityImpl.githubPath,
-      documentationUrl: capabilityImpl.documentationUrl
-    };
+  // Filter capabilities based on search
+  // A capability item is a pair of {app, capabilityImpl}
+  const filteredCapabilities = useMemo(() => {
+    const q = searchTerm.toLowerCase();
+    const result: { app: OpenSourceApp; impl: CapabilityImpl }[] = [];
     
+    apps.forEach(app => {
+      app.capabilities.forEach(impl => {
+        const matchesCapability = impl.capability.name.toLowerCase().includes(q);
+        const matchesApp = app.name.toLowerCase().includes(q);
+        
+        if (q === "" || matchesCapability || matchesApp) {
+          result.push({ app, impl });
+        }
+      });
+    });
+
+    // If search is empty, just show some default ones or none?
+    // Let's show first 30
+    return result.slice(0, 30);
+  }, [apps, searchTerm]);
+
+  const [expandedCap, setExpandedCap] = useState<string | null>(null);
+
+  const handleToggle = (app: OpenSourceApp, impl: CapabilityImpl) => {
+    const compositeId = `${app.id}-${impl.capability.id}`;
     if (externalSelectedCapabilities?.has(compositeId)) {
       removeCapability(compositeId);
     } else {
-      addCapability(selectedCapability);
+      addCapability({
+        id: compositeId,
+        capabilityId: impl.capability.id,
+        toolId: app.id,
+        name: impl.capability.name,
+        description: impl.capability.description,
+        category: impl.capability.category,
+        complexity: impl.capability.complexity,
+        toolName: app.name,
+        toolIcon: app.simpleIconSlug,
+        toolColor: app.simpleIconColor,
+        toolRepo: app.repositoryUrl,
+        implementationNotes: impl.implementationNotes,
+        githubPath: impl.githubPath,
+        documentationUrl: impl.documentationUrl
+      });
     }
   };
 
-  // No apps state
-  if (!apps || apps.length === 0) {
-    return (
-      <div className="group relative p-1 rounded-xl transition-all duration-300 bg-muted border border-border ring-2 ring-border/50">
-        <div className="relative flex flex-col space-y-2">
-          <div className="flex items-center justify-between px-3 py-2">
-            <div className="flex flex-col">
-              <h3 className="text-sm font-medium text-foreground">No Applications</h3>
-              <p className="text-xs text-muted-foreground font-medium">
-                No open source applications found
-              </p>
-            </div>
-          </div>
+  return (
+    <div className="flex flex-col gap-6 bg-background">
+      {/* Search Input */}
+      <div className="relative group/search">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within/search:text-foreground transition-colors" />
+        <input
+          type="text"
+          placeholder="Search applications or capabilities..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-full h-11 pl-10 pr-4 text-sm bg-secondary border border-border text-foreground outline-none transition-all duration-200 focus:ring-1 focus:ring-muted rounded-none"
+        />
+      </div>
+
+      {/* Tier 1: Open Source Applications */}
+      <div className="space-y-3">
+        <p className="text-[0.65rem] text-muted-foreground uppercase tracking-[0.15em] font-mono">
+          Applications
+        </p>
+        <div className="flex flex-wrap gap-2">
+          {filteredApps.length > 0 ? (
+            filteredApps.map(app => (
+              <button
+                key={app.id}
+                onClick={() => setSearchTerm(app.name)}
+                className="flex items-center gap-2 h-8 px-3 text-[0.75rem] font-medium bg-secondary border border-border hover:bg-accent hover:border-border/60 transition-all rounded-none"
+              >
+                <ToolIcon
+                  name={app.name}
+                  simpleIconSlug={app.simpleIconSlug}
+                  simpleIconColor={app.simpleIconColor}
+                  size={14}
+                  rounded="none"
+                />
+                <span>{app.name}</span>
+              </button>
+            ))
+          ) : (
+            <span className="text-xs text-muted-foreground">No apps found</span>
+          )}
         </div>
       </div>
-    );
-  }
 
-  // Transform capabilities data for current app
-  const capabilityData: CapabilityItem[] = currentApp.capabilities.map(capImpl => ({
-    name: capImpl.capability.name,
-    category: capImpl.capability.category || 'other',
-    percentage: 100, // Always 100% for open source
-    compatible: true, // Open source is always compatible
-    implementationNotes: capImpl.implementationNotes,
-    githubPath: capImpl.githubPath,
-    documentationUrl: capImpl.documentationUrl,
-    implementationComplexity: capImpl.implementationComplexity,
-    description: capImpl.capability.description,
-    complexity: capImpl.capability.complexity,
-  }));
+      {/* Tier 2: Capabilities */}
+      <div className="space-y-3">
+        <p className="text-[0.65rem] text-muted-foreground uppercase tracking-[0.15em] font-mono">
+          Capabilities
+        </p>
+        <div className="flex flex-col gap-2">
+          {filteredCapabilities.length > 0 ? (
+            filteredCapabilities.map(({ app, impl }) => {
+              const compositeId = `${app.id}-${impl.capability.id}`;
+              const isSelected = externalSelectedCapabilities?.has(compositeId);
+              const isExpanded = expandedCap === compositeId;
 
-  const compatibleCount = capabilityData.length; // All are compatible
-  const totalCount = capabilityData.length;
-  const compatibilityScore = 100; // 100% compatibility for open source
-
-  return (
-    <div className="group relative p-1 rounded-xl transition-all duration-300 bg-muted border border-border ring-2 ring-border/50">
-      <div className="relative flex flex-col space-y-2">
-        {/* Header in the outer gray card */}
-        <div className="flex items-center justify-between px-3 py-2">
-          {/* Left side: Logo and capabilities info */}
-          <div className="flex items-center gap-2 flex-1 min-w-0" ref={dropdownRef}>
-            <ToolIcon
-              name={currentApp.name}
-              simpleIconSlug={currentApp.simpleIconSlug}
-              simpleIconColor={currentApp.simpleIconColor}
-              size={32}
-            />
-            
-            {/* Custom dropdown trigger */}
-            <div className="relative flex-1 min-w-0">
-              <div className="flex flex-col items-start min-w-0">
-                <button
-                  onClick={toggleAppsDropdown}
-                  className="flex items-center gap-1 text-left"
-                >
-                  <h3 className="text-sm font-medium text-foreground truncate">{currentApp.name}</h3>
-                  <ChevronDown 
-                    className={`h-4 w-4 transition-transform duration-200 flex-shrink-0 ${
-                      isAppsDropdownOpen ? 'rotate-180' : ''
-                    }`} 
-                  />
-                </button>
-                <div className="flex items-center gap-1">
-                  <p className="text-xs text-muted-foreground font-medium">
-                    {compatibleCount} Capabilities
-                  </p>
-                  <span className="text-xs text-muted-foreground">·</span>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      updateBuildStatsCard({ isCollapsed: !isCollapsed })
-                    }}
-                    className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+              return (
+                <div key={compositeId} className="flex flex-col gap-0">
+                  <div
+                    className={cn(
+                      "group flex items-center gap-3 p-2 text-left border transition-all duration-200 rounded-none cursor-pointer",
+                      isSelected 
+                        ? "bg-accent border-border/60" 
+                        : "bg-secondary border-border hover:bg-accent/50 hover:border-border/60"
+                    )}
+                    onClick={() => setExpandedCap(isExpanded ? null : compositeId)}
                   >
-                    {isCollapsed ? 'Expand' : 'Collapse'}
-                  </button>
-                </div>
-              </div>
-
-              {/* Custom dropdown */}
-              {isAppsDropdownOpen && (
-                <div className="absolute top-full left-0 mt-2 w-80 max-h-96 rounded-lg border bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/75 shadow-lg z-50">
-                  <div className="p-2">
-                    <div className="mb-2 px-2 text-xs font-semibold text-muted-foreground">
-                      Switch to other open source app
+                    <ToolIcon
+                      name={app.name}
+                      simpleIconSlug={app.simpleIconSlug}
+                      simpleIconColor={app.simpleIconColor}
+                      size={24}
+                      rounded="none"
+                      dotOnly={!app.simpleIconSlug}
+                      className="shrink-0"
+                    />
+                    <div className="min-w-0 flex-1">
+                      <div className="text-[0.75rem] font-medium truncate group-hover:text-foreground transition-colors">
+                        {impl.capability.name}
+                      </div>
+                      <div className="text-[0.65rem] text-muted-foreground truncate italic">
+                        from {app.name}
+                      </div>
                     </div>
                     
-                    {/* Search Input */}
-                    <div className="relative mb-3">
-                      <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                      <Input
-                        ref={appSearchRef}
-                        type="search"
-                        placeholder="Search applications..."
-                        className="pl-9 pr-3 h-9 text-sm"
-                        value={appSearchTerm}
-                        onChange={(e) => updateBuildStatsCard({ appSearchTerm: e.target.value })}
-                      />
-                    </div>
-                    
-                    {/* Applications List */}
-                    <div className="space-y-1 max-h-64 overflow-y-auto">
-                      {filteredApps.length > 0 ? (
-                        (() => {
-                          const starterConfig = selectedStarterId ? starterAppsConfig[selectedStarterId as keyof typeof starterAppsConfig] : null;
-                          const starterAppSlugs = starterConfig ? new Set(starterConfig.appSlugs) : new Set();
-                          const builtWithStarter = filteredApps.filter(app => starterAppSlugs.has(app.slug));
-                          const otherApps = filteredApps.filter(app => !starterAppSlugs.has(app.slug));
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleToggle(app, impl);
+                      }}
+                      className={cn(
+                        "flex items-center justify-center size-6 shrink-0 transition-all",
+                        isSelected ? "text-primary" : "text-muted-foreground hover:text-foreground"
+                      )}
+                    >
+                      {isSelected ? <Check className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+                    </button>
+                  </div>
 
-                          return (
-                            <>
-                              {/* Built with this starter section */}
-                              {starterConfig && builtWithStarter.length > 0 && (
-                                <>
-                                  <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground border-b border-border flex items-center gap-2">
-                                    <span>Built with {starterConfig.name}</span>
-                                    <span className="inline-flex items-center justify-center rounded-full bg-muted/50 text-muted-foreground px-1.5 py-0.5 text-[10px] font-medium">
-                                      {builtWithStarter.length}
-                                    </span>
-                                  </div>
-                                  {builtWithStarter.map((app) => (
-                                    <button
-                                      key={app.id}
-                                      onClick={() => selectApp(app)}
-                                      className="w-full flex items-center gap-3 p-2 rounded-md text-left hover:bg-muted/50 transition-colors"
-                                    >
-                                      <ToolIcon
-                                        name={app.name}
-                                        simpleIconSlug={app.simpleIconSlug}
-                                        simpleIconColor={app.simpleIconColor}
-                                        size={24}
-                                      />
-                                      <div className="flex flex-col min-w-0 flex-1">
-                                        <div className="text-sm font-medium text-foreground truncate">
-                                          {app.name}
-                                        </div>
-                                        <div className="text-xs text-muted-foreground truncate">
-                                          {app.capabilities.length} capabilities
-                                        </div>
-                                      </div>
-                                    </button>
-                                  ))}
-                                </>
-                              )}
-
-                              {/* Other applications section */}
-                              {otherApps.length > 0 && (
-                                <>
-                                  {starterConfig && builtWithStarter.length > 0 && (
-                                    <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground border-b border-border mt-2">
-                                      Other Applications ({otherApps.length})
-                                    </div>
-                                  )}
-                                  {otherApps.map((app) => (
-                                    <button
-                                      key={app.id}
-                                      onClick={() => selectApp(app)}
-                                      className="w-full flex items-center gap-3 p-2 rounded-md text-left hover:bg-muted/50 transition-colors"
-                                    >
-                                      <ToolIcon
-                                        name={app.name}
-                                        simpleIconSlug={app.simpleIconSlug}
-                                        simpleIconColor={app.simpleIconColor}
-                                        size={24}
-                                      />
-                                      <div className="flex flex-col min-w-0 flex-1">
-                                        <div className="text-sm font-medium text-foreground truncate">
-                                          {app.name}
-                                        </div>
-                                        <div className="text-xs text-muted-foreground truncate">
-                                          {app.capabilities.length} capabilities
-                                        </div>
-                                      </div>
-                                    </button>
-                                  ))}
-                                </>
-                              )}
-                            </>
-                          );
-                        })()
-                      ) : (
-                        <div className="p-4 text-center text-sm text-muted-foreground">
-                          {appSearchTerm.trim()
-                            ? `No results found for "${appSearchTerm}"`
-                            : "No applications available"
-                          }
+                  {isExpanded && (
+                    <div className="p-3 bg-secondary/30 border-x border-b border-border/40 text-[0.7rem] space-y-2 animate-in slide-in-from-top-1 duration-200">
+                      {impl.implementationNotes && (
+                        <div>
+                          <p className="text-muted-foreground uppercase text-[0.6rem] font-mono mb-1">Notes</p>
+                          <p className="text-foreground/80 leading-relaxed">{impl.implementationNotes}</p>
                         </div>
                       )}
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-          
-          {/* Right side: Navigation and donut */}
-          <div className="flex items-center gap-2">
-            {/* Left chevron */}
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={prevApp}
-              disabled={organizedApps.length <= 1}
-              className="h-8 w-8 p-0"
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </Button>
-
-            {/* Right chevron */}
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={nextApp}
-              disabled={organizedApps.length <= 1}
-              className="h-8 w-8 p-0"
-            >
-              <ChevronRight className="w-4 h-4" />
-            </Button>
-
-            {/* Donut chart with popover */}
-            <Popover>
-              <PopoverTrigger asChild>
-                <div className="cursor-help">
-                  <DonutChart percentage={compatibilityScore} compatible={compatibilityScore === 100} />
-                </div>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-2" side="bottom" align="end">
-                <div className="text-xs">
-                  <span className="font-medium">{compatibleCount}/{totalCount} capabilities supported</span>
-                  <br />
-                  <span className="text-muted-foreground">{compatibilityScore}% compatibility</span>
-                </div>
-              </PopoverContent>
-            </Popover>
-          </div>
-        </div>
-
-        {/* Capabilities list in the inner white card */}
-        {!isCollapsed && (
-          <div className="ring-foreground/5 text-card-foreground rounded-lg bg-card border shadow border-transparent ring-1 p-2">
-          {/* Search bar */}
-          <div className="relative mb-3">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <Input
-              type="search"
-              placeholder="Search capabilities..."
-              className="pl-9 pr-3 h-9 text-sm"
-              value={capabilitySearch}
-              onChange={(e) => updateBuildStatsCard({ capabilitySearch: e.target.value })}
-            />
-          </div>
-          
-          {/* Capabilities list with scroll */}
-          <div className="space-y-3 max-h-64 overflow-y-auto">
-            {(() => {
-              // TODO: Consider implementing search index (FlexSearch) for better capability search
-              // Currently doing simple client-side filtering
-              const filteredCapabilities = capabilityData.filter((item) => {
-                if (!capabilitySearch.trim()) return true;
-                return item.name.toLowerCase().includes(capabilitySearch.toLowerCase());
-              });
-
-              if (filteredCapabilities.length === 0 && capabilitySearch.trim()) {
-                return (
-                  <div className="text-center py-8 text-muted-foreground">
-                    <p>No capabilities found for "{capabilitySearch}"</p>
-                  </div>
-                );
-              }
-
-              return filteredCapabilities
-                .sort((a, b) => {
-                  // Sort by pinned first, then by compatible status
-                  const aCompositeId = `${currentApp.id}-${currentApp.capabilities.find(c => c.capability.name === a.name)?.capability.id}`;
-                  const bCompositeId = `${currentApp.id}-${currentApp.capabilities.find(c => c.capability.name === b.name)?.capability.id}`;
-                  const aPinned = externalSelectedCapabilities?.has(aCompositeId) || false;
-                  const bPinned = externalSelectedCapabilities?.has(bCompositeId) || false;
-                  if (aPinned && !bPinned) return -1;
-                  if (!aPinned && bPinned) return 1;
-                  // Then sort compatible capabilities first within each group
-                  if (a.compatible && !b.compatible) return -1;
-                  if (!a.compatible && b.compatible) return 1;
-                  return 0;
-                })
-                .map((item) => {
-                const capabilityImpl = currentApp.capabilities.find(c => c.capability.name === item.name);
-                const compositeId = capabilityImpl ? `${currentApp.id}-${capabilityImpl.capability.id}` : '';
-                const isPinned = externalSelectedCapabilities?.has(compositeId) || false;
-                const showPin = item.compatible; // Only show pin for compatible capabilities
-                
-                return (
-                  <div
-                    key={`${currentApp.id}-${item.name}-${item.category}`}
-                    onClick={showPin ? (e) => {
-                      e.preventDefault()
-                      handlePinCapability(item)
-                    } : undefined}
-                    className="group flex items-center justify-between gap-5 rounded-2xl bg-background border p-2"
-                  >
-                    <div className="flex items-center gap-2 flex-1 min-w-0">
-                      <div className="rounded-lg p-1 flex-shrink-0">
-                        <DonutChart percentage={item.percentage} compatible={item.compatible} isAnimationActive={false} />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <div className="text-sm font-semibold truncate">{item.name}</div>
-                        <div className="flex items-center gap-1 text-[11px] font-medium">
-                          {item.githubPath && (
-                            <>
-                              <Popover>
-                                <PopoverTrigger asChild>
-                                  <button
-                                    onClick={(e) => e.stopPropagation()}
-                                    className="text-muted-foreground hover:text-foreground"
-                                  >
-                                    CODE
-                                  </button>
-                                </PopoverTrigger>
-                                <PopoverContent className="w-auto p-3" side="bottom" align="start">
-                                  <span className="text-sm text-muted-foreground break-all">
-                                    {item.githubPath}
-                                  </span>
-                                </PopoverContent>
-                              </Popover>
-                              <span className="text-muted-foreground">·</span>
-                            </>
-                          )}
-                          {item.documentationUrl && (
-                            <>
-                              <Popover>
-                                <PopoverTrigger asChild>
-                                  <button
-                                    onClick={(e) => e.stopPropagation()}
-                                    className="text-muted-foreground hover:text-foreground"
-                                  >
-                                    DOCS
-                                  </button>
-                                </PopoverTrigger>
-                                <PopoverContent className="w-auto p-3" side="bottom" align="start">
-                                  <a
-                                    href={item.documentationUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-sm text-primary hover:underline break-all"
-                                  >
-                                    {item.documentationUrl}
-                                  </a>
-                                </PopoverContent>
-                              </Popover>
-                              <span className="text-muted-foreground">·</span>
-                            </>
-                          )}
-                          {item.implementationNotes && (
-                            <Popover>
-                              <PopoverTrigger asChild>
-                                <button
-                                  onClick={(e) => e.stopPropagation()}
-                                  className="text-muted-foreground hover:text-foreground"
-                                >
-                                  INFO
-                                </button>
-                              </PopoverTrigger>
-                              <PopoverContent className="w-80 p-3" side="bottom" align="start">
-                                <div className="space-y-3">
-                                  <div className="text-sm font-medium">{item.name}</div>
-                                  <div className="text-sm text-muted-foreground">
-                                    {item.implementationNotes}
-                                  </div>
-                                  {item.implementationComplexity && (
-                                    <div className="text-xs text-muted-foreground">
-                                      <span className="font-medium">Complexity:</span> {item.implementationComplexity}
-                                    </div>
-                                  )}
-                                </div>
-                              </PopoverContent>
-                            </Popover>
-                          )}
+                      {impl.githubPath && (
+                        <div>
+                          <p className="text-muted-foreground uppercase text-[0.6rem] font-mono mb-1">Code Location</p>
+                          <code className="bg-muted px-1.5 py-0.5 border border-border text-foreground/70 break-all block font-mono text-[0.65rem]">
+                            {impl.githubPath}
+                          </code>
                         </div>
-                      </div>
+                      )}
+                      {!impl.implementationNotes && !impl.githubPath && (
+                        <p className="text-muted-foreground italic">No implementation details available.</p>
+                      )}
                     </div>
-                    {showPin && (
-                      <div className={`flex items-center justify-center size-8 rounded-full bg-primary flex-shrink-0 transition-opacity duration-250 ${
-                        isPinned ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
-                      }`}>
-                        <Plus className="size-4 text-primary-foreground stroke-3" />
-                      </div>
-                    )}
-                  </div>
-                );
-                })
-            })()}
-          </div>
+                  )}
+                </div>
+              );
+            })
+          ) : (
+            <span className="text-xs text-muted-foreground">No capabilities found</span>
+          )}
         </div>
-        )}
       </div>
     </div>
   );

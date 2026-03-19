@@ -1,0 +1,27 @@
+.shinyText {
+  display: inline-block;
+  background: linear-gradient(
+    120deg,
+    rgba(var(--foreground-rgb, 255 255 255) / 0%) 40%,
+    rgba(var(--foreground-rgb, 255 255 255) / 90%) 50%,
+    rgba(var(--foreground-rgb, 255 255 255) / 0%) 60%
+  );
+  color: hsl(var(--muted-foreground));
+  -webkit-background-clip: text;
+  background-clip: text;
+  background-size: 200% 100%;
+  animation: shine 5s linear infinite;
+}
+
+.shinyTextDisabled {
+  animation: none;
+}
+
+@keyframes shine {
+  0% {
+    background-position: 100%;
+  }
+  100% {
+    background-position: -100%;
+  }
+}

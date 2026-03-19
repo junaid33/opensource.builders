@@ -4,7 +4,7 @@
 import { cn } from "@/lib/utils";
 import { Monitor, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-import { type ComponentProps, useDeferredValue } from "react";
+import { type ComponentProps, useDeferredValue, useEffect, useState } from "react";
 
 const THEMES = [
   {
@@ -38,15 +38,54 @@ function ThemeSwitcher({
   onChange,
   defaultValue,
   className,
+  rounded = true,
   ...props
-}: ThemeSwitcherProps) {
+}: ThemeSwitcherProps & { rounded?: boolean }) {
   const { theme, setTheme } = useTheme();
   const deferredTheme = useDeferredValue(theme, "system");
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Don't render until mounted to prevent hydration mismatch
+  if (!mounted) {
+    return (
+      <div
+        className={cn(
+          "relative isolate inline-flex h-8 items-center border shadow-xs px-1",
+          rounded ? "rounded-full" : ""
+        )}
+        data-theme-switcher
+        {...props}
+      >
+        {THEMES.map(({ type, icon: Icon }) => (
+          <div
+            className={cn(
+              "group relative size-5.5",
+              rounded ? "rounded-full" : ""
+            )}
+            key={type}
+          >
+            <Icon
+              className={cn(
+                "relative m-auto size-3.5",
+                "transition duration-200 ease-out",
+                "text-secondary-foreground"
+              )}
+            />
+          </div>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div
       className={cn(
-        "relative isolate inline-flex h-8 items-center rounded-full border shadow-xs px-1",
+        "relative isolate inline-flex h-8 items-center border shadow-xs px-1",
+        rounded ? "rounded-full" : "",
         className
       )}
       data-theme-switcher
@@ -58,7 +97,10 @@ function ThemeSwitcher({
         return (
           <button
             aria-label={`Switch to ${label}`}
-            className="group relative size-5.5 rounded-full transition duration-200 ease-out"
+            className={cn(
+              "group relative size-5.5 transition duration-200 ease-out",
+              rounded ? "rounded-full" : ""
+            )}
             key={type}
             onClick={() => setTheme(type)}
             title={`Switch to ${label}`}
@@ -66,7 +108,7 @@ function ThemeSwitcher({
             data-umami-event={`Switch Theme to ${type}`}
           >
             {isActive && (
-              <div className="-z-1 absolute inset-0 rounded-full bg-blue-100 dark:bg-blue-500" />
+              <div className="-z-1 absolute inset-0 bg-blue-100 dark:bg-blue-500" />
             )}
             <Icon
               className={cn(

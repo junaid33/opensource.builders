@@ -1,7 +1,8 @@
 "use client";
 
-import { CombinedLogo } from "@/components/CombinedLogo";
+import { Logo } from "@/components/logo";
 import { TextScramble } from "@/components/ui/TextScramble";
+import { Container, Spacer } from "../components/shared";
 import {
   HoverCard,
   HoverCardContent,
@@ -25,12 +26,12 @@ export function EthosPage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative overflow-hidden">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6">
-          <div className="pt-28 pb-8 md:pt-36 md:pb-16">
+      <section className="relative overflow-hidden pt-12">
+        <Container>
+          <div className="pb-8">
             <div className="max-w-2xl text-left">
               <div className="flex items-center justify-start mb-4">
-                <CombinedLogo />
+                <Logo />
               </div>
               <a
                 href="https://openship.org"
@@ -40,7 +41,7 @@ export function EthosPage() {
               >
                 An Openship initiative <ArrowUpRight className="size-4 ml-1" />
               </a>
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 tracking-tight">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-6 tracking-tight font-syne">
                 opensource.builders
               </h1>
 
@@ -148,11 +149,11 @@ export function EthosPage() {
               </div>
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Content */}
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 pb-16">
+      <Container className="pb-16">
         {activeTab === "2025" ? (
           <div className="max-w-2xl space-y-8" key="2025">
             <div>
@@ -550,7 +551,8 @@ export function EthosPage() {
             </div>
           </div>
         )}
-      </div>
+      </Container>
     </div>
   );
 }
+

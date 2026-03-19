@@ -111,7 +111,7 @@ interface DataTableDrawerProps {
 
 const categories = [
   "Office Supplies",
-  "Travel", 
+  "Travel",
   "Software",
   "Hardware",
   "Marketing",
@@ -136,7 +136,7 @@ const activity = [
   },
   {
     id: 2,
-    type: "added", 
+    type: "added",
     person: { name: "Emily Ross" },
     date: "1d ago",
     dateTime: "2024-07-14T11:03",
@@ -192,8 +192,8 @@ function formatDate(dateString: string): string {
 
 // Badge component
 function CustomBadge({ variant, children }: { variant: string, children: React.ReactNode }) {
-  const baseStyles = "inline-flex items-center gap-x-1 whitespace-nowrap rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset"
-  
+  const baseStyles = "inline-flex items-center gap-x-1 whitespace-nowrap rounded-none px-2 py-1 text-xs font-medium ring-1 ring-inset"
+
   let variantStyles = ""
   switch (variant) {
     case "approved":
@@ -208,7 +208,7 @@ function CustomBadge({ variant, children }: { variant: string, children: React.R
     default:
       variantStyles = "bg-blue-50 text-blue-900 ring-blue-500/30 dark:bg-blue-400/10 dark:text-blue-400 dark:ring-blue-400/30"
   }
-  
+
   const [copied, setCopied] = React.useState(false)
 
   const handleCopyPrompt = async () => {
@@ -230,14 +230,14 @@ function CustomBadge({ variant, children }: { variant: string, children: React.R
 }
 
 // Button component
-function CustomButton({ variant = "primary", children, className, ...props }: { 
+function CustomButton({ variant = "primary", children, className, ...props }: {
   variant?: "primary" | "secondary" | "ghost"
   children: React.ReactNode
   className?: string
   [key: string]: any
 }) {
-  const baseStyles = "relative inline-flex items-center justify-center whitespace-nowrap rounded-md border px-3 py-2 text-center font-medium shadow-sm transition-all duration-100 ease-in-out text-base sm:text-sm disabled:pointer-events-none disabled:shadow-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
-  
+  const baseStyles = "relative inline-flex items-center justify-center whitespace-nowrap rounded-none border px-3 py-2 text-center font-medium shadow-sm transition-all duration-100 ease-in-out text-base sm:text-sm disabled:pointer-events-none disabled:shadow-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+
   let variantStyles = ""
   switch (variant) {
     case "primary":
@@ -250,7 +250,7 @@ function CustomButton({ variant = "primary", children, className, ...props }: {
       variantStyles = "shadow-none border-transparent text-gray-900 dark:text-gray-50 bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800/80 disabled:text-gray-400 disabled:dark:text-gray-600"
       break
   }
-  
+
   return (
     <button className={cn(baseStyles, variantStyles, className)} {...props}>
       {children}
@@ -263,7 +263,7 @@ function CustomInput({ className, ...props }: { className?: string, [key: string
   return (
     <input
       className={cn(
-        "relative block w-full appearance-none rounded-md border px-2.5 py-2 shadow-sm outline-none transition sm:text-sm",
+        "relative block w-full appearance-none rounded-none border px-2.5 py-2 shadow-sm outline-none transition sm:text-sm",
         "border-gray-300 dark:border-gray-800",
         "text-gray-900 dark:text-gray-50",
         "placeholder-gray-400 dark:placeholder-gray-500",
@@ -287,7 +287,7 @@ function CustomSelectTrigger({ children, className, ...props }: { children: Reac
   return (
     <SelectPrimitives.Trigger
       className={cn(
-        "group/trigger flex w-full select-none items-center justify-between gap-2 truncate rounded-md border px-3 py-2 shadow-sm outline-none transition text-base sm:text-sm",
+        "group/trigger flex w-full select-none items-center justify-between gap-2 truncate rounded-none border px-3 py-2 shadow-sm outline-none transition text-base sm:text-sm",
         "border-gray-300 dark:border-gray-800",
         "text-gray-900 dark:text-gray-50",
         "data-[placeholder]:text-gray-500 data-[placeholder]:dark:text-gray-500",
@@ -313,7 +313,7 @@ function CustomSelectContent({ children, ...props }: { children: React.ReactNode
     <SelectPrimitives.Portal>
       <SelectPrimitives.Content
         className={cn(
-          "relative z-50 overflow-hidden rounded-md border shadow-xl shadow-black/[2.5%]",
+          "relative z-50 overflow-hidden rounded-none border shadow-xl shadow-black/[2.5%]",
           "min-w-[calc(var(--radix-select-trigger-width)-2px)] max-w-[95vw]",
           "max-h-[--radix-select-content-available-height]",
           "bg-background",
@@ -346,7 +346,7 @@ function CustomSelectItem({ children, ...props }: { children: React.ReactNode, [
   return (
     <SelectPrimitives.Item
       className={cn(
-        "grid cursor-pointer grid-cols-[1fr_20px] gap-x-2 rounded px-3 py-2 outline-none transition-colors data-[state=checked]:font-semibold sm:text-sm",
+        "grid cursor-pointer grid-cols-[1fr_20px] gap-x-2 rounded-none px-3 py-2 outline-none transition-colors data-[state=checked]:font-semibold sm:text-sm",
         "text-gray-900 dark:text-gray-50",
         "data-[disabled]:pointer-events-none data-[disabled]:text-gray-400 data-[disabled]:hover:bg-none dark:data-[disabled]:text-gray-600",
         "focus-visible:bg-gray-100 focus-visible:dark:bg-gray-900",
@@ -416,7 +416,7 @@ function StarButton({
     }
     return count.toLocaleString('en-US');
   };
-  
+
   const handleClick = React.useCallback(
     (e: React.MouseEvent<HTMLAnchorElement>) => {
       e.preventDefault();
@@ -561,10 +561,10 @@ function CustomTextarea({ className, ...props }: { className?: string, [key: str
   return (
     <textarea
       className={cn(
-        "relative block w-full appearance-none rounded-md border px-2.5 py-2 shadow-sm outline-none transition sm:text-sm min-h-[100px] resize-y",
+        "relative block w-full appearance-none rounded-none border px-2.5 py-2 shadow-sm outline-none transition sm:text-sm min-h-[100px] resize-y",
         "border-gray-300 dark:border-gray-800",
         "text-gray-900 dark:text-gray-50",
-        "placeholder-gray-400 dark:placeholder-gray-500", 
+        "placeholder-gray-400 dark:placeholder-gray-500",
         "bg-background",
         "disabled:border-gray-300 disabled:bg-gray-100 disabled:text-gray-400",
         "disabled:dark:border-gray-700 disabled:dark:bg-gray-800 disabled:dark:text-gray-500",
@@ -622,7 +622,7 @@ function DataTableDrawerFeed() {
                   src={activityItem.person.imageUrl || ""}
                   className="relative mt-3 size-6 flex-none rounded-full bg-gray-50"
                 />
-                <div className="flex-auto rounded-md p-3 ring-1 ring-inset ring-gray-300 dark:ring-gray-800">
+                <div className="flex-auto rounded-none p-3 ring-1 ring-inset ring-gray-300 dark:ring-gray-800">
                   <div className="flex justify-between gap-x-4">
                     <div className="py-0.5 text-xs leading-5 text-gray-500 dark:text-gray-500">
                       <span className="font-medium text-gray-900 dark:text-gray-50">
@@ -701,44 +701,44 @@ export function DataTableDrawer({
   const { config } = useCapabilitiesConfig()
   const { addCapability, removeCapability } = useCapabilityActions()
   const lastPinnedToolId = useLastPinnedTool()
-  
+
   // Always use capabilities from provider - it's the source of truth
   const actualSelectedCapabilities = config.selectedCapabilities
 
   // Starter templates (from legacy Build page)
   const starterTemplates = [
-    { 
-      id: "1", 
-      name: "Next.js + Keystone Starter", 
-      description: "Full-stack template with admin", 
+    {
+      id: "1",
+      name: "Next.js + Keystone Starter",
+      description: "Full-stack template with admin",
       source: "https://github.com/junaid33/next-keystone-starter",
       info: "A full-stack Next.js application combining Next.js (App Router) with KeystoneJS as a headless CMS. It features GraphQL API, custom admin dashboard, authentication, database integration with PostgreSQL, and role-based permissions. Built with modern TypeScript architecture and includes comprehensive documentation. This starter was used to build opensource.builders, Openfront, and Openship - all production applications demonstrating its capabilities."
     },
-    { 
-      id: "openfront", 
-      name: "Openfront", 
-      description: "Open source e-commerce platform", 
+    {
+      id: "openfront",
+      name: "Openfront",
+      description: "Open source e-commerce platform",
       source: "https://github.com/openshiporg/openfront",
       info: "Openfront is built off of this same starter, but it's a Shopify alternative with comprehensive e-commerce features including product management, order processing, payment handling, and shipping integration."
     },
-    { 
-      id: "openship", 
-      name: "Openship", 
-      description: "Order routing & fulfillment platform", 
+    {
+      id: "openship",
+      name: "Openship",
+      description: "Order routing & fulfillment platform",
       source: "https://github.com/openshiporg/openship",
       info: "Openship is built off the same Next.js + Keystone starter with additional order routing and fulfillment automation capabilities for dropshipping and multi-vendor marketplaces."
     },
-    { 
-      id: "opensource-builders", 
-      name: "opensource.builders", 
-      description: "Open source tool discovery platform", 
+    {
+      id: "opensource-builders",
+      name: "opensource.builders",
+      description: "Open source tool discovery platform",
       source: "https://github.com/junaid33/opensource.builders",
       info: "opensource.builders is built off the same Next.js + Keystone starter and helps developers discover and compare open source alternatives to proprietary tools."
     },
-    { 
-      id: "byos", 
-      name: "Bring Your Own Starter", 
-      description: "Start with what you have", 
+    {
+      id: "byos",
+      name: "Bring Your Own Starter",
+      description: "Start with what you have",
       source: null,
       info: "Use your existing codebase as the foundation. Perfect for integrating powerful features from open source tools into your current project without starting from scratch."
     },
@@ -748,6 +748,7 @@ export function DataTableDrawer({
   const [copied, setCopied] = React.useState(false)
   const [githubMcpEnabled, setGithubMcpEnabled] = React.useState(true)
   const [showThankYouDialog, setShowThankYouDialog] = React.useState(false)
+  const [expandedSelectedCapabilityId, setExpandedSelectedCapabilityId] = React.useState<string | null>(null)
   const [selectedAgent, setSelectedAgent] = React.useState('claude-code')
   const [skillViewMode, setSkillViewMode] = React.useState<'structured' | 'raw'>('structured')
 
@@ -785,7 +786,7 @@ export function DataTableDrawer({
 
   // Group capabilities by tool/application
   const groupedCapabilities = React.useMemo(() => {
-    const groups: {[key: string]: SelectedCapability[]} = {}
+    const groups: { [key: string]: SelectedCapability[] } = {}
     if (actualSelectedCapabilities) {
       actualSelectedCapabilities.forEach(capability => {
         if (!groups[capability.toolName]) {
@@ -800,25 +801,25 @@ export function DataTableDrawer({
 
   const generateSkillName = () => {
     const slugify = (str: string) => str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
-    
+
     const currentTemplate = starterTemplates.find(t => t.id === selectedTemplate)
     const templateSlug = currentTemplate ? slugify(currentTemplate.name) : 'custom'
-    
+
     const capabilitySlugs = actualSelectedCapabilities?.slice(0, 2).map(c => slugify(c.name)).join('-') || ''
-    
+
     return capabilitySlugs ? `${templateSlug}-${capabilitySlugs}` : templateSlug
   }
 
   const generatePromptText = () => {
     const currentTemplate = starterTemplates.find(t => t.id === selectedTemplate)
-    
+
     if (!currentTemplate && (!actualSelectedCapabilities || actualSelectedCapabilities.length === 0)) {
       return "Select a starter and add capabilities to generate your skill."
     }
 
     const skillName = generateSkillName()
     const capabilityNames = actualSelectedCapabilities?.map(c => c.name).join(', ') || ''
-    
+
     let skill = `---
 name: ${skillName}
 description: ${currentTemplate ? `Build features using ${currentTemplate.name}` : 'Build features'}${capabilityNames ? ` with ${capabilityNames}` : ''}. Use when implementing these capabilities or when the user asks about building similar features.
@@ -827,7 +828,7 @@ description: ${currentTemplate ? `Build features using ${currentTemplate.name}` 
 # ${currentTemplate?.name || 'Custom'} Skill
 
 `
-    
+
     // Add starter section
     if (currentTemplate) {
       skill += `## Starter Template
@@ -835,7 +836,7 @@ description: ${currentTemplate ? `Build features using ${currentTemplate.name}` 
 Use **${currentTemplate.name}** as your starting point. ${currentTemplate.description}.
 
 `
-      
+
       if (currentTemplate.id === '1') {
         skill += `### Setup
 
@@ -851,16 +852,16 @@ Read the README.md and other relevant markdown files to understand how this full
 `
       }
     }
-    
+
     // Group capabilities by name
-    const capabilitiesByName: {[capabilityName: string]: SelectedCapability[]} = {}
+    const capabilitiesByName: { [capabilityName: string]: SelectedCapability[] } = {}
     actualSelectedCapabilities?.forEach(capability => {
       if (!capabilitiesByName[capability.name]) {
         capabilitiesByName[capability.name] = []
       }
       capabilitiesByName[capability.name].push(capability)
     })
-    
+
     if (Object.keys(capabilitiesByName).length > 0) {
       skill += `## Capabilities to Implement
 
@@ -872,30 +873,30 @@ Read the README.md and other relevant markdown files to understand how this full
       skill += `### ${capabilityName}
 
 `
-      
+
       implementations.forEach((implementation) => {
         if (implementations.length > 1) {
           skill += `**${implementation.toolName} approach:**
 
 `
         }
-        
+
         if (implementation.description) {
           skill += `${implementation.description}
 
 `
         }
-        
+
         if (implementation.githubPath && implementation.toolRepo) {
           skill += `Reference implementation: [${implementation.toolName}/${implementation.githubPath}](${implementation.toolRepo}/tree/main/${implementation.githubPath})\n\n`
         }
-        
+
         if (implementation.documentationUrl) {
           skill += `Documentation: ${implementation.documentationUrl}
 
 `
         }
-        
+
         if (implementation.implementationNotes) {
           skill += `> **Note:** ${implementation.implementationNotes}
 
@@ -912,7 +913,7 @@ Read the README.md and other relevant markdown files to understand how this full
 *This skill references implementations from: ${uniqueTools.join(', ')}. Generated by [opensource.builders](https://opensource.builders)*
 `
     }
-    
+
     return skill.trim()
   }
 
@@ -960,7 +961,7 @@ Read the README.md and other relevant markdown files to understand how this full
           >
             <DrawerPrimitives.Content
               className={cn(
-                "fixed inset-y-2 mx-auto flex w-[95vw] flex-1 flex-col overflow-y-auto rounded-md border p-4 shadow-lg focus:outline-none max-sm:inset-x-2 sm:inset-y-2 sm:right-2 sm:max-w-lg sm:p-6 lg:inset-4 lg:max-w-none lg:w-auto lg:pb-0",
+                "fixed inset-y-2 mx-auto flex w-[95vw] flex-1 flex-col overflow-y-auto rounded-none border p-4 shadow-lg focus:outline-none max-sm:inset-x-2 sm:inset-y-2 sm:right-2 sm:max-w-lg sm:p-6 lg:inset-4 lg:max-w-none lg:w-auto lg:pb-0",
                 "border-border",
                 "bg-background",
                 "data-[state=closed]:animate-drawerSlideRightAndFade data-[state=open]:animate-drawerSlideLeftAndFade",
@@ -997,7 +998,7 @@ Read the README.md and other relevant markdown files to understand how this full
                   <div className="flex-1 flex flex-col overflow-y-auto pr-4">
                     {/* Choose Starter (ported) */}
                     <div className="space-y-3 mb-5">
-                      <p className="text-xs text-muted-foreground uppercase tracking-wide">Choose Starter</p>
+                      <p className="text-[0.65rem] text-muted-foreground uppercase tracking-[0.15em] font-mono">Choose Starter</p>
                       <CustomSelect value={selectedTemplate} onValueChange={(value) => {
                         setSelectedTemplate(value)
                         updateBuildStatsCard({ currentAppId: undefined })
@@ -1089,7 +1090,7 @@ Read the README.md and other relevant markdown files to understand how this full
 
                     {/* Build Stats Card */}
                     <div className="space-y-3 flex-1">
-                      <p className="text-xs text-muted-foreground uppercase tracking-wide">Find Open Source Capabilities</p>
+                      <p className="text-[0.65rem] text-muted-foreground uppercase tracking-[0.15em] font-mono">Find Open Source Capabilities</p>
                       <BuildStatsCard
                         apps={apps}
                         selectedCapabilities={new Set(actualSelectedCapabilities?.map(cap => cap.id) || [])}
@@ -1097,461 +1098,420 @@ Read the README.md and other relevant markdown files to understand how this full
                       />
                     </div>
 
-                    {/* Copy & Download Skill Buttons */}
-                    <div className="pt-4 mt-auto flex gap-2">
-                      <button
-                        onClick={handleCopyPrompt}
-                        className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-gradient-to-b from-background to-muted border border-border hover:from-muted hover:to-muted/80 transition-all duration-200 shadow-sm text-sm font-medium"
-                      >
-                        <Copy className="h-4 w-4" />
-                        {copied ? "Copied!" : "Copy Skill"}
-                      </button>
-                      <button
-                        onClick={handleDownloadSkill}
-                        className="inline-flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-gradient-to-b from-background to-muted border border-border hover:from-muted hover:to-muted/80 transition-all duration-200 shadow-sm text-sm font-medium"
-                        title="Download as SKILL.md"
-                      >
-                        <Download className="h-4 w-4" />
-                      </button>
-                    </div>
+
                   </div>
 
                   {/* Middle Column: Selected Capabilities */}
                   <div className="flex-1 space-y-3 overflow-y-auto px-4 border-l border-border -my-4 py-4">
-                    <p className="text-xs text-muted-foreground uppercase tracking-wide">Selected Capabilities</p>
+                    <p className="text-[0.65rem] text-muted-foreground uppercase tracking-[0.15em] font-mono">Selected Capabilities</p>
                     {actualSelectedCapabilities && actualSelectedCapabilities.length > 0 ? (
                       <div className="space-y-2">
                         {actualSelectedCapabilities
                           .sort((a, b) => a.toolName.localeCompare(b.toolName))
-                          .map((capability) => (
-                          <div key={capability.id} className="flex items-center gap-3 rounded-lg bg-muted border p-3">
-                            {/* Tool Icon */}
-                            <div className="flex h-8 w-8 items-center justify-center flex-shrink-0">
-                              {capability.toolIcon ? (
-                                <ToolIcon
-                                  name={capability.toolName}
-                                  simpleIconSlug={capability.toolIcon}
-                                  simpleIconColor={capability.toolColor}
-                                  size={32}
-                                />
-                              ) : (
+                          .map((capability) => {
+                            const isExpanded = expandedSelectedCapabilityId === capability.id;
+                            return (
+                              <div key={capability.id} className="flex flex-col border border-border bg-muted/30">
                                 <div
-                                  className="flex aspect-square items-center justify-center rounded-md overflow-hidden relative after:rounded-[inherit] after:absolute after:inset-0 after:shadow-[0_1px_2px_0_rgb(0_0_0/.05),inset_0_1px_0_0_rgb(255_255_255/.12)] after:pointer-events-none"
-                                  style={{
-                                    width: 32,
-                                    height: 32,
-                                    background: capability.toolColor || '#000000'
-                                  }}
+                                  className="flex items-center gap-3 p-3 cursor-pointer group hover:bg-muted/50 transition-colors"
+                                  onClick={() => setExpandedSelectedCapabilityId(isExpanded ? null : capability.id)}
                                 >
-                                  <div
-                                    className="absolute inset-0 opacity-30"
-                                    style={{
-                                      backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-                                      backgroundSize: "256px 256px",
-                                    }}
-                                  />
-                                  <div
-                                    className="absolute inset-0 rounded-md"
-                                    style={{ boxShadow: "inset 0 1px 2px rgba(0,0,0,0.3), inset 0 -1px 2px rgba(255,255,255,0.1)" }}
-                                  />
-                                  <div className="absolute inset-0 flex items-center justify-center">
-                                    <span
-                                      className="font-instrument-serif font-bold text-foreground select-none"
-                                      style={{
-                                        fontSize: 32 * 0.45,
-                                        textShadow: "0 1px 4px rgba(255,255,255,0.3), 0 0 8px rgba(255,255,255,0.2)",
-                                        filter: 'brightness(0) invert(1)',
-                                        opacity: 0.9
-                                      }}
-                                    >
-                                      {capability.toolName.charAt(0).toUpperCase()}
-                                    </span>
+                                  {/* Tool Icon */}
+                                  <div className="flex-shrink-0">
+                                    <ToolIcon
+                                      name={capability.toolName}
+                                      simpleIconSlug={capability.toolIcon}
+                                      simpleIconColor={capability.toolColor}
+                                      size={32}
+                                      rounded="none"
+                                      dotOnly={!capability.toolIcon}
+                                    />
                                   </div>
-                                  <div className="absolute top-0 left-0 right-0 h-1/4 bg-gradient-to-b from-white/10 to-transparent rounded-t-md" />
-                                </div>
-                              )}
-                            </div>
 
-                            {/* Capability Info */}
-                            <div className="flex-1 min-w-0">
-                              <div className="text-sm font-medium">{capability.name}</div>
-                              <div className="text-xs text-muted-foreground">
-                                from {capability.toolName}
-                                {capability.category && (
-                                  <>
-                                    <span className="mx-1">·</span>
-                                    <span className="capitalize">{capability.category}</span>
-                                  </>
+                                  {/* Capability Info */}
+                                  <div className="flex-1 min-w-0">
+                                    <div className="text-sm font-medium truncate">{capability.name}</div>
+                                    <div className="text-[0.65rem] text-muted-foreground truncate uppercase font-mono tracking-tight">
+                                      from {capability.toolName}
+                                    </div>
+                                  </div>
+
+                                  <div className="flex items-center gap-1">
+                                    <ChevronDown className={cn("w-3.5 h-3.5 text-muted-foreground/50 transition-transform", isExpanded && "rotate-180")} />
+                                    {/* Remove Button */}
+                                    <button
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleCapabilityRemove(capability.id);
+                                      }}
+                                      className="text-muted-foreground/30 hover:text-red-500 transition-colors p-1"
+                                    >
+                                      <X className="h-4 w-4" />
+                                    </button>
+                                  </div>
+                                </div>
+
+                                {isExpanded && (
+                                  <div className="px-3 pb-3 pt-1 space-y-2 border-t border-border/20 animate-in slide-in-from-top-1 duration-200">
+                                    {capability.implementationNotes && (
+                                      <div>
+                                        <p className="text-muted-foreground uppercase text-[0.6rem] font-mono mb-1">Notes</p>
+                                        <p className="text-[0.7rem] text-foreground/80 leading-relaxed">{capability.implementationNotes}</p>
+                                      </div>
+                                    )}
+                                    {capability.githubPath && (
+                                      <div>
+                                        <p className="text-muted-foreground uppercase text-[0.6rem] font-mono mb-1">Code Location</p>
+                                        <code className="bg-muted px-1.5 py-0.5 border border-border text-foreground/70 break-all block font-mono text-[0.65rem] rounded-none">
+                                          {capability.githubPath}
+                                        </code>
+                                      </div>
+                                    )}
+                                    {!capability.implementationNotes && !capability.githubPath && (
+                                      <p className="text-[0.65rem] text-muted-foreground italic">No implementation details available.</p>
+                                    )}
+                                  </div>
                                 )}
                               </div>
-                            </div>
-
-                            {/* Remove Button */}
-                            <button
-                              onClick={() => handleCapabilityRemove(capability.id)}
-                              className="text-gray-400 hover:text-red-500 transition-colors p-1 focus:outline-none focus:ring-0 flex-shrink-0"
-                            >
-                              <X className="h-4 w-4" />
-                            </button>
-                          </div>
-                        ))}
+                            );
+                          })}
                       </div>
                     ) : (
-                      <div className="text-sm text-muted-foreground italic p-4 border border-dashed rounded-lg">
+                      <div className="text-sm text-muted-foreground italic p-4 border border-dashed rounded-none">
                         No capabilities selected. Use the search above to find and pin capabilities.
                       </div>
                     )}
                   </div>
 
                   {/* Right Column: Full Prompt Preview */}
-                  <div className="flex-1 space-y-3 overflow-y-auto px-4 border-l border-border -my-4 py-4">
-                    {/* MCP Toggle - Commented out: AI can access GitHub directly via api.github.com */}
-                    {/* <div className="space-y-3">
-                      <p className="text-xs text-muted-foreground uppercase tracking-wide">MCP Servers</p>
-                      <div className="flex items-center gap-2">
+                  <div className="flex-1 flex flex-col px-4 border-l border-border -my-4 py-4 overflow-hidden">
+                    <div className="flex-1 space-y-3 overflow-y-auto pr-2">
+                      <p className="text-xs text-muted-foreground uppercase tracking-wide">Generated Skill</p>
+
+                      {/* Structured/Raw Tabs */}
+                      <div className="inline-flex rounded-none border border-border p-0.5 bg-muted/50">
                         <button
-                          onClick={() => setGithubMcpEnabled(!githubMcpEnabled)}
-                          className="inline-flex items-center gap-3 px-3 py-2 rounded-lg bg-gradient-to-b from-background to-muted border border-border hover:from-muted hover:to-muted/80 transition-all duration-200 shadow-sm"
+                          onClick={() => setSkillViewMode('structured')}
+                          className={`px-3 py-1.5 text-xs font-medium rounded-none transition-all ${skillViewMode === 'structured'
+                            ? 'bg-background text-foreground shadow-sm'
+                            : 'text-muted-foreground hover:text-foreground'
+                            }`}
                         >
-                          <div className={`inline-block size-2 shrink-0 rounded-full ${
-                            githubMcpEnabled
-                              ? 'bg-green-500 outline outline-3 -outline-offset-1 outline-green-100 dark:outline-green-900'
-                              : 'bg-red-500 outline outline-3 -outline-offset-1 outline-red-100 dark:outline-red-900'
-                          }`} />
-                          <span className="text-sm font-medium">GitHub MCP</span>
+                          Structured
                         </button>
-
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <button className="text-muted-foreground hover:text-foreground transition-colors p-1">
-                              <Info className="h-4 w-4" />
-                            </button>
-                          </PopoverTrigger>
-                          <PopoverContent side="top" className="w-80">
-                            <div className="space-y-3">
-                              <div className="flex items-center gap-2">
-                                <Github className="h-4 w-4" />
-                                <span className="text-sm font-medium">GitHub MCP Setup</span>
-                              </div>
-                              <div className="text-sm text-muted-foreground space-y-2">
-                                {githubMcpEnabled ? (
-                                  <p><strong>Enabled:</strong> The AI prompt will instruct to use the GitHub MCP for direct repository access. This uses fewer tokens since it doesn't need to search the web.</p>
-                                ) : (
-                                  <p><strong>Disabled:</strong> The AI prompt will instruct to use web search to look up GitHub code. This may use more tokens but works without MCP setup.</p>
-                                )}
-                                <div className="pt-2 border-t">
-                                  <p className="text-xs font-medium mb-2">To enable GitHub MCP:</p>
-                                  <div className="space-y-1 text-xs">
-                                    <p>1. Create a GitHub personal access token with public repository access</p>
-                                    <p>2. Add the GitHub MCP to your Claude Code/Cursor/VS Code configuration</p>
-                                  </div>
-                                  <a
-                                    href="https://github.com/settings/tokens"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-primary hover:underline text-xs block mt-2"
-                                  >
-                                    Create GitHub Token →
-                                  </a>
-                                </div>
-                              </div>
-                            </div>
-                          </PopoverContent>
-                        </Popover>
-                      </div>
-                    </div> */}
-
-                    <p className="text-xs text-muted-foreground uppercase tracking-wide">Generated Skill</p>
-                    
-                    {/* Structured/Raw Tabs */}
-                    <div className="inline-flex rounded-lg border border-border p-0.5 bg-muted/50">
-                      <button
-                        onClick={() => setSkillViewMode('structured')}
-                        className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${
-                          skillViewMode === 'structured'
+                        <button
+                          onClick={() => setSkillViewMode('raw')}
+                          className={`px-3 py-1.5 text-xs font-medium rounded-none transition-all ${skillViewMode === 'raw'
                             ? 'bg-background text-foreground shadow-sm'
                             : 'text-muted-foreground hover:text-foreground'
-                        }`}
-                      >
-                        Structured
-                      </button>
-                      <button
-                        onClick={() => setSkillViewMode('raw')}
-                        className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${
-                          skillViewMode === 'raw'
-                            ? 'bg-background text-foreground shadow-sm'
-                            : 'text-muted-foreground hover:text-foreground'
-                        }`}
-                      >
-                        Raw
-                      </button>
-                    </div>
-
-                    {skillViewMode === 'raw' ? (
-                      <div className="p-4 rounded-lg bg-muted/30 border border-border/50 shadow-sm">
-                        <pre className="text-xs leading-relaxed text-foreground whitespace-pre-wrap font-mono overflow-x-auto">
-                          {generatePromptText()}
-                        </pre>
+                            }`}
+                        >
+                          Raw
+                        </button>
                       </div>
-                    ) : (
-                    <div className="p-4 rounded-lg bg-muted/30 border border-border/50 shadow-sm">
-                      <div className="text-sm leading-relaxed text-foreground">
-                        {(() => {
-                          const currentTemplate = starterTemplates.find(t => t.id === selectedTemplate)
-                          const capabilityGroups = Object.entries(groupedCapabilities)
 
-                          if (!currentTemplate && capabilityGroups.length === 0) {
-                            return (
-                              <span className="text-muted-foreground italic">
-                                Select a starter and add capabilities to generate your skill.
-                              </span>
-                            )
-                          }
+                      {skillViewMode === 'raw' ? (
+                        <div className="p-4 rounded-none bg-muted/30 border border-border/50 shadow-sm">
+                          <pre className="text-xs leading-relaxed text-foreground whitespace-pre-wrap font-mono overflow-x-auto">
+                            {generatePromptText()}
+                          </pre>
+                        </div>
+                      ) : (
+                        <div className="p-4 rounded-none bg-muted/30 border border-border/50 shadow-sm">
+                          <div className="text-sm leading-relaxed text-foreground">
+                            {(() => {
+                              const currentTemplate = starterTemplates.find(t => t.id === selectedTemplate)
+                              const capabilityGroups = Object.entries(groupedCapabilities)
 
-                          const capabilitiesByName: {[capabilityName: string]: SelectedCapability[]} = {}
-                          actualSelectedCapabilities.forEach(capability => {
-                            if (!capabilitiesByName[capability.name]) {
-                              capabilitiesByName[capability.name] = []
-                            }
-                            capabilitiesByName[capability.name].push(capability)
-                          })
-
-                          return (
-                            <div className="space-y-4">
-                              {currentTemplate && (
-                                <div className="flex items-start gap-2 text-sm leading-relaxed">
-                                  <Popover>
-                                    <PopoverTrigger asChild>
-                                      <button className="flex-shrink-0 inline-flex items-center gap-2 hover:bg-muted/50 rounded px-1 py-0.5 transition-colors focus:outline-none focus:ring-0">
-                                        <div style={{ width: 20, height: 20 }}>
-                                          {currentTemplate.id === 'openfront' ? (
-                                            <OpenfrontIcon className="w-5 h-5" />
-                                          ) : currentTemplate.id === 'openship' ? (
-                                            <OpenshipIcon className="w-5 h-5" />
-                                          ) : currentTemplate.id === 'byos' ? (
-                                            <LogoIcon className="w-5 h-5" />
-                                          ) : currentTemplate.id === '1' ? (
-                                            <NextKeystoneIcon className="w-5 h-5" />
-                                          ) : currentTemplate.id === 'opensource-builders' ? (
-                                            <LogoIcon className="w-5 h-5" />
-                                          ) : (
-                                            <LogoIcon className="w-5 h-5" />
-                                          )}
-                                        </div>
-                                      </button>
-                                    </PopoverTrigger>
-                                    <PopoverContent side="top" className="w-80">
-                                      <div className="space-y-3">
-                                        <div className="flex items-center gap-2">
-                                          <span className="text-sm font-medium">Starter Template</span>
-                                        </div>
-                                        <div className="flex items-center gap-3">
-                                          {currentTemplate.id === 'openfront' ? (
-                                            <OpenfrontIcon className="w-6 h-6" />
-                                          ) : currentTemplate.id === 'openship' ? (
-                                            <OpenshipIcon className="w-6 h-6" />
-                                          ) : currentTemplate.id === 'byos' ? (
-                                            <LogoIcon className="w-6 h-6" />
-                                          ) : currentTemplate.id === '1' ? (
-                                            <NextKeystoneIcon className="w-6 h-6" />
-                                          ) : currentTemplate.id === 'opensource-builders' ? (
-                                            <LogoIcon className="w-6 h-6" />
-                                          ) : (
-                                            <LogoIcon className="w-6 h-6" />
-                                          )}
-                                          <div>
-                                            <p className="text-sm font-medium text-foreground">{currentTemplate.name}</p>
-                                            <p className="text-xs text-muted-foreground">{currentTemplate.description}</p>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </PopoverContent>
-                                  </Popover>
-                                  <div className="flex-1">
-                                    {currentTemplate.id === '1' ? (
-                                      <Collapsible>
-                                        <div className="flex items-center justify-between">
-                                          {currentTemplate.name}
-                                          <CollapsibleTrigger className="text-muted-foreground hover:text-foreground transition-colors p-1">
-                                            <ChevronDown className="h-4 w-4" />
-                                          </CollapsibleTrigger>
-                                        </div>
-                                        <CollapsibleContent className="mt-3">
-                                          <div className="w-full cursor-pointer transition duration-100 ease-linear rounded-[10px] bg-card text-foreground shadow-xs ring-1 ring-inset ring-border hover:bg-muted/50 p-4">
-                                            <div className="inline-flex items-center mb-3">
-                                              <span className="inline-flex items-center rounded-md bg-muted shadow-xs ring-1 ring-inset ring-border gap-1.5 px-2 py-0.5">
-                                                <span className="inline-block size-2 shrink-0 rounded-full bg-primary outline outline-3 -outline-offset-1 outline-primary/20" />
-                                                Understanding the Starter
-                                              </span>
-                                            </div>
-                                            <div className="space-y-3 text-sm">
-                                              <div className="text-muted-foreground">
-                                                Please git clone this repo: <code className="bg-muted px-1 rounded text-xs">git clone https://github.com/junaid33/next-keystone-starter.git</code>
-                                              </div>
-                                              <div className="text-muted-foreground">
-                                                Then read the README.md and other relevant markdown files to get a general sense of how this full-stack Next.js application works.
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </CollapsibleContent>
-                                      </Collapsible>
-                                    ) : (
-                                      currentTemplate.name
-                                    )}
-                                  </div>
-                                </div>
-                              )}
-
-                              {Object.entries(capabilitiesByName).map(([capabilityName, implementations]) => {
-                                const hasMultipleImplementations = implementations.length > 1
+                              if (!currentTemplate && capabilityGroups.length === 0) {
                                 return (
-                                  <div key={capabilityName} className="flex items-start gap-2 text-sm leading-relaxed">
-                                    <Popover>
-                                      <PopoverTrigger asChild>
-                                        <button className="flex-shrink-0 inline-flex items-center gap-2 hover:bg-muted/50 rounded px-1 py-0.5 transition-colors focus:outline-none focus:ring-0">
-                                          <div className="relative flex -space-x-1.5">
-                                            {implementations.slice(0, 3).map((impl, idx) => (
-                                              <div key={impl.id} className="relative" style={{ zIndex: 10 - idx }}>
-                                                {impl.toolIcon ? (
-                                                  <div className="w-5 h-5 rounded-full bg-background border border-border flex items-center justify-center">
-                                                    <ToolIcon
-                                                      name={impl.toolName}
-                                                      simpleIconSlug={impl.toolIcon}
-                                                      simpleIconColor={impl.toolColor}
-                                                      size={12}
-                                                    />
-                                                  </div>
-                                                ) : (
-                                                  <div
-                                                    className="w-5 h-5 rounded-full border border-border flex items-center justify-center relative overflow-hidden"
-                                                    style={{ background: impl.toolColor || '#6B7280', color: 'white' }}
-                                                  >
-                                                    <span className="relative text-[8px] font-bold">
-                                                      {impl.toolName.charAt(0).toUpperCase()}
-                                                    </span>
-                                                  </div>
-                                                )}
+                                  <span className="text-muted-foreground italic">
+                                    Select a starter and add capabilities to generate your skill.
+                                  </span>
+                                )
+                              }
+
+                              const capabilitiesByName: { [capabilityName: string]: SelectedCapability[] } = {}
+                              actualSelectedCapabilities.forEach(capability => {
+                                if (!capabilitiesByName[capability.name]) {
+                                  capabilitiesByName[capability.name] = []
+                                }
+                                capabilitiesByName[capability.name].push(capability)
+                              })
+
+                              return (
+                                <div className="space-y-4">
+                                  {currentTemplate && (
+                                    <div className="flex items-start gap-2 text-sm leading-relaxed">
+                                      <Popover>
+                                        <PopoverTrigger asChild>
+                                          <button className="flex-shrink-0 inline-flex items-center gap-2 hover:bg-muted/50 rounded-none px-1 py-0.5 transition-colors focus:outline-none focus:ring-0">
+                                            <div style={{ width: 20, height: 20 }}>
+                                              {currentTemplate.id === 'openfront' ? (
+                                                <OpenfrontIcon className="w-5 h-5" />
+                                              ) : currentTemplate.id === 'openship' ? (
+                                                <OpenshipIcon className="w-5 h-5" />
+                                              ) : currentTemplate.id === 'byos' ? (
+                                                <LogoIcon className="w-5 h-5" />
+                                              ) : currentTemplate.id === '1' ? (
+                                                <NextKeystoneIcon className="w-5 h-5" />
+                                              ) : currentTemplate.id === 'opensource-builders' ? (
+                                                <LogoIcon className="w-5 h-5" />
+                                              ) : (
+                                                <LogoIcon className="w-5 h-5" />
+                                              )}
+                                            </div>
+                                          </button>
+                                        </PopoverTrigger>
+                                        <PopoverContent side="top" className="w-80">
+                                          <div className="space-y-3">
+                                            <div className="flex items-center gap-2">
+                                              <span className="text-sm font-medium">Starter Template</span>
+                                            </div>
+                                            <div className="flex items-center gap-3">
+                                              {currentTemplate.id === 'openfront' ? (
+                                                <OpenfrontIcon className="w-6 h-6" />
+                                              ) : currentTemplate.id === 'openship' ? (
+                                                <OpenshipIcon className="w-6 h-6" />
+                                              ) : currentTemplate.id === 'byos' ? (
+                                                <LogoIcon className="w-6 h-6" />
+                                              ) : currentTemplate.id === '1' ? (
+                                                <NextKeystoneIcon className="w-6 h-6" />
+                                              ) : currentTemplate.id === 'opensource-builders' ? (
+                                                <LogoIcon className="w-6 h-6" />
+                                              ) : (
+                                                <LogoIcon className="w-6 h-6" />
+                                              )}
+                                              <div>
+                                                <p className="text-sm font-medium text-foreground">{currentTemplate.name}</p>
+                                                <p className="text-xs text-muted-foreground">{currentTemplate.description}</p>
                                               </div>
-                                            ))}
+                                            </div>
                                           </div>
-                                        </button>
-                                      </PopoverTrigger>
-                                      <PopoverContent side="top" className="w-80">
-                                        <div className="space-y-3">
-                                          <div className="flex items-center gap-2">
-                                            <span className="text-sm font-medium">{capabilityName}</span>
-                                            {hasMultipleImplementations && (
-                                              <span className="text-xs bg-muted px-2 py-1 rounded">
-                                                {implementations.length} implementations
-                                              </span>
-                                            )}
-                                          </div>
-                                          <div className="space-y-2">
-                                            {implementations.map(implementation => (
-                                              <div key={implementation.id} className="p-2 rounded border bg-muted/30">
-                                                <div className="flex items-center gap-2 mb-1">
-                                                  {implementation.toolIcon ? (
-                                                    <ToolIcon
-                                                      name={implementation.toolName}
-                                                      simpleIconSlug={implementation.toolIcon}
-                                                      simpleIconColor={implementation.toolColor}
-                                                      size={16}
-                                                    />
-                                                  ) : (
-                                                    <div
-                                                      className="flex aspect-square items-center justify-center rounded-sm overflow-hidden text-[8px] font-instrument-serif font-bold"
-                                                      style={{ width: 16, height: 16, background: implementation.toolColor || '#6B7280', color: 'white' }}
-                                                    >
-                                                      {implementation.toolName.charAt(0).toUpperCase()}
-                                                    </div>
-                                                  )}
-                                                  <p className="text-sm font-medium">{implementation.toolName}</p>
-                                                </div>
-                                              </div>
-                                            ))}
-                                          </div>
-                                        </div>
-                                      </PopoverContent>
-                                    </Popover>
-                                    <div className="flex-1">
-                                      <Collapsible>
-                                        <div className="flex items-center justify-between">
-                                          Implement {capabilityName}
-                                          <CollapsibleTrigger className="text-muted-foreground hover:text-foreground transition-colors p-1">
-                                            <ChevronDown className="h-4 w-4" />
-                                          </CollapsibleTrigger>
-                                        </div>
-                                        <CollapsibleContent>
-                                          {implementations.map((implementation, index) => (
-                                            <div key={`${capabilityName}-${implementation.id}-${index}`} className="mt-3">
-                                              <div className="w-full cursor-pointer transition duration-100 ease-linear rounded-[10px] bg-card text-foreground shadow-xs ring-1 ring-inset ring-border hover:bg-muted/50 p-4">
+                                        </PopoverContent>
+                                      </Popover>
+                                      <div className="flex-1">
+                                        {currentTemplate.id === '1' ? (
+                                          <Collapsible>
+                                            <div className="flex items-center justify-between">
+                                              {currentTemplate.name}
+                                              <CollapsibleTrigger className="text-muted-foreground hover:text-foreground transition-colors p-1">
+                                                <ChevronDown className="h-4 w-4" />
+                                              </CollapsibleTrigger>
+                                            </div>
+                                            <CollapsibleContent className="mt-3">
+                                              <div className="w-full cursor-pointer transition duration-100 ease-linear rounded-none bg-card text-foreground shadow-xs ring-1 ring-inset ring-border hover:bg-muted/50 p-4">
                                                 <div className="inline-flex items-center mb-3">
-                                                  <span className="inline-flex items-center rounded-md bg-muted shadow-xs ring-1 ring-inset ring-border gap-2 px-2 py-0.5">
-                                                    {implementation.toolIcon ? (
-                                                      <ToolIcon
-                                                        name={implementation.toolName}
-                                                        simpleIconSlug={implementation.toolIcon}
-                                                        simpleIconColor={implementation.toolColor}
-                                                        size={16}
-                                                      />
-                                                    ) : (
-                                                      <span
-                                                        className="inline-block size-2 shrink-0 rounded-full outline outline-3 -outline-offset-1"
-                                                        style={{
-                                                          backgroundColor: implementation.toolColor || '#6366f1',
-                                                          outlineColor: `${implementation.toolColor || '#6366f1'}30`
-                                                        }}
-                                                      />
-                                                    )}
-                                                    {hasMultipleImplementations ? `${implementation.toolName} approach` : implementation.toolName}
+                                                  <span className="inline-flex items-center rounded-none bg-muted shadow-xs ring-1 ring-inset ring-border gap-1.5 px-2 py-0.5">
+                                                    <span className="inline-block size-2 shrink-0 rounded-full bg-primary outline outline-3 -outline-offset-1 outline-primary/20" />
+                                                    Understanding the Starter
                                                   </span>
                                                 </div>
                                                 <div className="space-y-3 text-sm">
-                                                  {implementation.description && (
-                                                    <div className="text-muted-foreground">{implementation.description}</div>
-                                                  )}
-                                                  {implementation.githubPath && implementation.toolRepo && (
-                                                    <div className="text-muted-foreground">
-                                                      Reference: <a href={`${implementation.toolRepo}/tree/main/${implementation.githubPath}`} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline"><code className="bg-muted px-1 rounded text-xs">{implementation.githubPath}</code></a> in {implementation.toolName}
-                                                    </div>
-                                                  )}
-                                                  {implementation.documentationUrl && (
-                                                    <div className="text-muted-foreground">
-                                                      Reference the documentation at: <a href={implementation.documentationUrl} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">{implementation.documentationUrl}</a>
-                                                    </div>
-                                                  )}
-                                                  {implementation.implementationNotes && (
-                                                    <div className="text-muted-foreground">
-                                                      <em>Note: {implementation.implementationNotes}</em>
-                                                    </div>
-                                                  )}
+                                                  <div className="text-muted-foreground">
+                                                    Please git clone this repo: <code className="bg-muted px-1 rounded-none text-xs">git clone https://github.com/junaid33/next-keystone-starter.git</code>
+                                                  </div>
+                                                  <div className="text-muted-foreground">
+                                                    Then read the README.md and other relevant markdown files to get a general sense of how this full-stack Next.js application works.
+                                                  </div>
                                                 </div>
                                               </div>
-                                            </div>
-                                          ))}
-                                        </CollapsibleContent>
-                                      </Collapsible>
+                                            </CollapsibleContent>
+                                          </Collapsible>
+                                        ) : (
+                                          currentTemplate.name
+                                        )}
+                                      </div>
                                     </div>
-                                  </div>
-                                )
-                              })}
-                            </div>
-                          )
-                        })()}
-                      </div>
+                                  )}
+
+                                  {Object.entries(capabilitiesByName).map(([capabilityName, implementations]) => {
+                                    const hasMultipleImplementations = implementations.length > 1
+                                    return (
+                                      <div key={capabilityName} className="flex items-start gap-2 text-sm leading-relaxed">
+                                        <Popover>
+                                          <PopoverTrigger asChild>
+                                            <button className="flex-shrink-0 inline-flex items-center gap-2 hover:bg-muted/50 rounded-none px-1 py-0.5 transition-colors focus:outline-none focus:ring-0">
+                                              <div className="relative flex -space-x-1.5">
+                                                {implementations.slice(0, 3).map((impl, idx) => (
+                                                  <div key={impl.id} className="relative" style={{ zIndex: 10 - idx }}>
+                                                    {impl.toolIcon ? (
+                                                      <div className="w-5 h-5 rounded-full bg-background border border-border flex items-center justify-center">
+                                                        <ToolIcon
+                                                          name={impl.toolName}
+                                                          simpleIconSlug={impl.toolIcon}
+                                                          simpleIconColor={impl.toolColor}
+                                                          size={12}
+                                                        />
+                                                      </div>
+                                                    ) : (
+                                                      <div
+                                                        className="w-5 h-5 rounded-full border border-border flex items-center justify-center relative overflow-hidden"
+                                                        style={{ background: impl.toolColor || '#6B7280', color: 'white' }}
+                                                      >
+                                                        <span className="relative text-[8px] font-bold">
+                                                          {impl.toolName.charAt(0).toUpperCase()}
+                                                        </span>
+                                                      </div>
+                                                    )}
+                                                  </div>
+                                                ))}
+                                              </div>
+                                            </button>
+                                          </PopoverTrigger>
+                                          <PopoverContent side="top" className="w-80">
+                                            <div className="space-y-3">
+                                              <div className="flex items-center gap-2">
+                                                <span className="text-sm font-medium">{capabilityName}</span>
+                                                {hasMultipleImplementations && (
+                                                  <span className="text-xs bg-muted px-2 py-1 rounded">
+                                                    {implementations.length} implementations
+                                                  </span>
+                                                )}
+                                              </div>
+                                              <div className="space-y-2">
+                                                {implementations.map(implementation => (
+                                                  <div key={implementation.id} className="p-2 rounded-none border bg-muted/30">
+                                                    <div className="flex items-center gap-2 mb-1">
+                                                      {implementation.toolIcon ? (
+                                                        <ToolIcon
+                                                          name={implementation.toolName}
+                                                          simpleIconSlug={implementation.toolIcon}
+                                                          simpleIconColor={implementation.toolColor}
+                                                          size={16}
+                                                        />
+                                                      ) : (
+                                                        <div
+                                                          className="flex aspect-square items-center justify-center rounded-none overflow-hidden text-[8px] font-instrument-serif font-bold"
+                                                          style={{ width: 16, height: 16, background: implementation.toolColor || '#6B7280', color: 'white' }}
+                                                        >
+                                                          {implementation.toolName.charAt(0).toUpperCase()}
+                                                        </div>
+                                                      )}
+                                                      <p className="text-sm font-medium">{implementation.toolName}</p>
+                                                    </div>
+                                                  </div>
+                                                ))}
+                                              </div>
+                                            </div>
+                                          </PopoverContent>
+                                        </Popover>
+                                        <div className="flex-1">
+                                          <Collapsible>
+                                            <div className="flex items-center justify-between">
+                                              Implement {capabilityName}
+                                              <CollapsibleTrigger className="text-muted-foreground hover:text-foreground transition-colors p-1">
+                                                <ChevronDown className="h-4 w-4" />
+                                              </CollapsibleTrigger>
+                                            </div>
+                                            <CollapsibleContent>
+                                              {implementations.map((implementation, index) => (
+                                                <div key={`${capabilityName}-${implementation.id}-${index}`} className="mt-3">
+                                                  <div className="w-full cursor-pointer transition duration-100 ease-linear rounded-none bg-card text-foreground shadow-xs ring-1 ring-inset ring-border hover:bg-muted/50 p-4">
+                                                    <div className="inline-flex items-center mb-3">
+                                                      <span className="inline-flex items-center rounded-none bg-muted shadow-xs ring-1 ring-inset ring-border gap-2 px-2 py-0.5">
+                                                        {implementation.toolIcon ? (
+                                                          <ToolIcon
+                                                            name={implementation.toolName}
+                                                            simpleIconSlug={implementation.toolIcon}
+                                                            simpleIconColor={implementation.toolColor}
+                                                            size={16}
+                                                          />
+                                                        ) : (
+                                                          <span
+                                                            className="inline-block size-2 shrink-0 rounded-full outline outline-3 -outline-offset-1"
+                                                            style={{
+                                                              backgroundColor: implementation.toolColor || '#6366f1',
+                                                              outlineColor: `${implementation.toolColor || '#6366f1'}30`
+                                                            }}
+                                                          />
+                                                        )}
+                                                        {hasMultipleImplementations ? `${implementation.toolName} approach` : implementation.toolName}
+                                                      </span>
+                                                    </div>
+                                                    <div className="space-y-3 text-sm">
+                                                      {implementation.description && (
+                                                        <div className="text-muted-foreground">{implementation.description}</div>
+                                                      )}
+                                                      {implementation.githubPath && implementation.toolRepo && (
+                                                        <div className="text-muted-foreground">
+                                                          Reference: <a href={`${implementation.toolRepo}/tree/main/${implementation.githubPath}`} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline"><code className="bg-muted px-1 rounded-none text-xs">{implementation.githubPath}</code></a> in {implementation.toolName}
+                                                        </div>
+                                                      )}
+                                                      {implementation.documentationUrl && (
+                                                        <div className="text-muted-foreground">
+                                                          Reference the documentation at: <a href={implementation.documentationUrl} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">{implementation.documentationUrl}</a>
+                                                        </div>
+                                                      )}
+                                                      {implementation.implementationNotes && (
+                                                        <div className="text-muted-foreground">
+                                                          <em>Note: {implementation.implementationNotes}</em>
+                                                        </div>
+                                                      )}
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              ))}
+                                            </CollapsibleContent>
+                                          </Collapsible>
+                                        </div>
+                                      </div>
+                                    )
+                                  })}
+                                </div>
+                              )
+                            })()}
+                          </div>
+                        </div>
+                      )}
                     </div>
-                    )}
+                    {/* Copy & Download Skill Buttons */}
+                    <div className="pt-4 mt-auto flex gap-2 border-t border-border bg-background">
+                      <button
+                        onClick={handleCopyPrompt}
+                        className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 rounded-none bg-gradient-to-b from-background to-muted border border-border hover:from-muted hover:to-muted/80 transition-all duration-200 shadow-sm text-sm font-medium"
+                      >
+                        <Copy className="h-4 w-4" />
+                        {copied ? "Copied!" : "Copy Skill"}
+                      </button>
+                      <button
+                        onClick={handleDownloadSkill}
+                        className="inline-flex items-center justify-center gap-2 px-3 py-2 rounded-none bg-gradient-to-b from-background to-muted border border-border hover:from-muted hover:to-muted/80 transition-all duration-200 shadow-sm text-sm font-medium"
+                        title="Download as SKILL.md"
+                      >
+                        <Download className="h-4 w-4" />
+                      </button>
+                    </div>
                   </div>
                 </div>
 
                 {/* Mobile: Tabbed layout (existing) */}
-                <CustomTabs defaultValue="builder" className="lg:hidden">
-                  <CustomTabsList>
-                    <CustomTabsTrigger value="builder" className="px-4">
+                <CustomTabs defaultValue="builder" className="lg:hidden flex flex-col h-full">
+                  <CustomTabsList className="flex w-full rounded-none border-b border-border bg-transparent p-0">
+                    <CustomTabsTrigger
+                      value="builder"
+                      className="flex-1 rounded-none border-b-2 border-transparent py-3 text-[0.7rem] font-mono uppercase tracking-[0.15em] data-[state=active]:border-foreground data-[state=active]:bg-transparent data-[state=active]:text-foreground"
+                    >
                       Builder
                     </CustomTabsTrigger>
-                    <CustomTabsTrigger value="full-prompt" className="px-4">
-                      Full Prompt
+                    <CustomTabsTrigger
+                      value="features"
+                      className="flex-1 rounded-none border-b-2 border-transparent py-3 text-[0.7rem] font-mono uppercase tracking-[0.15em] data-[state=active]:border-foreground data-[state=active]:bg-transparent data-[state=active]:text-foreground"
+                    >
+                      <span className="inline-flex items-center justify-center">
+                        Features
+                        {actualSelectedCapabilities && actualSelectedCapabilities.length > 0 && (
+                          <span className="ml-[6px] px-[3px] py-[1px] border border-border text-[10px] font-mono leading-none text-muted-foreground">
+                            {actualSelectedCapabilities.length}
+                          </span>
+                        )}
+                      </span>
+                    </CustomTabsTrigger>
+                    <CustomTabsTrigger
+                      value="full-prompt"
+                      className="flex-1 rounded-none border-b-2 border-transparent py-3 text-[0.7rem] font-mono uppercase tracking-[0.15em] data-[state=active]:border-foreground data-[state=active]:bg-transparent data-[state=active]:text-foreground"
+                    >
+                      Prompt
                     </CustomTabsTrigger>
                   </CustomTabsList>
                   <CustomTabsContent value="builder" className="space-y-5 px-6 mt-4">
@@ -1657,96 +1617,80 @@ Read the README.md and other relevant markdown files to understand how this full
                         selectedStarterId={selectedTemplate}
                       />
 
-                      {/* Selected Capabilities - Flat List */}
-                      {actualSelectedCapabilities && actualSelectedCapabilities.length > 0 && (
+                    </div>
+                  </CustomTabsContent>
+
+                  <CustomTabsContent value="features" className="flex-1 overflow-y-auto px-6 mt-4">
+                    <div className="space-y-4">
+                      <p className="text-[0.65rem] text-muted-foreground uppercase tracking-[0.15em] font-mono">Selected Capabilities</p>
+
+                      {actualSelectedCapabilities && actualSelectedCapabilities.length > 0 ? (
                         <div className="space-y-2">
                           {actualSelectedCapabilities
                             .sort((a, b) => a.toolName.localeCompare(b.toolName))
-                            .map((capability) => (
-                            <div key={capability.id} className="flex items-center gap-3 rounded-lg bg-muted border p-3">
-                              {/* Tool Icon */}
-                              <div className="flex h-8 w-8 items-center justify-center flex-shrink-0">
-                                {capability.toolIcon ? (
-                                  <ToolIcon
-                                    name={capability.toolName}
-                                    simpleIconSlug={capability.toolIcon}
-                                    simpleIconColor={capability.toolColor}
-                                    size={32}
-                                  />
-                                ) : (
+                            .map((capability) => {
+                              const isExpanded = expandedSelectedCapabilityId === capability.id;
+                              return (
+                                <div key={capability.id} className="flex flex-col border border-border bg-muted/30">
                                   <div
-                                    className="flex aspect-square items-center justify-center rounded-md overflow-hidden relative after:rounded-[inherit] after:absolute after:inset-0 after:shadow-[0_1px_2px_0_rgb(0_0_0/.05),inset_0_1px_0_0_rgb(255_255_255/.12)] after:pointer-events-none"
-                                    style={{
-                                      width: 32,
-                                      height: 32,
-                                      background: capability.toolColor || '#000000'
-                                    }}
+                                    className="flex items-center gap-3 p-3 cursor-pointer group"
+                                    onClick={() => setExpandedSelectedCapabilityId(isExpanded ? null : capability.id)}
                                   >
-                                    {/* Noise texture overlay */}
-                                    <div
-                                      className="absolute inset-0 opacity-30"
-                                      style={{
-                                        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-                                        backgroundSize: "256px 256px",
-                                      }}
-                                    />
-
-                                    {/* Additional inner shadow for depth */}
-                                    <div
-                                      className="absolute inset-0 rounded-md"
-                                      style={{ boxShadow: "inset 0 1px 2px rgba(0,0,0,0.3), inset 0 -1px 2px rgba(255,255,255,0.1)" }}
-                                    />
-
-                                    {/* Letter */}
-                                    <div className="absolute inset-0 flex items-center justify-center">
-                                      <span
-                                        className="font-instrument-serif font-bold text-foreground select-none"
-                                        style={{
-                                          fontSize: 32 * 0.45,
-                                          textShadow: "0 1px 4px rgba(255,255,255,0.3), 0 0 8px rgba(255,255,255,0.2)",
-                                          filter: 'brightness(0) invert(1)',
-                                          opacity: 0.9
-                                        }}
-                                      >
-                                        {capability.toolName.charAt(0).toUpperCase()}
-                                      </span>
+                                    <div className="flex-shrink-0">
+                                      <ToolIcon
+                                        name={capability.toolName}
+                                        simpleIconSlug={capability.toolIcon}
+                                        simpleIconColor={capability.toolColor}
+                                        size={32}
+                                        rounded="none"
+                                        dotOnly={!capability.toolIcon}
+                                      />
                                     </div>
-
-                                    {/* Subtle highlight */}
-                                    <div className="absolute top-0 left-0 right-0 h-1/4 bg-gradient-to-b from-white/10 to-transparent rounded-t-md" />
+                                    <div className="flex-1 min-w-0">
+                                      <div className="text-sm font-medium truncate">{capability.name}</div>
+                                      <div className="text-[0.65rem] text-muted-foreground truncate uppercase font-mono tracking-tight">
+                                        from {capability.toolName}
+                                      </div>
+                                    </div>
+                                    <div className="flex items-center gap-1">
+                                      <ChevronDown className={cn("w-3.5 h-3.5 text-muted-foreground/50 transition-transform", isExpanded && "rotate-180")} />
+                                      <button
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          handleCapabilityRemove(capability.id);
+                                        }}
+                                        className="text-muted-foreground/30 hover:text-red-500 transition-colors p-1"
+                                      >
+                                        <X className="h-4 w-4" />
+                                      </button>
+                                    </div>
                                   </div>
-                                )}
-                              </div>
-                              
-                              {/* Capability Info */}
-                              <div className="flex-1 min-w-0">
-                                <div className="text-sm font-medium">{capability.name}</div>
-                                <div className="text-xs text-muted-foreground">
-                                  from {capability.toolName}
-                                  {capability.category && (
-                                    <>
-                                      <span className="mx-1">·</span>
-                                      <span className="capitalize">{capability.category}</span>
-                                    </>
-                                  )}
-                                  {capability.complexity && (
-                                    <>
-                                      <span className="mx-1">·</span>
-                                      <span>{capability.complexity} complexity</span>
-                                    </>
+
+                                  {isExpanded && (
+                                    <div className="px-3 pb-3 pt-1 space-y-2 border-t border-border/20">
+                                      {capability.implementationNotes && (
+                                        <div>
+                                          <p className="text-muted-foreground uppercase text-[0.6rem] font-mono mb-1">Notes</p>
+                                          <p className="text-[0.7rem] text-foreground/80 leading-relaxed">{capability.implementationNotes}</p>
+                                        </div>
+                                      )}
+                                      {capability.githubPath && (
+                                        <div>
+                                          <p className="text-muted-foreground uppercase text-[0.6rem] font-mono mb-1">Code Location</p>
+                                          <code className="bg-muted px-1.5 py-0.5 border border-border text-foreground/70 break-all block font-mono text-[0.65rem] rounded-none">
+                                            {capability.githubPath}
+                                          </code>
+                                        </div>
+                                      )}
+                                    </div>
                                   )}
                                 </div>
-                              </div>
-                              
-                              {/* Remove Button */}
-                              <button
-                                onClick={() => handleCapabilityRemove(capability.id)}
-                                className="text-gray-400 hover:text-red-500 transition-colors p-1 focus:outline-none focus:ring-0 flex-shrink-0"
-                              >
-                                <X className="h-4 w-4" />
-                              </button>
-                            </div>
-                          ))}
+                              );
+                            })}
+                        </div>
+                      ) : (
+                        <div className="text-sm text-muted-foreground italic p-4 border border-dashed rounded-none">
+                          No capabilities selected. Use the Builder tab to find capabilities.
                         </div>
                       )}
                     </div>
@@ -1758,7 +1702,7 @@ Read the README.md and other relevant markdown files to understand how this full
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => setGithubMcpEnabled(!githubMcpEnabled)}
-                          className="inline-flex items-center gap-3 px-3 py-2 rounded-lg bg-gradient-to-b from-background to-muted border border-border hover:from-muted hover:to-muted/80 transition-all duration-200 shadow-sm"
+                          className="inline-flex items-center gap-3 px-3 py-2 rounded-none bg-gradient-to-b from-background to-muted border border-border hover:from-muted hover:to-muted/80 transition-all duration-200 shadow-sm"
                         >
                           <div className={`inline-block size-2 shrink-0 rounded-full ${
                             githubMcpEnabled
@@ -1810,220 +1754,80 @@ Read the README.md and other relevant markdown files to understand how this full
 
                     <div className="space-y-3">
                       <p className="text-xs text-muted-foreground uppercase tracking-wide">Generated Skill</p>
-                      
+
                       {/* Structured/Raw Tabs */}
-                      <div className="inline-flex rounded-lg border border-border p-0.5 bg-muted/50">
+                      <div className="inline-flex rounded-none border border-border p-0.5 bg-muted/50">
                         <button
                           onClick={() => setSkillViewMode('structured')}
-                          className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${
-                            skillViewMode === 'structured'
-                              ? 'bg-background text-foreground shadow-sm'
-                              : 'text-muted-foreground hover:text-foreground'
-                          }`}
+                          className={`px-3 py-1.5 text-xs font-medium rounded-none transition-all ${skillViewMode === 'structured'
+                            ? 'bg-background text-foreground shadow-sm'
+                            : 'text-muted-foreground hover:text-foreground'
+                            }`}
                         >
                           Structured
                         </button>
                         <button
                           onClick={() => setSkillViewMode('raw')}
-                          className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${
-                            skillViewMode === 'raw'
-                              ? 'bg-background text-foreground shadow-sm'
-                              : 'text-muted-foreground hover:text-foreground'
-                          }`}
+                          className={`px-3 py-1.5 text-xs font-medium rounded-none transition-all ${skillViewMode === 'raw'
+                            ? 'bg-background text-foreground shadow-sm'
+                            : 'text-muted-foreground hover:text-foreground'
+                            }`}
                         >
                           Raw
                         </button>
                       </div>
 
                       {skillViewMode === 'raw' ? (
-                        <div className="p-4 rounded-lg bg-muted/30 border border-border/50 shadow-sm">
+                        <div className="p-4 rounded-none bg-muted/30 border border-border/50 shadow-sm">
                           <pre className="text-xs leading-relaxed text-foreground whitespace-pre-wrap font-mono overflow-x-auto">
                             {generatePromptText()}
                           </pre>
                         </div>
                       ) : (
-                      <div className="p-4 rounded-lg bg-muted/30 border border-border/50 shadow-sm">
-                        <div className="text-sm leading-relaxed text-foreground">
-                          {(() => {
-                            const currentTemplate = starterTemplates.find(t => t.id === selectedTemplate)
-                            const capabilityGroups = Object.entries(groupedCapabilities)
-                            
-                            if (!currentTemplate && capabilityGroups.length === 0) {
-                              return (
-                                <span className="text-muted-foreground italic">
-                                  Select a starter and add capabilities to generate your skill.
-                                </span>
-                              )
-                            }
+                        <div className="p-4 rounded-none bg-muted/30 border border-border/50 shadow-sm">
+                          <div className="text-sm leading-relaxed text-foreground">
+                            {(() => {
+                              const currentTemplate = starterTemplates.find(t => t.id === selectedTemplate)
+                              const capabilityGroups = Object.entries(groupedCapabilities)
 
-                            // Group capabilities by capability name for better AI prompt generation
-                            const capabilitiesByName: {[capabilityName: string]: SelectedCapability[]} = {}
-                            actualSelectedCapabilities.forEach(capability => {
-                              if (!capabilitiesByName[capability.name]) {
-                                capabilitiesByName[capability.name] = []
+                              if (!currentTemplate && capabilityGroups.length === 0) {
+                                return (
+                                  <span className="text-muted-foreground italic">
+                                    Select a starter and add capabilities to generate your skill.
+                                  </span>
+                                )
                               }
-                              capabilitiesByName[capability.name].push(capability)
-                            })
 
-                            return (
-                              <div className="space-y-4">
-                                {/* Starter paragraph */}
-                                {currentTemplate && (
-                                  <div className="flex items-start gap-2 text-sm leading-relaxed">
-                                    <Popover>
-                                      <PopoverTrigger asChild>
-                                        <button className="flex-shrink-0 inline-flex items-center gap-2 hover:bg-muted/50 rounded px-1 py-0.5 transition-colors focus:outline-none focus:ring-0">
-                                          <div style={{ width: 20, height: 20 }}>
-                                            {currentTemplate.id === 'openfront' ? (
-                                              <OpenfrontIcon className="w-5 h-5" />
-                                            ) : currentTemplate.id === 'openship' ? (
-                                              <OpenshipIcon className="w-5 h-5" />
-                                            ) : currentTemplate.id === 'byos' ? (
-                                              <LogoIcon className="w-5 h-5" />
-                                            ) : currentTemplate.id === '1' ? (
-                                              <NextKeystoneIcon className="w-5 h-5" />
-                                            ) : currentTemplate.id === 'opensource-builders' ? (
-                                              <LogoIcon className="w-5 h-5" />
-                                            ) : (
-                                              <LogoIcon className="w-5 h-5" />
-                                            )}
-                                          </div>
-                                        </button>
-                                      </PopoverTrigger>
-                                      <PopoverContent side="top" className="w-80">
-                                        <div className="space-y-3">
-                                          <div className="flex items-center gap-2">
-                                            <span className="text-sm font-medium">Starter Template</span>
-                                          </div>
-                                          <div className="flex items-center gap-3">
-                                            {currentTemplate.id === 'openfront' ? (
-                                              <OpenfrontIcon className="w-6 h-6" />
-                                            ) : currentTemplate.id === 'openship' ? (
-                                              <OpenshipIcon className="w-6 h-6" />
-                                            ) : currentTemplate.id === 'byos' ? (
-                                              <LogoIcon className="w-6 h-6" />
-                                            ) : currentTemplate.id === '1' ? (
-                                              <NextKeystoneIcon className="w-6 h-6" />
-                                            ) : currentTemplate.id === 'opensource-builders' ? (
-                                              <LogoIcon className="w-6 h-6" />
-                                            ) : (
-                                              <LogoIcon className="w-6 h-6" />
-                                            )}
-                                            <div>
-                                              <p className="text-sm font-medium text-foreground">{currentTemplate.name}</p>
-                                              <p className="text-xs text-muted-foreground">{currentTemplate.description}</p>
-                                            </div>
-                                          </div>
-                                          {currentTemplate.info && (
-                                            <p className="text-sm text-muted-foreground">{currentTemplate.info}</p>
-                                          )}
-                                          <div className="flex items-center gap-2 pt-2 border-t">
-                                            {currentTemplate.source && (
-                                              <a
-                                                href={currentTemplate.source}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors text-xs"
-                                              >
-                                                <Github className="h-3 w-3" />
-                                                <span>Source</span>
-                                              </a>
-                                            )}
-                                          </div>
-                                        </div>
-                                      </PopoverContent>
-                                    </Popover>
-                                    <div className="flex-1">
-                                      {currentTemplate.id === '1' ? (
-                                        <Collapsible>
-                                          <div className="flex items-center justify-between">
-                                            {currentTemplate.name}
-                                            <CollapsibleTrigger className="text-muted-foreground hover:text-foreground transition-colors p-1">
-                                              <ChevronDown className="h-4 w-4" />
-                                            </CollapsibleTrigger>
-                                          </div>
-                                          
-                                          <CollapsibleContent className="mt-3">
-                                            {/* Git Clone capability-style card */}
-                                            <div className="w-full cursor-pointer transition duration-100 ease-linear rounded-[10px] bg-card text-foreground shadow-xs ring-1 ring-inset ring-border hover:bg-muted/50 p-4">
-                                              {/* Header with badge */}
-                                              <div className="inline-flex items-center mb-3">
-                                                <span className="inline-flex items-center rounded-md bg-muted shadow-xs ring-1 ring-inset ring-border gap-1.5 px-2 py-0.5">
-                                                  <span className="inline-block size-2 shrink-0 rounded-full bg-primary outline outline-3 -outline-offset-1 outline-primary/20" />
-                                                  Understanding the Starter
-                                                </span>
-                                              </div>
-                                              
-                                              {/* Content */}
-                                              <div className="space-y-3 text-sm">
-                                                <div className="text-muted-foreground">
-                                                  Please git clone this repo: <code className="bg-muted px-1 rounded text-xs">git clone https://github.com/junaid33/next-keystone-starter.git</code>
-                                                </div>
-                                                
-                                                <div className="text-muted-foreground">
-                                                  Then read the README.md and other relevant markdown files to get a general sense of how this full-stack Next.js application works. It's a Next.js application with a Keystone admin dashboard built-in, a GraphQL API, role-based permissions, and is designed with feature slices architecture. Review the /features directory structure and the project's architecture documentation.
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </CollapsibleContent>
-                                        </Collapsible>
-                                      ) : (
-                                        <>
-                                          Use the {currentTemplate.name} as your starting point. This template provides {currentTemplate.description.toLowerCase()} and will serve as the foundation for your application.
-                                        </>
-                                      )}
-                                    </div>
-                                  </div>
-                                )}
+                              // Group capabilities by capability name for better AI prompt generation
+                              const capabilitiesByName: { [capabilityName: string]: SelectedCapability[] } = {}
+                              actualSelectedCapabilities.forEach(capability => {
+                                if (!capabilitiesByName[capability.name]) {
+                                  capabilitiesByName[capability.name] = []
+                                }
+                                capabilitiesByName[capability.name].push(capability)
+                              })
 
-                                {/* Capability-specific paragraphs */}
-                                {Object.entries(capabilitiesByName).map(([capabilityName, implementations]) => {
-                                  const hasMultipleImplementations = implementations.length > 1
-                                  return (
-                                    <div key={capabilityName} className="flex items-start gap-2 text-sm leading-relaxed">
+                              return (
+                                <div className="space-y-4">
+                                  {/* Starter paragraph */}
+                                  {currentTemplate && (
+                                    <div className="flex items-start gap-2 text-sm leading-relaxed">
                                       <Popover>
                                         <PopoverTrigger asChild>
-                                          <button className="flex-shrink-0 inline-flex items-center gap-2 hover:bg-muted/50 rounded px-1 py-0.5 transition-colors focus:outline-none focus:ring-0">
-                                            {/* Avatar stack showing all tools that implement this capability */}
-                                            <div className="relative flex -space-x-1.5">
-                                              {implementations.slice(0, 3).map((impl, idx) => (
-                                                <div key={impl.id} className="relative" style={{ zIndex: 10 - idx }}>
-                                                  {impl.toolIcon ? (
-                                                    <div className="w-5 h-5 rounded-full bg-background border border-border flex items-center justify-center">
-                                                      <ToolIcon
-                                                        name={impl.toolName}
-                                                        simpleIconSlug={impl.toolIcon}
-                                                        simpleIconColor={impl.toolColor}
-                                                        size={16}
-                                                      />
-                                                    </div>
-                                                  ) : (
-                                                    <div 
-                                                      className="w-5 h-5 rounded-full border border-border flex items-center justify-center relative overflow-hidden"
-                                                      style={{ 
-                                                        background: impl.toolColor || '#6B7280',
-                                                        color: 'white'
-                                                      }}
-                                                    >
-                                                      {/* Noise texture overlay */}
-                                                      <div
-                                                        className="absolute inset-0 opacity-30"
-                                                        style={{
-                                                          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-                                                          backgroundSize: "256px 256px",
-                                                        }}
-                                                      />
-                                                      <span className="relative text-[8px] font-bold">
-                                                        {impl.toolName.charAt(0).toUpperCase()}
-                                                      </span>
-                                                    </div>
-                                                  )}
-                                                </div>
-                                              ))}
-                                              {implementations.length > 3 && (
-                                                <div className="w-5 h-5 rounded-full bg-muted border border-border flex items-center justify-center text-[8px] font-bold text-muted-foreground">
-                                                  +{implementations.length - 3}
-                                                </div>
+                                          <button className="flex-shrink-0 inline-flex items-center gap-2 hover:bg-muted/50 rounded-none px-1 py-0.5 transition-colors focus:outline-none focus:ring-0">
+                                            <div style={{ width: 20, height: 20 }}>
+                                              {currentTemplate.id === 'openfront' ? (
+                                                <OpenfrontIcon className="w-5 h-5" />
+                                              ) : currentTemplate.id === 'openship' ? (
+                                                <OpenshipIcon className="w-5 h-5" />
+                                              ) : currentTemplate.id === 'byos' ? (
+                                                <LogoIcon className="w-5 h-5" />
+                                              ) : currentTemplate.id === '1' ? (
+                                                <NextKeystoneIcon className="w-5 h-5" />
+                                              ) : currentTemplate.id === 'opensource-builders' ? (
+                                                <LogoIcon className="w-5 h-5" />
+                                              ) : (
+                                                <LogoIcon className="w-5 h-5" />
                                               )}
                                             </div>
                                           </button>
@@ -2031,140 +1835,278 @@ Read the README.md and other relevant markdown files to understand how this full
                                         <PopoverContent side="top" className="w-80">
                                           <div className="space-y-3">
                                             <div className="flex items-center gap-2">
-                                              <span className="text-sm font-medium">{capabilityName}</span>
-                                              {hasMultipleImplementations && (
-                                                <span className="text-xs bg-muted px-2 py-1 rounded">
-                                                  {implementations.length} implementations
-                                                </span>
-                                              )}
+                                              <span className="text-sm font-medium">Starter Template</span>
                                             </div>
-                                            <div className="space-y-2">
-                                              {implementations.map(implementation => (
-                                                <div key={implementation.id} className="p-2 rounded border bg-muted/30">
-                                                  <div className="flex items-center gap-2 mb-1">
-                                                    {implementation.toolIcon ? (
-                                                      <ToolIcon
-                                                        name={implementation.toolName}
-                                                        simpleIconSlug={implementation.toolIcon}
-                                                        simpleIconColor={implementation.toolColor}
-                                                        size={16}
-                                                      />
-                                                    ) : (
-                                                      <div 
-                                                        className="flex aspect-square items-center justify-center rounded-sm overflow-hidden text-[8px] font-instrument-serif font-bold"
-                                                        style={{ 
-                                                          width: 16, 
-                                                          height: 16,
-                                                          background: implementation.toolColor || '#6B7280',
-                                                          color: 'white'
-                                                        }}
-                                                      >
-                                                        {implementation.toolName.charAt(0).toUpperCase()}
-                                                      </div>
-                                                    )}
-                                                    <p className="text-sm font-medium">{implementation.toolName}</p>
-                                                  </div>
-                                                  {implementation.description && (
-                                                    <p className="text-xs text-muted-foreground mt-1">{implementation.description}</p>
-                                                  )}
-                                                  {implementation.implementationNotes && (
-                                                    <p className="text-xs text-muted-foreground mt-1 italic">{implementation.implementationNotes}</p>
-                                                  )}
-                                                </div>
-                                              ))}
+                                            <div className="flex items-center gap-3">
+                                              {currentTemplate.id === 'openfront' ? (
+                                                <OpenfrontIcon className="w-6 h-6" />
+                                              ) : currentTemplate.id === 'openship' ? (
+                                                <OpenshipIcon className="w-6 h-6" />
+                                              ) : currentTemplate.id === 'byos' ? (
+                                                <LogoIcon className="w-6 h-6" />
+                                              ) : currentTemplate.id === '1' ? (
+                                                <NextKeystoneIcon className="w-6 h-6" />
+                                              ) : currentTemplate.id === 'opensource-builders' ? (
+                                                <LogoIcon className="w-6 h-6" />
+                                              ) : (
+                                                <LogoIcon className="w-6 h-6" />
+                                              )}
+                                              <div>
+                                                <p className="text-sm font-medium text-foreground">{currentTemplate.name}</p>
+                                                <p className="text-xs text-muted-foreground">{currentTemplate.description}</p>
+                                              </div>
+                                            </div>
+                                            {currentTemplate.info && (
+                                              <p className="text-sm text-muted-foreground">{currentTemplate.info}</p>
+                                            )}
+                                            <div className="flex items-center gap-2 pt-2 border-t">
+                                              {currentTemplate.source && (
+                                                <a
+                                                  href={currentTemplate.source}
+                                                  target="_blank"
+                                                  rel="noopener noreferrer"
+                                                  className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors text-xs"
+                                                >
+                                                  <Github className="h-3 w-3" />
+                                                  <span>Source</span>
+                                                </a>
+                                              )}
                                             </div>
                                           </div>
                                         </PopoverContent>
                                       </Popover>
                                       <div className="flex-1">
-                                        <Collapsible>
-                                          <div className="flex items-center justify-between">
-                                            Implement {capabilityName}:
-                                            <CollapsibleTrigger className="text-muted-foreground hover:text-foreground transition-colors p-1">
-                                              <ChevronDown className="h-4 w-4" />
-                                            </CollapsibleTrigger>
-                                          </div>
-                                          
-                                          <CollapsibleContent>
-                                            {implementations.map((implementation, index) => (
-                                          <div key={`${capabilityName}-${implementation.id}-${index}`} className="mt-3">
-                                            {/* Everything inside one card */}
-                                            <div className="w-full cursor-pointer transition duration-100 ease-linear rounded-[10px] bg-card text-foreground shadow-xs ring-1 ring-inset ring-border hover:bg-muted/50 p-4">
-                                              {/* Header with badge */}
-                                              <div className="inline-flex items-center mb-3">
-                                                <span className="inline-flex items-center rounded-md bg-muted shadow-xs ring-1 ring-inset ring-border gap-2 px-2 py-0.5">
-                                                  {implementation.toolIcon ? (
-                                                    <ToolIcon
-                                                      name={implementation.toolName}
-                                                      simpleIconSlug={implementation.toolIcon}
-                                                      simpleIconColor={implementation.toolColor}
-                                                      size={16}
-                                                    />
-                                                  ) : (
-                                                    <span 
-                                                      className="inline-block size-2 shrink-0 rounded-full outline outline-3 -outline-offset-1"
-                                                      style={{ 
-                                                        backgroundColor: implementation.toolColor || '#6366f1',
-                                                        outlineColor: `${implementation.toolColor || '#6366f1'}30`
-                                                      }}
-                                                    />
-                                                  )}
-                                                  {hasMultipleImplementations ? `${implementation.toolName} approach` : implementation.toolName}
-                                                </span>
-                                              </div>
-                                              
-                                              {/* All content inside the card */}
-                                              <div className="space-y-3 text-sm">
-                                                {implementation.description && (
-                                                  <div className="text-muted-foreground">{implementation.description}</div>
-                                                )}
-                                                
-                                                {implementation.githubPath && implementation.toolRepo && (
-                                                  <div className="text-muted-foreground">
-                                                    Reference: <a href={`${implementation.toolRepo}/tree/main/${implementation.githubPath}`} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline"><code className="bg-muted px-1 rounded text-xs">{implementation.githubPath}</code></a> in {implementation.toolName}
-                                                  </div>
-                                                )}
-                                                
-                                                {implementation.documentationUrl && (
-                                                  <div className="text-muted-foreground">
-                                                    Reference the documentation at: <a href={implementation.documentationUrl} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">{implementation.documentationUrl}</a>
-                                                  </div>
-                                                )}
-                                                
-                                                {implementation.implementationNotes && (
-                                                  <div className="text-muted-foreground">
-                                                    <em>Note: {implementation.implementationNotes}</em>
-                                                  </div>
-                                                )}
-                                                
-                                                {implementation.implementationComplexity && (
-                                                  <div>
-                                                    <span className="text-xs bg-muted px-2 py-0.5 rounded">
-                                                      Complexity: {implementation.implementationComplexity}
-                                                    </span>
-                                                  </div>
-                                                )}
-
-                                                {hasMultipleImplementations && index === 0 && (
-                                                  <div className="text-muted-foreground text-xs italic border-t pt-2 mt-2">
-                                                    💡 Compare with other implementations below to choose the best approach for your use case.
-                                                  </div>
-                                                )}
-                                              </div>
+                                        {currentTemplate.id === '1' ? (
+                                          <Collapsible>
+                                            <div className="flex items-center justify-between">
+                                              {currentTemplate.name}
+                                              <CollapsibleTrigger className="text-muted-foreground hover:text-foreground transition-colors p-1">
+                                                <ChevronDown className="h-4 w-4" />
+                                              </CollapsibleTrigger>
                                             </div>
-                                          </div>
-                                        ))}
-                                          </CollapsibleContent>
-                                        </Collapsible>
+
+                                            <CollapsibleContent className="mt-3">
+                                              {/* Git Clone capability-style card */}
+                                              <div className="w-full cursor-pointer transition duration-100 ease-linear rounded-none bg-card text-foreground shadow-xs ring-1 ring-inset ring-border hover:bg-muted/50 p-4">
+                                                {/* Header with badge */}
+                                                <div className="inline-flex items-center mb-3">
+                                                  <span className="inline-flex items-center rounded-none bg-muted shadow-xs ring-1 ring-inset ring-border gap-1.5 px-2 py-0.5">
+                                                    <span className="inline-block size-2 shrink-0 rounded-full bg-primary outline outline-3 -outline-offset-1 outline-primary/20" />
+                                                    Understanding the Starter
+                                                  </span>
+                                                </div>
+
+                                                {/* Content */}
+                                                <div className="space-y-3 text-sm">
+                                                  <div className="text-muted-foreground">
+                                                    Please git clone this repo: <code className="bg-muted px-1 rounded-none text-xs">git clone https://github.com/junaid33/next-keystone-starter.git</code>
+                                                  </div>
+
+                                                  <div className="text-muted-foreground">
+                                                    Then read the README.md and other relevant markdown files to get a general sense of how this full-stack Next.js application works. It's a Next.js application with a Keystone admin dashboard built-in, a GraphQL API, role-based permissions, and is designed with feature slices architecture. Review the /features directory structure and the project's architecture documentation.
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </CollapsibleContent>
+                                          </Collapsible>
+                                        ) : (
+                                          <>
+                                            Use the {currentTemplate.name} as your starting point. This template provides {currentTemplate.description.toLowerCase()} and will serve as the foundation for your application.
+                                          </>
+                                        )}
                                       </div>
                                     </div>
-                                  )
-                                })}
-                              </div>
-                            )
-                          })()}
+                                  )}
+
+                                  {/* Capability-specific paragraphs */}
+                                  {Object.entries(capabilitiesByName).map(([capabilityName, implementations]) => {
+                                    const hasMultipleImplementations = implementations.length > 1
+                                    return (
+                                      <div key={capabilityName} className="flex items-start gap-2 text-sm leading-relaxed">
+                                        <Popover>
+                                          <PopoverTrigger asChild>
+                                            <button className="flex-shrink-0 inline-flex items-center gap-2 hover:bg-muted/50 rounded-none px-1 py-0.5 transition-colors focus:outline-none focus:ring-0">
+                                              {/* Avatar stack showing all tools that implement this capability */}
+                                              <div className="relative flex -space-x-1.5">
+                                                {implementations.slice(0, 3).map((impl, idx) => (
+                                                  <div key={impl.id} className="relative" style={{ zIndex: 10 - idx }}>
+                                                    {impl.toolIcon ? (
+                                                      <div className="w-5 h-5 rounded-full bg-background border border-border flex items-center justify-center">
+                                                        <ToolIcon
+                                                          name={impl.toolName}
+                                                          simpleIconSlug={impl.toolIcon}
+                                                          simpleIconColor={impl.toolColor}
+                                                          size={16}
+                                                        />
+                                                      </div>
+                                                    ) : (
+                                                      <div
+                                                        className="w-5 h-5 rounded-full border border-border flex items-center justify-center relative overflow-hidden"
+                                                        style={{
+                                                          background: impl.toolColor || '#6B7280',
+                                                          color: 'white'
+                                                        }}
+                                                      >
+                                                        {/* Noise texture overlay */}
+                                                        <div
+                                                          className="absolute inset-0 opacity-30"
+                                                          style={{
+                                                            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+                                                            backgroundSize: "256px 256px",
+                                                          }}
+                                                        />
+                                                        <span className="relative text-[8px] font-bold">
+                                                          {impl.toolName.charAt(0).toUpperCase()}
+                                                        </span>
+                                                      </div>
+                                                    )}
+                                                  </div>
+                                                ))}
+                                                {implementations.length > 3 && (
+                                                  <div className="w-5 h-5 rounded-full bg-muted border border-border flex items-center justify-center text-[8px] font-bold text-muted-foreground">
+                                                    +{implementations.length - 3}
+                                                  </div>
+                                                )}
+                                              </div>
+                                            </button>
+                                          </PopoverTrigger>
+                                          <PopoverContent side="top" className="w-80">
+                                            <div className="space-y-3">
+                                              <div className="flex items-center gap-2">
+                                                <span className="text-sm font-medium">{capabilityName}</span>
+                                                {hasMultipleImplementations && (
+                                                  <span className="text-xs bg-muted px-2 py-1 rounded">
+                                                    {implementations.length} implementations
+                                                  </span>
+                                                )}
+                                              </div>
+                                              <div className="space-y-2">
+                                                {implementations.map(implementation => (
+                                                  <div key={implementation.id} className="p-2 rounded-none border bg-muted/30">
+                                                    <div className="flex items-center gap-2 mb-1">
+                                                      {implementation.toolIcon ? (
+                                                        <ToolIcon
+                                                          name={implementation.toolName}
+                                                          simpleIconSlug={implementation.toolIcon}
+                                                          simpleIconColor={implementation.toolColor}
+                                                          size={16}
+                                                        />
+                                                      ) : (
+                                                        <div
+                                                          className="flex aspect-square items-center justify-center rounded-none overflow-hidden text-[8px] font-instrument-serif font-bold"
+                                                          style={{
+                                                            width: 16,
+                                                            height: 16,
+                                                            background: implementation.toolColor || '#6B7280',
+                                                            color: 'white'
+                                                          }}
+                                                        >
+                                                          {implementation.toolName.charAt(0).toUpperCase()}
+                                                        </div>
+                                                      )}
+                                                      <p className="text-sm font-medium">{implementation.toolName}</p>
+                                                    </div>
+                                                    {implementation.description && (
+                                                      <p className="text-xs text-muted-foreground mt-1">{implementation.description}</p>
+                                                    )}
+                                                    {implementation.implementationNotes && (
+                                                      <p className="text-xs text-muted-foreground mt-1 italic">{implementation.implementationNotes}</p>
+                                                    )}
+                                                  </div>
+                                                ))}
+                                              </div>
+                                            </div>
+                                          </PopoverContent>
+                                        </Popover>
+                                        <div className="flex-1">
+                                          <Collapsible>
+                                            <div className="flex items-center justify-between">
+                                              Implement {capabilityName}:
+                                              <CollapsibleTrigger className="text-muted-foreground hover:text-foreground transition-colors p-1">
+                                                <ChevronDown className="h-4 w-4" />
+                                              </CollapsibleTrigger>
+                                            </div>
+
+                                            <CollapsibleContent>
+                                              {implementations.map((implementation, index) => (
+                                                <div key={`${capabilityName}-${implementation.id}-${index}`} className="mt-3">
+                                                  {/* Everything inside one card */}
+                                                  <div className="w-full cursor-pointer transition duration-100 ease-linear rounded-none bg-card text-foreground shadow-xs ring-1 ring-inset ring-border hover:bg-muted/50 p-4">
+                                                    {/* Header with badge */}
+                                                    <div className="inline-flex items-center mb-3">
+                                                      <span className="inline-flex items-center rounded-none bg-muted shadow-xs ring-1 ring-inset ring-border gap-2 px-2 py-0.5">
+                                                        {implementation.toolIcon ? (
+                                                          <ToolIcon
+                                                            name={implementation.toolName}
+                                                            simpleIconSlug={implementation.toolIcon}
+                                                            simpleIconColor={implementation.toolColor}
+                                                            size={16}
+                                                          />
+                                                        ) : (
+                                                          <span
+                                                            className="inline-block size-2 shrink-0 rounded-full outline outline-3 -outline-offset-1"
+                                                            style={{
+                                                              backgroundColor: implementation.toolColor || '#6366f1',
+                                                              outlineColor: `${implementation.toolColor || '#6366f1'}30`
+                                                            }}
+                                                          />
+                                                        )}
+                                                        {hasMultipleImplementations ? `${implementation.toolName} approach` : implementation.toolName}
+                                                      </span>
+                                                    </div>
+
+                                                    {/* All content inside the card */}
+                                                    <div className="space-y-3 text-sm">
+                                                      {implementation.description && (
+                                                        <div className="text-muted-foreground">{implementation.description}</div>
+                                                      )}
+
+                                                      {implementation.githubPath && implementation.toolRepo && (
+                                                        <div className="text-muted-foreground">
+                                                          Reference: <a href={`${implementation.toolRepo}/tree/main/${implementation.githubPath}`} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline"><code className="bg-muted px-1 rounded-none text-xs">{implementation.githubPath}</code></a> in {implementation.toolName}
+                                                        </div>
+                                                      )}
+
+                                                      {implementation.documentationUrl && (
+                                                        <div className="text-muted-foreground">
+                                                          Reference the documentation at: <a href={implementation.documentationUrl} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">{implementation.documentationUrl}</a>
+                                                        </div>
+                                                      )}
+
+                                                      {implementation.implementationNotes && (
+                                                        <div className="text-muted-foreground">
+                                                          <em>Note: {implementation.implementationNotes}</em>
+                                                        </div>
+                                                      )}
+
+                                                      {implementation.implementationComplexity && (
+                                                        <div>
+                                                          <span className="text-xs bg-muted px-2 py-0.5 rounded">
+                                                            Complexity: {implementation.implementationComplexity}
+                                                          </span>
+                                                        </div>
+                                                      )}
+
+                                                      {hasMultipleImplementations && index === 0 && (
+                                                        <div className="text-muted-foreground text-xs italic border-t pt-2 mt-2">
+                                                          💡 Compare with other implementations below to choose the best approach for your use case.
+                                                        </div>
+                                                      )}
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              ))}
+                                            </CollapsibleContent>
+                                          </Collapsible>
+                                        </div>
+                                      </div>
+                                    )
+                                  })}
+                                </div>
+                              )
+                            })()}
+                          </div>
                         </div>
-                      </div>
                       )}
                     </div>
                   </CustomTabsContent>
@@ -2175,7 +2117,7 @@ Read the README.md and other relevant markdown files to understand how this full
               <div className="flex border-t border-border pt-4 sm:justify-end -mx-6 -mb-2 gap-2 bg-background px-6 lg:hidden">
                 <button
                   onClick={handleCopyPrompt}
-                  className="w-full inline-flex items-center justify-center gap-3 px-3 py-2 rounded-lg bg-gradient-to-b from-background to-muted border border-border hover:from-muted hover:to-muted/80 transition-all duration-200 shadow-sm text-sm font-medium"
+                  className="w-full inline-flex items-center justify-center gap-3 px-3 py-2 rounded-none bg-gradient-to-b from-background to-muted border border-border hover:from-muted hover:to-muted/80 transition-all duration-200 shadow-sm text-sm font-medium"
                 >
                   {copied ? "Copied!" : "Copy Skill"}
                 </button>
@@ -2191,7 +2133,7 @@ Read the README.md and other relevant markdown files to understand how this full
           <div className="relative flex shrink-0 items-center justify-center rounded-full size-16 bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 mb-3">
             <CircleCheck className="size-8" />
           </div>
-          
+
           <DialogHeader>
             <DialogTitle className="text-xl font-bold text-foreground mb-2">
               Skill Ready!
@@ -2202,13 +2144,13 @@ Read the README.md and other relevant markdown files to understand how this full
           </DialogHeader>
 
           {/* Installation Instructions Dropdown */}
-          <div className="rounded-lg bg-muted/50 border p-4 mb-3">
+          <div className="rounded-none bg-muted/50 border p-4 mb-3">
             <div className="flex items-center justify-between mb-3">
               <p className="text-sm font-medium">Install your skill:</p>
               <select
                 value={selectedAgent}
                 onChange={(e) => setSelectedAgent(e.target.value)}
-                className="text-xs bg-background border rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-ring"
+                className="text-xs bg-background border rounded-none px-2 py-1 focus:outline-none focus:ring-2 focus:ring-ring"
               >
                 <option value="claude-code">Claude Code</option>
                 <option value="cursor">Cursor</option>
@@ -2219,31 +2161,31 @@ Read the README.md and other relevant markdown files to understand how this full
             <div className="text-xs text-muted-foreground">
               {selectedAgent === 'claude-code' && (
                 <div className="space-y-1.5">
-                  <code className="block bg-background px-2 py-1.5 rounded border text-[11px]">.claude/skills/{generateSkillName()}.md</code>
+                  <code className="block bg-background px-2 py-1.5 rounded-none border text-[11px]">.claude/skills/{generateSkillName()}.md</code>
                   <p className="text-[11px]">Place in project root or <code className="bg-background px-1 rounded">~/.claude/skills/</code> for global access.</p>
                 </div>
               )}
               {selectedAgent === 'cursor' && (
                 <div className="space-y-1.5">
-                  <code className="block bg-background px-2 py-1.5 rounded border text-[11px]">.cursor/rules/{generateSkillName()}.mdc</code>
+                  <code className="block bg-background px-2 py-1.5 rounded-none border text-[11px]">.cursor/rules/{generateSkillName()}.mdc</code>
                   <p className="text-[11px]">Cursor will auto-detect rules in the <code className="bg-background px-1 rounded">.cursor/rules/</code> directory.</p>
                 </div>
               )}
               {selectedAgent === 'droid' && (
                 <div className="space-y-1.5">
-                  <code className="block bg-background px-2 py-1.5 rounded border text-[11px]">.factory/droids/{generateSkillName()}.md</code>
+                  <code className="block bg-background px-2 py-1.5 rounded-none border text-[11px]">.factory/droids/{generateSkillName()}.md</code>
                   <p className="text-[11px]">Place in project root or <code className="bg-background px-1 rounded">~/.factory/droids/</code> for personal droids.</p>
                 </div>
               )}
               {selectedAgent === 'codex' && (
                 <div className="space-y-1.5">
-                  <code className="block bg-background px-2 py-1.5 rounded border text-[11px]">AGENTS.md</code>
+                  <code className="block bg-background px-2 py-1.5 rounded-none border text-[11px]">AGENTS.md</code>
                   <p className="text-[11px]">Add to your project&apos;s AGENTS.md file or create one in the root directory.</p>
                 </div>
               )}
             </div>
           </div>
-          
+
           <div className="space-y-3 py-2">
             {actualSelectedCapabilities && Array.from(
               new Map(
@@ -2255,7 +2197,7 @@ Read the README.md and other relevant markdown files to understand how this full
                 if (repoMatch) {
                   const [, username, repo] = repoMatch;
                   return (
-                    <div key={capability.id} className="flex items-center gap-3 rounded-lg bg-muted border p-3">
+                    <div key={capability.id} className="flex items-center gap-3 rounded-none bg-muted border p-3">
                       {/* Tool Icon */}
                       <div className="flex h-8 w-8 items-center justify-center flex-shrink-0">
                         {capability.toolIcon ? (
@@ -2267,7 +2209,7 @@ Read the README.md and other relevant markdown files to understand how this full
                           />
                         ) : (
                           <div
-                            className="flex aspect-square items-center justify-center rounded-md overflow-hidden relative after:rounded-[inherit] after:absolute after:inset-0 after:shadow-[0_1px_2px_0_rgb(0_0_0/.05),inset_0_1px_0_0_rgb(255_255_255/.12)] after:pointer-events-none"
+                            className="flex aspect-square items-center justify-center rounded-none overflow-hidden relative after:rounded-[inherit] after:absolute after:inset-0 after:shadow-[0_1px_2px_0_rgb(0_0_0/.05),inset_0_1px_0_0_rgb(255_255_255/.12)] after:pointer-events-none"
                             style={{
                               width: 32,
                               height: 32,
@@ -2285,7 +2227,7 @@ Read the README.md and other relevant markdown files to understand how this full
 
                             {/* Additional inner shadow for depth */}
                             <div
-                              className="absolute inset-0 rounded-md"
+                              className="absolute inset-0 rounded-none"
                               style={{ boxShadow: "inset 0 1px 2px rgba(0,0,0,0.3), inset 0 -1px 2px rgba(255,255,255,0.1)" }}
                             />
 
@@ -2305,11 +2247,11 @@ Read the README.md and other relevant markdown files to understand how this full
                             </div>
 
                             {/* Subtle highlight */}
-                            <div className="absolute top-0 left-0 right-0 h-1/4 bg-gradient-to-b from-white/10 to-transparent rounded-t-md" />
+                            <div className="absolute top-0 left-0 right-0 h-1/4 bg-gradient-to-b from-white/10 to-transparent rounded-none" />
                           </div>
                         )}
                       </div>
-                      
+
                       {/* Capability Info */}
                       <div className="flex-1 min-w-0">
                         <div className="text-sm font-medium">{capability.toolName}</div>
@@ -2317,13 +2259,13 @@ Read the README.md and other relevant markdown files to understand how this full
                           {username}/{repo.replace('.git', '')}
                         </div>
                       </div>
-                      
+
                       {/* Star Button */}
                       <a
                         href={`https://github.com/${username}/${repo.replace('.git', '')}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 hover:from-gray-100 hover:to-gray-150 dark:hover:from-gray-700 dark:hover:to-gray-800 transition-all duration-200 shadow-sm text-sm font-medium"
+                        className="inline-flex items-center gap-2 px-3 py-2 rounded-none bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 hover:from-gray-100 hover:to-gray-150 dark:hover:from-gray-700 dark:hover:to-gray-800 transition-all duration-200 shadow-sm text-sm font-medium"
                       >
                         <Star className="h-4 w-4" />
                         <span>Star</span>

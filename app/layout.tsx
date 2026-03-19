@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Instrument_Serif } from "next/font/google";
+import { Inter, Instrument_Serif, Syne } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -12,6 +12,12 @@ const instrumentSerif = Instrument_Serif({
   variable: "--font-instrument-serif",
   subsets: ["latin"],
   weight: "400",
+  display: "swap",
+});
+
+const syne = Syne({
+  variable: "--font-syne",
+  subsets: ["latin"],
   display: "swap",
 });
 
@@ -72,7 +78,7 @@ export default function RootLayout({
         <link href="/favicon.svg" rel="icon" />
       </head>
       <body
-        className={`${inter.variable} ${instrumentSerif.variable} font-inter antialiased`}
+        className={`${inter.variable} ${instrumentSerif.variable} ${syne.variable} font-inter antialiased`}
       >
         <div className="min-h-screen">
           {children}

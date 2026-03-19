@@ -481,6 +481,24 @@ export const GET_CATEGORY_DETAILS = gql`
           description
           githubStars
           license
+          websiteUrl
+          repositoryUrl
+          simpleIconSlug
+          simpleIconColor
+          capabilities {
+            capability {
+              id
+              name
+              slug
+              description
+              category
+              complexity
+            }
+            isActive
+            implementationNotes
+            githubPath
+            documentationUrl
+          }
         }
       }
     }

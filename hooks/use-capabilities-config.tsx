@@ -28,6 +28,7 @@ interface CapabilitiesConfig {
     capabilitySearch: string
     appSearchTerm: string
     isAppsDropdownOpen: boolean
+    isDrawerOpen: boolean
   }
 }
 
@@ -58,6 +59,7 @@ const defaultCapabilitiesConfig: CapabilitiesConfig = {
     capabilitySearch: '',
     appSearchTerm: '',
     isAppsDropdownOpen: false,
+    isDrawerOpen: false,
   }
 }
 
@@ -84,6 +86,7 @@ const loadFromLS = (storageKey: string, defaultConfig: CapabilitiesConfig): Capa
           ...parsed.buildStatsCard,
           currentAppId: undefined, // Always start with first app (will default to index 0)
           isAppsDropdownOpen: false, // Always start closed
+          isDrawerOpen: false, // Always start closed
           appSearchTerm: '', // Clear search
         }
       }

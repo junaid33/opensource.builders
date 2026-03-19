@@ -1,15 +1,14 @@
 import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
-import { fetchApplicationBySlug, ComparisonApplication } from '@/features/public-site/lib/data';
+import { fetchApplicationBySlug } from '@/features/public-site/lib/data';
 import { ComparisonPageClient } from '@/features/public-site/screens/ComparisonPage';
 
 interface PageProps {
-  params: Promise<{ slugs: string[] }>;
+  params: Promise<{ slugs?: string[] }>;
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slugs } = await params;
-  
+
   if (!slugs || slugs.length < 2) {
     return {
       title: 'Compare Applications',
@@ -18,7 +17,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const [slug1, slug2] = slugs;
-  
+
   try {
     const [app1, app2] = await Promise.all([
       fetchApplicationBySlug(slug1),
@@ -73,8 +72,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function ComparePage({ params }: PageProps) {
   const { slugs } = await params;
 
+  // If no slugs provided, show the selection page
   if (!slugs || slugs.length < 2) {
-    notFound();
+    return <ComparisonPageClient />;
   }
 
   const [slug1, slug2] = slugs;
@@ -84,8 +84,9 @@ export default async function ComparePage({ params }: PageProps) {
     fetchApplicationBySlug(slug2),
   ]);
 
+  // If we can't find one or both apps, still show the page with empty selection
   if (!app1 || !app2) {
-    notFound();
+    return <ComparisonPageClient />;
   }
 
   return <ComparisonPageClient app1={app1} app2={app2} />;

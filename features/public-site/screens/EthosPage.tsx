@@ -26,7 +26,7 @@ export function EthosPage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative overflow-hidden pt-12">
+      <section className="relative overflow-hidden pt-5 sm:pt-7">
         <Container>
           <div className="pb-8">
             <div className="max-w-2xl text-left">
@@ -555,4 +555,3 @@ export function EthosPage() {
     </div>
   );
 }
-

@@ -7,7 +7,7 @@ import { queryKeys } from '../../lib/query-keys';
 import { makeGraphQLRequest } from '../../lib/graphql/client';
 import { fetchAlternatives } from '../../lib/data';
 import Link from 'next/link';
-import { ChevronDown, Star } from 'lucide-react';
+import { ChevronDown, Star, Globe } from 'lucide-react';
 import { CapabilityDropdownChip } from '../shared';
 import ToolIcon from '@/components/ToolIcon';
 import { useCapabilityActions, useSelectedCapabilities } from '@/hooks/use-capabilities-config';
@@ -21,11 +21,12 @@ function formatStars(n: number): string {
 // Default featured proprietary apps to show as tag buttons
 const DEFAULT_APP_SLUGS = [
   'shopify',
+  'airtable',
+  'cursor',
+  'conductor',
   'notion',
   'figma',
   'slack',
-  'cursor',
-  'zoom',
   'v0',
   'screen-studio',
   'tailwind-plus',
@@ -34,11 +35,12 @@ const DEFAULT_APP_SLUGS = [
 // Assign a color to each default app (matching desengs dot colors)
 const APP_COLORS: Record<string, string> = {
   shopify: '#8b5cf6',
+  airtable: '#18BFFF',
+  conductor: '#f97316',
   notion: '#6366f1',
   figma: '#f472b6',
   slack: '#22d3ee',
   cursor: '#ef4444',
-  zoom: '#f97316',
   v0: '#a3e635',
   'screen-studio': '#2dd4bf',
   'tailwind-plus': '#4ade80',
@@ -63,6 +65,10 @@ const GET_ALL_OPEN_SOURCE_APPS = `
       id
       name
       slug
+      repositoryUrl
+      websiteUrl
+      githubStars
+      license
       simpleIconColor
       capabilities {
         capability { id name slug }
@@ -327,28 +333,53 @@ function AlternativesList({
               <div className="flex-grow min-w-3 border-b border-dashed border-border transition-colors group-hover:border-border/60" />
 
               {/* Stars & License */}
-              <div className="flex items-center gap-2 shrink-0 text-[0.75rem] text-muted-foreground/60 font-mono uppercase truncate hidden sm:flex">
-                <span className="flex items-center gap-1">
-                  <Star className="w-3 h-3" />
-                  {formatStars(alt.githubStars)}
-                </span>
+              <div className="hidden shrink-0 items-center gap-2 truncate font-mono text-[0.75rem] uppercase text-zinc-600 dark:text-zinc-300 sm:flex">
+                {alt.repositoryUrl ? (
+                  <a
+                    href={alt.repositoryUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={e => e.stopPropagation()}
+                    className="flex items-center gap-1 transition-colors hover:text-zinc-900 dark:hover:text-zinc-50"
+                  >
+                    <Star className="h-3.5 w-3.5" />
+                    {formatStars(alt.githubStars)}
+                  </a>
+                ) : (
+                  <span className="flex items-center gap-1">
+                    <Star className="h-3.5 w-3.5" />
+                    {formatStars(alt.githubStars)}
+                  </span>
+                )}
                 {alt.license && (
                   <>
                     <span>·</span>
                     <span>{alt.license}</span>
                   </>
                 )}
+                {alt.websiteUrl && (
+                  <a
+                    href={alt.websiteUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={e => e.stopPropagation()}
+                    className="transition-colors hover:text-zinc-900 dark:hover:text-zinc-50"
+                    aria-label={`${alt.name} website`}
+                  >
+                    <Globe className="h-3.5 w-3.5" />
+                  </a>
+                )}
               </div>
 
               {/* Feature count */}
-              <p className="shrink-0 font-mono text-[0.79rem] tabular-nums text-muted-foreground/60 uppercase whitespace-nowrap transition-colors group-hover:text-muted-foreground">
+              <p className="shrink-0 whitespace-nowrap font-mono text-[0.79rem] uppercase tabular-nums text-zinc-600 transition-colors group-hover:text-zinc-900 dark:text-zinc-300 dark:group-hover:text-zinc-50">
                 {capCount} {capCount === 1 ? 'feat' : 'feats'}
               </p>
 
               {/* Expand chevron */}
               <ChevronDown
                 className={cn(
-                  'w-3.5 h-3.5 text-muted-foreground/40 transition-transform duration-200 shrink-0',
+                  'h-3.5 w-3.5 shrink-0 text-zinc-500 transition-transform duration-200 dark:text-zinc-400',
                   isExpanded && 'rotate-180'
                 )}
               />

@@ -9,7 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 import { queryKeys } from '../lib/query-keys';
 import { makeGraphQLRequest } from '../lib/graphql/client';
 import Link from 'next/link';
-import { Star, ChevronDown } from 'lucide-react';
+import { Star, ChevronDown, Globe } from 'lucide-react';
 import { CapabilityDropdownChip } from '../components/shared/CapabilityDropdownChip';
 import { cn } from '@/lib/utils';
 import ToolIcon from '@/components/ToolIcon';
@@ -175,26 +175,51 @@ export function CapabilitiesPageClient({ slug }: CapabilitiesPageClientProps) {
                       <div className="flex-grow min-w-3 border-b border-dashed border-border transition-colors group-hover:border-border/60" />
                       
                       {/* Stars & License */}
-                      <div className="flex items-center gap-2 shrink-0 text-[0.75rem] text-muted-foreground/60 font-mono uppercase truncate hidden sm:flex">
-                        <span className="flex items-center gap-1">
-                          <Star className="w-3 h-3" />
-                          {formatStars((app as any).githubStars)}
-                        </span>
+                      <div className="hidden shrink-0 items-center gap-2 truncate font-mono text-[0.75rem] uppercase text-zinc-600 dark:text-zinc-300 sm:flex">
+                        {(app as any).repositoryUrl ? (
+                          <a
+                            href={(app as any).repositoryUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={e => e.stopPropagation()}
+                            className="flex items-center gap-1 transition-colors hover:text-zinc-900 dark:hover:text-zinc-50"
+                          >
+                            <Star className="h-3.5 w-3.5" />
+                            {formatStars((app as any).githubStars)}
+                          </a>
+                        ) : (
+                          <span className="flex items-center gap-1">
+                            <Star className="h-3.5 w-3.5" />
+                            {formatStars((app as any).githubStars)}
+                          </span>
+                        )}
                         {(app as any).license && (
                           <>
                             <span>·</span>
                             <span>{(app as any).license}</span>
                           </>
                         )}
+                        {(app as any).websiteUrl && (
+                          <a
+                            href={(app as any).websiteUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={e => e.stopPropagation()}
+                            className="transition-colors hover:text-zinc-900 dark:hover:text-zinc-50"
+                            aria-label={`${app.name} website`}
+                          >
+                            <Globe className="h-3.5 w-3.5" />
+                          </a>
+                        )}
                       </div>
 
-                      <p className="shrink-0 font-mono text-[0.79rem] tabular-nums text-muted-foreground/60 uppercase whitespace-nowrap transition-colors group-hover:text-muted-foreground">
+                      <p className="shrink-0 whitespace-nowrap font-mono text-[0.79rem] uppercase tabular-nums text-zinc-600 transition-colors group-hover:text-zinc-900 dark:text-zinc-300 dark:group-hover:text-zinc-50">
                         {capCount} {capCount === 1 ? 'feat' : 'feats'}
                       </p>
 
                       <ChevronDown
                         className={cn(
-                          'w-3.5 h-3.5 text-muted-foreground/40 transition-transform duration-200 shrink-0',
+                          'h-3.5 w-3.5 shrink-0 text-zinc-500 transition-transform duration-200 dark:text-zinc-400',
                           isExpanded && 'rotate-180'
                         )}
                       />

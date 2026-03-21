@@ -1,18 +1,16 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { useOsAlternatives } from '../lib/hooks';
-import { Container, Spacer, PageHeader } from '../components/shared';
+import { Container, Spacer } from '../components/shared';
 import { Footer } from '../components/landing/Footer';
-import { DataTableDrawer } from '@/components/ui/DataTableDrawer';
 import { useCapabilityActions, useSelectedCapabilities, useBuildStatsCardState } from '@/hooks/use-capabilities-config';
 import { useQuery } from '@tanstack/react-query';
 import { queryKeys } from '../lib/query-keys';
 import { makeGraphQLRequest } from '../lib/graphql/client';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { ChevronDown, Plus, Check, ExternalLink, Star, GitFork } from 'lucide-react';
+import { ChevronDown, Star, GitFork, Globe } from 'lucide-react';
 import { CapabilityDropdownChip } from '../components/shared';
 import ToolIcon from '@/components/ToolIcon';
 
@@ -66,8 +64,6 @@ export function OsAlternativesPageClient({ slug }: OsAlternativesPageClientProps
   const [expandedAlt, setExpandedAlt] = useState<string | null>(null);
   const [showAllCaps, setShowAllCaps] = useState(false);
   const INITIAL_CAPS_LIMIT = 15;
-  const router = useRouter();
-
   const { data: osAlternativesData, error: osAlternativesError } = useOsAlternatives(slug);
 
   const { addCapability, removeCapability } = useCapabilityActions();
@@ -120,32 +116,45 @@ export function OsAlternativesPageClient({ slug }: OsAlternativesPageClientProps
   return (
     <Container>
       {/* Header */}
-      <div className="pb-6">
-        <div className="flex items-baseline gap-3 mb-1">
+      <div className="pb-6 pt-5 sm:pt-7">
+        <div className="mb-1 flex flex-wrap items-center gap-x-3 gap-y-2 sm:items-baseline">
           <h1 className="font-instrument-serif text-[2rem] leading-[1.2] tracking-tight">
             {openSourceApp.name}
           </h1>
-          <div className="flex items-center gap-3 text-[0.69rem] font-mono text-muted-foreground/60 uppercase">
+          <div className="flex flex-wrap items-center gap-3 text-[0.69rem] font-mono uppercase text-zinc-600 dark:text-zinc-300">
             {openSourceApp.githubStars ? (
-              <span className="flex items-center gap-1">
-                <Star className="w-3 h-3" />
-                {formatStars(openSourceApp.githubStars)}
-              </span>
+              openSourceApp.repositoryUrl ? (
+                <a
+                  href={openSourceApp.repositoryUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1 transition-colors hover:text-zinc-900 dark:hover:text-zinc-50"
+                >
+                  <Star className="h-3.5 w-3.5" />
+                  {formatStars(openSourceApp.githubStars)}
+                </a>
+              ) : (
+                <span className="flex items-center gap-1">
+                  <Star className="h-3.5 w-3.5" />
+                  {formatStars(openSourceApp.githubStars)}
+                </span>
+              )
             ) : null}
             {openSourceApp.githubForks ? (
               <span className="flex items-center gap-1">
-                <GitFork className="w-3 h-3" />
+                <GitFork className="h-3.5 w-3.5" />
                 {formatStars(openSourceApp.githubForks)}
               </span>
             ) : null}
-            {openSourceApp.repositoryUrl && (
+            {openSourceApp.websiteUrl && (
               <a
-                href={openSourceApp.repositoryUrl}
+                href={openSourceApp.websiteUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-foreground transition-colors"
+                className="transition-colors hover:text-zinc-900 dark:hover:text-zinc-50"
+                aria-label={`${openSourceApp.name} website`}
               >
-                <ExternalLink className="w-3 h-3" />
+                <Globe className="h-3.5 w-3.5" />
               </a>
             )}
           </div>
@@ -157,7 +166,7 @@ export function OsAlternativesPageClient({ slug }: OsAlternativesPageClientProps
           </Link>
         </p>
         {openSourceApp.license && (
-          <p className="text-muted-foreground/60 text-xs mt-1 font-mono uppercase">
+          <p className="mt-1 font-mono text-xs uppercase text-zinc-600 dark:text-zinc-300">
             {openSourceApp.license} License
           </p>
         )}
@@ -178,7 +187,7 @@ export function OsAlternativesPageClient({ slug }: OsAlternativesPageClientProps
             placeholder="Search capabilities..."
             value={searchValue}
             onChange={e => setSearchValue(e.currentTarget.value)}
-            className="h-10 w-[200px] px-3 text-base bg-secondary border border-border text-foreground outline-none transition-all duration-200 focus-visible:ring-2 focus-visible:ring-muted"
+            className="h-9 w-[200px] px-3 text-sm bg-secondary border border-border text-foreground outline-none transition-all duration-200 focus-visible:ring-2 focus-visible:ring-muted"
           />
 
           {(searchValue || showAllCaps ? filteredCaps : filteredCaps.slice(0, INITIAL_CAPS_LIMIT)).map((cap, i) => {
@@ -210,7 +219,7 @@ export function OsAlternativesPageClient({ slug }: OsAlternativesPageClientProps
           {!searchValue && filteredCaps.length > INITIAL_CAPS_LIMIT && (
             <button
               onClick={() => setShowAllCaps(!showAllCaps)}
-              className="h-10 px-4 text-base font-medium text-muted-foreground bg-secondary border border-transparent hover:text-foreground hover:bg-accent transition-all duration-200"
+              className="inline-flex h-9 items-center px-3 text-sm font-medium text-muted-foreground bg-secondary border border-transparent hover:text-foreground hover:bg-accent transition-all duration-200"
             >
               {showAllCaps ? 'Show less' : `+ Show ${filteredCaps.length - INITIAL_CAPS_LIMIT} more`}
             </button>
@@ -233,7 +242,7 @@ export function OsAlternativesPageClient({ slug }: OsAlternativesPageClientProps
                   {cap.capability.name}
                 </Link>
                 <div className="flex-grow min-w-3 border-b border-dashed border-border transition-colors group-hover:border-border/60" />
-                <p className="shrink-0 font-mono text-[0.79rem] tabular-nums text-muted-foreground/60 uppercase whitespace-nowrap transition-colors group-hover:text-muted-foreground">
+                <p className="shrink-0 whitespace-nowrap font-mono text-[0.79rem] uppercase tabular-nums text-zinc-600 transition-colors group-hover:text-zinc-900 dark:text-zinc-300 dark:group-hover:text-zinc-50">
                   {cap.isActive !== false ? 'Active' : 'Inactive'}
                 </p>
               </li>
@@ -281,24 +290,49 @@ export function OsAlternativesPageClient({ slug }: OsAlternativesPageClientProps
                       <div className="flex-grow min-w-3 border-b border-dashed border-border transition-colors group-hover:border-border/60" />
 
                       {/* Stars & License */}
-                      <div className="flex items-center gap-2 shrink-0 text-[0.75rem] text-muted-foreground/60 font-mono uppercase truncate hidden sm:flex">
-                        <span className="flex items-center gap-1">
-                          <Star className="w-3 h-3" />
-                          {formatStars(alt.githubStars)}
-                        </span>
+                      <div className="hidden shrink-0 items-center gap-2 truncate font-mono text-[0.75rem] uppercase text-zinc-600 dark:text-zinc-300 sm:flex">
+                        {alt.repositoryUrl ? (
+                          <a
+                            href={alt.repositoryUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={e => e.stopPropagation()}
+                            className="flex items-center gap-1 transition-colors hover:text-zinc-900 dark:hover:text-zinc-50"
+                          >
+                            <Star className="h-3.5 w-3.5" />
+                            {formatStars(alt.githubStars)}
+                          </a>
+                        ) : (
+                          <span className="flex items-center gap-1">
+                            <Star className="h-3.5 w-3.5" />
+                            {formatStars(alt.githubStars)}
+                          </span>
+                        )}
                         {alt.license && (
                           <>
                             <span>·</span>
                             <span>{alt.license}</span>
                           </>
                         )}
+                        {alt.websiteUrl && (
+                          <a
+                            href={alt.websiteUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={e => e.stopPropagation()}
+                            className="transition-colors hover:text-zinc-900 dark:hover:text-zinc-50"
+                            aria-label={`${alt.name} website`}
+                          >
+                            <Globe className="h-3.5 w-3.5" />
+                          </a>
+                        )}
                       </div>
-                      <p className="shrink-0 font-mono text-[0.79rem] tabular-nums text-muted-foreground/60 uppercase whitespace-nowrap transition-colors group-hover:text-muted-foreground">
+                      <p className="shrink-0 whitespace-nowrap font-mono text-[0.79rem] uppercase tabular-nums text-zinc-600 transition-colors group-hover:text-zinc-900 dark:text-zinc-300 dark:group-hover:text-zinc-50">
                         {capCount} {capCount === 1 ? 'feat' : 'feats'}
                       </p>
                       <ChevronDown
                         className={cn(
-                          'w-3.5 h-3.5 text-muted-foreground/40 transition-transform duration-200 shrink-0',
+                          'h-3.5 w-3.5 shrink-0 text-zinc-500 transition-transform duration-200 dark:text-zinc-400',
                           isExpanded && 'rotate-180'
                         )}
                       />

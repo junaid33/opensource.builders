@@ -140,6 +140,7 @@ export interface OpenSourceApplicationWithCapability {
   repositoryUrl?: string;
   simpleIconSlug?: string;
   simpleIconColor?: string;
+  capabilities?: OpenSourceCapability[];
   implementationNotes?: string;
   githubPath?: string;
   documentationUrl?: string;

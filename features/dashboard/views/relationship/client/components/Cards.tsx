@@ -9,7 +9,7 @@ import React, {
 } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Plus, ExternalLink, Edit, Trash2 } from "lucide-react";
+import { Plus, ArrowUpRight, Edit, Trash2 } from "lucide-react";
 import { FieldContainer } from "@/components/ui/field-container";
 import { FieldLabel } from "@/components/ui/field-label";
 import { RelationshipSelect } from "./RelationshipSelect";
@@ -339,7 +339,7 @@ export function Cards({
                         {displayOptions.linkToItem && (
                           <Button size="sm" variant="ghost" asChild>
                             <Link href={`/${foreignList.path}/${id}`}>
-                              <ExternalLink className="h-3 w-3 mr-1" />
+                              <ArrowUpRight className="h-3 w-3 mr-1" />
                               View {foreignList.singular} details
                             </Link>
                           </Button>

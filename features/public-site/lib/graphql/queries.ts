@@ -270,6 +270,21 @@ export const GET_CAPABILITY_APPLICATIONS = gql`
           repositoryUrl
           simpleIconSlug
           simpleIconColor
+          capabilities {
+            capability {
+              id
+              name
+              slug
+              description
+              category
+              complexity
+            }
+            implementationNotes
+            githubPath
+            documentationUrl
+            implementationComplexity
+            isActive
+          }
         }
         implementationNotes
         githubPath

@@ -18,7 +18,7 @@ import { useSlate } from 'slate-react'
 import { Editor, Range } from 'slate'
 import { wrapLink } from './link-shared'
 import { KeyboardInTooltip } from './Toolbar'
-import { Link2, Trash2, ExternalLink } from 'lucide-react'
+import { Link2, Trash2, ArrowUpRight } from 'lucide-react'
 import { useElementWithSetNodes } from './utils-hooks'
 import { isValidURL } from './isValidURL'
 import { useForceValidation } from './utils-hooks'
@@ -109,7 +109,7 @@ export const LinkElement = ({
                     variant: "outline",
                   })}
                 >
-                  <ExternalLink size={16} />
+                  <ArrowUpRight size={16} />
                 </a>
                 <Button
                   size="icon"

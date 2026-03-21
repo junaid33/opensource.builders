@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Star, ExternalLink, Check, X, Globe, ChevronRight, ChevronDown } from 'lucide-react';
+import { Star, Check, X, Globe, ChevronRight, ChevronDown } from 'lucide-react';
 import ToolIcon from '@/components/ToolIcon';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';

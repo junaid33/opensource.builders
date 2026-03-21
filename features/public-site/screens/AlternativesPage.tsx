@@ -10,7 +10,7 @@ import { queryKeys } from '../lib/query-keys';
 import { makeGraphQLRequest } from '../lib/graphql/client';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { ChevronDown, Star } from 'lucide-react';
+import { ChevronDown, Star, Globe } from 'lucide-react';
 import { CapabilityDropdownChip } from '../components/shared';
 import ToolIcon from '@/components/ToolIcon';
 import { useCapabilityActions, useSelectedCapabilities } from '@/hooks/use-capabilities-config';
@@ -168,7 +168,7 @@ export function AlternativesPageClient({ slug }: AlternativesPageClientProps) {
             placeholder="Search capabilities..."
             value={searchValue}
             onChange={e => setSearchValue(e.currentTarget.value)}
-            className="h-9 w-[200px] px-2 text-[0.79rem] bg-secondary border border-border text-foreground outline-none transition-all duration-200 focus-visible:ring-2 focus-visible:ring-muted"
+            className="h-9 w-[200px] px-3 text-sm bg-secondary border border-border text-foreground outline-none transition-all duration-200 focus-visible:ring-2 focus-visible:ring-muted"
           />
 
           {(searchValue || showAllCaps ? visibleCaps : visibleCaps.slice(0, INITIAL_CAPS_LIMIT)).map(cap => {
@@ -206,7 +206,7 @@ export function AlternativesPageClient({ slug }: AlternativesPageClientProps) {
           {!searchValue && visibleCaps.length > INITIAL_CAPS_LIMIT && (
             <button
               onClick={() => setShowAllCaps(!showAllCaps)}
-              className="h-9 px-4 text-[0.79rem] font-medium text-muted-foreground bg-secondary border border-transparent hover:text-foreground hover:bg-accent transition-all duration-200"
+              className="inline-flex h-9 items-center px-3 text-sm font-medium text-muted-foreground bg-secondary border border-transparent hover:text-foreground hover:bg-accent transition-all duration-200"
             >
               {showAllCaps ? 'Show less' : `+ Show ${visibleCaps.length - INITIAL_CAPS_LIMIT} more`}
             </button>
@@ -253,24 +253,49 @@ export function AlternativesPageClient({ slug }: AlternativesPageClientProps) {
                     <div className="flex-grow min-w-3 border-b border-dashed border-border transition-colors group-hover:border-border/60" />
 
                     {/* Stars & License */}
-                    <div className="flex items-center gap-2 shrink-0 text-[0.75rem] text-muted-foreground/60 font-mono uppercase truncate hidden sm:flex">
-                      <span className="flex items-center gap-1">
-                        <Star className="w-3 h-3" />
-                        {formatStars(alt.githubStars)}
-                      </span>
+                    <div className="hidden shrink-0 items-center gap-2 truncate font-mono text-[0.75rem] uppercase text-zinc-600 dark:text-zinc-300 sm:flex">
+                      {alt.repositoryUrl ? (
+                        <a
+                          href={alt.repositoryUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={e => e.stopPropagation()}
+                          className="flex items-center gap-1 transition-colors hover:text-zinc-900 dark:hover:text-zinc-50"
+                        >
+                          <Star className="h-3.5 w-3.5" />
+                          {formatStars(alt.githubStars)}
+                        </a>
+                      ) : (
+                        <span className="flex items-center gap-1">
+                          <Star className="h-3.5 w-3.5" />
+                          {formatStars(alt.githubStars)}
+                        </span>
+                      )}
                       {alt.license && (
                         <>
                           <span>·</span>
                           <span>{alt.license}</span>
                         </>
                       )}
+                      {alt.websiteUrl && (
+                        <a
+                          href={alt.websiteUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={e => e.stopPropagation()}
+                          className="transition-colors hover:text-zinc-900 dark:hover:text-zinc-50"
+                          aria-label={`${alt.name} website`}
+                        >
+                          <Globe className="h-3.5 w-3.5" />
+                        </a>
+                      )}
                     </div>
-                    <p className="shrink-0 font-mono text-[0.79rem] tabular-nums text-muted-foreground/60 uppercase whitespace-nowrap transition-colors group-hover:text-muted-foreground">
+                    <p className="shrink-0 whitespace-nowrap font-mono text-[0.79rem] uppercase tabular-nums text-zinc-600 transition-colors group-hover:text-zinc-900 dark:text-zinc-300 dark:group-hover:text-zinc-50">
                       {capCount} {capCount === 1 ? 'feat' : 'feats'}
                     </p>
                     <ChevronDown
                       className={cn(
-                        'w-3.5 h-3.5 text-muted-foreground/40 transition-transform duration-200 shrink-0',
+                        'h-3.5 w-3.5 shrink-0 text-zinc-500 transition-transform duration-200 dark:text-zinc-400',
                         isExpanded && 'rotate-180'
                       )}
                     />

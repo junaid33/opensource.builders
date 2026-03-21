@@ -4,7 +4,7 @@ import * as DrawerPrimitives from "@radix-ui/react-dialog"
 import * as TabsPrimitives from "@radix-ui/react-tabs"
 import * as SelectPrimitives from "@radix-ui/react-select"
 import { RiCloseLine, RiExpandUpDownLine, RiCheckLine, RiArrowUpSLine, RiArrowDownSLine } from "@remixicon/react"
-import { Download, Copy, File, Trash2, CircleCheck, Github, Info, Folder, Lightbulb, ChevronDown, ChevronLeft, ChevronRight, Nut, Search, X, Package, Star, ExternalLink } from "lucide-react"
+import { Download, Copy, File, Trash2, CircleCheck, Github, Info, Folder, Lightbulb, ChevronDown, ChevronLeft, ChevronRight, Nut, Search, X, Package, Star } from "lucide-react"
 import React from "react"
 import {
   motion,
@@ -300,7 +300,7 @@ function CustomSelectTrigger({ children, className, ...props }: { children: Reac
       )}
       {...props}
     >
-      <span className="truncate">{children}</span>
+      <span className="flex min-w-0 flex-1 items-center text-left">{children}</span>
       <SelectPrimitives.Icon asChild>
         <RiExpandUpDownLine className="size-4 shrink-0 text-gray-400 dark:text-gray-600 group-data-[disabled]/trigger:text-gray-300 group-data-[disabled]/trigger:dark:text-gray-600" />
       </SelectPrimitives.Icon>
@@ -999,7 +999,7 @@ Read the README.md and other relevant markdown files to understand how this full
                     {/* Choose Starter (ported) */}
                     <div className="space-y-3 mb-5">
                       <p className="text-[0.65rem] text-muted-foreground uppercase tracking-[0.15em] font-mono">Choose Starter</p>
-                      <CustomSelect value={selectedTemplate} onValueChange={(value) => {
+                      <CustomSelect value={selectedTemplate} onValueChange={(value: string) => {
                         setSelectedTemplate(value)
                         updateBuildStatsCard({ currentAppId: undefined })
                       }}>
@@ -1008,7 +1008,7 @@ Read the README.md and other relevant markdown files to understand how this full
                             const t = starterTemplates.find(s => s.id === selectedTemplate)
                             if (!t) return <SelectPrimitives.Value placeholder="Choose a starter template" />
                             return (
-                              <span className="flex items-center gap-3">
+                              <span className="flex min-w-0 flex-1 items-center gap-3 text-left">
                                 {t.id === 'openfront' ? (
                                   <OpenfrontIcon className="w-6 h-6" />
                                 ) : t.id === 'openship' ? (
@@ -1022,9 +1022,9 @@ Read the README.md and other relevant markdown files to understand how this full
                                 ) : (
                                   <LogoIcon className="w-6 h-6" />
                                 )}
-                                <span>
-                                  <span className="block font-medium leading-5">{t.name}</span>
-                                  <span className="text-gray-500 dark:text-gray-500 mt-0.5 block text-xs leading-4">{t.description}</span>
+                                <span className="min-w-0 flex-1 text-left">
+                                  <span className="block truncate font-medium leading-5">{t.name}</span>
+                                  <span className="mt-0.5 block truncate text-xs leading-4 text-gray-500 dark:text-gray-500">{t.description}</span>
                                 </span>
                               </span>
                             )
@@ -1518,7 +1518,7 @@ Read the README.md and other relevant markdown files to understand how this full
                     {/* Choose Starter (ported) */}
                     <div className="space-y-3">
                       <p className="text-xs text-muted-foreground uppercase tracking-wide">Choose Starter</p>
-                      <CustomSelect value={selectedTemplate} onValueChange={(value) => {
+                      <CustomSelect value={selectedTemplate} onValueChange={(value: string) => {
                         setSelectedTemplate(value)
                         // Reset to first app when starter changes
                         updateBuildStatsCard({ currentAppId: undefined })
@@ -1528,7 +1528,7 @@ Read the README.md and other relevant markdown files to understand how this full
                             const t = starterTemplates.find(s => s.id === selectedTemplate)
                             if (!t) return <SelectPrimitives.Value placeholder="Choose a starter template" />
                             return (
-                              <span className="flex items-center gap-3">
+                              <span className="flex min-w-0 flex-1 items-center gap-3 text-left">
                                 {t.id === 'openfront' ? (
                                   <OpenfrontIcon className="w-6 h-6" />
                                 ) : t.id === 'openship' ? (
@@ -1542,9 +1542,9 @@ Read the README.md and other relevant markdown files to understand how this full
                                 ) : (
                                   <LogoIcon className="w-6 h-6" />
                                 )}
-                                <span>
-                                  <span className="block font-medium leading-5">{t.name}</span>
-                                  <span className="text-gray-500 dark:text-gray-500 mt-0.5 block text-xs leading-4">{t.description}</span>
+                                <span className="min-w-0 flex-1 text-left">
+                                  <span className="block truncate font-medium leading-5">{t.name}</span>
+                                  <span className="mt-0.5 block truncate text-xs leading-4 text-gray-500 dark:text-gray-500">{t.description}</span>
                                 </span>
                               </span>
                             )

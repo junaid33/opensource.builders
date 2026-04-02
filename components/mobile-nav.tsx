@@ -53,18 +53,6 @@ export function MobileNav({ onClose }: { onClose: () => void }) {
               </span>
             </a>
           </Button>
-          {navLinks.map((link) => (
-            <Button
-              asChild
-              className="h-11 justify-start rounded-none border border-border bg-secondary/50 px-4 text-left text-base font-syne"
-              key={link.label}
-              variant="ghost"
-              onClick={onClose}
-            >
-              <a href={link.href}>{link.label}</a>
-            </Button>
-          ))}
-
           <Button
             asChild
             className="h-11 justify-start rounded-none border border-border bg-secondary/50 px-4 text-left text-base font-syne"
@@ -127,7 +115,7 @@ export function MobileNav({ onClose }: { onClose: () => void }) {
               setTheme(theme === "dark" ? "light" : "dark");
               onClose();
             }}
-            className="flex h-11 items-center gap-3 rounded-none border border-border bg-secondary/50 px-4 text-left text-base font-syne transition-colors hover:bg-accent"
+            className="flex h-11 items-center gap-3 rounded-none border border-border bg-secondary/50 px-4 text-left text-base font-syne font-medium transition-colors hover:bg-accent"
           >
             {theme === "dark" ? (
               <>

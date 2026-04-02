@@ -147,6 +147,28 @@ Grouping for proprietary applications
 
 When a user says something like "I found an open source alternative to X called Y", follow this workflow:
 
+### Phase 0: Resolve the Canonical Product and Repository
+
+Before researching or creating anything, confirm you are looking at the correct product and repository.
+
+This is mandatory when names are ambiguous, short, or overloaded. Examples: `superset`, `mux`, `conductor`, `vibetunnel`, `table`.
+
+Use this order of trust:
+
+1. The exact URL the user gave you
+2. The official product website or docs
+3. A curated source the user explicitly provided
+4. The repository linked from the official site/docs
+
+Do **not** assume the most popular GitHub result is correct.
+
+Record the canonical pair before proceeding:
+- Product website
+- Documentation URL
+- Repository URL
+
+If you found plausible candidates that are **not** the right project, note them in your report as rejected candidates so future work does not repeat the same confusion.
+
 ### Phase 1: Research the Open Source Project
 
 **You MUST research the GitHub repository to gather:**
@@ -164,10 +186,19 @@ When a user says something like "I found an open source alternative to X called 
    - Last commit date
    - License type
 
+   **License rule:** verify the license from the actual repository default branch (`LICENSE`, `COPYING`, or equivalent), not only from GitHub's summary metadata.
+
 3. **Identify capabilities** - From the README and features list, determine:
    - What features does this app have?
    - How do they compare to the proprietary alternative?
    - What's the implementation complexity?
+
+4. **Capture evidence for each capability** - For every capability you plan to add or link, record at least one of:
+   - README section
+   - Documentation URL
+   - Real code path
+
+   Avoid creating capability links from vague marketing copy alone.
 
 **Example research for a project:**
 ```
@@ -196,6 +227,11 @@ Project: https://github.com/AppFlowy-IO/AppFlowy
 
 3. **Identify the category** - What type of software is this?
    - Productivity, Design, Development, Communication, etc.
+
+4. **Build or correct the proprietary capability baseline first**
+   - Compare the official product feature set with what is already in the database
+   - If the proprietary app is under-modeled, add the missing capabilities before adding new alternatives
+   - After expanding the baseline, re-check existing alternatives for that same proprietary app so older entries do not stay artificially incomplete
 
 ### Phase 3: Check for Existing Records
 
@@ -241,6 +277,8 @@ query {
   }
 }
 ```
+
+Also check whether a differently named record already points to the same repository or website. Repository identity is more important than name similarity.
 
 #### Check for existing Capabilities:
 ```graphql
@@ -418,6 +456,18 @@ Report back to the user with:
 - What was created (new apps, capabilities)
 - What was linked (alternatives, capabilities)
 - The URL where they can view the new entry
+- Any rejected candidates and why they were excluded
+- Any existing alternatives you refreshed because the proprietary baseline changed
+
+### Public Site Verification
+
+After API verification, confirm the entry behaves correctly on the public site pages that consume it:
+
+- Proprietary alternatives page shows the new alternative
+- Open source alternative page shows the right capability chips and metadata
+- Capability pages show non-zero `feats` counts when the app actually has capabilities
+
+If the database entry looks correct but the UI is wrong, inspect the GraphQL query and data mapping layer. Do **not** assume the data entry itself is bad.
 
 ---
 

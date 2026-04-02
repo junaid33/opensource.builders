@@ -102,6 +102,7 @@ For each entry, perform independent research to verify the data:
 4. **Verify the alternative relationship:**
    - Does `primaryAlternativeTo` point to the correct proprietary app?
    - Is this open source project actually an alternative to that proprietary app?
+   - Is it a strong alternative, or only an adjacent tool with partial overlap?
 
 #### For Proprietary Applications:
 
@@ -119,6 +120,23 @@ For each entry, perform independent research to verify the data:
 
 4. **Verify linked alternatives:**
    - Are the `openSourceAlternatives` actually alternatives to this product?
+
+### Step 2.5: Verify Public-Site Rendering and Query Shape
+
+After verifying the database values, verify the public pages and the queries that power them.
+
+Check these cases when relevant:
+- Alternatives page rows show correct `feats` counts
+- Capability pages show the app's real capability count, not `0 feats`
+- Expanded rows contain the expected chips
+- Repo links, website links, stars, and licenses render from the intended fields
+
+If API data is correct but the page output is wrong, inspect:
+- The GraphQL query used by that page
+- The server/client data mapper
+- Any type that drops fields between fetch and render
+
+Treat query-shape drift as a verification failure, not just a UI bug.
 
 ### Step 3: Generate Verification Report
 
@@ -203,7 +221,7 @@ For each entry, verify:
 - [ ] `description` accurately describes the project
 - [ ] `repositoryUrl` is valid and accessible
 - [ ] `websiteUrl` is valid (if provided)
-- [ ] `license` matches the actual license file
+- [ ] `license` matches the actual repository license file
 - [ ] `githubStars` is within 10% of actual (stats get stale)
 - [ ] `githubForks` is within 10% of actual
 - [ ] `githubIssues` is reasonable
@@ -216,6 +234,8 @@ For each entry, verify:
 - [ ] All capabilities actually exist in the project
 - [ ] `githubPath` in capabilities points to real code
 - [ ] `documentationUrl` in capabilities is valid
+- [ ] Public pages show the expected feat counts and chips
+- [ ] Page queries actually fetch the fields the UI expects
 
 ### Proprietary Application
 - [ ] `name` is the official product name
@@ -227,6 +247,7 @@ For each entry, verify:
 - [ ] `category` is appropriate
 - [ ] All capabilities match actual product features
 - [ ] `openSourceAlternatives` are actually alternatives
+- [ ] Existing alternatives still make sense if the proprietary baseline was expanded
 
 ---
 
@@ -301,6 +322,14 @@ Common mistakes:
 - Open source project listed as alternative to wrong proprietary app
 - Example: A Figma alternative incorrectly linked to Sketch
 
+### 8. Downstream Query Drift
+- Database entry is correct but the page still renders wrong values
+- Example: capability page shows `0 feats` because the query did not fetch the app's capabilities array
+
+### 9. Ambiguous Project Identity
+- Correct-looking entry points to the wrong repo because the name matched multiple projects
+- Example: short or overloaded names picked from GitHub search without resolving against official docs
+
 ---
 
 ## Bulk Verification Query
@@ -356,6 +385,7 @@ Do not update entries if:
 - The change would break relationships
 - The user didn't ask for fixes, only verification
 - The discrepancy is minor (e.g., stars off by < 5%)
+- The project is only an adjacent tool and you cannot justify it as a real alternative
 
 Instead, report the issue and ask the user if they want it fixed.
 

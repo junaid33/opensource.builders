@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 
 interface DuoIconProps {
-  name: "category" | "compare" | "sun" | "moon" | "github";
+  name: "ethos" | "category" | "compare" | "sun" | "moon" | "github";
   className?: string;
   primaryColor?: string;
   secondaryColor?: string;
@@ -16,6 +16,23 @@ export function DuoIcon({
   const secondaryOpacity = 0.3;
 
   const icons = {
+    ethos: (
+      <>
+        <path
+          d="M 12 2 L 20 6.5 L 20 17.5 L 12 22 L 4 17.5 L 4 6.5 Z"
+          fill={secondaryColor}
+          opacity={secondaryOpacity}
+        />
+        <path
+          d="M 12 5.25 L 16.5 7.8 L 16.5 10.8 L 12 13.35 L 7.5 10.8 L 7.5 7.8 Z"
+          fill={primaryColor}
+        />
+        <path
+          d="M 12 14.75 L 16 12.5 L 16 15.2 L 12 17.5 L 8 15.2 L 8 12.5 Z"
+          fill={primaryColor}
+        />
+      </>
+    ),
     category: (
       <>
         <path

@@ -8,9 +8,8 @@ import { MobileNav } from "./mobile-nav";
 import { useBuildStatsCardState, useSelectedCapabilities } from "@/hooks/use-capabilities-config";
 import { motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
-import { Menu, X, MoreVertical } from "lucide-react";
+import { Menu, X, MoreVertical, Search as SearchIcon } from "lucide-react";
 import { Syne } from "next/font/google";
-import { Search as SearchIcon } from "lucide-react";
 import { useDebouncedSearch } from "@/features/public-site/lib/hooks/use-search";
 import ToolIcon from "@/components/ToolIcon";
 import { DuoIcon } from "@/components/DuoIcon";
@@ -34,7 +33,13 @@ export function Header() {
   const [searchTerm, setSearchTerm] = useState("");
   const moreRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
+  const mobileSearchInputRef = useRef<HTMLInputElement>(null);
   const { data: searchResults, isLoading: isSearching } = useDebouncedSearch(searchTerm, 300);
+  const hasSearchResults = Boolean(
+    searchResults &&
+      (searchResults.openSourceApplications.length > 0 ||
+        searchResults.proprietaryApplications.length > 0)
+  );
 
   useEffect(() => {
     if (selectedCapabilities.length > prevCount) {
@@ -48,11 +53,21 @@ export function Header() {
 
   useEffect(() => {
     const onResize = () => {
-      if (window.innerWidth >= 768) setMenuOpen(false);
+      if (window.innerWidth >= 768) {
+        setMenuOpen(false);
+        setSearchOpen(false);
+      }
     };
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, []);
+
+  useEffect(() => {
+    if (searchOpen) {
+      const timer = setTimeout(() => mobileSearchInputRef.current?.focus(), 120);
+      return () => clearTimeout(timer);
+    }
+  }, [searchOpen]);
 
   // Close dropdowns on click outside
   useEffect(() => {
@@ -77,7 +92,7 @@ export function Header() {
         scrolled && "bg-background/95 backdrop-blur-sm supports-backdrop-filter:bg-background/50"
       )}
     >
-      <nav className="mx-auto flex h-16 w-full max-w-5xl items-center justify-between px-4">
+      <nav className="mx-auto flex h-16 w-full max-w-5xl items-center justify-between gap-3 px-4">
         {/* Logo */}
         <a href="/" className="hover:opacity-80 transition-opacity">
           <Logo />
@@ -271,26 +286,144 @@ export function Header() {
           </div>
         </div>
 
-        {/* Mobile Menu Button */}
-        <button
-          aria-label={menuOpen ? "Close Menu" : "Open Menu"}
-          onClick={() => setMenuOpen((v) => !v)}
-          className="relative z-20 -m-2.5 -mr-3 block cursor-pointer p-2.5 md:hidden"
-        >
-          <Menu
-            className={cn(
-              "m-auto size-5 transition-all duration-200",
-              menuOpen && "rotate-180 scale-0 opacity-0",
-            )}
-          />
-          <X
-            className={cn(
-              "absolute inset-0 m-auto size-5 -rotate-180 scale-0 opacity-0 transition-all duration-200",
-              menuOpen && "rotate-0 scale-100 opacity-100",
-            )}
-          />
-        </button>
+        {/* Mobile actions */}
+        <div className="flex items-center gap-1 md:hidden" ref={searchRef}>
+          <button
+            aria-label={searchOpen ? "Close search" : "Open search"}
+            onClick={() => {
+              if (searchOpen) {
+                setSearchOpen(false);
+                setSearchTerm("");
+              } else {
+                setMenuOpen(false);
+                setSearchOpen(true);
+              }
+            }}
+            className="relative z-20 inline-flex h-10 w-10 items-center justify-center border border-border bg-secondary/60 transition-colors hover:bg-secondary"
+          >
+            <SearchIcon className={cn("size-4 transition-all duration-200", searchOpen && "scale-0 opacity-0")} />
+            <X
+              className={cn(
+                "absolute size-4 scale-0 opacity-0 transition-all duration-200",
+                searchOpen && "scale-100 opacity-100"
+              )}
+            />
+          </button>
+
+          <button
+            aria-label={menuOpen ? "Close Menu" : "Open Menu"}
+            onClick={() => {
+              setMenuOpen((v) => !v);
+              setSearchOpen(false);
+            }}
+            className="relative z-20 inline-flex h-10 w-10 items-center justify-center border border-border bg-secondary/60 transition-colors hover:bg-secondary"
+          >
+            <Menu
+              className={cn(
+                "size-5 transition-all duration-200",
+                menuOpen && "rotate-180 scale-0 opacity-0",
+              )}
+            />
+            <X
+              className={cn(
+                "absolute size-5 -rotate-180 scale-0 opacity-0 transition-all duration-200",
+                menuOpen && "rotate-0 scale-100 opacity-100",
+              )}
+            />
+          </button>
+        </div>
       </nav>
+
+      {searchOpen && (
+        <div className="border-t border-border px-4 py-3 md:hidden" ref={searchRef}>
+          <div className="mx-auto max-w-5xl">
+            <div className="relative">
+              <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+              <input
+                ref={mobileSearchInputRef}
+                type="text"
+                placeholder="Search alternatives, apps, features..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="h-11 w-full border border-border bg-secondary pl-9 pr-10 text-sm outline-none transition-colors focus:ring-1 focus:ring-muted"
+              />
+              {searchTerm && (
+                <button
+                  aria-label="Clear search"
+                  onClick={() => setSearchTerm("")}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  <X className="size-4" />
+                </button>
+              )}
+
+              {searchTerm && (
+                <div className="absolute left-0 right-0 top-full z-50 mt-2 border border-border bg-background shadow-lg">
+                  {isSearching ? (
+                    <div className="p-4 text-center text-sm text-muted-foreground">Searching...</div>
+                  ) : hasSearchResults ? (
+                    <div className="max-h-80 overflow-auto py-1">
+                      {searchResults?.openSourceApplications.length ? (
+                        <div>
+                          <div className="px-3 pt-2 text-xs font-semibold text-muted-foreground">Open Source</div>
+                          {searchResults.openSourceApplications.slice(0, 5).map((app) => (
+                            <a
+                              key={app.id}
+                              href={`/os-alternatives/${app.slug}`}
+                              onClick={() => {
+                                setSearchOpen(false);
+                                setSearchTerm("");
+                              }}
+                              className="flex items-center gap-3 px-3 py-2 text-sm transition-colors hover:bg-accent"
+                            >
+                              <ToolIcon
+                                name={app.name}
+                                simpleIconSlug={app.simpleIconSlug}
+                                simpleIconColor={app.simpleIconColor}
+                                size={16}
+                                rounded="none"
+                              />
+                              <span className="font-medium">{app.name}</span>
+                            </a>
+                          ))}
+                        </div>
+                      ) : null}
+
+                      {searchResults?.proprietaryApplications.length ? (
+                        <div>
+                          <div className="px-3 pt-2 text-xs font-semibold text-muted-foreground">Proprietary</div>
+                          {searchResults.proprietaryApplications.slice(0, 5).map((app) => (
+                            <a
+                              key={app.id}
+                              href={`/alternatives/${app.slug}`}
+                              onClick={() => {
+                                setSearchOpen(false);
+                                setSearchTerm("");
+                              }}
+                              className="flex items-center gap-3 px-3 py-2 text-sm transition-colors hover:bg-accent"
+                            >
+                              <ToolIcon
+                                name={app.name}
+                                simpleIconSlug={app.simpleIconSlug}
+                                simpleIconColor={app.simpleIconColor}
+                                size={16}
+                                rounded="none"
+                              />
+                              <span className="font-medium">{app.name}</span>
+                            </a>
+                          ))}
+                        </div>
+                      ) : null}
+                    </div>
+                  ) : (
+                    <div className="p-4 text-center text-sm text-muted-foreground">No results found</div>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       {menuOpen && (
         <div className="md:hidden">
@@ -306,6 +439,7 @@ function ThemeToggleMenuItem({ onClose }: { onClose: () => void }) {
 
   const toggleTheme = () => {
     setTheme(theme === "dark" ? "light" : "dark");
+    onClose();
   };
 
   return (

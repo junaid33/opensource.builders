@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/logo";
 import { useScroll } from "@/hooks/use-scroll";
@@ -8,7 +9,7 @@ import { MobileNav } from "./mobile-nav";
 import { useBuildStatsCardState, useSelectedCapabilities } from "@/hooks/use-capabilities-config";
 import { motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
-import { Menu, X, MoreVertical, Search as SearchIcon } from "lucide-react";
+import { Menu, X, MoreVertical, Package, Search as SearchIcon } from "lucide-react";
 import { Syne } from "next/font/google";
 import { useDebouncedSearch } from "@/features/public-site/lib/hooks/use-search";
 import ToolIcon from "@/components/ToolIcon";
@@ -32,13 +33,18 @@ export function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const moreRef = useRef<HTMLDivElement>(null);
-  const searchRef = useRef<HTMLDivElement>(null);
+  const desktopSearchRef = useRef<HTMLDivElement>(null);
+  const mobileActionsRef = useRef<HTMLDivElement>(null);
+  const mobileSearchPanelRef = useRef<HTMLDivElement>(null);
+  const mobileMenuPanelRef = useRef<HTMLDivElement>(null);
   const mobileSearchInputRef = useRef<HTMLInputElement>(null);
   const { data: searchResults, isLoading: isSearching } = useDebouncedSearch(searchTerm, 300);
+
   const hasSearchResults = Boolean(
     searchResults &&
       (searchResults.openSourceApplications.length > 0 ||
-        searchResults.proprietaryApplications.length > 0)
+        searchResults.proprietaryApplications.length > 0 ||
+        searchResults.capabilities.length > 0)
   );
 
   useEffect(() => {
@@ -58,6 +64,7 @@ export function Header() {
         setSearchOpen(false);
       }
     };
+
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, []);
@@ -69,68 +76,114 @@ export function Header() {
     }
   }, [searchOpen]);
 
-  // Close dropdowns on click outside
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (moreRef.current && !moreRef.current.contains(event.target as Node)) {
+    const handlePointerDownOutside = (event: MouseEvent) => {
+      const target = event.target as Node;
+
+      const isInsideDesktopSearch = desktopSearchRef.current?.contains(target) ?? false;
+      const isInsideMobileActions = mobileActionsRef.current?.contains(target) ?? false;
+      const isInsideMobileSearchPanel = mobileSearchPanelRef.current?.contains(target) ?? false;
+      const isInsideMobileMenuPanel = mobileMenuPanelRef.current?.contains(target) ?? false;
+      const isInsideMoreMenu = moreRef.current?.contains(target) ?? false;
+
+      if (!isInsideMoreMenu) {
         setMoreOpen(false);
       }
-      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+
+      if (!isInsideDesktopSearch && !isInsideMobileActions && !isInsideMobileSearchPanel) {
         setSearchOpen(false);
       }
+
+      if (!isInsideMobileActions && !isInsideMobileMenuPanel) {
+        setMenuOpen(false);
+      }
     };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+
+    document.addEventListener("mousedown", handlePointerDownOutside);
+    return () => document.removeEventListener("mousedown", handlePointerDownOutside);
   }, []);
+
+  const closeSearch = (clearTerm = false) => {
+    setSearchOpen(false);
+    if (clearTerm) {
+      setSearchTerm("");
+    }
+  };
+
+  const closeMenu = () => {
+    setMenuOpen(false);
+  };
+
+  const handleSearchToggle = () => {
+    if (searchOpen) {
+      closeSearch(true);
+      return;
+    }
+
+    closeMenu();
+    setSearchOpen(true);
+  };
+
+  const handleMenuToggle = () => {
+    if (menuOpen) {
+      closeMenu();
+      return;
+    }
+
+    closeSearch(false);
+    setMenuOpen(true);
+  };
+
+  const handleSearchResultClick = () => {
+    setSearchTerm("");
+    setSearchOpen(false);
+    setMenuOpen(false);
+  };
 
   return (
     <header
       data-state={menuOpen ? "active" : "inactive"}
       className={cn(
         "sticky top-0 z-50 w-full border-b transition-all duration-200",
-        menuOpen && "md:h-screen md:bg-background/95 md:backdrop-blur md:overflow-y-auto",
-        scrolled && "bg-background/95 backdrop-blur-sm supports-backdrop-filter:bg-background/50"
+        (menuOpen || searchOpen || moreOpen || scrolled) &&
+          "bg-background/95 backdrop-blur-sm supports-backdrop-filter:bg-background/80"
       )}
     >
       <nav className="mx-auto flex h-16 w-full max-w-5xl items-center justify-between gap-3 px-4">
-        {/* Logo */}
-        <a href="/" className="hover:opacity-80 transition-opacity">
+        <Link href="/" className="transition-opacity hover:opacity-80">
           <Logo />
-        </a>
+        </Link>
 
-        {/* Search Bar - Desktop */}
-        <div className="hidden md:flex flex-1 max-w-md mx-8" ref={searchRef}>
+        <div className="mx-8 hidden max-w-md flex-1 md:flex" ref={desktopSearchRef}>
           <div className="relative w-full">
-            <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <SearchIcon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <input
               type="text"
               placeholder="Search alternatives, apps, features..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               onFocus={() => setSearchOpen(true)}
-              onBlur={() => setTimeout(() => setSearchOpen(false), 200)}
-              className="w-full h-9 pl-9 pr-3 text-sm bg-secondary border border-border outline-none focus:ring-1 focus:ring-muted transition-colors"
+              className="h-9 w-full border border-border bg-secondary pl-9 pr-3 text-sm outline-none transition-colors focus:ring-1 focus:ring-muted"
             />
 
-            {searchOpen && searchTerm && (
-              <div className="absolute top-full left-0 right-0 mt-1 border border-border bg-background shadow-lg z-50 rounded-none">
+            {searchOpen && searchTerm.trim() && (
+              <div className="absolute left-0 right-0 top-full z-50 mt-1 border border-border bg-background shadow-lg">
                 <div className="py-1">
                   {isSearching ? (
                     <div className="p-4 text-center text-sm text-muted-foreground">Searching...</div>
                   ) : searchResults ? (
                     <div className="max-h-80 overflow-auto">
-                      {/* Open Source Applications */}
                       {searchResults.openSourceApplications.length > 0 && (
                         <div>
                           <div className="mb-2 px-3 pt-2 text-xs font-semibold text-muted-foreground">
                             Open Source
                           </div>
                           {searchResults.openSourceApplications.slice(0, 5).map((app) => (
-                            <a
+                            <Link
                               key={app.id}
                               href={`/os-alternatives/${app.slug}`}
-                              onMouseDown={() => { setSearchTerm(''); setSearchOpen(false); }}
-                              className="flex items-center gap-3 w-full px-3 py-2 text-sm hover:bg-accent transition-colors"
+                              onClick={handleSearchResultClick}
+                              className="flex w-full items-center gap-3 px-3 py-2 text-left text-sm transition-colors hover:bg-accent"
                             >
                               <ToolIcon
                                 name={app.name}
@@ -140,23 +193,22 @@ export function Header() {
                                 rounded="none"
                               />
                               <span className="font-medium">{app.name}</span>
-                            </a>
+                            </Link>
                           ))}
                         </div>
                       )}
 
-                      {/* Proprietary Applications */}
                       {searchResults.proprietaryApplications.length > 0 && (
                         <div>
                           <div className="mb-2 px-3 pt-2 text-xs font-semibold text-muted-foreground">
                             Proprietary
                           </div>
                           {searchResults.proprietaryApplications.slice(0, 5).map((app) => (
-                            <a
+                            <Link
                               key={app.id}
                               href={`/alternatives/${app.slug}`}
-                              onMouseDown={() => { setSearchTerm(''); setSearchOpen(false); }}
-                              className="flex items-center gap-3 w-full px-3 py-2 text-sm hover:bg-accent transition-colors"
+                              onClick={handleSearchResultClick}
+                              className="flex w-full items-center gap-3 px-3 py-2 text-left text-sm transition-colors hover:bg-accent"
                             >
                               <ToolIcon
                                 name={app.name}
@@ -166,12 +218,31 @@ export function Header() {
                                 rounded="none"
                               />
                               <span className="font-medium">{app.name}</span>
-                            </a>
+                            </Link>
                           ))}
                         </div>
                       )}
 
-                      {searchResults.openSourceApplications.length === 0 && searchResults.proprietaryApplications.length === 0 && (
+                      {searchResults.capabilities.length > 0 && (
+                        <div>
+                          <div className="mb-2 px-3 pt-2 text-xs font-semibold text-muted-foreground">
+                            Capabilities
+                          </div>
+                          {searchResults.capabilities.slice(0, 5).map((capability) => (
+                            <Link
+                              key={capability.id}
+                              href={`/capabilities/${capability.slug}`}
+                              onClick={handleSearchResultClick}
+                              className="flex w-full items-center gap-3 px-3 py-2 text-left text-sm transition-colors hover:bg-accent"
+                            >
+                              <Package className="h-4 w-4 text-muted-foreground" />
+                              <span className="font-medium">{capability.name}</span>
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+
+                      {!hasSearchResults && (
                         <div className="p-4 text-center text-sm text-muted-foreground">
                           No results found
                         </div>
@@ -184,25 +255,24 @@ export function Header() {
           </div>
         </div>
 
-        {/* Right side - Ethos, Build, More */}
-        <div className="hidden md:flex items-center gap-2">
-          {/* Ethos Button */}
+        <div className="hidden items-center gap-2 md:flex">
           <motion.div
             animate={isAnimating ? { scale: [1, 1.1, 1] } : {}}
             transition={{ duration: 0.3 }}
           >
-            <a href="/ethos">
-              <Button
-                variant="ghost"
-                size="sm"
-                className={cn(syne.className, "font-bold uppercase tracking-wider text-[10px] px-4 rounded-none h-8 border border-border bg-secondary/50 shadow-[3px_3px_0px_0px_rgba(0,0,0,0.25)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.15)] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.25)] dark:active:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.1)] transition-all hover:bg-secondary/80")}
-              >
-                Ethos
-              </Button>
-            </a>
+            <Button
+              asChild
+              variant="ghost"
+              size="sm"
+              className={cn(
+                syne.className,
+                "h-8 rounded-none border border-border bg-secondary/50 px-4 text-[10px] font-bold uppercase tracking-wider shadow-[3px_3px_0px_0px_rgba(0,0,0,0.25)] transition-all hover:bg-secondary/80 active:translate-x-[1px] active:translate-y-[1px] active:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.25)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.15)] dark:active:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.1)]"
+              )}
+            >
+              <Link href="/ethos">Ethos</Link>
+            </Button>
           </motion.div>
 
-          {/* Build Button */}
           <motion.div
             animate={isAnimating ? { scale: [1, 1.1, 1] } : {}}
             transition={{ duration: 0.3 }}
@@ -210,35 +280,42 @@ export function Header() {
             <Button
               variant="ghost"
               size="sm"
-              className={cn(syne.className, "relative font-bold uppercase tracking-wider text-[10px] px-4 rounded-none h-8 border border-border bg-primary text-primary-foreground hover:text-primary-foreground shadow-[3px_3px_0px_0px_rgba(0,0,0,0.25)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.15)] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.25)] dark:active:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.1)] transition-all hover:bg-primary/90 flex items-center gap-2")}
+              className={cn(
+                syne.className,
+                "relative flex h-8 items-center gap-2 rounded-none border border-border bg-primary px-4 text-[10px] font-bold uppercase tracking-wider text-primary-foreground shadow-[3px_3px_0px_0px_rgba(0,0,0,0.25)] transition-all hover:bg-primary/90 hover:text-primary-foreground active:translate-x-[1px] active:translate-y-[1px] active:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.25)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.15)] dark:active:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.1)]"
+              )}
               onClick={() => updateBuildStatsCard({ isDrawerOpen: true })}
             >
               Build
               {selectedCapabilities.length > 0 && (
-                <div className="flex items-center justify-center bg-background text-foreground size-4 text-[9px] font-bold">
+                <div className="flex size-4 items-center justify-center bg-background text-[9px] font-bold text-foreground">
                   {selectedCapabilities.length}
                 </div>
               )}
             </Button>
           </motion.div>
 
-          {/* More Button */}
           <div className="relative" ref={moreRef}>
             <Button
               variant="ghost"
               size="sm"
-              className={cn(syne.className, "font-bold uppercase tracking-wider text-[10px] px-3 rounded-none h-8 border border-border bg-secondary/50 shadow-[3px_3px_0px_0px_rgba(0,0,0,0.25)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.15)] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.25)] dark:active:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.1)] transition-all hover:bg-secondary/80")}
-              onClick={() => setMoreOpen(!moreOpen)}
+              className={cn(
+                syne.className,
+                "h-8 rounded-none border border-border bg-secondary/50 px-3 text-[10px] font-bold uppercase tracking-wider shadow-[3px_3px_0px_0px_rgba(0,0,0,0.25)] transition-all hover:bg-secondary/80 active:translate-x-[1px] active:translate-y-[1px] active:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.25)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.15)] dark:active:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.1)]"
+              )}
+              onClick={() => setMoreOpen((open) => !open)}
+              aria-expanded={moreOpen}
+              aria-label="Open more navigation"
             >
               <MoreVertical className="size-4" />
             </Button>
 
             {moreOpen && (
-              <div className="absolute top-full right-0 mt-1 w-52 border border-border bg-background shadow-lg z-50">
+              <div className="absolute right-0 top-full z-50 mt-1 w-52 border border-border bg-background shadow-lg">
                 <div className="py-1">
-                  <a
+                  <Link
                     href="/categories"
-                    className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-accent transition-colors"
+                    className="flex items-center gap-2 px-3 py-2 text-sm transition-colors hover:bg-accent"
                     onClick={() => setMoreOpen(false)}
                   >
                     <DuoIcon
@@ -248,10 +325,10 @@ export function Header() {
                       className="text-emerald-500 dark:text-emerald-400"
                     />
                     Categories
-                  </a>
-                  <a
+                  </Link>
+                  <Link
                     href="/compare"
-                    className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-accent transition-colors"
+                    className="flex items-center gap-2 px-3 py-2 text-sm transition-colors hover:bg-accent"
                     onClick={() => setMoreOpen(false)}
                   >
                     <DuoIcon
@@ -261,13 +338,13 @@ export function Header() {
                       className="text-blue-500 dark:text-blue-400"
                     />
                     Compare
-                  </a>
+                  </Link>
                   <div className="my-1 border-t border-border" />
                   <a
                     href="https://github.com/junaid33/opensource.builders"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-accent transition-colors"
+                    className="flex items-center gap-2 px-3 py-2 text-sm transition-colors hover:bg-accent"
                     onClick={() => setMoreOpen(false)}
                   >
                     <DuoIcon
@@ -286,59 +363,34 @@ export function Header() {
           </div>
         </div>
 
-        {/* Mobile actions */}
-        <div className="flex items-center gap-1 md:hidden" ref={searchRef}>
+        <div className="flex items-center gap-1 md:hidden" ref={mobileActionsRef}>
           <button
+            type="button"
             aria-label={searchOpen ? "Close search" : "Open search"}
-            onClick={() => {
-              if (searchOpen) {
-                setSearchOpen(false);
-                setSearchTerm("");
-              } else {
-                setMenuOpen(false);
-                setSearchOpen(true);
-              }
-            }}
-            className="relative z-20 inline-flex h-10 w-10 items-center justify-center border border-border bg-secondary/60 transition-colors hover:bg-secondary"
+            aria-expanded={searchOpen}
+            onClick={handleSearchToggle}
+            className="inline-flex h-10 w-10 items-center justify-center border border-border bg-secondary/60 transition-colors hover:bg-secondary"
           >
-            <SearchIcon className={cn("size-4 transition-all duration-200", searchOpen && "scale-0 opacity-0")} />
-            <X
-              className={cn(
-                "absolute size-4 scale-0 opacity-0 transition-all duration-200",
-                searchOpen && "scale-100 opacity-100"
-              )}
-            />
+            {searchOpen ? <X className="size-4" /> : <SearchIcon className="size-4" />}
           </button>
 
           <button
-            aria-label={menuOpen ? "Close Menu" : "Open Menu"}
-            onClick={() => {
-              setMenuOpen((v) => !v);
-              setSearchOpen(false);
-            }}
-            className="relative z-20 inline-flex h-10 w-10 items-center justify-center border border-border bg-secondary/60 transition-colors hover:bg-secondary"
+            type="button"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            onClick={handleMenuToggle}
+            className="inline-flex h-10 w-10 items-center justify-center border border-border bg-secondary/60 transition-colors hover:bg-secondary"
           >
-            <Menu
-              className={cn(
-                "size-5 transition-all duration-200",
-                menuOpen && "rotate-180 scale-0 opacity-0",
-              )}
-            />
-            <X
-              className={cn(
-                "absolute size-5 -rotate-180 scale-0 opacity-0 transition-all duration-200",
-                menuOpen && "rotate-0 scale-100 opacity-100",
-              )}
-            />
+            {menuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
           </button>
         </div>
       </nav>
 
       {searchOpen && (
-        <div className="border-t border-border px-4 py-3 md:hidden" ref={searchRef}>
+        <div className="border-t border-border px-4 py-3 md:hidden" ref={mobileSearchPanelRef}>
           <div className="mx-auto max-w-5xl">
             <div className="relative">
-              <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+              <SearchIcon className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
               <input
                 ref={mobileSearchInputRef}
                 type="text"
@@ -349,6 +401,7 @@ export function Header() {
               />
               {searchTerm && (
                 <button
+                  type="button"
                   aria-label="Clear search"
                   onClick={() => setSearchTerm("")}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground"
@@ -357,7 +410,7 @@ export function Header() {
                 </button>
               )}
 
-              {searchTerm && (
+              {searchTerm.trim() && (
                 <div className="absolute left-0 right-0 top-full z-50 mt-2 border border-border bg-background shadow-lg">
                   {isSearching ? (
                     <div className="p-4 text-center text-sm text-muted-foreground">Searching...</div>
@@ -367,14 +420,11 @@ export function Header() {
                         <div>
                           <div className="px-3 pt-2 text-xs font-semibold text-muted-foreground">Open Source</div>
                           {searchResults.openSourceApplications.slice(0, 5).map((app) => (
-                            <a
+                            <Link
                               key={app.id}
                               href={`/os-alternatives/${app.slug}`}
-                              onClick={() => {
-                                setSearchOpen(false);
-                                setSearchTerm("");
-                              }}
-                              className="flex items-center gap-3 px-3 py-2 text-sm transition-colors hover:bg-accent"
+                              onClick={handleSearchResultClick}
+                              className="flex w-full items-center gap-3 px-3 py-2 text-left text-sm transition-colors hover:bg-accent"
                             >
                               <ToolIcon
                                 name={app.name}
@@ -384,7 +434,7 @@ export function Header() {
                                 rounded="none"
                               />
                               <span className="font-medium">{app.name}</span>
-                            </a>
+                            </Link>
                           ))}
                         </div>
                       ) : null}
@@ -393,14 +443,11 @@ export function Header() {
                         <div>
                           <div className="px-3 pt-2 text-xs font-semibold text-muted-foreground">Proprietary</div>
                           {searchResults.proprietaryApplications.slice(0, 5).map((app) => (
-                            <a
+                            <Link
                               key={app.id}
                               href={`/alternatives/${app.slug}`}
-                              onClick={() => {
-                                setSearchOpen(false);
-                                setSearchTerm("");
-                              }}
-                              className="flex items-center gap-3 px-3 py-2 text-sm transition-colors hover:bg-accent"
+                              onClick={handleSearchResultClick}
+                              className="flex w-full items-center gap-3 px-3 py-2 text-left text-sm transition-colors hover:bg-accent"
                             >
                               <ToolIcon
                                 name={app.name}
@@ -410,7 +457,24 @@ export function Header() {
                                 rounded="none"
                               />
                               <span className="font-medium">{app.name}</span>
-                            </a>
+                            </Link>
+                          ))}
+                        </div>
+                      ) : null}
+
+                      {searchResults?.capabilities.length ? (
+                        <div>
+                          <div className="px-3 pt-2 text-xs font-semibold text-muted-foreground">Capabilities</div>
+                          {searchResults.capabilities.slice(0, 5).map((capability) => (
+                            <Link
+                              key={capability.id}
+                              href={`/capabilities/${capability.slug}`}
+                              onClick={handleSearchResultClick}
+                              className="flex w-full items-center gap-3 px-3 py-2 text-left text-sm transition-colors hover:bg-accent"
+                            >
+                              <Package className="h-4 w-4 text-muted-foreground" />
+                              <span className="font-medium">{capability.name}</span>
+                            </Link>
                           ))}
                         </div>
                       ) : null}
@@ -426,8 +490,8 @@ export function Header() {
       )}
 
       {menuOpen && (
-        <div className="md:hidden">
-          <MobileNav onClose={() => setMenuOpen(false)} />
+        <div className="md:hidden" ref={mobileMenuPanelRef}>
+          <MobileNav onClose={closeMenu} />
         </div>
       )}
     </header>
@@ -444,8 +508,9 @@ function ThemeToggleMenuItem({ onClose }: { onClose: () => void }) {
 
   return (
     <button
+      type="button"
       onClick={toggleTheme}
-      className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-accent transition-colors w-full text-left"
+      className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm transition-colors hover:bg-accent"
     >
       {theme === "dark" ? (
         <>

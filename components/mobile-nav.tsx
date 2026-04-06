@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { navLinks } from "@/lib/navigation";
 import { Wand2 } from "lucide-react";
 import { DuoIcon } from "@/components/DuoIcon";
 import { useTheme } from "next-themes";
@@ -23,6 +23,7 @@ export function MobileNav({ onClose }: { onClose: () => void }) {
       prevCountRef.current = selectedCapabilities.length;
       return () => clearTimeout(timer);
     }
+
     prevCountRef.current = selectedCapabilities.length;
   }, [selectedCapabilities.length]);
 
@@ -39,9 +40,8 @@ export function MobileNav({ onClose }: { onClose: () => void }) {
             asChild
             className="h-11 justify-start rounded-none border border-border bg-secondary/50 px-4 text-left text-base font-syne"
             variant="ghost"
-            onClick={onClose}
           >
-            <a href="/ethos">
+            <Link href="/ethos" onClick={onClose}>
               <span className="flex items-center gap-3">
                 <DuoIcon
                   name="ethos"
@@ -51,15 +51,15 @@ export function MobileNav({ onClose }: { onClose: () => void }) {
                 />
                 Ethos
               </span>
-            </a>
+            </Link>
           </Button>
+
           <Button
             asChild
             className="h-11 justify-start rounded-none border border-border bg-secondary/50 px-4 text-left text-base font-syne"
             variant="ghost"
-            onClick={onClose}
           >
-            <a href="/categories">
+            <Link href="/categories" onClick={onClose}>
               <span className="flex items-center gap-3">
                 <DuoIcon
                   name="category"
@@ -69,16 +69,15 @@ export function MobileNav({ onClose }: { onClose: () => void }) {
                 />
                 Categories
               </span>
-            </a>
+            </Link>
           </Button>
 
           <Button
             asChild
             className="h-11 justify-start rounded-none border border-border bg-secondary/50 px-4 text-left text-base font-syne"
             variant="ghost"
-            onClick={onClose}
           >
-            <a href="/compare">
+            <Link href="/compare" onClick={onClose}>
               <span className="flex items-center gap-3">
                 <DuoIcon
                   name="compare"
@@ -88,16 +87,15 @@ export function MobileNav({ onClose }: { onClose: () => void }) {
                 />
                 Compare
               </span>
-            </a>
+            </Link>
           </Button>
 
           <Button
             asChild
             className="h-11 justify-start rounded-none border border-border bg-secondary/50 px-4 text-left text-base font-syne"
             variant="ghost"
-            onClick={onClose}
           >
-            <a href="https://github.com/junaid33/opensource.builders" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/junaid33/opensource.builders" target="_blank" rel="noopener noreferrer" onClick={onClose}>
               <span className="flex items-center gap-3">
                 <DuoIcon
                   name="github"
@@ -111,6 +109,7 @@ export function MobileNav({ onClose }: { onClose: () => void }) {
           </Button>
 
           <button
+            type="button"
             onClick={() => {
               setTheme(theme === "dark" ? "light" : "dark");
               onClose();
@@ -149,13 +148,13 @@ export function MobileNav({ onClose }: { onClose: () => void }) {
       >
         <Button
           size="lg"
-          className="w-full justify-start font-syne font-bold uppercase tracking-wider text-xs rounded-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)] flex items-center gap-3 px-4 text-left"
+          className="flex w-full items-center justify-start gap-3 rounded-none px-4 text-left font-syne text-xs font-bold uppercase tracking-wider shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]"
           onClick={handleOpenBuilder}
         >
           <Wand2 className="size-4" />
           Build
           {selectedCapabilities.length > 0 && (
-            <div className="flex items-center justify-center bg-background text-foreground size-5 text-[10px] font-bold border border-foreground/10 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.5)]">
+            <div className="flex size-5 items-center justify-center border border-foreground/10 bg-background text-[10px] font-bold text-foreground shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.5)]">
               {selectedCapabilities.length}
             </div>
           )}

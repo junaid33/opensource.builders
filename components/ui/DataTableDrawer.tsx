@@ -2136,7 +2136,7 @@ Read the README.md and other relevant markdown files to understand how this full
 
           <DialogHeader>
             <DialogTitle className="text-xl font-bold text-foreground mb-2">
-              Skill Ready!
+              Skill Has Been Copied!
             </DialogTitle>
             <DialogDescription className="text-sm text-muted-foreground mb-3">
               Your skill references amazing features built by these projects. Please consider starring them to show your support.
@@ -2144,7 +2144,7 @@ Read the README.md and other relevant markdown files to understand how this full
           </DialogHeader>
 
           {/* Installation Instructions Dropdown */}
-          <div className="rounded-none bg-muted/50 border p-4 mb-3">
+          {/* <div className="rounded-none bg-muted/50 border p-4 mb-3">
             <div className="flex items-center justify-between mb-3">
               <p className="text-sm font-medium">Install your skill:</p>
               <select
@@ -2184,7 +2184,7 @@ Read the README.md and other relevant markdown files to understand how this full
                 </div>
               )}
             </div>
-          </div>
+          </div> */}
 
           <div className="space-y-3 py-2">
             {actualSelectedCapabilities && Array.from(

@@ -48,11 +48,13 @@ export default function BuildStatsCard({
 }: BuildStatsCardProps) {
   const { addCapability, removeCapability } = useCapabilityActions();
   const [searchTerm, setSearchTerm] = useState("");
+  const [visibleAppsCount, setVisibleAppsCount] = useState(5);
+  const [visibleCapabilitiesCount, setVisibleCapabilitiesCount] = useState(5);
 
   // Filter apps based on search
   const filteredApps = useMemo(() => {
-    if (!searchTerm.trim()) return apps.slice(0, 10); // Show top 10 by default
-    const q = searchTerm.toLowerCase();
+    const q = searchTerm.trim().toLowerCase();
+    if (!q) return apps;
     return apps.filter(app => 
       app.name.toLowerCase().includes(q) || 
       app.description?.toLowerCase().includes(q)
@@ -62,7 +64,7 @@ export default function BuildStatsCard({
   // Filter capabilities based on search
   // A capability item is a pair of {app, capabilityImpl}
   const filteredCapabilities = useMemo(() => {
-    const q = searchTerm.toLowerCase();
+    const q = searchTerm.trim().toLowerCase();
     const result: { app: OpenSourceApp; impl: CapabilityImpl }[] = [];
     
     apps.forEach(app => {
@@ -76,10 +78,19 @@ export default function BuildStatsCard({
       });
     });
 
-    // If search is empty, just show some default ones or none?
-    // Let's show first 30
-    return result.slice(0, 30);
+    return result;
   }, [apps, searchTerm]);
+
+  const displayedApps = searchTerm.trim()
+    ? filteredApps
+    : filteredApps.slice(0, visibleAppsCount);
+
+  const displayedCapabilities = searchTerm.trim()
+    ? filteredCapabilities
+    : filteredCapabilities.slice(0, visibleCapabilitiesCount);
+
+  const canShowMoreApps = !searchTerm.trim() && filteredApps.length > displayedApps.length;
+  const canShowMoreCapabilities = !searchTerm.trim() && filteredCapabilities.length > displayedCapabilities.length;
 
   const [expandedCap, setExpandedCap] = useState<string | null>(null);
 
@@ -117,7 +128,7 @@ export default function BuildStatsCard({
           placeholder="Search applications or capabilities..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full h-11 pl-10 pr-4 text-sm bg-secondary border border-border text-foreground outline-none transition-all duration-200 focus:ring-1 focus:ring-muted rounded-none"
+          className="w-full h-11 pl-10 pr-4 text-base bg-secondary border border-border text-foreground outline-none transition-all duration-200 focus:ring-1 focus:ring-muted rounded-none"
         />
       </div>
 
@@ -127,8 +138,8 @@ export default function BuildStatsCard({
           Applications
         </p>
         <div className="flex flex-wrap gap-2">
-          {filteredApps.length > 0 ? (
-            filteredApps.map(app => (
+          {displayedApps.length > 0 ? (
+            displayedApps.map(app => (
               <button
                 key={app.id}
                 onClick={() => setSearchTerm(app.name)}
@@ -148,6 +159,14 @@ export default function BuildStatsCard({
             <span className="text-xs text-muted-foreground">No apps found</span>
           )}
         </div>
+        {canShowMoreApps && (
+          <button
+            onClick={() => setVisibleAppsCount(prev => prev + 5)}
+            className="inline-flex h-8 items-center px-3 text-[0.75rem] font-medium text-muted-foreground bg-secondary border border-transparent hover:text-foreground hover:bg-accent transition-all rounded-none"
+          >
+            + Show 5 more
+          </button>
+        )}
       </div>
 
       {/* Tier 2: Capabilities */}
@@ -156,8 +175,8 @@ export default function BuildStatsCard({
           Capabilities
         </p>
         <div className="flex flex-col gap-2">
-          {filteredCapabilities.length > 0 ? (
-            filteredCapabilities.map(({ app, impl }) => {
+          {displayedCapabilities.length > 0 ? (
+            displayedCapabilities.map(({ app, impl }) => {
               const compositeId = `${app.id}-${impl.capability.id}`;
               const isSelected = externalSelectedCapabilities?.has(compositeId);
               const isExpanded = expandedCap === compositeId;
@@ -233,6 +252,14 @@ export default function BuildStatsCard({
             <span className="text-xs text-muted-foreground">No capabilities found</span>
           )}
         </div>
+        {canShowMoreCapabilities && (
+          <button
+            onClick={() => setVisibleCapabilitiesCount(prev => prev + 5)}
+            className="inline-flex h-8 items-center px-3 text-[0.75rem] font-medium text-muted-foreground bg-secondary border border-transparent hover:text-foreground hover:bg-accent transition-all rounded-none"
+          >
+            + Show 5 more
+          </button>
+        )}
       </div>
     </div>
   );

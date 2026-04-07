@@ -23,10 +23,12 @@ const DEFAULT_APP_SLUGS = [
   'shopify',
   'airtable',
   'cursor',
+  'superwhisper',
   'conductor',
   'notion',
   'figma',
   'slack',
+  'resend',
   'v0',
   'screen-studio',
   'tailwind-plus',
@@ -41,6 +43,7 @@ const APP_COLORS: Record<string, string> = {
   figma: '#f472b6',
   slack: '#22d3ee',
   cursor: '#ef4444',
+  resend: '#000000',
   v0: '#a3e635',
   'screen-studio': '#2dd4bf',
   'tailwind-plus': '#4ade80',
@@ -94,6 +97,7 @@ export function BrowseAlternatives() {
   const [searchValue, setSearchValue] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedApp, setExpandedApp] = useState<string | null>(null);
+  const [visibleTagCount, setVisibleTagCount] = useState(10);
 
   // Fetch all proprietary apps for search
   const { data: allApps = [] } = useQuery<ProprietaryAppBasic[]>({
@@ -134,14 +138,20 @@ export function BrowseAlternatives() {
       .filter((app): app is ProprietaryAppBasic => !!app);
   }, [allApps]);
 
+  const orderedApps = useMemo(() => {
+    const defaultSlugs = new Set(defaultApps.map(app => app.slug));
+    const remainingApps = allApps.filter(app => !defaultSlugs.has(app.slug));
+    return [...defaultApps, ...remainingApps];
+  }, [allApps, defaultApps]);
+
   // Filter visible tag buttons based on search
   const visibleTags = useMemo(() => {
-    if (!searchQuery.trim()) return defaultApps;
+    if (!searchQuery.trim()) return orderedApps;
     const q = searchQuery.trim().toLowerCase();
     return allApps.filter(app =>
       app.name.toLowerCase().includes(q)
     );
-  }, [allApps, defaultApps, searchQuery]);
+  }, [allApps, orderedApps, searchQuery]);
 
   // Toggle a proprietary app filter - single selection only
   const toggleFilter = (slug: string) => {
@@ -154,7 +164,14 @@ export function BrowseAlternatives() {
     setSelectedSlugs([]);
     setSearchQuery('');
     setSearchValue('');
+    setVisibleTagCount(10);
   };
+
+  const displayedTags = searchQuery.trim()
+    ? visibleTags
+    : visibleTags.slice(0, visibleTagCount);
+
+  const canShowMoreTags = !searchQuery.trim() && visibleTags.length > displayedTags.length;
 
   return (
     <section className="my-12">
@@ -181,12 +198,12 @@ export function BrowseAlternatives() {
               // Live search for tags
               setSearchQuery(e.currentTarget.value);
             }}
-            className="h-9 w-[200px] px-2 text-[0.79rem] bg-secondary border border-border text-foreground outline-none transition-all duration-200 focus-visible:ring-2 focus-visible:ring-muted"
+            className="h-9 w-[200px] px-2 text-base bg-secondary border border-border text-foreground outline-none transition-all duration-200 focus-visible:ring-2 focus-visible:ring-muted"
           />
         </form>
 
         {/* Tag Buttons */}
-        {visibleTags.map(app => {
+        {displayedTags.map(app => {
           const isActive = selectedSlugs.includes(app.slug);
           return (
             <button
@@ -222,6 +239,15 @@ export function BrowseAlternatives() {
             </button>
           );
         })}
+
+        {canShowMoreTags && (
+          <button
+            onClick={() => setVisibleTagCount(prev => prev + 5)}
+            className="inline-flex h-9 items-center px-3 text-sm font-medium text-muted-foreground bg-secondary border border-transparent hover:text-foreground hover:bg-accent transition-all duration-200"
+          >
+            + Show 5 more
+          </button>
+        )}
 
         {/* Clear All */}
         <button

@@ -101,7 +101,7 @@ export function NavbarSearch() {
           type="search"
           placeholder="Search open source tools, proprietary apps, or capabilities..."
           className={cn(
-            "h-9 w-full pl-9 pr-3 text-sm bg-background",
+            "h-9 w-full pl-9 pr-3 text-base bg-background",
             isOpen && hasResults && "rounded-b-none"
           )}
           value={search}

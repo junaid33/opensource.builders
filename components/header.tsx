@@ -163,7 +163,7 @@ export function Header() {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               onFocus={() => setSearchOpen(true)}
-              className="h-9 w-full border border-border bg-secondary pl-9 pr-3 text-sm outline-none transition-colors focus:ring-1 focus:ring-muted"
+              className="h-9 w-full border border-border bg-secondary pl-9 pr-3 text-base outline-none transition-colors focus:ring-1 focus:ring-muted"
             />
 
             {searchOpen && searchTerm.trim() && (
@@ -397,7 +397,7 @@ export function Header() {
                 placeholder="Search alternatives, apps, features..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="h-11 w-full border border-border bg-secondary pl-9 pr-10 text-sm outline-none transition-colors focus:ring-1 focus:ring-muted"
+                className="h-11 w-full border border-border bg-secondary pl-9 pr-10 text-base outline-none transition-colors focus:ring-1 focus:ring-muted"
               />
               {searchTerm && (
                 <button

@@ -63,6 +63,72 @@ const defaultCapabilitiesConfig: CapabilitiesConfig = {
   }
 }
 
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === "object" && value !== null
+
+const sanitizeSelectedCapability = (value: unknown): SelectedCapability | null => {
+  if (!isRecord(value)) return null
+
+  const id = typeof value.id === "string" ? value.id : null
+  const capabilityId = typeof value.capabilityId === "string" ? value.capabilityId : null
+  const toolId = typeof value.toolId === "string" ? value.toolId : null
+  const name = typeof value.name === "string" ? value.name : null
+  const toolName = typeof value.toolName === "string" ? value.toolName : null
+
+  if (!id || !capabilityId || !toolId || !name || !toolName) {
+    return null
+  }
+
+  return {
+    id,
+    capabilityId,
+    toolId,
+    name,
+    toolName,
+    description: typeof value.description === "string" ? value.description : undefined,
+    category: typeof value.category === "string" ? value.category : undefined,
+    complexity: typeof value.complexity === "string" ? value.complexity : undefined,
+    toolIcon: typeof value.toolIcon === "string" ? value.toolIcon : undefined,
+    toolColor: typeof value.toolColor === "string" ? value.toolColor : undefined,
+    toolRepo: typeof value.toolRepo === "string" ? value.toolRepo : undefined,
+    implementationNotes: typeof value.implementationNotes === "string" ? value.implementationNotes : undefined,
+    githubPath: typeof value.githubPath === "string" ? value.githubPath : undefined,
+    documentationUrl: typeof value.documentationUrl === "string" ? value.documentationUrl : undefined,
+  }
+}
+
+const sanitizeCapabilitiesConfig = (value: unknown, defaultConfig: CapabilitiesConfig): CapabilitiesConfig => {
+  if (!isRecord(value)) return defaultConfig
+
+  const selectedCapabilities = Array.isArray(value.selectedCapabilities)
+    ? value.selectedCapabilities
+        .map(sanitizeSelectedCapability)
+        .filter((capability): capability is SelectedCapability => capability !== null)
+    : defaultConfig.selectedCapabilities
+
+  const rawBuildStatsCard = isRecord(value.buildStatsCard) ? value.buildStatsCard : {}
+
+  return {
+    selectedCapabilities,
+    lastPinnedToolId:
+      typeof value.lastPinnedToolId === "string" ? value.lastPinnedToolId : undefined,
+    buildStatsCard: {
+      currentAppId: undefined,
+      isCollapsed:
+        typeof rawBuildStatsCard.isCollapsed === "boolean"
+          ? rawBuildStatsCard.isCollapsed
+          : defaultConfig.buildStatsCard.isCollapsed,
+      capabilitySearch:
+        typeof rawBuildStatsCard.capabilitySearch === "string"
+          ? rawBuildStatsCard.capabilitySearch
+          : defaultConfig.buildStatsCard.capabilitySearch,
+      appSearchTerm: '',
+      isAppsDropdownOpen: false,
+      isDrawerOpen: false,
+    },
+  }
+}
+
 const saveToLS = (storageKey: string, config: CapabilitiesConfig) => {
   try {
     localStorage.setItem(storageKey, JSON.stringify(config))
@@ -76,23 +142,15 @@ const loadFromLS = (storageKey: string, defaultConfig: CapabilitiesConfig): Capa
 
   try {
     const savedConfig = localStorage.getItem(storageKey)
-    if (savedConfig) {
-      const parsed = JSON.parse(savedConfig) as CapabilitiesConfig
-      return {
-        ...defaultConfig,
-        ...parsed,
-        // Always reset these UI states on page load - they should never be persisted
-        buildStatsCard: {
-          ...parsed.buildStatsCard,
-          currentAppId: undefined, // Always start with first app (will default to index 0)
-          isAppsDropdownOpen: false, // Always start closed
-          isDrawerOpen: false, // Always start closed
-          appSearchTerm: '', // Clear search
-        }
-      }
-    }
+    if (!savedConfig) return defaultConfig
 
-    return defaultConfig
+    const parsed = JSON.parse(savedConfig) as unknown
+    const sanitized = sanitizeCapabilitiesConfig(parsed, defaultConfig)
+
+    // Rewrite invalid or older shapes into the current safe format
+    saveToLS(storageKey, sanitized)
+
+    return sanitized
   } catch {
     return defaultConfig
   }

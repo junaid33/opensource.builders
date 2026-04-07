@@ -4,6 +4,115 @@ This skill enables an AI assistant to add new proprietary applications and their
 
 ---
 
+## What Open Source Builders Actually Is
+
+Open Source Builders is **not just a directory of alternatives**.
+
+It models:
+- **one proprietary application baseline** (for example: Superwhisper, Shopify, Notion)
+- **many open source alternatives** linked to that proprietary app
+- **shared capabilities** across both sides
+- **implementation-level evidence** on the open source side
+
+The goal is not only to help users discover alternatives, but to help them:
+- compare alternatives by real capabilities
+- inspect implementation evidence in docs and code
+- understand how a proprietary workflow maps to open source tools
+- generate build plans and skills from real implementation patterns
+
+Think in this canonical structure:
+1. define or verify the proprietary application baseline
+2. define the important capabilities that matter for substitution
+3. connect one or more open source applications to that baseline
+4. attach evidence-backed capability mappings to each open source application
+
+If the schema in this skill is sufficient for the task, **treat this document as canonical**. Only inspect Keystone model files if a query/mutation fails, fields appear inconsistent, or you have evidence the schema changed.
+
+---
+
+## Alternative Matching Rules
+
+Do **not** require exact feature parity.
+
+An open source project can be a valid alternative when it covers the same **core user job** and provides a meaningfully similar workflow, even if it is missing some premium, enterprise, or polish features.
+
+Use this rubric:
+
+### Strong alternative
+- same core workflow or user job
+- meaningful capability overlap
+- users could reasonably substitute it for the proprietary product
+
+### Partial alternative
+- adjacent workflow with some overlap
+- may replace only part of the proprietary workflow
+- acceptable to add only if the substitution case is still credible
+
+### Not an alternative
+- similar underlying technology but different end-user job
+- infrastructure/tooling dependency rather than a product substitute
+- overlap is too weak to justify listing as an alternative
+
+Prefer **workflow overlap** over superficial category similarity.
+
+---
+
+## Capability Heuristics and Evidence Rules
+
+Capabilities are the comparison layer. They do not need to be identical between products, but they should map the important jobs users expect.
+
+### Evidence precedence
+
+For each capability, prefer evidence in this order:
+1. real code path
+2. dedicated docs page
+3. README feature section
+4. release notes / changelog
+5. marketing copy only as a last resort
+
+Do not add capability links from vague claims alone when stronger evidence is available.
+
+### Category starter heuristic: AI dictation / voice-to-text apps
+
+For products like Superwhisper, Wispr Flow, voice dictation tools, or local speech assistants, common capabilities often include:
+- `speech-to-text` — speech converted into text
+- `offline-first` — core workflow works without cloud dependency
+- `global-hotkey` — system-wide shortcut starts/stops recording
+- `auto-pasting` — app inserts transcribed text into the focused field
+- `local-model-management` — downloads/selects/loads local STT or LLM models
+- `ai-text-transformation` — cleanup, rewrite, formatting, prompt-based post-processing
+- `context-awareness` — uses active app, focused element, selection, OCR, or clipboard context
+
+Use these heuristics as a starting point, not as a substitute for research.
+
+### License ambiguity rule
+
+When verifying license:
+- prefer `LICENSE`, `COPYING`, or equivalent on the default branch
+- do not rely only on GitHub summary metadata
+- if no license file exists but the README claims a license, treat it as **provisional**
+- if you proceed with a provisional license, explicitly mention that in your final report
+
+---
+
+## Public-Site Expectations
+
+The public site depends on more than raw DB correctness.
+
+For alternatives pages, the data typically needs:
+- proprietary app capabilities
+- open source alternatives with stars, forks, license, website/repo
+- open source alternative capability arrays including implementation fields
+
+For open source alternative detail pages, the data typically needs:
+- `primaryAlternativeTo`
+- open source capability rows
+- sibling alternatives with capability arrays for feat counts and chips
+
+If the DB is correct but the page looks wrong, inspect the query shape and mapper before changing the entry itself.
+
+---
+
 ## Prerequisites
 
 Before you can add anything to the database, you need:
@@ -197,6 +306,8 @@ If you found plausible candidates that are **not** the right project, note them 
    - README section
    - Documentation URL
    - Real code path
+
+   Prefer evidence in this order: real code path → docs page → README → release notes → marketing copy.
 
    Avoid creating capability links from vague marketing copy alone.
 
@@ -453,8 +564,13 @@ query {
 ```
 
 Report back to the user with:
+- Canonical proprietary app
+- Canonical open source project
+- Why this is a valid alternative
 - What was created (new apps, capabilities)
 - What was linked (alternatives, capabilities)
+- Capabilities linked and evidence used
+- Any uncertainties, including provisional license calls
 - The URL where they can view the new entry
 - Any rejected candidates and why they were excluded
 - Any existing alternatives you refreshed because the proprietary baseline changed

@@ -998,7 +998,7 @@ Read the README.md and other relevant markdown files to understand how this full
                   <div className="flex-1 flex flex-col overflow-y-auto pr-4">
                     {/* Choose Starter (ported) */}
                     <div className="space-y-3 mb-5">
-                      <p className="text-[0.65rem] text-muted-foreground uppercase tracking-[0.15em] font-mono">Choose Starter</p>
+                      <p className="text-xs text-muted-foreground uppercase tracking-wide">Choose Starter</p>
                       <CustomSelect value={selectedTemplate} onValueChange={(value: string) => {
                         setSelectedTemplate(value)
                         updateBuildStatsCard({ currentAppId: undefined })
@@ -1090,7 +1090,7 @@ Read the README.md and other relevant markdown files to understand how this full
 
                     {/* Build Stats Card */}
                     <div className="space-y-3 flex-1">
-                      <p className="text-[0.65rem] text-muted-foreground uppercase tracking-[0.15em] font-mono">Find Open Source Capabilities</p>
+                      <p className="text-xs text-muted-foreground uppercase tracking-wide">Find Open Source Capabilities</p>
                       <BuildStatsCard
                         apps={apps}
                         selectedCapabilities={new Set(actualSelectedCapabilities?.map(cap => cap.id) || [])}
@@ -1103,7 +1103,7 @@ Read the README.md and other relevant markdown files to understand how this full
 
                   {/* Middle Column: Selected Capabilities */}
                   <div className="flex-1 space-y-3 overflow-y-auto px-4 border-l border-border -my-4 py-4">
-                    <p className="text-[0.65rem] text-muted-foreground uppercase tracking-[0.15em] font-mono">Selected Capabilities</p>
+                    <p className="text-xs text-muted-foreground uppercase tracking-wide">Selected Capabilities</p>
                     {actualSelectedCapabilities && actualSelectedCapabilities.length > 0 ? (
                       <div className="space-y-2">
                         {actualSelectedCapabilities
@@ -1622,7 +1622,7 @@ Read the README.md and other relevant markdown files to understand how this full
 
                   <CustomTabsContent value="features" className="flex-1 overflow-y-auto px-6 mt-4">
                     <div className="space-y-4">
-                      <p className="text-[0.65rem] text-muted-foreground uppercase tracking-[0.15em] font-mono">Selected Capabilities</p>
+                      <p className="text-xs text-muted-foreground uppercase tracking-wide">Selected Capabilities</p>
 
                       {actualSelectedCapabilities && actualSelectedCapabilities.length > 0 ? (
                         <div className="space-y-2">

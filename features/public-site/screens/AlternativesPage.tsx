@@ -113,16 +113,22 @@ export function AlternativesPageClient({ slug }: AlternativesPageClientProps) {
     );
   }, [proprietaryApp, searchValue]);
 
-  // Filter alternatives based on selected capabilities
+  // Filter alternatives based on selected capabilities.
+  // Use AND semantics: adding more capability filters should only narrow results.
+  // Also ignore inactive capability mappings.
   const filteredAlternatives = useMemo(() => {
     if (!proprietaryApp?.openSourceAlternatives) return [];
     if (selectedCaps.length === 0) return proprietaryApp.openSourceAlternatives;
 
-    return proprietaryApp.openSourceAlternatives.filter(alt =>
-      alt.capabilities?.some(cap =>
-        selectedCaps.includes(cap.capability.slug)
-      )
-    );
+    return proprietaryApp.openSourceAlternatives.filter((alt) => {
+      const activeCapabilitySlugs = new Set(
+        (alt.capabilities || [])
+          .filter((cap) => cap.isActive !== false)
+          .map((cap) => cap.capability.slug)
+      );
+
+      return selectedCaps.every((selectedCap) => activeCapabilitySlugs.has(selectedCap));
+    });
   }, [proprietaryApp, selectedCaps]);
 
   const toggleCap = (slug: string) => {

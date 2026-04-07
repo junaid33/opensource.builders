@@ -4,6 +4,60 @@ This skill enables an AI assistant to verify and audit entries in the Open Sourc
 
 ---
 
+## What “Verified” Means in Open Source Builders
+
+In Open Source Builders, a record is only truly verified when all of these are true:
+- the database fields are materially accurate
+- the proprietary ↔ open source relationship is correct
+- the capability mappings are evidence-backed
+- the public-site query shape supports correct rendering
+
+This matters because OSB is not just a directory. It is a structured map from:
+- one proprietary application baseline
+- to many open source alternatives
+- through shared capabilities
+- with implementation evidence on the open source side
+
+When verifying an entry, do not only ask “is this row filled in?” Ask:
+- is this actually a credible alternative?
+- do these capabilities reflect real substitution value?
+- is the evidence real?
+- will the public site render the intended data correctly?
+
+---
+
+## Verification Outcome Types
+
+Use these distinctions when reporting issues:
+
+### Bad data
+The stored value is wrong.
+- wrong repository
+- wrong stars/forks/license
+- wrong relationship
+- capability does not exist
+
+### Stale data
+The value was once correct but needs refresh.
+- GitHub stars/forks outdated
+- last commit old
+- status no longer reflects maintenance level
+
+### Weak evidence
+The mapping may be plausible but is not well-supported.
+- capability sourced only from vague marketing copy
+- docs link is generic and not capability-specific
+- `githubPath` is missing or does not support the claim
+
+### Query/render bug
+The DB is correct but the public site is not showing it correctly.
+- missing feat counts
+- chips not rendering
+- query omitted needed fields
+- mapper dropped capabilities or metadata
+
+---
+
 ## Purpose
 
 After new entries are added to Open Source Builders, use this skill to:
@@ -137,6 +191,17 @@ If API data is correct but the page output is wrong, inspect:
 - Any type that drops fields between fetch and render
 
 Treat query-shape drift as a verification failure, not just a UI bug.
+
+Important practical note:
+- some public pages are client-rendered or hydrated after load
+- terminal HTML checks may be inconclusive even when the page is healthy
+- when HTML output is inconclusive, treat the query shape and mapper as the source of truth
+
+In those cases, prioritize verification in this order:
+1. DB correctness
+2. GraphQL query shape
+3. mapper / transform correctness
+4. rendered HTML if observable
 
 ### Step 3: Generate Verification Report
 
@@ -299,6 +364,12 @@ Common mistakes:
 - "MIT" vs "MIT License"
 - "GPL-3.0" vs "GPLv3" vs "GNU GPL v3"
 - Missing license when repo has one
+- README claims a license but the repo has no top-level license file
+
+If a README claims a license but no license file exists:
+- treat the license as provisional
+- mention the source of the claim
+- do not present it as fully verified from repo metadata alone
 
 ### 3. Incorrect Status
 - Project marked "active" but hasn't had commits in 6+ months
@@ -329,6 +400,13 @@ Common mistakes:
 ### 9. Ambiguous Project Identity
 - Correct-looking entry points to the wrong repo because the name matched multiple projects
 - Example: short or overloaded names picked from GitHub search without resolving against official docs
+
+### 10. Weak Alternative Fit
+- Project is technically related but not a credible substitute for the proprietary workflow
+- Similar technology stack, but wrong user job
+- Too little capability overlap to justify listing as an alternative
+
+Use the same substitution mindset as the contribution skill: strong workflow overlap matters more than superficial category overlap.
 
 ---
 

@@ -123,7 +123,7 @@ export default function BuildStatsCard({
 
       {/* Tier 1: Open Source Applications */}
       <div className="space-y-3">
-        <p className="text-[0.65rem] text-muted-foreground uppercase tracking-[0.15em] font-mono">
+        <p className="text-xs text-muted-foreground uppercase tracking-wide">
           Applications
         </p>
         <div className="flex flex-wrap gap-2">
@@ -152,7 +152,7 @@ export default function BuildStatsCard({
 
       {/* Tier 2: Capabilities */}
       <div className="space-y-3">
-        <p className="text-[0.65rem] text-muted-foreground uppercase tracking-[0.15em] font-mono">
+        <p className="text-xs text-muted-foreground uppercase tracking-wide">
           Capabilities
         </p>
         <div className="flex flex-col gap-2">

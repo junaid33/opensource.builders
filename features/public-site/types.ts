@@ -170,3 +170,37 @@ export interface AllCapabilitiesResponse {
 export interface AllOpenSourceAppsResponse {
   openSourceApplications: OpenSourceApplication[];
 }
+
+export interface RecentOpenSourceApp {
+  id: string;
+  name: string;
+  slug: string;
+  description?: string | null;
+  githubStars?: number | null;
+  githubForks?: number | null;
+  license?: string | null;
+  status?: string | null;
+  repositoryUrl?: string | null;
+  websiteUrl?: string | null;
+  simpleIconSlug?: string | null;
+  simpleIconColor?: string | null;
+  createdAt?: string | null;
+  primaryAlternativeTo?: {
+    id: string;
+    name: string;
+    slug: string;
+    simpleIconSlug?: string | null;
+    simpleIconColor?: string | null;
+  } | null;
+  capabilities?: Array<{
+    capability: {
+      id: string;
+      name: string;
+      slug: string;
+    };
+  }> | null;
+}
+
+export interface RecentOpenSourceAppsResponse {
+  openSourceApplications: RecentOpenSourceApp[];
+}

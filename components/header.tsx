@@ -4,30 +4,19 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/logo";
 import { useScroll } from "@/hooks/use-scroll";
-import { Button } from "@/components/ui/button";
 import { MobileNav } from "./mobile-nav";
-import { useBuildStatsCardState, useSelectedCapabilities } from "@/hooks/use-capabilities-config";
-import { motion } from "framer-motion";
-import { useState, useEffect, useRef } from "react";
-import { Menu, X, MoreVertical, Package, Search as SearchIcon } from "lucide-react";
-import { Syne } from "next/font/google";
+import { useBuildStatsCardState } from "@/hooks/use-capabilities-config";
+import { useState, useEffect, useRef, type ReactNode } from "react";
+import { ChevronDown, X, Package, Search as SearchIcon, Star } from "lucide-react";
+import { GeistPixelSquare } from "geist/font/pixel";
 import { useDebouncedSearch } from "@/features/public-site/lib/hooks/use-search";
 import ToolIcon from "@/components/ToolIcon";
 import { DuoIcon } from "@/components/DuoIcon";
-import { useTheme } from "next-themes";
-
-const syne = Syne({
-  subsets: ["latin"],
-  display: "swap",
-  adjustFontFallback: false,
-});
+import { ThemeSwitcher } from "@/components/ui/theme-toggle";
 
 export function Header() {
   const scrolled = useScroll(10);
   const { updateBuildStatsCard } = useBuildStatsCardState();
-  const selectedCapabilities = useSelectedCapabilities();
-  const [prevCount, setPrevCount] = useState(selectedCapabilities.length);
-  const [isAnimating, setIsAnimating] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -46,16 +35,6 @@ export function Header() {
         searchResults.proprietaryApplications.length > 0 ||
         searchResults.capabilities.length > 0)
   );
-
-  useEffect(() => {
-    if (selectedCapabilities.length > prevCount) {
-      setIsAnimating(true);
-      const timer = setTimeout(() => setIsAnimating(false), 500);
-      setPrevCount(selectedCapabilities.length);
-      return () => clearTimeout(timer);
-    }
-    setPrevCount(selectedCapabilities.length);
-  }, [selectedCapabilities.length, prevCount]);
 
   useEffect(() => {
     const onResize = () => {
@@ -255,133 +234,133 @@ export function Header() {
           </div>
         </div>
 
-        <div className="hidden items-center gap-2 md:flex">
-          <motion.div
-            animate={isAnimating ? { scale: [1, 1.1, 1] } : {}}
-            transition={{ duration: 0.3 }}
-          >
-            <Button
-              asChild
-              variant="ghost"
-              size="sm"
-              className={cn(
-                syne.className,
-                "h-8 rounded-none border border-border bg-secondary/50 px-4 text-[10px] font-bold uppercase tracking-wider shadow-[3px_3px_0px_0px_rgba(0,0,0,0.25)] transition-all hover:bg-secondary/80 active:translate-x-[1px] active:translate-y-[1px] active:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.25)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.15)] dark:active:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.1)]"
-              )}
-            >
-              <Link href="/ethos">Ethos</Link>
-            </Button>
-          </motion.div>
+        <div className="hidden items-center gap-3 md:flex">
+          <StarsBadge />
 
-          <motion.div
-            animate={isAnimating ? { scale: [1, 1.1, 1] } : {}}
-            transition={{ duration: 0.3 }}
+          <span aria-hidden="true" className="flex h-7 items-center text-[14px] font-medium leading-none text-foreground/70">
+            /
+          </span>
+
+          <Link
+            href="/ethos"
+            className={cn(
+              GeistPixelSquare.className,
+              "flex h-7 items-center text-[11px] font-semibold uppercase leading-none tracking-[0.12em] text-foreground/70 transition-colors hover:text-foreground"
+            )}
           >
-            <Button
-              variant="ghost"
-              size="sm"
-              className={cn(
-                syne.className,
-                "relative flex h-8 items-center gap-2 rounded-none border border-border bg-primary px-4 text-[10px] font-bold uppercase tracking-wider text-primary-foreground shadow-[3px_3px_0px_0px_rgba(0,0,0,0.25)] transition-all hover:bg-primary/90 hover:text-primary-foreground active:translate-x-[1px] active:translate-y-[1px] active:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.25)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.15)] dark:active:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.1)]"
-              )}
-              onClick={() => updateBuildStatsCard({ isDrawerOpen: true })}
-            >
-              Build
-              {selectedCapabilities.length > 0 && (
-                <div className="flex size-4 items-center justify-center bg-background text-[9px] font-bold text-foreground">
-                  {selectedCapabilities.length}
-                </div>
-              )}
-            </Button>
-          </motion.div>
+            Ethos
+          </Link>
+
+          <span aria-hidden="true" className="flex h-7 items-center text-[14px] font-medium leading-none text-foreground/70">
+            /
+          </span>
+
+          <button
+            type="button"
+            className={cn(
+              GeistPixelSquare.className,
+              "flex h-7 items-center text-[11px] font-semibold uppercase leading-none tracking-[0.12em] text-foreground/70 transition-colors hover:text-foreground"
+            )}
+            onClick={() => updateBuildStatsCard({ isDrawerOpen: true })}
+          >
+            Build
+          </button>
+
+          <span aria-hidden="true" className="flex h-7 items-center text-[14px] font-medium leading-none text-foreground/70">
+            /
+          </span>
 
           <div className="relative" ref={moreRef}>
-            <Button
-              variant="ghost"
-              size="sm"
+            <button
+              type="button"
               className={cn(
-                syne.className,
-                "h-8 rounded-none border border-border bg-secondary/50 px-3 text-[10px] font-bold uppercase tracking-wider shadow-[3px_3px_0px_0px_rgba(0,0,0,0.25)] transition-all hover:bg-secondary/80 active:translate-x-[1px] active:translate-y-[1px] active:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.25)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.15)] dark:active:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.1)]"
+                GeistPixelSquare.className,
+                "flex h-7 items-center gap-1.5 text-[11px] font-semibold uppercase leading-none tracking-[0.12em] text-foreground/70 transition-colors hover:text-foreground"
               )}
               onClick={() => setMoreOpen((open) => !open)}
               aria-expanded={moreOpen}
               aria-label="Open more navigation"
             >
-              <MoreVertical className="size-4" />
-            </Button>
+              More
+              <ChevronDown className="size-3 stroke-[3] text-foreground/80" aria-hidden="true" />
+            </button>
 
             {moreOpen && (
-              <div className="absolute right-0 top-full z-50 mt-1 w-52 border border-border bg-background shadow-lg">
-                <div className="py-1">
-                  <Link
-                    href="/categories"
-                    className="flex items-center gap-2 px-3 py-2 text-sm transition-colors hover:bg-accent"
-                    onClick={() => setMoreOpen(false)}
-                  >
-                    <DuoIcon
-                      name="category"
-                      primaryColor="currentColor"
-                      secondaryColor="currentColor"
-                      className="text-emerald-500 dark:text-emerald-400"
-                    />
-                    Categories
-                  </Link>
-                  <Link
-                    href="/compare"
-                    className="flex items-center gap-2 px-3 py-2 text-sm transition-colors hover:bg-accent"
-                    onClick={() => setMoreOpen(false)}
-                  >
-                    <DuoIcon
-                      name="compare"
-                      primaryColor="currentColor"
-                      secondaryColor="currentColor"
-                      className="text-blue-500 dark:text-blue-400"
-                    />
-                    Compare
-                  </Link>
-                  <div className="my-1 border-t border-border" />
-                  <a
-                    href="https://github.com/junaid33/opensource.builders"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-3 py-2 text-sm transition-colors hover:bg-accent"
-                    onClick={() => setMoreOpen(false)}
-                  >
-                    <DuoIcon
-                      name="github"
-                      primaryColor="currentColor"
-                      secondaryColor="currentColor"
-                      className="text-indigo-500 dark:text-indigo-400"
-                    />
-                    Source Code
-                  </a>
-                  <div className="my-1 border-t border-border" />
-                  <ThemeToggleMenuItem onClose={() => setMoreOpen(false)} />
+              <div className="absolute right-0 top-full z-50 mt-3 w-[25rem] max-w-[calc(100vw-2rem)] overflow-hidden border border-border bg-background shadow-2xl shadow-black/10 dark:shadow-black/40">
+                <div className="flex items-center justify-between gap-3 border-b border-border bg-secondary/35 px-4 py-3">
+                  <div className="min-w-0">
+                    <p className={cn(GeistPixelSquare.className, "text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground")}>Menu</p>
+                    <p className="mt-1 truncate text-sm text-foreground">Navigate the open source catalog.</p>
+                  </div>
+                  <ThemeSwitcher rounded={false} className="h-8 border-border bg-background px-1 shadow-none [&_button]:size-5 [&_svg]:size-3" />
                 </div>
+
+                <div className="p-2">
+                  <MoreFeaturedLink
+                    href="/categories"
+                    title="Categories"
+                    description="Browse the software map"
+                    icon={<DuoIcon name="category" primaryColor="currentColor" secondaryColor="currentColor" className="text-emerald-500 dark:text-emerald-400" />}
+                    onClick={() => setMoreOpen(false)}
+                  />
+                  <MoreFeaturedLink
+                    href="/compare"
+                    title="Compare"
+                    description="Put two apps side by side"
+                    icon={<DuoIcon name="compare" primaryColor="currentColor" secondaryColor="currentColor" className="text-blue-500 dark:text-blue-400" />}
+                    onClick={() => setMoreOpen(false)}
+                  />
+                  <MoreFeaturedLink
+                    href="/ethos"
+                    title="Ethos"
+                    description="Why source-owned software matters"
+                    icon={<DuoIcon name="ethos" primaryColor="currentColor" secondaryColor="currentColor" className="text-fuchsia-500 dark:text-fuchsia-400" />}
+                    onClick={() => setMoreOpen(false)}
+                  />
+                  <MoreFeaturedLink
+                    href="https://github.com/junaid33/opensource.builders"
+                    title="Source Code"
+                    description="Open the public repository"
+                    external
+                    icon={<DuoIcon name="github" primaryColor="currentColor" secondaryColor="currentColor" className="text-indigo-500 dark:text-indigo-400" />}
+                    onClick={() => setMoreOpen(false)}
+                  />
+                </div>
+
               </div>
             )}
           </div>
         </div>
 
-        <div className="flex items-center gap-1 md:hidden" ref={mobileActionsRef}>
+        <div className="flex items-center gap-3 md:hidden" ref={mobileActionsRef}>
           <button
             type="button"
             aria-label={searchOpen ? "Close search" : "Open search"}
             aria-expanded={searchOpen}
             onClick={handleSearchToggle}
-            className="inline-flex h-10 w-10 items-center justify-center border border-border bg-secondary/60 transition-colors hover:bg-secondary"
+            className={cn(
+              GeistPixelSquare.className,
+              "flex h-7 items-center text-[11px] font-semibold uppercase leading-none tracking-[0.12em] text-foreground/70 transition-colors hover:text-foreground"
+            )}
           >
-            {searchOpen ? <X className="size-4" /> : <SearchIcon className="size-4" />}
+            {searchOpen ? "Close" : "Search"}
           </button>
+
+          <span aria-hidden="true" className="flex h-7 items-center text-[14px] font-medium leading-none text-foreground/70">
+            /
+          </span>
 
           <button
             type="button"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
             onClick={handleMenuToggle}
-            className="inline-flex h-10 w-10 items-center justify-center border border-border bg-secondary/60 transition-colors hover:bg-secondary"
+            className={cn(
+              GeistPixelSquare.className,
+              "flex h-7 items-center text-[11px] font-semibold uppercase leading-none tracking-[0.12em] text-foreground/70 transition-colors hover:text-foreground"
+            )}
           >
-            {menuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
+            {menuOpen ? "Close" : "Menu"}
           </button>
         </div>
       </nav>
@@ -498,41 +477,68 @@ export function Header() {
   );
 }
 
-function ThemeToggleMenuItem({ onClose }: { onClose: () => void }) {
-  const { theme, setTheme } = useTheme();
-
-  const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-    onClose();
-  };
-
+function StarsBadge({ className }: { className?: string }) {
   return (
-    <button
-      type="button"
-      onClick={toggleTheme}
-      className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm transition-colors hover:bg-accent"
-    >
-      {theme === "dark" ? (
-        <>
-          <DuoIcon
-            name="sun"
-            primaryColor="currentColor"
-            secondaryColor="currentColor"
-            className="text-amber-500 dark:text-amber-400"
-          />
-          Light Mode
-        </>
-      ) : (
-        <>
-          <DuoIcon
-            name="moon"
-            primaryColor="currentColor"
-            secondaryColor="currentColor"
-            className="text-rose-500 dark:text-rose-400"
-          />
-          Dark Mode
-        </>
+    <a
+      href="https://github.com/junaid33/opensource.builders"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="View opensource.builders on GitHub"
+      className={cn(
+        GeistPixelSquare.className,
+        "inline-flex h-8 items-center justify-center gap-2 text-[11px] font-semibold uppercase leading-none tracking-[0.08em] text-muted-foreground transition-colors hover:text-foreground",
+        className
       )}
-    </button>
+    >
+      <Star className="size-3 fill-orange-400 text-orange-400" aria-hidden="true" />
+      <span className="h-3.5 w-px bg-border" aria-hidden="true" />
+      <span className="text-foreground/70">1.1K</span>
+    </a>
   );
 }
+
+function MoreFeaturedLink({
+  href,
+  title,
+  description,
+  icon,
+  external = false,
+  onClick,
+}: {
+  href: string;
+  title: string;
+  description: string;
+  icon: ReactNode;
+  external?: boolean;
+  onClick: () => void;
+}) {
+  const content = (
+    <>
+      <span className="flex size-9 shrink-0 items-center justify-center border border-border bg-card [&_svg]:size-4">
+        {icon}
+      </span>
+      <span className="min-w-0 flex-1">
+        <span className="block text-sm font-semibold leading-5 text-foreground">{title}</span>
+        <span className="block truncate text-xs leading-5 text-muted-foreground">{description}</span>
+      </span>
+      <span aria-hidden="true" className="text-muted-foreground/50 transition-transform group-hover:translate-x-0.5">→</span>
+    </>
+  );
+  const className = "group flex items-center gap-3 p-2 transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
+
+  if (external) {
+    return (
+      <a href={href} target="_blank" rel="noopener noreferrer" onClick={onClick} className={className}>
+        {content}
+      </a>
+    );
+  }
+
+  return (
+    <Link href={href} onClick={onClick} className={className}>
+      {content}
+    </Link>
+  );
+}
+
+

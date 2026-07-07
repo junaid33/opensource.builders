@@ -1,8 +1,8 @@
 // Single data functions used by both server prefetch and client useQuery
 import { cache } from 'react';
 import { makeGraphQLRequest } from './graphql/client';
-import { GET_POPULAR_APPS, GET_ALTERNATIVES, GET_ALL_PROPRIETARY_APPS, MULTI_MODEL_SEARCH, GET_OS_ALTERNATIVES, GET_CAPABILITY_APPLICATIONS, GET_ALL_CAPABILITIES, GET_ALL_OPEN_SOURCE_APPS, GET_PAGINATED_ALTERNATIVES } from './graphql/queries';
-import { PopularAppsResponse, AlternativesResponse, SearchResult, PopularApp, ProprietaryApplication, OpenSourceApplication, CapabilityApplicationsResponse, AllCapabilitiesResponse, AllOpenSourceAppsResponse, Capability } from '../types';
+import { GET_POPULAR_APPS, GET_ALTERNATIVES, GET_ALL_PROPRIETARY_APPS, MULTI_MODEL_SEARCH, GET_OS_ALTERNATIVES, GET_CAPABILITY_APPLICATIONS, GET_ALL_CAPABILITIES, GET_ALL_OPEN_SOURCE_APPS, GET_PAGINATED_ALTERNATIVES, GET_RECENT_OPEN_SOURCE_APPS } from './graphql/queries';
+import { PopularAppsResponse, AlternativesResponse, SearchResult, PopularApp, ProprietaryApplication, OpenSourceApplication, CapabilityApplicationsResponse, AllCapabilitiesResponse, AllOpenSourceAppsResponse, RecentOpenSourceAppsResponse, RecentOpenSourceApp, Capability } from '../types';
 
 export const OPEN_SOURCE_APP_NOT_FOUND_ERROR = 'Open source application not found';
 export const OS_APP_NOT_MARKED_AS_ALTERNATIVE_ERROR = 'This open source application is not marked as an alternative to any proprietary application';
@@ -278,6 +278,17 @@ export const fetchAllCapabilities = cache(async function (): Promise<Capability[
 });
 
 // Fetch all open source applications
+export async function fetchRecentOpenSourceApps(
+  take = 6,
+  skip = 0
+): Promise<RecentOpenSourceApp[]> {
+  const data = await makeGraphQLRequest<RecentOpenSourceAppsResponse>(GET_RECENT_OPEN_SOURCE_APPS, {
+    take,
+    skip,
+  });
+  return data.openSourceApplications;
+}
+
 export const fetchAllOpenSourceApps = cache(async function (): Promise<OpenSourceApplication[]> {
   const data = await makeGraphQLRequest<AllOpenSourceAppsResponse>(GET_ALL_OPEN_SOURCE_APPS);
   return data.openSourceApplications;

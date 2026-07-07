@@ -21,8 +21,12 @@ function formatStars(n: number): string {
 // Default featured proprietary apps to show as tag buttons
 const DEFAULT_APP_SLUGS = [
   'shopify',
-  'airtable',
+  'granola',
+  'chatgpt',
+  'claude-code',
   'cursor',
+  'google-analytics',
+  'airtable',
   'superwhisper',
   'conductor',
   'notion',
@@ -37,12 +41,16 @@ const DEFAULT_APP_SLUGS = [
 // Assign a color to each default app (matching desengs dot colors)
 const APP_COLORS: Record<string, string> = {
   shopify: '#8b5cf6',
+  granola: '#2E2618',
+  chatgpt: '#74AA9C',
+  'claude-code': '#D97757',
+  cursor: '#ef4444',
+  'google-analytics': '#E37400',
   airtable: '#18BFFF',
   conductor: '#f97316',
   notion: '#6366f1',
   figma: '#f472b6',
   slack: '#22d3ee',
-  cursor: '#ef4444',
   resend: '#000000',
   v0: '#a3e635',
   'screen-studio': '#2dd4bf',
@@ -93,7 +101,7 @@ function getAppColor(app: ProprietaryAppBasic): string {
 }
 
 export function BrowseAlternatives() {
-  const [selectedSlugs, setSelectedSlugs] = useState<string[]>(['shopify']);
+  const [selectedSlugs, setSelectedSlugs] = useState<string[]>(['chatgpt']);
   const [searchValue, setSearchValue] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedApp, setExpandedApp] = useState<string | null>(null);

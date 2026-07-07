@@ -4,7 +4,23 @@ import { gql } from 'graphql-request';
 export const GET_POPULAR_APPS = gql`
   query GetPopularApps {
     proprietaryApplications(
-      take: 9
+      where: {
+        slug: {
+          in: [
+            "shopify"
+            "granola"
+            "chatgpt"
+            "claude-code"
+            "cursor"
+            "google-analytics"
+            "superwhisper"
+            "airtable"
+            "notion"
+            "figma"
+          ]
+        }
+      }
+      take: 10
       orderBy: { name: asc }
     ) {
       id
@@ -14,6 +30,7 @@ export const GET_POPULAR_APPS = gql`
       websiteUrl
       simpleIconSlug
       simpleIconColor
+      openSourceAlternativesCount
     }
   }
 `;
@@ -433,6 +450,46 @@ export const GET_PAGINATED_ALTERNATIVES = gql`
         }
       }
       openSourceAlternativesCount
+    }
+  }
+`;
+
+// Recently added open source applications
+export const GET_RECENT_OPEN_SOURCE_APPS = gql`
+  query GetRecentOpenSourceApps($take: Int!, $skip: Int!) {
+    openSourceApplications(
+      where: { status: { in: ["active", "beta", "maintenance"] } }
+      orderBy: { createdAt: desc }
+      take: $take
+      skip: $skip
+    ) {
+      id
+      name
+      slug
+      description
+      githubStars
+      githubForks
+      license
+      status
+      repositoryUrl
+      websiteUrl
+      simpleIconSlug
+      simpleIconColor
+      createdAt
+      primaryAlternativeTo {
+        id
+        name
+        slug
+        simpleIconSlug
+        simpleIconColor
+      }
+      capabilities {
+        capability {
+          id
+          name
+          slug
+        }
+      }
     }
   }
 `;

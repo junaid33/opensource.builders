@@ -20,6 +20,7 @@ export const queryKeys = {
     all: ['openSourceApps'] as const,
     lists: () => [...queryKeys.openSourceApps.all, 'list'] as const,
     list: () => [...queryKeys.openSourceApps.all, 'list'] as const,
+    recent: () => [...queryKeys.openSourceApps.all, 'recent'] as const,
     details: () => [...queryKeys.openSourceApps.all, 'detail'] as const,
     detail: (slug: string) => [...queryKeys.openSourceApps.details(), slug] as const,
   },

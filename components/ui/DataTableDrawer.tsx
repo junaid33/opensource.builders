@@ -722,6 +722,13 @@ export function DataTableDrawer({
       info: "Openfront is built off of this same starter, but it's a Shopify alternative with comprehensive e-commerce features including product management, order processing, payment handling, and shipping integration."
     },
     {
+      id: "openfront-restaurant",
+      name: "Openfront Restaurant",
+      description: "Open source restaurant platform",
+      source: "https://github.com/openshiporg/openfront-restaurant",
+      info: "Openfront Restaurant is built off the same Next.js + Keystone starter and provides restaurant workflows including point of sale, menu and order management, kitchen display, table management, online ordering, and shift reporting."
+    },
+    {
       id: "openship",
       name: "Openship",
       description: "Order routing & fulfillment platform",
@@ -1009,7 +1016,7 @@ Read the README.md and other relevant markdown files to understand how this full
                             if (!t) return <SelectPrimitives.Value placeholder="Choose a starter template" />
                             return (
                               <span className="flex min-w-0 flex-1 items-center gap-3 text-left">
-                                {t.id === 'openfront' ? (
+                                {t.id.startsWith('openfront') ? (
                                   <OpenfrontIcon className="w-6 h-6" />
                                 ) : t.id === 'openship' ? (
                                   <OpenshipIcon className="w-6 h-6" />
@@ -1034,7 +1041,7 @@ Read the README.md and other relevant markdown files to understand how this full
                           {starterTemplates.map((template) => (
                             <CustomSelectItem key={template.id} value={template.id}>
                               <span className="flex items-center gap-3">
-                                {template.id === 'openfront' ? (
+                                {template.id.startsWith('openfront') ? (
                                   <OpenfrontIcon className="w-6 h-6" />
                                 ) : template.id === 'openship' ? (
                                   <OpenshipIcon className="w-6 h-6" />
@@ -1247,7 +1254,7 @@ Read the README.md and other relevant markdown files to understand how this full
                                         <PopoverTrigger asChild>
                                           <button className="flex-shrink-0 inline-flex items-center gap-2 hover:bg-muted/50 rounded-none px-1 py-0.5 transition-colors focus:outline-none focus:ring-0">
                                             <div style={{ width: 20, height: 20 }}>
-                                              {currentTemplate.id === 'openfront' ? (
+                                              {currentTemplate.id.startsWith('openfront') ? (
                                                 <OpenfrontIcon className="w-5 h-5" />
                                               ) : currentTemplate.id === 'openship' ? (
                                                 <OpenshipIcon className="w-5 h-5" />
@@ -1269,7 +1276,7 @@ Read the README.md and other relevant markdown files to understand how this full
                                               <span className="text-sm font-medium">Starter Template</span>
                                             </div>
                                             <div className="flex items-center gap-3">
-                                              {currentTemplate.id === 'openfront' ? (
+                                              {currentTemplate.id.startsWith('openfront') ? (
                                                 <OpenfrontIcon className="w-6 h-6" />
                                               ) : currentTemplate.id === 'openship' ? (
                                                 <OpenshipIcon className="w-6 h-6" />
@@ -1487,7 +1494,7 @@ Read the README.md and other relevant markdown files to understand how this full
 
                 {/* Mobile: Tabbed layout (existing) */}
                 <CustomTabs defaultValue="builder" className="lg:hidden flex flex-col h-full">
-                  <CustomTabsList className="flex w-full rounded-none border-b border-border bg-transparent p-0">
+                  <CustomTabsList className="flex w-full rounded-none border-b border-border bg-transparent px-6 py-0">
                     <CustomTabsTrigger
                       value="builder"
                       className="flex-1 rounded-none border-b-2 border-transparent py-3 text-[0.7rem] font-mono uppercase tracking-[0.15em] data-[state=active]:border-foreground data-[state=active]:bg-transparent data-[state=active]:text-foreground"
@@ -1529,7 +1536,7 @@ Read the README.md and other relevant markdown files to understand how this full
                             if (!t) return <SelectPrimitives.Value placeholder="Choose a starter template" />
                             return (
                               <span className="flex min-w-0 flex-1 items-center gap-3 text-left">
-                                {t.id === 'openfront' ? (
+                                {t.id.startsWith('openfront') ? (
                                   <OpenfrontIcon className="w-6 h-6" />
                                 ) : t.id === 'openship' ? (
                                   <OpenshipIcon className="w-6 h-6" />
@@ -1554,7 +1561,7 @@ Read the README.md and other relevant markdown files to understand how this full
                           {starterTemplates.map((template) => (
                             <CustomSelectItem key={template.id} value={template.id}>
                               <span className="flex items-center gap-3">
-                                {template.id === 'openfront' ? (
+                                {template.id.startsWith('openfront') ? (
                                   <OpenfrontIcon className="w-6 h-6" />
                                 ) : template.id === 'openship' ? (
                                   <OpenshipIcon className="w-6 h-6" />
@@ -1816,7 +1823,7 @@ Read the README.md and other relevant markdown files to understand how this full
                                         <PopoverTrigger asChild>
                                           <button className="flex-shrink-0 inline-flex items-center gap-2 hover:bg-muted/50 rounded-none px-1 py-0.5 transition-colors focus:outline-none focus:ring-0">
                                             <div style={{ width: 20, height: 20 }}>
-                                              {currentTemplate.id === 'openfront' ? (
+                                              {currentTemplate.id.startsWith('openfront') ? (
                                                 <OpenfrontIcon className="w-5 h-5" />
                                               ) : currentTemplate.id === 'openship' ? (
                                                 <OpenshipIcon className="w-5 h-5" />
@@ -1838,7 +1845,7 @@ Read the README.md and other relevant markdown files to understand how this full
                                               <span className="text-sm font-medium">Starter Template</span>
                                             </div>
                                             <div className="flex items-center gap-3">
-                                              {currentTemplate.id === 'openfront' ? (
+                                              {currentTemplate.id.startsWith('openfront') ? (
                                                 <OpenfrontIcon className="w-6 h-6" />
                                               ) : currentTemplate.id === 'openship' ? (
                                                 <OpenshipIcon className="w-6 h-6" />

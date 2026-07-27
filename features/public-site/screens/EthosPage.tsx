@@ -30,19 +30,19 @@ export function EthosPage() {
         <Container>
           <div className="pb-8">
             <div className="max-w-2xl text-left">
-              <div className="flex items-center justify-start mb-4">
-                <Logo />
-              </div>
               <a
                 href="https://openship.org"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center text-sm text-muted-foreground mb-4 uppercase font-medium tracking-wide hover:text-foreground transition-colors"
+                className="mb-4 flex items-center text-sm font-medium uppercase tracking-wide text-muted-foreground transition-colors hover:text-foreground"
               >
-                An Openship initiative <ArrowUpRight className="size-4 ml-1" />
+                An Openship initiative <ArrowUpRight className="ml-1 size-4" />
               </a>
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-6 tracking-tight font-syne">
-                opensource.builders
+              <div className="mb-4 flex items-center justify-start">
+                <Logo />
+              </div>
+              <h1 className="mb-6 font-syne text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl">
+                Build software you can own.
               </h1>
 
               {/* Author Info */}

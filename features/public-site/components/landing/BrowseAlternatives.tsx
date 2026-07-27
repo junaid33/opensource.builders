@@ -21,20 +21,20 @@ function formatStars(n: number): string {
 // Default featured proprietary apps to show as tag buttons
 const DEFAULT_APP_SLUGS = [
   'shopify',
-  'granola',
   'chatgpt',
   'claude-code',
   'cursor',
-  'google-analytics',
-  'airtable',
   'superwhisper',
   'conductor',
+  'google-analytics',
   'notion',
   'figma',
   'slack',
-  'resend',
+  'airtable',
   'v0',
   'screen-studio',
+  'granola',
+  'resend',
   'tailwind-plus',
 ];
 
@@ -101,7 +101,7 @@ function getAppColor(app: ProprietaryAppBasic): string {
 }
 
 export function BrowseAlternatives() {
-  const [selectedSlugs, setSelectedSlugs] = useState<string[]>(['chatgpt']);
+  const [selectedSlugs, setSelectedSlugs] = useState<string[]>(['shopify']);
   const [searchValue, setSearchValue] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedApp, setExpandedApp] = useState<string | null>(null);
@@ -251,7 +251,7 @@ export function BrowseAlternatives() {
         {canShowMoreTags && (
           <button
             onClick={() => setVisibleTagCount(prev => prev + 5)}
-            className="inline-flex h-9 items-center px-3 text-sm font-medium text-muted-foreground bg-secondary border border-transparent hover:text-foreground hover:bg-accent transition-all duration-200"
+            className="flex h-9 items-center border border-border bg-secondary px-4 text-[0.79rem] font-medium text-muted-foreground transition-all duration-200 hover:bg-accent hover:text-foreground active:scale-95"
           >
             + Show 5 more
           </button>

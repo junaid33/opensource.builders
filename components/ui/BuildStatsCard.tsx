@@ -162,7 +162,7 @@ export default function BuildStatsCard({
         {canShowMoreApps && (
           <button
             onClick={() => setVisibleAppsCount(prev => prev + 5)}
-            className="inline-flex h-8 items-center px-3 text-[0.75rem] font-medium text-muted-foreground bg-secondary border border-transparent hover:text-foreground hover:bg-accent transition-all rounded-none"
+            className="inline-flex h-8 items-center rounded-none border border-border bg-secondary px-3 text-[0.75rem] font-medium text-muted-foreground transition-all hover:bg-accent hover:text-foreground"
           >
             + Show 5 more
           </button>
@@ -255,7 +255,7 @@ export default function BuildStatsCard({
         {canShowMoreCapabilities && (
           <button
             onClick={() => setVisibleCapabilitiesCount(prev => prev + 5)}
-            className="inline-flex h-8 items-center px-3 text-[0.75rem] font-medium text-muted-foreground bg-secondary border border-transparent hover:text-foreground hover:bg-accent transition-all rounded-none"
+            className="inline-flex h-8 items-center rounded-none border border-border bg-secondary px-3 text-[0.75rem] font-medium text-muted-foreground transition-all hover:bg-accent hover:text-foreground"
           >
             + Show 5 more
           </button>

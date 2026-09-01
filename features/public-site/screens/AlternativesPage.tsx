@@ -212,7 +212,7 @@ export function AlternativesPageClient({ slug }: AlternativesPageClientProps) {
           {!searchValue && visibleCaps.length > INITIAL_CAPS_LIMIT && (
             <button
               onClick={() => setShowAllCaps(!showAllCaps)}
-              className="inline-flex h-9 items-center px-3 text-sm font-medium text-muted-foreground bg-secondary border border-transparent hover:text-foreground hover:bg-accent transition-all duration-200"
+              className="inline-flex h-9 items-center border border-border bg-secondary px-3 text-sm font-medium text-muted-foreground transition-all duration-200 hover:bg-accent hover:text-foreground"
             >
               {showAllCaps ? 'Show less' : `+ Show ${visibleCaps.length - INITIAL_CAPS_LIMIT} more`}
             </button>

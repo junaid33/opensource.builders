@@ -219,7 +219,7 @@ export function OsAlternativesPageClient({ slug }: OsAlternativesPageClientProps
           {!searchValue && filteredCaps.length > INITIAL_CAPS_LIMIT && (
             <button
               onClick={() => setShowAllCaps(!showAllCaps)}
-              className="inline-flex h-9 items-center px-3 text-sm font-medium text-muted-foreground bg-secondary border border-transparent hover:text-foreground hover:bg-accent transition-all duration-200"
+              className="inline-flex h-8 w-[calc(50%-0.25rem)] shrink-0 items-center border border-border bg-secondary px-2 text-xs font-medium text-muted-foreground transition-all duration-200 hover:bg-accent hover:text-foreground sm:h-9 sm:w-auto sm:px-3 sm:text-sm"
             >
               {showAllCaps ? 'Show less' : `+ Show ${filteredCaps.length - INITIAL_CAPS_LIMIT} more`}
             </button>

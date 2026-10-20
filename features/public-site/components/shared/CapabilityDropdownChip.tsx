@@ -91,13 +91,13 @@ export function CapabilityDropdownChip({
       <DropdownMenuTrigger asChild>
         <button
           className={cn(
-            'relative flex items-center gap-2 h-9 px-3 text-sm font-medium border transition-all duration-200 focus-visible:outline-none focus:ring-1 focus:ring-muted',
+            'relative flex h-8 w-[calc(50%-0.25rem)] min-w-0 shrink-0 items-center gap-1.5 border px-2 text-xs font-medium transition-all duration-200 focus-visible:outline-none focus:ring-1 focus:ring-muted sm:h-9 sm:w-auto sm:gap-2 sm:px-3 sm:text-sm',
             showActiveRing
               ? 'text-foreground bg-accent border-border/60'
               : isActive
               ? 'text-muted-foreground bg-secondary border-border hover:text-foreground hover:bg-accent'
               : 'text-muted-foreground/40 bg-secondary/50 border-border/50 line-through',
-            'active:scale-95 rounded-none shrink-0' // Force no roundedness, prevent shrinking
+            'active:scale-95 rounded-none'
           )}
         >
           {showActiveRing && (
@@ -119,7 +119,7 @@ export function CapabilityDropdownChip({
             className="shrink-0"
           />
 
-          <span className="truncate max-w-[120px] sm:max-w-[150px]">{capability.name}</span>
+          <span className="min-w-0 flex-1 truncate text-left sm:max-w-[150px]">{capability.name}</span>
           <ChevronDown className="w-3 h-3 opacity-30 shrink-0" />
         </button>
       </DropdownMenuTrigger>
@@ -136,9 +136,32 @@ export function CapabilityDropdownChip({
           {capability.name}
         </DropdownMenuLabel>
 
+        <DropdownMenuSeparator className="bg-border" />
+
+        {(implementationNotes || githubPath || documentationUrl) && (
+          <div className="px-2 py-2 space-y-2 text-[0.7rem]">
+            {implementationNotes && (
+              <div>
+                <p className="text-muted-foreground uppercase text-[0.6rem] font-mono mb-1">Notes</p>
+                <p className="text-foreground/80 leading-relaxed">{implementationNotes}</p>
+              </div>
+            )}
+            {githubPath && (
+              <div>
+                <p className="text-muted-foreground uppercase text-[0.6rem] font-mono mb-1">Code Location</p>
+                <code className="bg-muted px-1.5 py-0.5 border border-border text-foreground/70 break-all block font-mono">
+                  {githubPath}
+                </code>
+              </div>
+            )}
+          </div>
+        )}
+
         {otherAppsWithCap.length > 0 && (
           <>
-            <DropdownMenuSeparator className="bg-border" />
+            {(implementationNotes || githubPath || documentationUrl) && (
+              <DropdownMenuSeparator className="bg-border" />
+            )}
             <div className="px-2 py-1.5 text-xs text-muted-foreground/80 font-mono uppercase tracking-wider">
               Used by
             </div>
@@ -171,28 +194,6 @@ export function CapabilityDropdownChip({
         )}
 
         <DropdownMenuSeparator className="bg-border" />
-        
-        {(implementationNotes || githubPath || documentationUrl) && (
-          <>
-            <div className="px-2 py-2 space-y-2 text-[0.7rem]">
-              {implementationNotes && (
-                <div>
-                  <p className="text-muted-foreground uppercase text-[0.6rem] font-mono mb-1">Notes</p>
-                  <p className="text-foreground/80 leading-relaxed">{implementationNotes}</p>
-                </div>
-              )}
-              {githubPath && (
-                <div>
-                  <p className="text-muted-foreground uppercase text-[0.6rem] font-mono mb-1">Code Location</p>
-                  <code className="bg-muted px-1.5 py-0.5 border border-border text-foreground/70 break-all block font-mono">
-                    {githubPath}
-                  </code>
-                </div>
-              )}
-            </div>
-            <DropdownMenuSeparator className="bg-border" />
-          </>
-        )}
 
         <DropdownMenuItem
           onClick={handleToggle}

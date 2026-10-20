@@ -422,7 +422,7 @@ function AlternativesList({
             {/* Accordion: Capabilities as Chips */}
             {isExpanded && alt.capabilities && (
               <div className="pb-4 pt-2">
-                <div className="flex flex-wrap gap-2">
+                <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap [&>button]:w-full sm:[&>button]:w-auto">
                   {alt.capabilities.map((cap: any) => {
                     const compositeId = `${alt.id}-${cap.capability.id}`;
                     const isSelected = selectedCapabilities.some((c: any) => c.id === compositeId);

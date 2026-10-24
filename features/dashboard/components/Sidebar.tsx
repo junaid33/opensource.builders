@@ -39,11 +39,15 @@ import { AdminMeta } from '../hooks/useAdminMeta'
 import { Home, Database, ChevronRight, Package } from 'lucide-react'
 import { Logo, LogoIcon } from '@/features/dashboard/components/Logo'
 import { UserProfileClient } from './UserProfileClient'
+import { visibleSidebarLists } from '../lib/sidebarAccess'
 
 interface User {
   id: string;
   email: string;
   name?: string;
+  role?: {
+    canAccessDashboard?: boolean;
+  };
 }
 
 interface SidebarProps {
@@ -79,7 +83,7 @@ export function Sidebar({ adminMeta, user }: SidebarProps) {
   )
 
   // Convert lists to sidebar links format
-  const sidebarLinks = listsArray.map((list: any) => ({
+  const sidebarLinks = visibleSidebarLists(listsArray as any[], user).map((list: any) => ({
     title: list.label,
     href: `/dashboard/${list.path}`
   }))
@@ -92,7 +96,7 @@ export function Sidebar({ adminMeta, user }: SidebarProps) {
       isActive: false,
       icon: Package,
     },
-  ]
+  ].filter((group) => group.items.length > 0)
 
   return (
     <SidebarComponent collapsible="icon">

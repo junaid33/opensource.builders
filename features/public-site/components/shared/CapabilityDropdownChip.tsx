@@ -125,7 +125,7 @@ export function CapabilityDropdownChip({
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="start" className="w-[300px] border-border bg-background rounded-none">
-        <DropdownMenuLabel className="font-instrument-serif text-lg font-normal mb-1 flex items-center gap-2">
+        <DropdownMenuLabel className="font-geist-serif text-lg font-normal mb-1 flex items-center gap-2">
           <ToolIcon
             name={openSourceAppName}
             simpleIconSlug={toolIcon}

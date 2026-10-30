@@ -13,7 +13,7 @@ export default async function CategoriesPage() {
   return (
     <div className="w-[90%] max-w-[600px] mx-auto py-12">
       <div className="pb-6">
-        <h1 className="font-instrument-serif text-[2rem] leading-[1.2] tracking-tight">
+        <h1 className="font-geist-serif text-[2rem] leading-[1.2] tracking-tight">
           Categories
         </h1>
         <p className="mt-2 text-muted-foreground text-sm leading-relaxed">

@@ -130,7 +130,7 @@ export default function ToolIcon({
       {/* Letter */}
       <div className="absolute inset-0 flex items-center justify-center">
         <span
-          className="font-instrument-serif font-bold text-foreground select-none"
+          className="font-sans font-bold text-foreground select-none"
           style={{
             fontSize: size * 0.45,
             textShadow: "0 1px 4px rgba(255,255,255,0.3), 0 0 8px rgba(255,255,255,0.2)",

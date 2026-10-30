@@ -118,7 +118,7 @@ export function OsAlternativesPageClient({ slug }: OsAlternativesPageClientProps
       {/* Header */}
       <div className="pb-6 pt-5 sm:pt-7">
         <div className="mb-1 flex flex-wrap items-center gap-x-3 gap-y-2 sm:items-baseline">
-          <h1 className="font-instrument-serif text-[2rem] leading-[1.2] tracking-tight">
+          <h1 className="font-geist-serif text-[2rem] leading-[1.2] tracking-tight">
             {openSourceApp.name}
           </h1>
           <div className="flex flex-wrap items-center gap-3 text-[0.69rem] font-mono uppercase text-zinc-600 dark:text-zinc-300">
@@ -176,7 +176,7 @@ export function OsAlternativesPageClient({ slug }: OsAlternativesPageClientProps
 
       {/* Capabilities Section — chips with + buttons */}
       <section className="my-12">
-        <h2 className="font-instrument-serif text-[1.3rem] mb-6">
+        <h2 className="font-geist-serif text-[1.3rem] mb-6">
           <i>Capabilities:</i>
         </h2>
 
@@ -256,7 +256,7 @@ export function OsAlternativesPageClient({ slug }: OsAlternativesPageClientProps
         <>
           <Spacer />
           <section className="my-12">
-            <h2 className="font-instrument-serif text-[1.3rem] mb-6">
+            <h2 className="font-geist-serif text-[1.3rem] mb-6">
               Other Alternatives to <i>{proprietaryApp.name}:</i>
             </h2>
 

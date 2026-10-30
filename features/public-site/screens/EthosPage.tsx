@@ -159,7 +159,7 @@ export function EthosPage() {
             <div>
               <TextScramble
                 as="h2"
-                className="text-3xl sm:text-4xl font-semibold mb-4 font-instrument-serif"
+                className="text-3xl sm:text-4xl font-normal mb-4 font-geist-serif"
                 trigger={scrambleTrigger}
                 duration={0.6}
               >
@@ -184,7 +184,7 @@ export function EthosPage() {
             <div>
               <TextScramble
                 as="h2"
-                className="text-3xl sm:text-4xl font-semibold mb-4 font-instrument-serif"
+                className="text-3xl sm:text-4xl font-normal mb-4 font-geist-serif"
                 trigger={scrambleTrigger}
                 duration={0.6}
               >
@@ -227,7 +227,7 @@ export function EthosPage() {
             <div>
               <TextScramble
                 as="h2"
-                className="text-3xl sm:text-4xl font-semibold mb-4 font-instrument-serif"
+                className="text-3xl sm:text-4xl font-normal mb-4 font-geist-serif"
                 trigger={scrambleTrigger}
                 duration={0.6}
               >
@@ -263,7 +263,7 @@ export function EthosPage() {
             <div>
               <TextScramble
                 as="h2"
-                className="text-3xl sm:text-4xl font-semibold mb-4 font-instrument-serif"
+                className="text-3xl sm:text-4xl font-normal mb-4 font-geist-serif"
                 trigger={scrambleTrigger}
                 duration={0.6}
               >
@@ -301,7 +301,7 @@ export function EthosPage() {
             <div>
               <TextScramble
                 as="h2"
-                className="text-3xl sm:text-4xl font-semibold mb-4 font-instrument-serif"
+                className="text-3xl sm:text-4xl font-normal mb-4 font-geist-serif"
                 trigger={scrambleTrigger}
                 duration={0.6}
               >
@@ -336,7 +336,7 @@ export function EthosPage() {
             <div>
               <TextScramble
                 as="h2"
-                className="text-3xl sm:text-4xl font-semibold mb-4 font-instrument-serif"
+                className="text-3xl sm:text-4xl font-normal mb-4 font-geist-serif"
                 trigger={scrambleTrigger}
                 duration={0.6}
               >
@@ -367,7 +367,7 @@ export function EthosPage() {
             <div>
               <TextScramble
                 as="h2"
-                className="text-3xl sm:text-4xl font-semibold mb-4 font-instrument-serif"
+                className="text-3xl sm:text-4xl font-normal mb-4 font-geist-serif"
                 trigger={scrambleTrigger}
                 duration={0.6}
               >
@@ -412,7 +412,7 @@ export function EthosPage() {
             <div>
               <TextScramble
                 as="h2"
-                className="text-3xl sm:text-4xl font-semibold mb-4 font-instrument-serif"
+                className="text-3xl sm:text-4xl font-normal mb-4 font-geist-serif"
                 trigger={scrambleTrigger}
                 duration={0.6}
               >
@@ -530,7 +530,7 @@ export function EthosPage() {
             <div>
               <TextScramble
                 as="h2"
-                className="text-3xl sm:text-4xl font-semibold mb-4 font-instrument-serif"
+                className="text-3xl sm:text-4xl font-normal mb-4 font-geist-serif"
                 trigger={scrambleTrigger}
                 duration={0.6}
               >

@@ -111,7 +111,7 @@ export function CapabilitiesPageClient({ slug }: CapabilitiesPageClientProps) {
       {/* Proprietary Apps with this capability */}
       {proprietaryApplications.length > 0 && (
         <section className="my-12">
-          <h2 className="font-instrument-serif text-[1.3rem] mb-6">
+          <h2 className="font-geist-serif text-[1.3rem] mb-6">
             <i>Proprietary:</i>
           </h2>
           <ul className="list-none [&:has(>li:hover)_li:not(:hover)]:opacity-50">
@@ -143,7 +143,7 @@ export function CapabilitiesPageClient({ slug }: CapabilitiesPageClientProps) {
         <>
           {proprietaryApplications.length > 0 && <Spacer />}
           <section className="my-12">
-            <h2 className="font-instrument-serif text-[1.3rem] mb-6">
+            <h2 className="font-geist-serif text-[1.3rem] mb-6">
               <i>Open Source:</i>
             </h2>
             <ul className="list-none [&:has(>li:hover)_li:not(:hover)]:opacity-50">

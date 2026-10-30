@@ -129,7 +129,7 @@ export function CategoryPageClient({ category }: CategoryPageClientProps) {
     <>
       {/* Header */}
       <div className="py-12">
-        <h1 className="font-instrument-serif text-[3rem] sm:text-[4.8rem] leading-[1] tracking-tighter max-w-[900px]">
+        <h1 className="font-geist-serif text-[3rem] sm:text-[4.8rem] leading-[1] tracking-tighter max-w-[900px]">
           Open source alternatives for <i>{category.name}</i>
         </h1>
         {category.description && (
@@ -141,7 +141,7 @@ export function CategoryPageClient({ category }: CategoryPageClientProps) {
 
       {/* Section title */}
       <section className="my-12">
-        <h2 className="font-instrument-serif text-[1.3rem] mb-6">
+        <h2 className="font-geist-serif text-[1.3rem] mb-6">
           Browse <i>Alternatives:</i>
         </h2>
 

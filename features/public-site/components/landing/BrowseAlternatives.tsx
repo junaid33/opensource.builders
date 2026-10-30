@@ -184,7 +184,7 @@ export function BrowseAlternatives() {
   return (
     <section className="my-12">
       {/* Title */}
-      <h2 className="font-instrument-serif text-[1.3rem] mb-6">
+      <h2 className="font-geist-serif text-[1.3rem] mb-6">
         Browse <i>Alternatives:</i>
       </h2>
 

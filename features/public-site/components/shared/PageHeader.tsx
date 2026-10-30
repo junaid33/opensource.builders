@@ -5,13 +5,13 @@ interface PageHeaderProps {
 }
 
 /**
- * Simple Instrument Serif page header with optional subtitle.
+ * Simple Geist Serif page header with optional subtitle.
  * Used across all redesigned pages.
  */
 export function PageHeader({ title, subtitle, italicTitle = false }: PageHeaderProps) {
   return (
     <div className="pb-6 pt-5 sm:pt-7">
-      <h1 className="font-instrument-serif text-[2rem] leading-[1.2] tracking-tight">
+      <h1 className="font-geist-serif text-[2rem] leading-[1.2] tracking-tight">
         {italicTitle ? <i>{title}</i> : title}
       </h1>
       {subtitle && (

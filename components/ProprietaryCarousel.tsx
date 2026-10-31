@@ -217,7 +217,7 @@ export default function ProprietaryCarousel({ proprietaryTools = [] }: Proprieta
       <div className="relative m-auto max-w-7xl px-6">
         <div className="flex flex-col items-center">
           <div className="mb-8">
-            <p className="font-geist-serif font-normal text-3xl text-primary text-center">Popular proprietary software</p>
+            <p className="font-instrument-serif font-bold text-3xl text-primary text-center">Popular proprietary software</p>
             <p className="text-sm text-muted-foreground text-center mt-2">Click any software to see open source alternatives</p>
           </div>
           <div className="relative py-6 w-full">

@@ -163,7 +163,7 @@ export function AlternativesPageClient({ slug }: AlternativesPageClientProps) {
 
       {/* Browse section: Search + Capability chips + Alternatives list */}
       <section className="my-12">
-        <h2 className="font-geist-serif text-[1.3rem] mb-6">
+        <h2 className="font-instrument-serif text-[1.3rem] mb-6">
           Filter by <i>Capability:</i>
         </h2>
 

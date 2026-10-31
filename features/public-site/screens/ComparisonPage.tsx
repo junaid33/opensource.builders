@@ -133,7 +133,7 @@ export function ComparisonPageClient({ app1, app2 }: ComparisonPageClientProps) 
       <section className="pt-[150px] pb-[50px]">
         <Lines />
 
-        <h1 className="font-geist-serif text-[3rem] sm:text-[4.8rem] leading-[1] tracking-tighter max-w-[900px]">
+        <h1 className="font-instrument-serif text-[3rem] sm:text-[4.8rem] leading-[1] tracking-tighter max-w-[900px]">
           Compare <i>Applications</i>
         </h1>
         <p className="mt-10 leading-relaxed text-muted-foreground text-xl sm:text-2xl max-w-[650px] font-medium">
@@ -336,7 +336,7 @@ export function ComparisonPageClient({ app1, app2 }: ComparisonPageClientProps) 
       {/* Comparison Table */}
       {selectedApp1 && selectedApp2 && comparison && (
         <section className="my-12">
-          <h2 className="font-geist-serif text-[1.3rem] mb-6">
+          <h2 className="font-instrument-serif text-[1.3rem] mb-6">
             <i>{selectedAppName1}</i> vs <i>{selectedAppName2}</i>
           </h2>
 

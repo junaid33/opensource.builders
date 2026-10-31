@@ -349,7 +349,7 @@ export function DisplayCard({
                     />
                   ) : (
                     <div 
-                      className="w-full h-full rounded-sm flex items-center justify-center text-white font-sans font-bold"
+                      className="w-full h-full rounded-sm flex items-center justify-center text-white font-instrument-serif font-bold"
                       style={{ 
                         backgroundColor: alt.simpleIconColor || '#6B7280',
                         fontSize: '8px'

@@ -1389,7 +1389,7 @@ Read the README.md and other relevant markdown files to understand how this full
                                                         />
                                                       ) : (
                                                         <div
-                                                          className="flex aspect-square items-center justify-center rounded-none overflow-hidden text-[8px] font-sans font-bold"
+                                                          className="flex aspect-square items-center justify-center rounded-none overflow-hidden text-[8px] font-instrument-serif font-bold"
                                                           style={{ width: 16, height: 16, background: implementation.toolColor || '#6B7280', color: 'white' }}
                                                         >
                                                           {implementation.toolName.charAt(0).toUpperCase()}
@@ -2000,7 +2000,7 @@ Read the README.md and other relevant markdown files to understand how this full
                                                         />
                                                       ) : (
                                                         <div
-                                                          className="flex aspect-square items-center justify-center rounded-none overflow-hidden text-[8px] font-sans font-bold"
+                                                          className="flex aspect-square items-center justify-center rounded-none overflow-hidden text-[8px] font-instrument-serif font-bold"
                                                           style={{
                                                             width: 16,
                                                             height: 16,
@@ -2241,7 +2241,7 @@ Read the README.md and other relevant markdown files to understand how this full
                             {/* Letter */}
                             <div className="absolute inset-0 flex items-center justify-center">
                               <span
-                                className="font-sans font-bold text-foreground select-none"
+                                className="font-instrument-serif font-bold text-foreground select-none"
                                 style={{
                                   fontSize: 32 * 0.45,
                                   textShadow: "0 1px 4px rgba(255,255,255,0.3), 0 0 8px rgba(255,255,255,0.2)",

@@ -268,7 +268,7 @@ export function RecentUpdates() {
   return (
     <section className="my-12">
       <div className="mb-6">
-        <h2 className="font-geist-serif text-[1.3rem]">
+        <h2 className="font-instrument-serif text-[1.3rem]">
           Recent <i>Updates</i>
         </h2>
       </div>

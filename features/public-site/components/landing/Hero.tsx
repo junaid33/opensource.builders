@@ -11,7 +11,7 @@ export function Hero() {
           <Lines />
 
           {/* Headline */}
-          <h1 className="font-geist-serif text-[3rem] sm:text-[4.8rem] leading-[1] tracking-tighter max-w-[900px]">
+          <h1 className="font-instrument-serif text-[3rem] sm:text-[4.8rem] leading-[1] tracking-tighter max-w-[900px]">
             Find an <i>open source</i> <br />
             alternative to <i>anything.</i>
           </h1>

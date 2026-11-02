@@ -425,7 +425,7 @@ export function ComparisonPageClient({ app1, app2 }: ComparisonPageClientProps) 
           </div>
 
           {/* Column headers */}
-          <div className="flex items-center gap-2 py-2 mb-4 text-[0.69rem] font-mono uppercase tracking-wider text-muted-foreground/60">
+          <div className="flex items-center gap-2 py-2 mb-4 text-xs sm:text-[0.69rem] font-mono uppercase tracking-wider text-muted-foreground/60">
             <span className="flex-grow">Capability</span>
             <span className="w-20 text-center shrink-0">{selectedAppName1}</span>
             <span className="w-20 text-center shrink-0">{selectedAppName2}</span>

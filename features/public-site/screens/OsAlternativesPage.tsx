@@ -121,7 +121,7 @@ export function OsAlternativesPageClient({ slug }: OsAlternativesPageClientProps
           <h1 className="font-instrument-serif text-[2rem] leading-[1.2] tracking-tight">
             {openSourceApp.name}
           </h1>
-          <div className="flex flex-wrap items-center gap-3 text-[0.69rem] font-mono uppercase text-zinc-600 dark:text-zinc-300">
+          <div className="flex flex-wrap items-center gap-3 text-xs sm:text-[0.69rem] font-mono uppercase text-zinc-600 dark:text-zinc-300">
             {openSourceApp.githubStars ? (
               openSourceApp.repositoryUrl ? (
                 <a

@@ -65,7 +65,7 @@ function RecentUpdateCard({ app }: { app: RecentOpenSourceApp }) {
                 <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
                   <h3 className="truncate text-sm font-semibold text-foreground">{app.name}</h3>
                   {status ? (
-                    <span className="font-mono text-[0.62rem] uppercase tracking-wide text-muted-foreground">
+                    <span className="font-mono text-xs sm:text-[0.62rem] uppercase tracking-wide text-muted-foreground">
                       {status}
                     </span>
                   ) : null}
@@ -73,7 +73,7 @@ function RecentUpdateCard({ app }: { app: RecentOpenSourceApp }) {
               </div>
 
               {addedAt ? (
-                <span className="shrink-0 border border-border bg-secondary/60 px-2 py-1 font-mono text-[0.62rem] uppercase tracking-wide text-muted-foreground">
+                <span className="shrink-0 border border-border bg-secondary/60 px-2 py-1 font-mono text-xs sm:text-[0.62rem] uppercase tracking-wide text-muted-foreground">
                   {addedAt}
                 </span>
               ) : null}
@@ -109,20 +109,20 @@ function RecentUpdateCard({ app }: { app: RecentOpenSourceApp }) {
             {visibleCapabilities.map(({ capability }, index) => (
               <span
                 key={`${capability.id}-${index}`}
-                className="border border-border bg-secondary/50 px-2 py-0.5 font-mono text-[0.62rem] uppercase tracking-wide text-muted-foreground"
+                className="border border-border bg-secondary/50 px-2 py-0.5 font-mono text-xs sm:text-[0.62rem] uppercase tracking-wide text-muted-foreground"
               >
                 {capability.name}
               </span>
             ))}
             {hiddenCapabilityCount > 0 ? (
-              <span className="border border-dashed border-border px-2 py-0.5 font-mono text-[0.62rem] uppercase tracking-wide text-muted-foreground">
+              <span className="border border-dashed border-border px-2 py-0.5 font-mono text-xs sm:text-[0.62rem] uppercase tracking-wide text-muted-foreground">
                 +{hiddenCapabilityCount}
               </span>
             ) : null}
           </div>
         ) : null}
 
-        <div className="mt-auto flex flex-wrap items-center gap-x-2 gap-y-1 pt-3 font-mono text-[0.68rem] uppercase tracking-wide text-muted-foreground">
+        <div className="mt-auto flex flex-wrap items-center gap-x-2 gap-y-1 pt-3 font-mono text-xs sm:text-[0.68rem] uppercase tracking-wide text-muted-foreground">
           {app.githubStars ? (
             <span className="inline-flex items-center gap-1">
               <Star className="size-3" aria-hidden="true" />
@@ -156,7 +156,7 @@ function RecentUpdateCard({ app }: { app: RecentOpenSourceApp }) {
       </Link>
 
       {(app.repositoryUrl || app.websiteUrl || proprietary) && (
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-border px-3 py-2 font-mono text-[0.62rem] uppercase tracking-wide">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-border px-3 py-2 font-mono text-xs sm:text-[0.62rem] uppercase tracking-wide">
           {proprietary ? (
             <Link
               href={`/alternatives/${proprietary.slug}`}

@@ -64,9 +64,9 @@ export default function LlmsPage() {
               <li key={item.path} className="flex items-center gap-2 py-1 text-sm group">
                 <span className="w-1.5 min-w-1.5 h-1.5 rounded-full bg-muted-foreground/40 shrink-0" />
                 <span className="font-medium text-foreground">{item.label}</span>
-                <code className="text-[0.69rem] font-mono text-muted-foreground/60">{item.path}</code>
+                <code className="text-xs sm:text-[0.69rem] font-mono text-muted-foreground/60">{item.path}</code>
                 <div className="flex-grow min-w-3 border-b border-dashed border-border" />
-                <span className="text-muted-foreground/60 text-[0.79rem] shrink-0">{item.desc}</span>
+                <span className="text-muted-foreground/60 text-[0.79rem] min-w-0 sm:shrink-0">{item.desc}</span>
               </li>
             ))}
           </ul>

@@ -2,7 +2,7 @@ import { MinimalLink } from '../shared';
 
 export function Footer() {
   return (
-    <footer className="space-y-1 py-12 font-mono text-[0.69rem] font-medium uppercase tracking-wider text-muted-foreground/60">
+    <footer className="space-y-1 py-12 font-mono text-xs sm:text-[0.69rem] font-medium uppercase tracking-wider text-muted-foreground/60">
       <p>
         <span className="text-foreground">—</span>{' '}
         An{' '}

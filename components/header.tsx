@@ -245,7 +245,7 @@ export function Header() {
             href="/ethos"
             className={cn(
               GeistPixelSquare.className,
-              "flex h-7 items-center text-[11px] font-semibold uppercase leading-none tracking-[0.12em] text-foreground/70 transition-colors hover:text-foreground"
+              "flex h-7 items-center text-xs sm:text-[11px] font-semibold uppercase leading-none tracking-[0.12em] text-foreground/70 transition-colors hover:text-foreground"
             )}
           >
             Ethos
@@ -259,7 +259,7 @@ export function Header() {
             type="button"
             className={cn(
               GeistPixelSquare.className,
-              "flex h-7 items-center text-[11px] font-semibold uppercase leading-none tracking-[0.12em] text-foreground/70 transition-colors hover:text-foreground"
+              "flex h-7 items-center text-xs sm:text-[11px] font-semibold uppercase leading-none tracking-[0.12em] text-foreground/70 transition-colors hover:text-foreground"
             )}
             onClick={() => updateBuildStatsCard({ isDrawerOpen: true })}
           >
@@ -275,7 +275,7 @@ export function Header() {
               type="button"
               className={cn(
                 GeistPixelSquare.className,
-                "flex h-7 items-center gap-1.5 text-[11px] font-semibold uppercase leading-none tracking-[0.12em] text-foreground/70 transition-colors hover:text-foreground"
+                "flex h-7 items-center gap-1.5 text-xs sm:text-[11px] font-semibold uppercase leading-none tracking-[0.12em] text-foreground/70 transition-colors hover:text-foreground"
               )}
               onClick={() => setMoreOpen((open) => !open)}
               aria-expanded={moreOpen}
@@ -289,7 +289,7 @@ export function Header() {
               <div className="absolute right-0 top-full z-50 mt-3 w-[25rem] max-w-[calc(100vw-2rem)] overflow-hidden border border-border bg-background shadow-2xl shadow-black/10 dark:shadow-black/40">
                 <div className="flex items-center justify-between gap-3 border-b border-border bg-secondary/35 px-4 py-3">
                   <div className="min-w-0">
-                    <p className={cn(GeistPixelSquare.className, "text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground")}>Menu</p>
+                    <p className={cn(GeistPixelSquare.className, "text-xs sm:text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground")}>Menu</p>
                     <p className="mt-1 truncate text-sm text-foreground">Navigate the open source catalog.</p>
                   </div>
                   <ThemeSwitcher rounded={false} className="h-8 border-border bg-background px-1 shadow-none [&_button]:size-5 [&_svg]:size-3" />
@@ -340,7 +340,7 @@ export function Header() {
             onClick={handleSearchToggle}
             className={cn(
               GeistPixelSquare.className,
-              "flex h-7 items-center text-[11px] font-semibold uppercase leading-none tracking-[0.12em] text-foreground/70 transition-colors hover:text-foreground"
+              "flex h-7 items-center text-xs sm:text-[11px] font-semibold uppercase leading-none tracking-[0.12em] text-foreground/70 transition-colors hover:text-foreground"
             )}
           >
             {searchOpen ? "Close" : "Search"}
@@ -357,7 +357,7 @@ export function Header() {
             onClick={handleMenuToggle}
             className={cn(
               GeistPixelSquare.className,
-              "flex h-7 items-center text-[11px] font-semibold uppercase leading-none tracking-[0.12em] text-foreground/70 transition-colors hover:text-foreground"
+              "flex h-7 items-center text-xs sm:text-[11px] font-semibold uppercase leading-none tracking-[0.12em] text-foreground/70 transition-colors hover:text-foreground"
             )}
           >
             {menuOpen ? "Close" : "Menu"}
@@ -486,7 +486,7 @@ function StarsBadge({ className }: { className?: string }) {
       aria-label="View opensource.builders on GitHub"
       className={cn(
         GeistPixelSquare.className,
-        "inline-flex h-8 items-center justify-center gap-2 text-[11px] font-semibold uppercase leading-none tracking-[0.08em] text-muted-foreground transition-colors hover:text-foreground",
+        "inline-flex h-8 items-center justify-center gap-2 text-xs sm:text-[11px] font-semibold uppercase leading-none tracking-[0.08em] text-muted-foreground transition-colors hover:text-foreground",
         className
       )}
     >

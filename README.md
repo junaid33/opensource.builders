@@ -6,6 +6,8 @@ Find open-source alternatives to popular software, compare features side-by-side
 
 [![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/TK5wC1?referralCode=I_tWSs)
 
+[![Deploy on ZopDay](https://zop.dev/deploytozopday-inkhard.svg)](https://zop.dev/zopday/app/deploy?repo=https://github.com/junaid33/opensource.builders&port=3000)
+
 ## Features
 
 - **Browse Alternatives** - Discover open-source alternatives to proprietary applications
@@ -85,6 +87,10 @@ See [CONTRIBUTING_TO_OSB.md](./CONTRIBUTING_TO_OSB.md) for guidelines on adding 
 ### Railway
 
 [![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/TK5wC1?referralCode=I_tWSs)
+
+### ZopDay
+
+[![Deploy on ZopDay](https://zop.dev/deploytozopday-inkhard.svg)](https://zop.dev/zopday/app/deploy?repo=https://github.com/junaid33/opensource.builders&port=3000)
 
 ## License
 
